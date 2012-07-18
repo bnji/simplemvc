@@ -1,3 +1,4 @@
+//http://localhost/minify/min/?f=simplemvc/simple.mvc.js
 var ViewModel = {
   //Use whenever you need to update a models value and reflect in the DOM 
   Update : function(obj, key, val) {    
