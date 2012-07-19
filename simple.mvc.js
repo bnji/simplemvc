@@ -3,31 +3,46 @@ var ViewModel = {
   //Use whenever you need to update a models value and reflect in the DOM 
   Update : function(obj, key, val) {    
     $(obj).trigger('set'+Common.FirstCharToUpper(key), [val]);
+    console.log("Update()");
+  },
+  Get : function(obj, key) {
+    //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
+    var result = {val : 0};
+    $(obj).triggerHandler('get'+Common.FirstCharToUpper(key), [result]);
+    console.log("Get()");
+    return result.val;
   },
   Create : function(viewId, $object, reflectModelChangeInView, onChange) { //, onSubmit) {
+    console.log("Create()");
     //If changes within the model should be reflected in the view:
     //Loop throught the properties within the object and attach events using
     //jQuery bind and whenever the user wants to update a value it can be done
     //using trigger, which is implemented in the Update method.
     if(reflectModelChangeInView) {
       $.each($object, function(property,v) {
-        ViewModel.AttachGetterSetter($object, property, function(n, ov, nv) {
+        ViewModel.AddGetSet($object, property, function(n, ov, nv) {
           //Update the view accordingly
+          //alert(n + ": " + ov + "=>" + nv);
           $(viewId).getSetHtml($object);
           //Make sure that the input will have the change event triggered,
           //so that the views bound to this element will also be updated.
+          //This is important in case the model is changed using setTimeout()
+          //which will update the model, then this change must simulate
+          //a user setting the value of the input. 
           $(':input[name='+n+']').not('.excludeFromModel').trigger('change');
         });
       });
     }
     //Set the DOM values
     $(viewId).getSetHtml($object);
-    //Initialize the view with the model data
-    ViewModel.GetDomVal(viewId, $object);
+    //Initialize the view with the model data if they aren't specified in the model
+    ViewModel.SetModelFromDomValues(viewId, $object); //(?)
+    
+    
     //Update the model view, whenever a change occurs
     $(viewId+' :input').not('.excludeFromModel').change(function(){
       //Update the model
-      ViewModel.GetDomVal(viewId, $object);
+      ViewModel.SetModelFromDomValues(viewId, $object);
       var n = $(this).attr('name');
       var v = $(viewId).getSetHtml()[n];
       //ViewModel.SetDomVal(viewId, n, v);
@@ -44,11 +59,13 @@ var ViewModel = {
     //alert($object);
     return $object;
   },
-  AttachGetterSetter : function(obj, prop, onUpdate) {
+  AddGetSet : function(obj, prop, onUpdate) {
+    console.log("AddGetSet");
     (function($object, thisProp) {
       var propFstCap = Common.FirstCharToUpper(thisProp);
-      $($object).bind('get'+propFstCap, function () { return $object[thisProp]; } );
-      $($object).bind('set'+propFstCap, function (event, newVal) {
+      $($object).bind('get'+propFstCap, function(event, ret) {
+        ret.val = $object[thisProp];
+      }).bind('set'+propFstCap, function (event, newVal) {
         //Replace the old value with the new value in the model
         var oldVal = $object[thisProp];
         $object[thisProp] = newVal;
@@ -56,10 +73,16 @@ var ViewModel = {
       });    
     })(obj, prop);
   },
-  //Get DOM values and update the model
-  GetDomVal : function(viewId, $object) {
+  GetDomVal : function(viewId) {
+    console.log("GetDomVal()");
     //Get the values from the DOM
-    var pars = $(viewId).getSetHtml();
+    return $(viewId).getSetHtml();
+  },
+  //Get DOM values and update the model
+  SetModelFromDomValues : function(viewId, $object) {
+    console.log("SetModelFromDomValues()");
+    //Get the values from the DOM
+    var pars = ViewModel.GetDomVal(viewId);
     //alert(JSON.stringify($formParams, null, 2));
     //Update the model using the DOM values
     $.each(pars, function(key, val) { 
@@ -71,6 +94,7 @@ var ViewModel = {
     return pars;
   },
   SetDomVal : function(datasrc, name, value) {
+    console.log("SetDomVal()");
     //alert(datasrc + " " + name + " " + value);
     //alert($(document).find('[datasrc='+datasrc+'][name='+name+']').html());
     //$(document).find('[datasrc='+datasrc+'][name='+name+']').not('.excludeFromModel').html(value);
@@ -106,6 +130,7 @@ var Common = {
     },
     setValues : function(params) {
       console.log('setValues called!');
+      //Set the values for  'p', 'div' and 'span' elements
       this.getDivElements(this).each(function() {
         var key = $(this).attr('datafld');
         if(key === undefined) {
@@ -125,6 +150,7 @@ var Common = {
         // Don't do all this work if there's no value
         if ( value !== undefined) {
           $this = $(this);
+          
           // Nested these if statements for performance
           if ( $this.is(":radio") ) {
             if ( $this.val() === value ) {
@@ -158,6 +184,11 @@ var Common = {
         if(type === 'submit' || !name) {
           return;
         }
+        
+        if(elm.hasClass('isNumber')) {
+          value = parseInt(value);
+        } 
+        
         if(elm.is(':checkbox')) {
           value = false;
           if(elm.attr('checked')) {
@@ -180,10 +211,10 @@ var Common = {
       //alert(JSON.stringify(formData, null, 2));
       
       this.getDivElements(this).each(function() {
-        //alert();
         var value = $(this).html();
         //alert(value);
         if(value !== undefined) {
+          
           var key = $(this).attr('datafld');
           if(key === undefined) {
             key = $(this).attr('id');
@@ -195,7 +226,7 @@ var Common = {
           data[key] = value;
         }
       });
-      data = $.extend({}, data, formData);
+      data = $.extend(data, formData);
       //alert(JSON.stringify(data, null, 2));
       return data;
     }
