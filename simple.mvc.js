@@ -1,17 +1,5 @@
 //http://localhost/minify/min/?f=simplemvc/simple.mvc.js
 var ViewModel = {
-  //Use whenever you need to update a models value and reflect in the DOM 
-  Set : function(obj, key, val) {    
-    $(obj).trigger('set'+Common.FirstCharToUpper(key), [val]);
-    console.log("Set)");
-  },
-  Get : function(obj, key) {
-    //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
-    var result = {val : 0};
-    $(obj).triggerHandler('get'+Common.FirstCharToUpper(key), [result]);
-    console.log("Get()");
-    return result['val'];
-  },
   Create : function(viewId, $object, $settings) { //, onSubmit) {
     console.log("Create()");
     
@@ -19,9 +7,13 @@ var ViewModel = {
     if($settings === null || $settings === undefined) {
       //alert("settings is null for view: " + viewId);
       $settings = {
+        viewId: viewId,
         reflectModelChangeInView: true
       };
+    } else {
+      $.extend($settings,{viewId: viewId});
     }
+    //alert(JSON.stringify($settings, null, 2));
     
     //If changes within the model should be reflected in the view:
     //Loop throught the properties within the object and attach events using
@@ -44,7 +36,7 @@ var ViewModel = {
         });
       });
     }
-    //Set the DOM values
+    //Set the DOM values from the Model
     $(viewId).getSetHtml($object);
     //Initialize the view with the model data if they aren't specified in the model
     ViewModel.SetModelFromDomValues(viewId, $object); //(?)
@@ -56,19 +48,16 @@ var ViewModel = {
       ViewModel.SetModelFromDomValues(viewId, $object);
       var n = $(this).attr('name');
       var v = $(viewId).getSetHtml()[n];
-      //ViewModel.SetDomVal(viewId, n, v);
-      //$(viewId).getSetHtml($object);
       
-      //if($settings['onChange'] !== undefined && $settings['onChange'] !== null) {
       if($settings['settings']['onChange'] !== undefined && $settings['settings']['onChange'] !== null) {
         //$settings['onChange']();
-        $settings['settings']['onChange']();
+        $settings['settings']['onChange'](n, v);
       }
-    }).keyup(function(){
+    });/*.keyup(function(){
       var n = $(this).attr('name');
       var v = $(this).val();
-      ViewModel.SetDomVal(viewId, n, v);
-    });
+      ViewModel.SetDataboundDomVal(viewId, n, v);
+    });*/
     
     //Add the settings to the Model object
     $settings = {settings:$settings};
@@ -79,6 +68,18 @@ var ViewModel = {
     //Return the new object in JSON format
     //alert(JSON.stringify($object, null, 2));
     return $object;
+  },
+  //Use whenever you need to update a models value and reflect in the DOM 
+  Set : function(obj, key, val) {    
+    $(obj).trigger('set'+Common.FirstCharToUpper(key), [val]);
+    console.log("Set)");
+  },
+  Get : function(obj, key) {
+    //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
+    var result = {val : 0};
+    $(obj).triggerHandler('get'+Common.FirstCharToUpper(key), [result]);
+    console.log("Get()");
+    return result['val'];
   },
   //Works in IE! http://jsfiddle.net/cTJZN/
   AddGetSet : function(obj, prop, onUpdate) {
@@ -110,20 +111,20 @@ var ViewModel = {
     $.each(pars, function(key, val) { 
       $object[key] = val;
       //alert(key + " = " + val);
-      ViewModel.SetDomVal(viewId, key, val);
+      ViewModel.SetDataboundDomVal(viewId, key, val);
     });
     //Return the values in JSON format
     return pars;
   },
   /**
-   * Update the 
+   * Update the databound elements!
    */
-  SetDomVal : function(datasrc, name, value) {
-    console.log("SetDomVal()");
+  SetDataboundDomVal : function(datasrc, name, value) {
+    console.log("SetDataboundDomVal()");
     //alert(datasrc + " " + name + " " + value);
     //alert($(document).find('[datasrc='+datasrc+'][name='+name+']').html());
-    //$(document).find('[datasrc='+datasrc+'][name='+name+']').not('.excludeFromModel').html(value);
-    $('*').find('[datasrc='+datasrc+'][name='+name+']').html(value).val(value);
+    $(document).find('[datasrc='+datasrc+'][name='+name+']').html(value).val(value);
+    //$('*').find('[datasrc='+datasrc+'][name='+name+']').html(value).val(value);
   }
 };
 

@@ -62,20 +62,23 @@ $(function() {
 
 describe("MVC Object which reflects model changes in the DOM", function() {
   var timerCallback,
+      viewId,
       obj,
       settings;
   beforeEach(function(){
     timerCallback = jasmine.createSpy('timerCallback');
     jasmine.Clock.useMock();
     
+    viewId = '#testArea';
+    
     settings = {
       reflectModelChangeInView:true,
-      onChange: function() {
-        //so something on change
+      onChange: function(n, v) {
+        return {'name':n,'value':v};
       }
     };
     
-    obj = new ViewModel.Create('#testArea', {
+    obj = new ViewModel.Create(viewId, {
       id : 123,
       type : 'typeVal'
     }, settings);
@@ -87,6 +90,19 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   
   it("obj should not be undefined", function() {
     expect(obj).not.toBe(undefined);
+  });
+  
+  it("onChange should work", function() {
+    //var newVal = Date.now();
+    //$('#testArea #id').val(newVal).trigger('change');
+    var ret = obj['settings']['onChange']('key', 'val');
+    expect(ret['name']).toBe('key');
+    expect(ret['value']).toBe('val');
+  });
+  
+  it("obj settings should contain the viewId", function(){
+    expect(obj['settings']['viewId']).toEqual(viewId);
+    //obj['settings']['onChange']();
   });
   
   it("Testing if intial value of 'id' is a Number with the value: 123", function() {
@@ -130,7 +146,8 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   
   it("Updating an input element which has another element databound to it should be updated with same information", function() {
     var newVal = Date.now();
-    $('#testArea #id').val(newVal).trigger('change');
+    $('#id').val(newVal).trigger('change');
+    //alert(obj.id);
     expect(obj.id).toBe(newVal);
     var dom = ViewModel.GetDomVal('#testArea', obj);
     expect(dom.id).toBe(newVal);
@@ -222,6 +239,27 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     expect(obj.id).not.toBe(newVal);
     var dom = ViewModel.GetDomVal('#testArea', obj);
     expect(dom.id).not.toBe(newVal);
+  });
+  
+});
+
+describe("MVC Object without settings", function() {
+  var viewId = '#testArea',
+      obj;
+  
+  beforeEach(function(){
+    obj = new ViewModel.Create(viewId, {
+      id : 123,
+      type : 'typeVal'
+    });
+  }); 
+  
+  it("obj settings should contain the viewId property and to equal viewId", function(){
+    expect(obj['settings']['viewId']).toEqual(viewId);
+  });
+  
+  it("obj settings should contain the reflectModelChangeInView property and be set to true", function(){
+    expect(obj['settings']['reflectModelChangeInView']).toEqual(true);
   });
   
 });
