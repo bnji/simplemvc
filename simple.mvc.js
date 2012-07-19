@@ -1,26 +1,37 @@
 //http://localhost/minify/min/?f=simplemvc/simple.mvc.js
 var ViewModel = {
   //Use whenever you need to update a models value and reflect in the DOM 
-  Update : function(obj, key, val) {    
+  Set : function(obj, key, val) {    
     $(obj).trigger('set'+Common.FirstCharToUpper(key), [val]);
-    console.log("Update()");
+    console.log("Set)");
   },
   Get : function(obj, key) {
     //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
     var result = {val : 0};
     $(obj).triggerHandler('get'+Common.FirstCharToUpper(key), [result]);
     console.log("Get()");
-    return result.val;
+    return result['val'];
   },
-  Create : function(viewId, $object, reflectModelChangeInView, onChange) { //, onSubmit) {
+  Create : function(viewId, $object, $settings) { //, onSubmit) {
     console.log("Create()");
+    
+    //Always have these settings even not specified
+    if($settings === null || $settings === undefined) {
+      //alert("settings is null for view: " + viewId);
+      $settings = {
+        reflectModelChangeInView: true
+      };
+    }
+    
     //If changes within the model should be reflected in the view:
     //Loop throught the properties within the object and attach events using
     //jQuery bind and whenever the user wants to update a value it can be done
     //using trigger, which is implemented in the Update method.
-    if(reflectModelChangeInView) {
+    if($settings['reflectModelChangeInView']) { //$object['settings']['reflectModelChangeInView']) {
       $.each($object, function(property,v) {
+        
         ViewModel.AddGetSet($object, property, function(n, ov, nv) {
+          
           //Update the view accordingly
           //alert(n + ": " + ov + "=>" + nv);
           $(viewId).getSetHtml($object);
@@ -47,24 +58,35 @@ var ViewModel = {
       var v = $(viewId).getSetHtml()[n];
       //ViewModel.SetDomVal(viewId, n, v);
       //$(viewId).getSetHtml($object);
-      if(onChange !== undefined && onChange !== null) {
-        onChange();
+      
+      //if($settings['onChange'] !== undefined && $settings['onChange'] !== null) {
+      if($settings['settings']['onChange'] !== undefined && $settings['settings']['onChange'] !== null) {
+        //$settings['onChange']();
+        $settings['settings']['onChange']();
       }
     }).keyup(function(){
       var n = $(this).attr('name');
       var v = $(this).val();
       ViewModel.SetDomVal(viewId, n, v);
     });
+    
+    //Add the settings to the Model object
+    $settings = {settings:$settings};
+    //alert(JSON.stringify($object, null, 2));
+    $.extend($object, $settings);
+    //alert(viewId + ": " + JSON.stringify($settings, null, 2));
+    //alert(JSON.stringify($object, null, 2));
     //Return the new object in JSON format
-    //alert($object);
+    //alert(JSON.stringify($object, null, 2));
     return $object;
   },
+  //Works in IE! http://jsfiddle.net/cTJZN/
   AddGetSet : function(obj, prop, onUpdate) {
     console.log("AddGetSet");
     (function($object, thisProp) {
       var propFstCap = Common.FirstCharToUpper(thisProp);
       $($object).bind('get'+propFstCap, function(event, ret) {
-        ret.val = $object[thisProp];
+        ret['val'] = $object[thisProp];
       }).bind('set'+propFstCap, function (event, newVal) {
         //Replace the old value with the new value in the model
         var oldVal = $object[thisProp];
@@ -93,12 +115,15 @@ var ViewModel = {
     //Return the values in JSON format
     return pars;
   },
+  /**
+   * Update the 
+   */
   SetDomVal : function(datasrc, name, value) {
     console.log("SetDomVal()");
     //alert(datasrc + " " + name + " " + value);
     //alert($(document).find('[datasrc='+datasrc+'][name='+name+']').html());
     //$(document).find('[datasrc='+datasrc+'][name='+name+']').not('.excludeFromModel').html(value);
-    $(document).find('[datasrc='+datasrc+'][name='+name+']').html(value).val(value);
+    $('*').find('[datasrc='+datasrc+'][name='+name+']').html(value).val(value);
   }
 };
 
@@ -119,14 +144,14 @@ var Common = {
       }
     },
     getInputElements : function(target) {
-      var selItems = target.find('input,button,select').filter(':not(.excludeFromModel)');//.not('.excludeFromModel');
+      var selItems = target.find('input,button,select').filter(':not(.excludeFromModel)');
       //console.log(selItems);
       return selItems;
     },
     getDivElements : function(target) {
       var selItems =  target.find('p,span,div').filter(':not(.excludeFromModel)');
       //console.log(selItems);
-      return selItems;// target.find('p,span,div').not('.excludeFromModel');
+      return selItems;
     },
     setValues : function(params) {
       console.log('setValues called!');

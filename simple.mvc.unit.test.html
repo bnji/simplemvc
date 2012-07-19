@@ -1,3 +1,7 @@
+<!--IE fixes -->
+<script type="text/javascript" src="lib/json2.js"></script>
+<script type="text/javascript"> if (!window.console) console = {log: function() {}}; </script>
+<!--//end IE fixes -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="simple.mvc.js"></script>
 <link rel="stylesheet" type="text/css" href="lib/jasmine/jasmine.css" />
@@ -58,18 +62,23 @@ $(function() {
 
 describe("MVC Object which reflects model changes in the DOM", function() {
   var timerCallback,
-      obj;
+      obj,
+      settings;
   beforeEach(function(){
     timerCallback = jasmine.createSpy('timerCallback');
     jasmine.Clock.useMock();
     
+    settings = {
+      reflectModelChangeInView:true,
+      onChange: function() {
+        //so something on change
+      }
+    };
+    
     obj = new ViewModel.Create('#testArea', {
       id : 123,
       type : 'typeVal'
-    }, true, function() {
-      //var domObj = ViewModel.GetDomVal('#phone-1', phoneObj);
-      //writeJsonObj(domObj, phoneObj);
-    });
+    }, settings);
   }); 
   
   it("obj should not be null", function() {
@@ -131,25 +140,36 @@ describe("MVC Object which reflects model changes in the DOM", function() {
     expect(databoundValue).toBe(newVal);
   });
   
-  it("Updating a property in the model using ViewModel.Update() will also update the DOM value.", function() {
+  it("Updating a property in the model using ViewModel.Set() will also update the DOM value.", function() {
     var newVal = Date.now();
-    ViewModel.Update(obj, 'id', newVal);
+    ViewModel.Set(obj, 'id', newVal);
     expect(obj.id).toBe(newVal);
     var dom = ViewModel.GetDomVal('#testArea', obj);
     expect(dom.id).toBe(newVal);
   });
   
   it("View object should be equal to model object (JSON)", function() {
-    var domObj = JSON.stringify(ViewModel.GetDomVal('#testArea', obj));
+    var domObj = ViewModel.GetDomVal('#testArea', obj);
+    settings = {settings:settings};
+    $.extend(domObj, settings);
+    domObj = JSON.stringify(domObj);
     var modObj = JSON.stringify(obj);
+    //var a1 = jQuery.makeArray(domObj);// ($.map(domObj, function (a) { return a; })).sort();
+    //var a2 = jQuery.makeArray(modObj);// ($.map(modObj, function (a) { return a; })).sort();
+    //alert($.isArray(a1) + "\n" + $.isArray(a2));
+    //alert(a1.sort() + "\n----\n" + a2.sort());
     //alert(domObj + "\n----\n" + modObj);
+    //expect(a1.sort()).toEqual(a2.sort());
     expect(modObj).toEqual(domObj);
   });
   
   it("View object should be equal to model object (JSON) after the model has been updated", function() {
-    ViewModel.Update(obj, 'id', 'foo');
-    ViewModel.Update(obj, 'type', 'bar');
-    var domObj = JSON.stringify(ViewModel.GetDomVal('#testArea', obj));
+    ViewModel.Set(obj, 'id', 'foo');
+    ViewModel.Set(obj, 'type', 'bar');
+    var domObj = ViewModel.GetDomVal('#testArea', obj);
+    settings = {settings:settings};
+    $.extend(domObj, settings);
+    domObj = JSON.stringify(domObj);
     var modObj = JSON.stringify(obj);
     expect(modObj).toEqual(domObj);
   });
@@ -162,7 +182,7 @@ describe("MVC Object which reflects model changes in the DOM", function() {
     setTimeout(function() {
       timerCallback();
     }, 3000);
-    ViewModel.Update(obj, 'type', 'delay change!');
+    ViewModel.Set(obj, 'type', 'delay change!');
     var domVal = $('#typeDatabound').val();
     expect(domVal).toBe(obj.type);
     //alert(domVal + " =?= " + obj.type);
@@ -178,9 +198,13 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     obj = new ViewModel.Create('#testArea', {
       id : 123,
       type : 'typeVal'
-    }, false, function() {
-      //var domObj = ViewModel.GetDomVal('#phone-1', phoneObj);
-      //writeJsonObj(domObj, phoneObj);
+    }, {
+      reflectModelChangeInView:false,
+      onChange: function() {
+        alert("ok");
+        //var domObj = ViewModel.GetDomVal('#phone-1', phoneObj);
+        //writeJsonObj(domObj, phoneObj);
+      }
     });
   }); 
   
@@ -192,9 +216,9 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     expect(obj).not.toBe(undefined);
   });
   
-  it("Updating Model properties (and therefor also DOM values) using ViewModel.Update() should not work", function() {
+  it("Updating Model properties (and therefor also DOM values) using ViewModel.Set() should not work", function() {
     var newVal = Date.now();
-    ViewModel.Update(obj, 'id', newVal);
+    ViewModel.Set(obj, 'id', newVal);
     expect(obj.id).not.toBe(newVal);
     var dom = ViewModel.GetDomVal('#testArea', obj);
     expect(dom.id).not.toBe(newVal);
