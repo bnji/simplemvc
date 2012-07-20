@@ -1,8 +1,14 @@
 //http://localhost/minify/min/?f=simplemvc/simple.mvc.js
-var ViewModel = {
-  Create : function(viewId, $object, $settings) { //, onSubmit) {
+
+/**
+ * 
+ */
+var MVC = {
+  Controller : function(data) {
+    return data;
+  }, 
+  ModelView : function(viewId, $object, $settings) { //, onSubmit) {
     console.log("Create()");
-    
     //Always have these settings even not specified
     if($settings === null || $settings === undefined) {
       //alert("settings is null for view: " + viewId);
@@ -22,7 +28,7 @@ var ViewModel = {
     if($settings['reflectModelChangeInView']) { //$object['settings']['reflectModelChangeInView']) {
       $.each($object, function(property,v) {
         
-        ViewModel.AddGetSet($object, property, function(n, ov, nv) {
+        MVC.AddGetSet($object, property, function(n, ov, nv) {
           
           //Update the view accordingly
           //alert(n + ": " + ov + "=>" + nv);
@@ -39,26 +45,52 @@ var ViewModel = {
     //Set the DOM values from the Model
     $(viewId).getSetHtml($object);
     //Initialize the view with the model data if they aren't specified in the model
-    ViewModel.SetModelFromDomValues(viewId, $object); //(?)
+    MVC.SetModelFromDomValues(viewId, $object); //(?)
     
-    
+    //var n, v;
     //Update the model view, whenever a change occurs
-    $(viewId+' :input').not('.excludeFromModel').change(function(){
-      //Update the model
-      ViewModel.SetModelFromDomValues(viewId, $object);
+    $(viewId+' :input').not('.excludeFromModel').focus(function(){
+      console.log('onFocus');
+      //http://jsfiddle.net/PKVVP/
       var n = $(this).attr('name');
-      var v = $(viewId).getSetHtml()[n];
-      
+      var v = MVC.GetDomVal(viewId)[n]; //$(viewId).getSetHtml()[n];
+      console.log(n + " : " + v);
+      if($settings['settings']['onFocus'] !== undefined && $settings['settings']['onFocus'] !== null) {
+        $settings['settings']['onFocus'](n, v);
+      }
+      //alert(n + " : " + v);
+    }).blur(function() {
+      console.log('onBlur');
+      var n = $(this).attr('name');
+      var v = MVC.GetDomVal(viewId)[n]; //$(viewId).getSetHtml()[n];
+      console.log(n + " : " + v);      
+    }).change(function(){
+      console.log('onChange');
+      var n = $(this).attr('name');
+      var v = MVC.GetDomVal(viewId)[n]; //$(viewId).getSetHtml()[n];
+      console.log(n + " : " + v);
+      //Update the model and update databound elements too
+      MVC.SetModelFromDomValues(viewId, $object);
       if($settings['settings']['onChange'] !== undefined && $settings['settings']['onChange'] !== null) {
         //$settings['onChange']();
         $settings['settings']['onChange'](n, v);
       }
+    }).select(function() {
+      console.log('onSelect');
+      var n = $(this).attr('name');
+      var v = $(this).val();// MVC.GetDomVal(viewId)[n]; //$(viewId).getSetHtml()[n];
+      console.log(n + " : " + v);
+      
+    }).submit(function(){
+      alert('submit');
     });/*.keyup(function(){
       var n = $(this).attr('name');
       var v = $(this).val();
-      ViewModel.SetDataboundDomVal(viewId, n, v);
+      MVC.SetDataboundDomVal(viewId, n, v);
     });*/
+   
     
+
     //Add the settings to the Model object
     $settings = {settings:$settings};
     //alert(JSON.stringify($object, null, 2));
@@ -69,19 +101,69 @@ var ViewModel = {
     //alert(JSON.stringify($object, null, 2));
     return $object;
   },
+  Save : function(obj, par) {
+    var s = obj['settings']['controller']['Save'];
+    if(s !== undefined && s !== null) {
+      s(obj, par);
+    } else {
+      alert('missing save func.');
+    }
+  },
+  Update : function(obj, par) {
+    var s = obj['settings']['controller']['Update'];
+    if(s !== undefined && s !== null) {
+      s(obj, par);
+    } else {
+      alert('missing update func.');
+    }
+  },
+  Delete : function(obj, par) {
+    var s = obj['settings']['controller']['Delete'];
+    if(s !== undefined && s !== null) {
+      s(obj, par);
+    } else {
+      alert('missing save func.');
+    }
+  },
   //Use whenever you need to update a models value and reflect in the DOM 
-  Set : function(obj, key, val) {    
+  Set : function(obj, key, val) {
     $(obj).trigger('set'+Common.FirstCharToUpper(key), [val]);
     console.log("Set)");
   },
+  /**
+   * Must only be used if 'reflectModelChangeInView' is TRUE.
+   * 
+   * @param obj The data object literal (JSON)
+   * @param key The property key
+   * @return The value from 
+   */
   Get : function(obj, key) {
     //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
+    console.log("Get()");
     var result = {val : 0};
     $(obj).triggerHandler('get'+Common.FirstCharToUpper(key), [result]);
-    console.log("Get()");
     return result['val'];
   },
-  //Works in IE! http://jsfiddle.net/cTJZN/
+  /**
+   * AddGetSet: Add getters and setters
+   * 
+   * Getters and Setters in JavaScript/JScript (ECMAScript) are not an option
+   * as it is hard to get workin cross-browser/platform!
+   * There is a solution here, but only down to IE9:
+   * Source: http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/
+   * 
+   * If changes in the model properties should be reflected in the view
+   * then setter and getter methods will be attached using jQuery.
+   * 
+   * Note: Will only be used(exec.) if 'reflectModelChangeInView' is TRUE.
+   * 
+   * Works in IE 7+: http://jsfiddle.net/cTJZN/
+   * 
+   * @param obj The data object literal (JSON) 
+   * @param prop The property name
+   * @param onUpdate callBack function will execute, whenever the get/set 
+   * event handlers bound with .bind() method.
+   */
   AddGetSet : function(obj, prop, onUpdate) {
     console.log("AddGetSet");
     (function($object, thisProp) {
@@ -105,13 +187,13 @@ var ViewModel = {
   SetModelFromDomValues : function(viewId, $object) {
     console.log("SetModelFromDomValues()");
     //Get the values from the DOM
-    var pars = ViewModel.GetDomVal(viewId);
+    var pars = MVC.GetDomVal(viewId);
     //alert(JSON.stringify($formParams, null, 2));
     //Update the model using the DOM values
     $.each(pars, function(key, val) { 
       $object[key] = val;
       //alert(key + " = " + val);
-      ViewModel.SetDataboundDomVal(viewId, key, val);
+      MVC.SetDataboundDomVal(viewId, key, val);
     });
     //Return the values in JSON format
     return pars;
@@ -123,8 +205,11 @@ var ViewModel = {
     console.log("SetDataboundDomVal()");
     //alert(datasrc + " " + name + " " + value);
     //alert($(document).find('[datasrc='+datasrc+'][name='+name+']').html());
-    $(document).find('[datasrc='+datasrc+'][name='+name+']').html(value).val(value);
+    //$(document).find('[datasrc='+datasrc+'][name='+name+']').html(value).val(value);
     //$('*').find('[datasrc='+datasrc+'][name='+name+']').html(value).val(value);
+    //$('[datasrc='+datasrc+'][name='+name+']').text(value).val(value);
+    $('div[datasrc|='+datasrc+'][name|='+name+'],p[datasrc|='+datasrc+'][name|='+name+'],span[datasrc|='+datasrc+'][name|='+name+']').text(value);
+    $('input[datasrc|='+datasrc+'][name|='+name+']').val(value);
   }
 };
 
@@ -145,7 +230,7 @@ var Common = {
       }
     },
     getInputElements : function(target) {
-      var selItems = target.find('input,button,select').filter(':not(.excludeFromModel)');
+      var selItems = target.find('input,button,select,textarea').filter(':not(.excludeFromModel)');
       //console.log(selItems);
       return selItems;
     },
@@ -258,31 +343,3 @@ var Common = {
     }
   });
 })(jQuery);
-
-/*Using jQuery instead of this
-//Source: http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/
-function extendAsArray(obj, onSet) {
-    if (obj.length === undefined) {// || obj.__lookupGetter__('length')) {
-        var index = 0;
-        //document.body.appendChild(obj);
-        for (var prop in obj) {
-          (function(thisIndex, thisProp) {
-            var propFstCap = thisProp.substring(0, 1).toUpperCase() + thisProp.substring(1, thisProp.length);
-            Object.defineProperty(obj, "gs"+propFstCap, {
-              get: function() {
-                  return obj[thisProp];
-              },
-              set: function(newVal) {
-                //alert(thisProp + ": " + obj[thisProp] + "=>" + newVal);
-                var oldVal = obj[thisProp]; 
-                obj[thisProp] = newVal;
-                onSet(thisProp, oldVal, newVal);
-              }
-            });
-          })(index, prop)
-          index++;
-        };
-        //obj.__defineGetter__("length", function() {return index});
-    }
-    return obj;
-}*/

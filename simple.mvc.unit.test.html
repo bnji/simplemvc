@@ -23,9 +23,9 @@
 <div style="display:none;">
   <h1>Outside the View</h1>
   <p>
-    This input element will be databound to the property 'type' in the ViewModel 'testArea'.
+    This input element will be databound to the property 'type' in the MVC 'testArea'.
     <br /> 
-    <span name="type" id="typeDatabound" datasrc="#testArea"></span>
+    <span datasrc="#testArea" name="type" id="typeDatabound">&nbsp;</span>
   </p>
 </div>
 <script>
@@ -78,7 +78,7 @@ describe("MVC Object which reflects model changes in the DOM", function() {
       }
     };
     
-    obj = new ViewModel.Create(viewId, {
+    obj = new MVC.ModelView(viewId, {
       id : 123,
       type : 'typeVal'
     }, settings);
@@ -106,67 +106,67 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("Testing if intial value of 'id' is a Number with the value: 123", function() {
-    expect(obj.id).toBe(123);
+    expect(obj['id']).toBe(123);
   });
   
   it("Testing if initial value of 'type' is 'typeVal'", function() {
-    expect(obj.type).toBe('typeVal');
+    expect(obj['type']).toBe('typeVal');
   });
   
   it("Testing if getter method is working", function() {
     //obj.type = "hello";
-    var getVal = ViewModel.Get(obj, 'type');
+    var getVal = MVC.Get(obj, 'type');
     expect(obj.type).toBe(getVal);
   });
   
   it("Elements in the view should be threated as property of the model and therefore added to the model even not specified in the model", function() {
-    var domVal = ViewModel.GetDomVal('#testArea', obj);
-    expect(domVal.canIjoinTheModelEvenNotSpecified).not.toBe(null);
-    expect(domVal.canIjoinTheModelEvenNotSpecified).not.toBe(undefined);
-    expect(obj.canIjoinTheModelEvenNotSpecified).not.toBe(null);
-    expect(obj.canIjoinTheModelEvenNotSpecified).not.toBe(undefined);
-    expect(domVal.canIjoinTheModelEvenNotSpecified).toBe(obj.canIjoinTheModelEvenNotSpecified);
+    var domVal = MVC.GetDomVal('#testArea', obj);
+    expect(domVal['canIjoinTheModelEvenNotSpecified']).not.toBe(null);
+    expect(domVal['canIjoinTheModelEvenNotSpecified']).not.toBe(undefined);
+    expect(obj['canIjoinTheModelEvenNotSpecified']).not.toBe(null);
+    expect(obj['canIjoinTheModelEvenNotSpecified']).not.toBe(undefined);
+    expect(domVal['canIjoinTheModelEvenNotSpecified']).toBe(obj.canIjoinTheModelEvenNotSpecified);
   });
     
   it("Changing Model property directly should not update the dom value", function() {
     var newVal = ''+Date.now();
     obj.id = newVal;
-    expect(obj.id).toBe(newVal);
-    var dom = ViewModel.GetDomVal('#testArea', obj);
-    expect(dom.id).not.toBe(newVal);
+    expect(obj['id']).toBe(newVal);
+    var dom = MVC.GetDomVal('#testArea', obj);
+    expect(dom['id']).not.toBe(newVal);
   });
   
   it("Updating an input element should update the model accordingly", function() {
     var newVal = Date.now();
     $('#testArea #id').val(newVal).trigger('change');
-    expect(obj.id).toBe(newVal);
-    var dom = ViewModel.GetDomVal('#testArea', obj);
-    expect(dom.id).toBe(newVal);
+    expect(obj['id']).toBe(newVal);
+    var dom = MVC.GetDomVal('#testArea', obj);
+    expect(dom['id']).toBe(newVal);
   });
   
   it("Updating an input element which has another element databound to it should be updated with same information", function() {
     var newVal = Date.now();
     $('#id').val(newVal).trigger('change');
     //alert(obj.id);
-    expect(obj.id).toBe(newVal);
-    var dom = ViewModel.GetDomVal('#testArea', obj);
-    expect(dom.id).toBe(newVal);
+    expect(obj['id']).toBe(newVal);
+    var dom = MVC.GetDomVal('#testArea', obj);
+    expect(dom['id']).toBe(newVal);
     //var databoundValue = $('#testArea').getSetHtml();
     var databoundValue = parseInt($('#testArea #idDatabound').text());
     //alert(JSON.stringify(databoundValue, null, 2));
     expect(databoundValue).toBe(newVal);
   });
   
-  it("Updating a property in the model using ViewModel.Set() will also update the DOM value.", function() {
+  it("Updating a property in the model using MVC.Set() will also update the DOM value.", function() {
     var newVal = Date.now();
-    ViewModel.Set(obj, 'id', newVal);
-    expect(obj.id).toBe(newVal);
-    var dom = ViewModel.GetDomVal('#testArea', obj);
-    expect(dom.id).toBe(newVal);
+    MVC.Set(obj, 'id', newVal);
+    expect(obj['id']).toBe(newVal);
+    var dom = MVC.GetDomVal('#testArea', obj);
+    expect(dom['id']).toBe(newVal);
   });
   
   it("View object should be equal to model object (JSON)", function() {
-    var domObj = ViewModel.GetDomVal('#testArea', obj);
+    var domObj = MVC.GetDomVal('#testArea', obj);
     settings = {settings:settings};
     $.extend(domObj, settings);
     domObj = JSON.stringify(domObj);
@@ -181,9 +181,9 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("View object should be equal to model object (JSON) after the model has been updated", function() {
-    ViewModel.Set(obj, 'id', 'foo');
-    ViewModel.Set(obj, 'type', 'bar');
-    var domObj = ViewModel.GetDomVal('#testArea', obj);
+    MVC.Set(obj, 'id', 'foo');
+    MVC.Set(obj, 'type', 'bar');
+    var domObj = MVC.GetDomVal('#testArea', obj);
     settings = {settings:settings};
     $.extend(domObj, settings);
     domObj = JSON.stringify(domObj);
@@ -192,15 +192,15 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("Should not work to get the value from a submit button", function() {
-    expect(obj.submitButton).toBe(undefined);
+    expect(obj['submitButton']).toBe(undefined);
   });
   
   it("Should work updating the value of a property using setTimeout() (simulating input change from user)", function() {
     setTimeout(function() {
       timerCallback();
     }, 3000);
-    ViewModel.Set(obj, 'type', 'delay change!');
-    var domVal = $('#typeDatabound').val();
+    MVC.Set(obj, 'type', 'delay change!');
+    var domVal = $('#typeDatabound').html();
     expect(domVal).toBe(obj.type);
     //alert(domVal + " =?= " + obj.type);
   });
@@ -212,14 +212,14 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
   var obj;
   
   beforeEach(function(){
-    obj = new ViewModel.Create('#testArea', {
+    obj = new MVC.ModelView('#testArea', {
       id : 123,
       type : 'typeVal'
     }, {
       reflectModelChangeInView:false,
       onChange: function() {
         alert("ok");
-        //var domObj = ViewModel.GetDomVal('#phone-1', phoneObj);
+        //var domObj = MVC.GetDomVal('#phone-1', phoneObj);
         //writeJsonObj(domObj, phoneObj);
       }
     });
@@ -233,12 +233,12 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     expect(obj).not.toBe(undefined);
   });
   
-  it("Updating Model properties (and therefor also DOM values) using ViewModel.Set() should not work", function() {
+  it("Updating Model properties (and therefor also DOM values) using MVC.Set() should not work", function() {
     var newVal = Date.now();
-    ViewModel.Set(obj, 'id', newVal);
-    expect(obj.id).not.toBe(newVal);
-    var dom = ViewModel.GetDomVal('#testArea', obj);
-    expect(dom.id).not.toBe(newVal);
+    MVC.Set(obj, 'id', newVal);
+    expect(obj['id']).not.toBe(newVal);
+    var dom = MVC.GetDomVal('#testArea', obj);
+    expect(dom['id']).not.toBe(newVal);
   });
   
 });
@@ -248,7 +248,7 @@ describe("MVC Object without settings", function() {
       obj;
   
   beforeEach(function(){
-    obj = new ViewModel.Create(viewId, {
+    obj = new MVC.ModelView(viewId, {
       id : 123,
       type : 'typeVal'
     });
