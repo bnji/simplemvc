@@ -29,6 +29,26 @@
   <input type="button" name="delete" id="delete" value="delete" />
   
 </div>
+<div id="testArea2" style="display: none;">
+  ID (input): <input class="isNumber" name="id3" id="id3" />
+  <br />
+  Type: <input type="text" name="type2" value="typeVal2" />
+  <br />
+  <span id="attachGetterSetterEvenNotSpecifiedInModel"> </span>
+</div>
+
+<div id="testArea3" style="display: none;">
+  <h2>Testing classes</h2>
+  <span class="isNumber" id="spanIsNumber">123456</span>
+  <span id="spanIsNotNumber">123456</span>
+  <input class="isNumber" name="inputIsNumber" type="text" value="123456" />
+  <input name="inputIsNotNumber" type="text" value="123456" />
+</div>
+
+<div id="testAreaEmpty" style="display: none;">
+  <input type="text" name="inModel" value="foobar" />
+</div>
+
 <div style="display:none;">
   <h1>Outside the View</h1>
   <p>
@@ -69,7 +89,7 @@ $(function() {
 });
 
 
-describe("MVC Object which reflects model changes in the DOM", function() {
+describe("MVC Object which reflects model changes in the DOM ---- ", function() {
   var timerCallback,
       viewId,
       obj,
@@ -139,15 +159,18 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("Calling MVC.Save() method should work", function() {
-    MVC.Save(obj, 'saveExtraParameter');
+    //MVC.Save(obj, 'saveExtraParameter');
+    obj.Save('saveExtraParameter');
   });
   
   it("Calling MVC.Update() method should work", function() {
-    MVC.Update(obj, 'updateExtraParameter');
+    //MVC.Update(obj, 'updateExtraParameter');
+    obj.Update('updateExtraParameter');
   });
   
   it("Calling MVC.Delete() method should work", function() {
-    MVC.Delete(obj, 'deleteExtraParameter');
+    //MVC.Delete(obj, 'deleteExtraParameter');
+    obj.Delete('deleteExtraParameter');
   });
   
   it("elements which have the class 'excludeFromModel' should not be included in the Model (even when inside the (DOM) View)", function() {
@@ -156,15 +179,17 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("changing Model property using the MVC.Set() method should update the DOM value when 'reflectModelChangeInView' : true", function() {
-    var newVal = ''+Date.now();
-    MVC.Set(obj, 'type', newVal);
+    var newVal = ''+$.now();
+    //MVC.Set(obj, 'type', newVal);
+    obj.Set('type', newVal);
     var domVal = MVC.GetDomVal(viewId)['type'];
+    //alert(obj['type'] + " - " + MVC.Get(obj, 'type') + " - " + MVC.GetDomVal(viewId)['type']);
     expect(domVal).toBe(newVal);
   });
   
   it("changing Model property by reference should not update the DOM value", function() {
     //alert(MVC.GetDomVal(viewId)['type']);
-    var newVal = ''+Date.now();// MVC.Set(obj, 'type', ''+Date.now());
+    var newVal = ''+$.now();// MVC.Set(obj, 'type', ''+Date.now());
     obj['type'] = newVal;
     var domVal = MVC.GetDomVal(viewId)['type'];
     //alert(MVC.GetDomVal(viewId)['type']);
@@ -172,10 +197,11 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("change event should work", function() {
-    var newVal = ''+Date.now();
+    var newVal = ''+$.now();
     //$('#testArea #id').val(newVal).trigger('change');
     //var ret = obj['settings']['change']('key', 'val');
-    MVC.Set(obj, 'type', newVal);
+    //MVC.Set(obj, 'type', newVal);
+    obj.Set('type', newVal);
     $('#testArea #type').val(newVal).trigger('change');
     //onChangeResultData = obj obj['settings']['change'](null, 'key', 'val');
     //alert(JSON.stringify(onChangeResultData));
@@ -190,7 +216,7 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   
   it("Testing if getter method is working", function() {
     //obj.type = "hello";
-    var getVal = MVC.Get(obj, 'type');
+    var getVal = obj.Get('type');// MVC.Get(obj, 'type');
     expect(obj.type).toBe(getVal);
   });
   
@@ -204,7 +230,7 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
     
   it("Changing Model property directly should not update the dom value", function() {
-    var newVal = ''+Date.now();
+    var newVal = ''+$.now();
     obj.id = newVal;
     expect(obj['id']).toBe(newVal);
     var dom = MVC.GetDomVal('#testArea', obj);
@@ -212,7 +238,7 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("Updating an input element should update the model accordingly", function() {
-    var newVal = Date.now();
+    var newVal = $.now();
     $('#testArea #id').val(newVal).trigger('change');
     expect(obj['id']).toBe(newVal);
     var dom = MVC.GetDomVal('#testArea', obj);
@@ -220,7 +246,7 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("Updating an input element which has another element databound to it should be updated with same information", function() {
-    var newVal = Date.now();
+    var newVal = $.now();
     $('#id').val(newVal).trigger('change');
     //alert(obj.id);
     expect(obj['id']).toBe(newVal);
@@ -233,8 +259,9 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("Updating a property in the model using MVC.Set() will also update the DOM value.", function() {
-    var newVal = Date.now();
-    MVC.Set(obj, 'id', newVal);
+    var newVal = $.now();
+    //MVC.Set(obj, 'id', newVal);
+    obj.Set('id', newVal);
     expect(obj['id']).toBe(newVal);
     var dom = MVC.GetDomVal('#testArea', obj);
     expect(dom['id']).toBe(newVal);
@@ -246,6 +273,12 @@ describe("MVC Object which reflects model changes in the DOM", function() {
     $.extend(domObj, settings);
     domObj = JSON.stringify(domObj);
     var modObj = JSON.stringify(obj);
+    //alert(MVC.Debug(modObj) + "\n\n" + MVC.Debug(domObj));
+    //var a1, a2;
+    //a1 = $.makeArray(domObj);
+    //a2 = $.makeArray(modObj);
+    //alert(a1.sort() + "\n\n" + a2.sort());
+    //expect(a1.sort()).toEqual(a2.sort());
     //var a1 = jQuery.makeArray(domObj);// ($.map(domObj, function (a) { return a; })).sort();
     //var a2 = jQuery.makeArray(modObj);// ($.map(modObj, function (a) { return a; })).sort();
     //alert($.isArray(a1) + "\n" + $.isArray(a2));
@@ -256,8 +289,10 @@ describe("MVC Object which reflects model changes in the DOM", function() {
   });
   
   it("View object should be equal to model object (JSON) after the model has been updated", function() {
-    MVC.Set(obj, 'id', 'foo');
-    MVC.Set(obj, 'type', 'bar');
+    //MVC.Set(obj, 'id', 'foo');
+    obj.Set('id', 'foo');
+    //MVC.Set(obj, 'type', 'bar');
+    obj.Set('type', 'bar');
     var domObj = MVC.GetDomVal('#testArea', obj);
     settings = {settings:settings};
     $.extend(domObj, settings);
@@ -274,7 +309,8 @@ describe("MVC Object which reflects model changes in the DOM", function() {
     setTimeout(function() {
       timerCallback();
     }, 3000);
-    MVC.Set(obj, 'type', 'delay change!');
+    //MVC.Set(obj, 'type', 'delay change!');
+    obj.Set('type', 'delay change!');
     var domVal = $('#typeDatabound').html();
     expect(domVal).toBe(obj.type);
     //alert(domVal + " =?= " + obj.type);
@@ -302,7 +338,8 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
   
   it("Changing Model property using the MVC.Set() method should not set the property or the DOM value when 'reflectModelChangeInView' : false", function() {
     var newVal = ''+Date.now();
-    MVC.Set(obj, 'type', newVal);
+    //MVC.Set(obj, 'type', newVal);
+    obj.Set('type', newVal);
     var domVal = MVC.GetDomVal(viewId)['type'];
     expect(domVal).not.toBe(newVal);
     var propVal = obj['type'];
@@ -310,13 +347,14 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
   });
   
   it("Getting a Model property value using the MVC.Get() method should be undefined when 'reflectModelChangeInView' : false", function() {
-    var objVal = MVC.Get(obj, 'type');
+    var objVal = obj.Get('type'); //MVC.Get(obj, 'type');
     expect(objVal).toBe(undefined);
   });
   
   it("Updating Model properties (and therefor also DOM values) using MVC.Set() should not work", function() {
     var newVal = Date.now();
-    MVC.Set(obj, 'id', newVal);
+    //MVC.Set(obj, 'id', newVal);
+    obj.Set('id', newVal);
     expect(obj['id']).not.toBe(newVal);
     var dom = MVC.GetDomVal('#testArea', obj);
     expect(dom['id']).not.toBe(newVal);
@@ -398,10 +436,11 @@ describe("MVC Object with autosave", function() {
   });
   
   xit("autoSaveInterval = 5000 should call the Save() method every 5 seconds", function() {
-    MVC.Save(obj, $.now());
+    //MVC.Save(obj, $.now());
+    obj.Save($.now());
   });
   
-  it("should support async execution of test preparation and exepectations", function() {
+  xit("should support async execution of test preparation and exepectations", function() {
     runs(function() {
       flag = false;
       value = 0;
@@ -423,4 +462,70 @@ describe("MVC Object with autosave", function() {
   });
   
 });
+
+describe("MVC Object Getter & Setter", function() {
+  var obj,
+      viewId;
+  
+  beforeEach(function(){
+    viewId = '#testArea2';
+    obj = new MVC.ModelView(viewId, {
+      id3 : 123,
+      type2 : 'typeVal'
+    }, {
+      reflectModelChangeInView : true
+    });
+  });
+  
+  it("Getter & Setter methods should be attached to properties which are specified by the DOM but not in Model (when 'reflectModelChangeInView' : true)", function() {
+    var newVal = ''+$.now();
+    //MVC.Set(obj, 'attachGetterSetterEvenNotSpecifiedInModel', newVal);
+    obj.Set('attachGetterSetterEvenNotSpecifiedInModel', newVal);
+    var domVal = obj.Get('attachGetterSetterEvenNotSpecifiedInModel');// MVC.Get(obj, 'attachGetterSetterEvenNotSpecifiedInModel'); //MVC.GetDomVal(viewId)['attachGetterSetterEvenNotSpecifiedInModel'];
+    expect(domVal).toBe(newVal);
+  });
+  
+});
+
+describe("MVC Object: testing classes.", function() {
+  var obj,
+      viewId;
+  
+  beforeEach(function(){
+    viewId = '#testArea3';
+    obj = new MVC.ModelView(viewId, {});
+  });
+  
+  it("spanIsNumber should be a number", function() {
+    expect(obj['spanIsNumber']).toEqual(123456);
+  });
+  
+  it("spanIsNotNumber should not be a number", function() {
+    expect(obj['spanIsNotNumber']).not.toEqual(123456);
+  });
+  
+  
+});
+
+describe("MVC Object without object data", function() {
+  var obj,
+      viewId;
+  
+  beforeEach(function(){
+    viewId = '#testAreaEmpty';
+    obj = new MVC.ModelView(viewId);
+  });
+  
+  it("Object should be empty, but not null or undefined, even if not provided!", function() {
+    expect(obj).not.toBe(undefined);
+    expect(obj).not.toBe(null);
+  });
+  
+  it("Model should have property added, even when not object data intially where passed (only viewId)", function() {
+    expect(obj['inModel']).toEqual('foobar');
+  });
+  
+});
+
+  
 </script>
