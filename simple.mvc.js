@@ -34,6 +34,7 @@ var MVC = {
   ModelView : function(viewId, $object, $settings) {
     CMN.LOG("ModelView Created...");
     
+    
     //Always have object data. Only require viewId
     if($object === null || $object === undefined) {
       $object = {};
@@ -51,10 +52,159 @@ var MVC = {
     }
     //alert(CMN.JSTR($settings, null, 2));
     
+    
+    $object.Save = function(par) {
+      MVC.CtrRun('Save', $object, par);
+    }
+    $object.Update = function(par) {
+      MVC.CtrRun('Update', $object, par);
+    }
+    $object.Delete = function(par) {
+      MVC.CtrRun('Delete', $object, par);
+    }
+    
+    /**
+     * AddGetSet: Add getters and setters
+     * 
+     * Getters and Setters in JavaScript/JScript (ECMAScript) are not an option
+     * as it is hard to get workin cross-browser/platform!
+     * There is a solution here, but only down to IE9:
+     * Source: http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/
+     * 
+     * If changes in the model properties should be reflected in the view
+     * then setter and getter methods will be attached using jQuery.
+     * 
+     * Note: Will only be used(exec.) if 'reflectModelChangeInView' is TRUE.
+     * 
+     * Works in IE 7+: http://jsfiddle.net/cTJZN/
+     * 
+     * @param obj The data object literal (JSON) 
+     * @param prop The property name
+     * @param onUpdate callBack function will execute, whenever the get/set 
+     * event handlers bound with .bind() method.
+     */
+    $object.AddGetSet = function(prop, onUpdate) {
+      CMN.LOG("AddGetSet");
+      //var thisProp = Common.FstChrUp(thisProp);
+      $($object).bind('get'+prop, function(event, ret) {
+        ret['val'] = $object[prop];
+      }).bind('set'+prop, function (event, newVal) {
+        //Replace the old value with the new value in the model
+        var oldVal = $object[prop];
+        //Only update values if they're changed
+        if(oldVal !== newVal) {
+          $object[prop] = newVal;
+          onUpdate(prop, oldVal, newVal);
+        }
+      });
+    }
+    
+    $object.RemoveGetSet = function(prop) {
+      //implement it
+    }
+    
+    //Use whenever you need to update a models value and reflect in the DOM
+    $object.Set = function(key, val) {
+      CMN.LOG("Set()");
+      //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
+      $($object).trigger('set'+key, [val]);
+    }
+    /**
+     * Must only be used if 'reflectModelChangeInView' is TRUE.
+     * 
+     * @param key The property key
+     * @return The value from 
+     */
+    $object.Get = function(key) {
+      //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
+      CMN.LOG("Get()");
+      var result = { val : undefined };
+      //$($object).triggerHandler('get'+Common.FstChrUp(key), [result]);
+      $($object).triggerHandler('get'+key, [result]);
+      return result['val'];
+    }
+    
+    $object.SetDomVal = function() {
+      CMN.LOG("SetDomVal()");
+      //Set the values in the DOM
+      $(viewId).getSetHtml($object);
+    }
+    $object.GetDomVal = function() {
+      CMN.LOG("GetDomVal()");
+      //Get the values from the DOM
+      return $(viewId).getSetHtml();
+    }
+    
+    //Update the model and databound elements
+    $object.SetModelFromView = function(updateDataboundValues) {
+      CMN.LOG("SetModelFromView()");
+      //Get the values from the DOM
+      //var pars = MVC.GetDomVal(viewId);
+      var pars = $object.GetDomVal();
+      //alert(MVC.CMN.JSTR(pars));
+      //alert(CMN.JSTR($formParams, null, 2));
+      //Update the model using the DOM values
+      $.each(pars, function(key, newVal) {
+        var oldVal = $object[key];
+        //Only update values if they're changed
+        //alert(typeof oldVal + " " + oldVal);
+        //alert((typeof oldVal) + " - " + (typeof oldVal) == 'String');
+        //Check the value of oldVal (not newVal)
+        //See why when checking valType === 'undefined' below
+        var valType = typeof oldVal;
+        if(oldVal !== newVal) {
+          
+          //alert("Key: " + key + "\nOld value: " + oldVal + " (" + typeof oldVal + ")\nNew value: " + newVal + " (" + typeof newVal + ")");
+          //A problem arises when comparing object literals!!!
+          //should valType (string, number, boolean, object, undefined, function)
+          //be used for anything?
+          //When the property has not been defined in the Model, but in the View
+          //the value will be undefined and therefore also the type.
+          //In some cases this should be handled differently!
+          //if(valType === 'string' || valType === 'number' || valType === 'boolean' || valType === 'object' || valType === 'undefined') {
+            
+            //alert(key + ": " + oldVal + " changed to " + newVal);
+            
+            //Update the model with the value from DOM
+            $object[key] = newVal;
+            if(updateDataboundValues === undefined || updateDataboundValues === true) {
+              //Update databound DOM values 
+              $object.SetDataboundDomVal(viewId, key, newVal);
+            }
+            
+          //}
+          //else {
+          //  alert("Missing implementation of primitive types in SetModelFromView() method for type: " + valType);
+          //}
+        }
+      });
+      //Return the values in JSON format
+      return pars;
+    }
+    /**
+     * Update the databound elements!
+     * 
+     * @param {Object} datasrc
+     * @param {Object} name
+     * @param {Object} value
+     */
+    $object.SetDataboundDomVal = function(datasrc, name, value) {
+      CMN.LOG("SetDataboundDomVal()");
+      //The following works fine, except it breaks in IE<9!!!
+      //$('[datasrc='+datasrc+'][name='+name+']').text(value).val(value);
+      //This works though:
+      CMN.LOG(counter + " - datasrc: " + datasrc + " - name: " + name + " - value: " + value);
+      $('div[datasrc|='+datasrc+'][name|='+name+'],p[datasrc|='+datasrc+'][name|='+name+'],span[datasrc|='+datasrc+'][name|='+name+']').text(value);
+      $('input[datasrc|='+datasrc+'][name|='+name+']').val(value);
+      counter++;
+    }
+    
     //Set the DOM values from the Model
-    MVC.SetDomVal(viewId, $object);
+    //MVC.SetDomVal(viewId, $object);
+    $object.SetDomVal();
     //Initialize the View with the Model data if they aren't specified in the Model
-    MVC.SetModelFromDomValues(viewId, $object);
+    //MVC.SetModelFromView(viewId, $object);
+    $object.SetModelFromView();
     
     //If Model property changes should be reflected/displayed in the View:
     //Loop throught the properties within the object and attach events using the
@@ -69,10 +219,12 @@ var MVC = {
         //var pars = MVC.GetDomVal(viewId);
         //Add the Getter and Setter methods
         //n: name, ov: old value, nv: new value
-        MVC.AddGetSet($object, k, function(n, ov, nv) {
+        //MVC.AddGetSet($object, k, function(n, ov, nv) {
+        $object.AddGetSet(k, function(n, ov, nv) {
           //alert(n + ": " + ov + "=>" + nv);
           //Update the view accordingly
-          MVC.SetDomVal(viewId, $object); //$(viewId).getSetHtml($object);
+          //MVC.SetDomVal(viewId, $object); //$(viewId).getSetHtml($object);
+          $object.SetDomVal();
           
           //Make sure that the input will have the change event triggered,
           //so that the views bound to this element will also be updated.
@@ -83,26 +235,6 @@ var MVC = {
         });
       });
     }
-    ////////
-    /*$.each($object, function(k,v) {
-      //alert(k + " : " + v);
-      //var pars = MVC.GetDomVal(viewId);
-      MVC.AddGetSet($object, k, function(n, ov, nv) {
-        if($settings['reflectModelChangeInView']) { //$object['settings']['reflectModelChangeInView']) {
-          //Update the view accordingly
-          //alert(n + ": " + ov + "=>" + nv);
-          MVC.SetDomVal(viewId, $object); //$(viewId).getSetHtml($object);
-          
-          //Make sure that the input will have the change event triggered,
-          //so that the views bound to this element will also be updated.
-          //This is important in case the model is changed using setTimeout()
-          //which will update the model, then this change must simulate
-          //a user setting the value of the input. 
-          $(':input[name='+n+']').not('.excludeFromModel').trigger('change');
-        }
-      });
-    });*/
-    ////////
     /*
     var clone = $settings['clone'];
     if(clone !== undefined) {
@@ -127,7 +259,8 @@ var MVC = {
     var autoSaveInterval = $settings['autoSaveInterval'];
     if(autoSaveInterval > 0) {
       setInterval(function() { 
-        MVC.Save($object); 
+        $object.Save();
+        //MVC.Save($object);
       }, autoSaveInterval);
     }
     
@@ -142,7 +275,8 @@ var MVC = {
     })
     .change(function(e){
       //Update the model and also the databound elements
-      MVC.SetModelFromDomValues(viewId, $object); //Always do this (core concept!)
+      //MVC.SetModelFromView(viewId, $object); //Always do this (core concept!)
+      $object.SetModelFromView(); //Always do this (core concept!)
       MVC.EvtRun($settings, e);
     })
     .select(function(e) {
@@ -154,9 +288,10 @@ var MVC = {
     .keyup(function(e){
       //If the 'keyup' event hasn't been specified in the settings, then
       //by default update the Model and databound values using the
-      //SetModelFromDomValues() method
+      //SetModelFromView() method
       if($settings['settings']['keyup'] === undefined) {
-        MVC.SetModelFromDomValues(viewId, $object);
+        //MVC.SetModelFromView(viewId, $object);
+        $object.SetModelFromView();
       }
       MVC.EvtRun($settings, e);
       //MVC.EvtRun($settings, 'change');
@@ -177,37 +312,6 @@ var MVC = {
     $.extend($object, $settings);
     
     
-    
-    
-    $object.Save = function(par) {
-      MVC.CtrRun('Save', $object, par);
-    }
-    $object.Update = function(par) {
-      MVC.CtrRun('Update', $object, par);
-    }
-    $object.Delete = function(par) {
-      MVC.CtrRun('Delete', $object, par);
-    }
-    
-    $object.Set = function(key, val) {
-      CMN.LOG("Set()");
-      //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
-      $($object).trigger('set'+key, [val]);
-    },
-    /**
-     * Must only be used if 'reflectModelChangeInView' is TRUE.
-     * 
-     * @param key The property key
-     * @return The value from 
-     */
-    $object.Get = function(key) {
-      //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
-      CMN.LOG("Get()");
-      var result = { val : undefined };
-      //$($object).triggerHandler('get'+Common.FstChrUp(key), [result]);
-      $($object).triggerHandler('get'+key, [result]);
-      return result['val'];
-    }
     
     //alert(viewId + ": " + CMN.JSTR($settings, null, 2));
     //alert(CMN.JSTR($object, null, 2));
@@ -240,150 +344,6 @@ var MVC = {
     } else {
       alert('Missing ' + methodName + '() method!');
     }
-  },
-  /*Save : function(obj, par) {
-    MVC.CtrRun('Save', obj, par);
-  },
-  Update : function(obj, par) {
-    MVC.CtrRun('Update', obj, par);
-  },
-  Delete : function(obj, par) {
-    MVC.CtrRun('Delete', obj, par);
-  },*/
-  //Use whenever you need to update a models value and reflect in the DOM 
-  /*Set : function(obj, key, val) {
-    CMN.LOG("Set()");
-    //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
-    $(obj).trigger('set'+key, [val]);
-  },
-  /**
-   * Must only be used if 'reflectModelChangeInView' is TRUE.
-   * 
-   * @param obj The data object literal (JSON)
-   * @param key The property key
-   * @return The value from 
-   */
-  /*Get : function(obj, key) {
-    //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
-    CMN.LOG("Get()");
-    var result = {val : undefined};
-    //$(obj).triggerHandler('get'+Common.FstChrUp(key), [result]);
-    $(obj).triggerHandler('get'+key, [result]);
-    return result['val'];
-  },*/
-  /**
-   * AddGetSet: Add getters and setters
-   * 
-   * Getters and Setters in JavaScript/JScript (ECMAScript) are not an option
-   * as it is hard to get workin cross-browser/platform!
-   * There is a solution here, but only down to IE9:
-   * Source: http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/
-   * 
-   * If changes in the model properties should be reflected in the view
-   * then setter and getter methods will be attached using jQuery.
-   * 
-   * Note: Will only be used(exec.) if 'reflectModelChangeInView' is TRUE.
-   * 
-   * Works in IE 7+: http://jsfiddle.net/cTJZN/
-   * 
-   * @param obj The data object literal (JSON) 
-   * @param prop The property name
-   * @param onUpdate callBack function will execute, whenever the get/set 
-   * event handlers bound with .bind() method.
-   */
-  AddGetSet : function(obj, prop, onUpdate) {
-    CMN.LOG("AddGetSet");
-    //var thisProp = Common.FstChrUp(thisProp);
-    $(obj).bind('get'+prop, function(event, ret) {
-      ret['val'] = obj[prop];
-    }).bind('set'+prop, function (event, newVal) {
-      //Replace the old value with the new value in the model
-      var oldVal = obj[prop];
-      //Only update values if they're changed
-      if(oldVal !== newVal) {
-        obj[prop] = newVal;
-        onUpdate(prop, oldVal, newVal);
-      }
-    });
-  },
-  SetDomVal : function(viewId, data) {
-    CMN.LOG("SetDomVal()");
-    //Set the values in the DOM
-    $(viewId).getSetHtml(data);
-  },
-  GetDomVal : function(viewId) {
-    CMN.LOG("GetDomVal()");
-    //Get the values from the DOM
-    return $(viewId).getSetHtml();
-  },
-  //Update the model and databound elements
-  SetModelFromDomValues : function(viewId, $object) {
-    CMN.LOG("SetModelFromDomValues()");
-    //Get the values from the DOM
-    var pars = MVC.GetDomVal(viewId);
-    //alert(MVC.CMN.JSTR(pars));
-    //alert(CMN.JSTR($formParams, null, 2));
-    //Update the model using the DOM values
-    $.each(pars, function(key, newVal) {
-      var oldVal = $object[key];
-      //Only update values if they're changed
-      //alert(typeof oldVal + " " + oldVal);
-      //alert((typeof oldVal) + " - " + (typeof oldVal) == 'String');
-      //Check the value of oldVal (not newVal)
-      //See why when checking valType === 'undefined' below
-      var valType = typeof oldVal;
-      if(oldVal !== newVal) {
-        
-        //alert("Key: " + key + "\nOld value: " + oldVal + " (" + typeof oldVal + ")\nNew value: " + newVal + " (" + typeof newVal + ")");
-        //A problem arises when comparing if select is same as another select!
-        if(valType === 'string' || valType === 'number' || valType === 'boolean') {
-          //alert(key + ": " + oldVal + " changed to " + newVal);
-          //Update the model with the value from DOM
-          $object[key] = newVal;
-          //Update databound DOM values 
-          MVC.SetDataboundDomVal(viewId, key, newVal);
-        }
-        else if(valType === 'object') {
-          $object[key] = newVal;
-          //Update databound DOM values 
-          MVC.SetDataboundDomVal(viewId, key, newVal);
-          //alert("object");
-        }
-        else if(valType === 'undefined') {
-          //When the property has not been defined in the Model, but in the View
-          //the value will be undefined and therefore also the type.
-          //In some cases this should be handled differently
-          //alert(key + ": " + oldVal + " changed to " + newVal);
-          //Update the model with the value from DOM
-          $object[key] = newVal;
-          //Update databound DOM values 
-          MVC.SetDataboundDomVal(viewId, key, newVal);
-        }
-        else {
-          alert("Missing implementation of primitive types in SetModelFromDomValues() method for type: " + valType);
-        }
-      }
-    });
-    //Return the values in JSON format
-    return pars;
-  },
-  /**
-   * Update the databound elements!
-   * 
-   * @param {Object} datasrc
-   * @param {Object} name
-   * @param {Object} value
-   */
-  SetDataboundDomVal : function(datasrc, name, value) {
-    CMN.LOG("SetDataboundDomVal()");
-    //The following works fine, except it breaks in IE<9!!!
-    //$('[datasrc='+datasrc+'][name='+name+']').text(value).val(value);
-    //This works though:
-    CMN.LOG(counter + " - datasrc: " + datasrc + " - name: " + name + " - value: " + value);
-    $('div[datasrc|='+datasrc+'][name|='+name+'],p[datasrc|='+datasrc+'][name|='+name+'],span[datasrc|='+datasrc+'][name|='+name+']').text(value);
-    $('input[datasrc|='+datasrc+'][name|='+name+']').val(value);
-    counter++;
-    
   }
 };
 
