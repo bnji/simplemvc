@@ -1,7 +1,9 @@
 [simple.mvc.js](http://hammerbenjamin.com/simplemvc-showcase)
 =========
 
-**A simple - yet solving a complex task while being lightweight - MVC / MVVM solution to your jQuery + HTML apps/websites.***
+**A simple - yet solving a complex task while being lightweight - MVC / MVVM solution to your jQuery + HTML apps/websites.**
+
+**There is a showcase with examples & API available: [http://hammerbenjamin.com/simplemvc-showcase](http://hammerbenjamin.com/simplemvc-showcase)**
 
 #Getting started 
 
