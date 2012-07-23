@@ -4,7 +4,7 @@
 // License:   Licensed under MIT license (see LICENCE.MD)
 // To minify: http://localhost/minify/min/?f=simplemvc/simple.mvc.js
 // ==========================================================================
-var counter = 0;
+//var counter = 0;
 /**
  * Helper functions (helps reduce code base)
  */
@@ -51,7 +51,7 @@ var MVC = {
    * @constructor
    */
   ModelView : function(viewId, $object, $settings) {
-    CMN.LOG("ModelView Created...");
+    //CMN.LOG("ModelView Created...");
     
     //Make sure that there always is object data. Only require 'viewId'
     if($object === null || $object === undefined) {
@@ -132,7 +132,7 @@ var MVC = {
      * the get/set event handlers bound with .bind() method are triggered.
      */
     $object.AddGetSet = function(prop, onUpdate) {
-      CMN.LOG("AddGetSet");
+      //CMN.LOG("AddGetSet");
       //var prop = Common.FstChrUp(prop);
       $($object)
       .bind('get'+prop, function(event, ret) {
@@ -176,9 +176,9 @@ var MVC = {
      * 
      */
     $object.Set = function(prop, value) {
-      CMN.LOG("Set()");
+      //CMN.LOG("Set()");
       //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
-      $($object).trigger('set'+prop, [value]);
+      $($object).triggerHandler('set'+prop, [value]);
     }
     /**
      * Get
@@ -191,7 +191,7 @@ var MVC = {
      */
     $object.Get = function(prop) {
       //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
-      CMN.LOG("Get()");
+      //CMN.LOG("Get()");
       var result = { value : undefined };
       //$($object).triggerHandler('get'+Common.FstChrUp(key), [result]);
       $($object).triggerHandler('get'+prop, [result]);
@@ -206,7 +206,7 @@ var MVC = {
      * @method SetViewFromModel
      */
     $object.SetViewFromModel = function() {
-      CMN.LOG("SetViewFromModel()");
+      //CMN.LOG("SetViewFromModel()");
       //Set the values in the DOM
       $(viewId).getSetHtml($object);
     }
@@ -220,7 +220,7 @@ var MVC = {
      * @return {Object} The View data as JSON object
      */
     $object.GetViewData = function() {
-      CMN.LOG("GetViewData()");
+      //CMN.LOG("GetViewData()");
       //Get the values from the View (DOM)
       return $(viewId).getSetHtml();
     }
@@ -236,7 +236,7 @@ var MVC = {
      * get updated. If false, then they won't. 
      */
     $object.SetModelFromView = function(updateDataboundValues) {
-      CMN.LOG("SetModelFromView()");
+      //CMN.LOG("SetModelFromView()");
       //Get the values from the DOM
       //var pars = MVC.GetViewData(viewId);
       var pars = $object.GetViewData();
@@ -292,14 +292,14 @@ var MVC = {
      * @param {String} value A new value.
      */
     $object.SetDataboundDomVal = function(datasrc, name, value) {
-      CMN.LOG("SetDataboundDomVal()");
+      //CMN.LOG("SetDataboundDomVal()");
       //The following works fine, except it breaks in IE<9!!!
       //$('[datasrc='+datasrc+'][name='+name+']').text(value).val(value);
       //This works though:
-      CMN.LOG(counter + " - datasrc: " + datasrc + " - name: " + name + " - value: " + value);
+      //CMN.LOG(counter + " - datasrc: " + datasrc + " - name: " + name + " - value: " + value);
       $('div[datasrc|='+datasrc+'][name|='+name+'],p[datasrc|='+datasrc+'][name|='+name+'],span[datasrc|='+datasrc+'][name|='+name+']').text(value);
       $('input[datasrc|='+datasrc+'][name|='+name+']').val(value);
-      counter++;
+      //counter++;
     }
     
     /**
@@ -317,7 +317,7 @@ var MVC = {
         type = event;
       }
       if(event === undefined) {
-        CMN.LOG('event "e" is undefined!');
+        //CMN.LOG('event "e" is undefined!');
         return;
       }
       if($.trim(event.target.name).length > 0) {
@@ -343,7 +343,7 @@ var MVC = {
       if(exec !== undefined && exec !== null) {
         exec($object, par);
       } else {
-        alert('Missing ' + method + '() method!');
+        CMN.LOG('Missing ' + method + '() method!');
       }
     }
     
@@ -420,16 +420,15 @@ var MVC = {
       $(clone['target']).append($copy);
     }
     */
-    var autoSaveInterval = $settings['autoSaveInterval'];
-    if(autoSaveInterval > 0) {
+    if($settings['autoSaveInterval'] > 0) {
       setInterval(function() { 
         $object.Save();
-        //MVC.Save($object);
-      }, autoSaveInterval);
+      }, $settings['autoSaveInterval']);
     }
     
     //Update the model view, whenever a change occurs
-    $(viewId+' :input').not('.excludeFromModel')
+    $(viewId+' :input')
+    .not('.excludeFromModel')
     .focus(function(e){
       //http://jsfiddle.net/PKVVP/
       $object.RunEvent(e);
@@ -457,8 +456,7 @@ var MVC = {
         //MVC.SetModelFromView(viewId, $object);
         $object.SetModelFromView();
       }
-      $object.RunEvent(e);
-      //MVC.RunEvent($settings, 'change');
+      $object.RunEvent(e); //e should euqal 'change' 
       /*var n = $(this).attr('name');
       var v = $(this).val();
       MVC.SetDataboundDomVal(viewId, n, v);*/
@@ -472,15 +470,7 @@ var MVC = {
 
     //Add the settings to the Model object
     $settings = { settings : $settings };
-    //alert(CMN.JSTR($object, null, 2));
     $.extend($object, $settings);
-    
-    
-    
-    //alert(viewId + ": " + CMN.JSTR($settings, null, 2));
-    //alert(CMN.JSTR($object, null, 2));
-    //Return the new object in JSON format
-    //alert(CMN.JSTR($object, null, 2));
     return $object;
   }
 };
