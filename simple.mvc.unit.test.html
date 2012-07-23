@@ -3,7 +3,7 @@
 <script type="text/javascript"> if (!window.console) console = {log: function() {}}; </script>
 <!--//end IE fixes -->
 <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
-<script type="text/javascript" src="../simplemvc-showcase/lib/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="simple.mvc.js"></script>
 <link rel="stylesheet" type="text/css" href="lib/jasmine/jasmine.css" />
 <script type="text/javascript" src="lib/jasmine/jasmine.js"></script>
@@ -102,7 +102,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     
     viewId = '#testArea';
     
-    ctr = new MVC.Controller({
+    ctr = MVC.Controller({
       Save : function(o, par) {
         expect(par).not.toBe(undefined);
         expect(par).toBe('saveExtraParameter');
@@ -129,7 +129,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
       }
     };
     
-    obj = new MVC.ModelView(viewId, {
+    obj = MVC.ModelView(viewId, {
       id : 123,
       id2 : 456,
       type : 'typeVal'
@@ -325,7 +325,7 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
   
   beforeEach(function(){
     viewId = '#testArea';
-    obj = new MVC.ModelView(viewId, {
+    obj = MVC.ModelView(viewId, {
       id : 123,
       type : 'typeVal'
     }, {
@@ -368,7 +368,7 @@ describe("MVC Object without settings", function() {
   
   beforeEach(function(){
     viewId = '#testArea';
-    obj = new MVC.ModelView(viewId, {
+    obj = MVC.ModelView(viewId, {
       id : 123,
       type : 'typeVal'
     });
@@ -397,7 +397,7 @@ describe("MVC Object with autosave", function() {
       viewId,
       counter = 0;
       
-  ctr = new MVC.Controller({
+  ctr = MVC.Controller({
     Save : function(o, currentTimePar) {
       //alert(counter);
       /*timerCallback();
@@ -426,7 +426,7 @@ describe("MVC Object with autosave", function() {
     jasmine.Clock.useMock();
     
     viewId = '#testArea';
-    obj = new MVC.ModelView(viewId, {
+    obj = MVC.ModelView(viewId, {
       id : 123,
       type : 'typeVal'
     }, {
@@ -469,7 +469,7 @@ describe("MVC Object Getter & Setter", function() {
   
   beforeEach(function(){
     viewId = '#testArea2';
-    obj = new MVC.ModelView(viewId, {
+    obj = MVC.ModelView(viewId, {
       id3 : 123,
       type2 : 'typeVal'
     }, {
@@ -493,7 +493,7 @@ describe("MVC Object: testing classes.", function() {
   
   beforeEach(function(){
     viewId = '#testArea3';
-    obj = new MVC.ModelView(viewId, {});
+    obj = MVC.ModelView(viewId, {});
   });
   
   it("spanIsNumber should be a number", function() {
@@ -513,7 +513,7 @@ describe("MVC Object without object data", function() {
   
   beforeEach(function(){
     viewId = '#testAreaEmpty';
-    obj = new MVC.ModelView(viewId);
+    obj = MVC.ModelView(viewId);
   });
   
   it("Object should be empty, but not null or undefined, even if not provided!", function() {
