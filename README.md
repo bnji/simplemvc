@@ -5,12 +5,14 @@
 
 **There is a showcase with examples & API available: [http://hammerbenjamin.com/simplemvc-showcase](http://hammerbenjamin.com/simplemvc-showcase)**
 
+# ***Note: The project is still in the beta phase***
+
 #Getting started 
 
 * [Download](https://github.com/bnji/simplemvc/zipball/master) the simple.mvc.js library.
 * Include jQuery: [https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js](https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js) *Only if it's not included with your project already!
 * Include the simple.mvc.js library in your project.
-* Check out the examples: You can copy & paste them into your project and test them out or try the online demo below.
+* [Check out the examples](http://hammerbenjamin.com/simplemvc-showcase/examples-overview.html) Look at the source code or view them on the showcase page. * Examples still being created *
 
 
 #The problem
