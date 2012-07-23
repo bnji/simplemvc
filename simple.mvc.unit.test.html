@@ -32,7 +32,7 @@
 <div id="testArea2" style="display: none;">
   ID (input): <input class="isNumber" name="id3" id="id3" />
   <br />
-  Type: <input type="text" name="type2" value="typeVal2" />
+  Type: <input type="text" name="type2" value="typeValFromView" />
   <br />
   <span id="attachGetterSetterEvenNotSpecifiedInModel"> </span>
 </div>
@@ -182,17 +182,17 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     var newVal = ''+$.now();
     //MVC.Set(obj, 'type', newVal);
     obj.Set('type', newVal);
-    var domVal = obj.GetDomVal()['type'];// MVC.GetDomVal(viewId)['type'];
-    //alert(obj['type'] + " - " + MVC.Get(obj, 'type') + " - " + MVC.GetDomVal(viewId)['type']);
+    var domVal = obj.GetViewData()['type'];// MVC.GetViewData(viewId)['type'];
+    //alert(obj['type'] + " - " + MVC.Get(obj, 'type') + " - " + MVC.GetViewData(viewId)['type']);
     expect(domVal).toBe(newVal);
   });
   
   it("changing Model property by reference should not update the DOM value", function() {
-    //alert(MVC.GetDomVal(viewId)['type']);
+    //alert(MVC.GetViewData(viewId)['type']);
     var newVal = ''+$.now();// MVC.Set(obj, 'type', ''+Date.now());
     obj['type'] = newVal;
-    var domVal = obj.GetDomVal()['type'];//MVC.GetDomVal(viewId)['type'];
-    //alert(MVC.GetDomVal(viewId)['type']);
+    var domVal = obj.GetViewData()['type'];//MVC.GetViewData(viewId)['type'];
+    //alert(MVC.GetViewData(viewId)['type']);
     expect(domVal).not.toBe(obj['type']);
   });
   
@@ -221,7 +221,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
   });
   
   it("Elements in the view should be threated as property of the model and therefore added to the model even not specified in the model", function() {
-    var domVal = obj.GetDomVal();//MVC.GetDomVal('#testArea', obj);
+    var domVal = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     expect(domVal['canIjoinTheModelEvenNotSpecified']).not.toBe(null);
     expect(domVal['canIjoinTheModelEvenNotSpecified']).not.toBe(undefined);
     expect(obj['canIjoinTheModelEvenNotSpecified']).not.toBe(null);
@@ -233,7 +233,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     var newVal = ''+$.now();
     obj.id = newVal;
     expect(obj['id']).toBe(newVal);
-    var dom = obj.GetDomVal();// MVC.GetDomVal('#testArea', obj);
+    var dom = obj.GetViewData();// MVC.GetViewData('#testArea', obj);
     expect(dom['id']).not.toBe(newVal);
   });
   
@@ -241,7 +241,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     var newVal = $.now();
     $('#testArea #id').val(newVal).trigger('change');
     expect(obj['id']).toBe(newVal);
-    var dom = obj.GetDomVal();//MVC.GetDomVal('#testArea', obj);
+    var dom = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     expect(dom['id']).toBe(newVal);
   });
   
@@ -250,7 +250,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     $('#id').val(newVal).trigger('change');
     //alert(obj.id);
     expect(obj['id']).toBe(newVal);
-    var dom = obj.GetDomVal();//MVC.GetDomVal('#testArea', obj);
+    var dom = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     expect(dom['id']).toBe(newVal);
     //var databoundValue = $('#testArea').getSetHtml();
     var databoundValue = parseInt($('#testArea #idDatabound').text());
@@ -263,12 +263,12 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     //MVC.Set(obj, 'id', newVal);
     obj.Set('id', newVal);
     expect(obj['id']).toBe(newVal);
-    var dom = obj.GetDomVal(); //MVC.GetDomVal('#testArea', obj);
+    var dom = obj.GetViewData(); //MVC.GetViewData('#testArea', obj);
     expect(dom['id']).toBe(newVal);
   });
   
   it("View object should be equal to model object (JSON)", function() {
-    var domObj = obj.GetDomVal();//MVC.GetDomVal('#testArea', obj);
+    var domObj = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     settings = { settings : settings };
     $.extend(domObj, settings);
     domObj = JSON.stringify(domObj);
@@ -293,7 +293,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     obj.Set('id', 'foo');
     //MVC.Set(obj, 'type', 'bar');
     obj.Set('type', 'bar');
-    var domObj = obj.GetDomVal();//MVC.GetDomVal('#testArea', obj);
+    var domObj = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     settings = { settings : settings };
     $.extend(domObj, settings);
     domObj = JSON.stringify(domObj);
@@ -314,6 +314,11 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     var domVal = $('#typeDatabound').html();
     expect(domVal).toBe(obj.type);
     //alert(domVal + " =?= " + obj.type);
+  });
+  
+  it("Should work converting the object Model to an array using .toArray() method", function() {
+    expect($.isArray(obj)).toBe(false);
+    expect($.isArray(obj.toArray())).toBe(true);
   });
   
 });
@@ -340,7 +345,7 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     var newVal = ''+Date.now();
     //MVC.Set(obj, 'type', newVal);
     obj.Set('type', newVal);
-    var domVal = obj.GetDomVal()['type'];//MVC.GetDomVal(viewId)['type'];
+    var domVal = obj.GetViewData()['type'];//MVC.GetViewData(viewId)['type'];
     expect(domVal).not.toBe(newVal);
     var propVal = obj['type'];
     expect(propVal).not.toBe(newVal);
@@ -356,7 +361,7 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     //MVC.Set(obj, 'id', newVal);
     obj.Set('id', newVal);
     expect(obj['id']).not.toBe(newVal);
-    var dom = obj.GetDomVal();//MVC.GetDomVal('#testArea', obj);
+    var dom = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     expect(dom['id']).not.toBe(newVal);
   });
   
@@ -471,7 +476,7 @@ describe("MVC Object Getter & Setter", function() {
     viewId = '#testArea2';
     obj = MVC.ModelView(viewId, {
       id3 : 123,
-      type2 : 'typeVal'
+      type2 : 'typeValFromModel'
     }, {
       reflectModelChangeInView : true
     });
@@ -481,8 +486,24 @@ describe("MVC Object Getter & Setter", function() {
     var newVal = ''+$.now();
     //MVC.Set(obj, 'attachGetterSetterEvenNotSpecifiedInModel', newVal);
     obj.Set('attachGetterSetterEvenNotSpecifiedInModel', newVal);
-    var domVal = obj.Get('attachGetterSetterEvenNotSpecifiedInModel');// MVC.Get(obj, 'attachGetterSetterEvenNotSpecifiedInModel'); //MVC.GetDomVal(viewId)['attachGetterSetterEvenNotSpecifiedInModel'];
+    var domVal = obj.Get('attachGetterSetterEvenNotSpecifiedInModel');// MVC.Get(obj, 'attachGetterSetterEvenNotSpecifiedInModel'); //MVC.GetViewData(viewId)['attachGetterSetterEvenNotSpecifiedInModel'];
     expect(domVal).toBe(newVal);
+  });
+  
+  it("Should work removing getters & setters and add them again to a property in the Model", function() {
+    var newVal = '', lastTypeValBeforeRemovedGetterSetter = '';
+    expect(obj.Get('type2')).toEqual('typeValFromModel'); //alert('Original value from View: ' + obj.Get('type2'));
+    newVal = 'type2 - Changed In Model & View';
+    obj.Set('type2', newVal);
+    lastTypeValBeforeRemovedGetterSetter = newVal;
+    expect(obj.Get('type2')).toEqual(newVal); //alert('Changed value in Model & View: '  + obj.Get('type2'));
+    obj.RemoveGetSet('type2');
+    expect(obj.Get('type2')).toEqual(undefined); //alert('Removed Getter & Setter (should be "undefined"): ' + obj.Get('type2'));
+    newVal = $.now();
+    obj.Set('id3', newVal);
+    expect(obj.Get('id3')).toEqual(newVal); //alert('.Get() & .Set() should still work on the property "id3": ' + obj.Get('id3'));
+    obj.AddGetSet('type2');
+    expect(obj.Get('type2')).toEqual(lastTypeValBeforeRemovedGetterSetter); //alert('Added Getter & Setter (should NOT be "undefined"): ' + obj.Get('type2'));
   });
   
 });

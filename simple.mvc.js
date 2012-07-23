@@ -50,7 +50,7 @@ var MVC = {
     if($settings['reflectModelChangeInView'] === undefined) {
       $.extend($settings, {reflectModelChangeInView : true});
     }
-    //alert(CMN.JSTR($settings, null, 2));
+    //alert(CMN.JSTR($settings));
     
     
     $object.Save = function(par) {
@@ -67,7 +67,7 @@ var MVC = {
      * AddGetSet: Add getters and setters
      * 
      * Getters and Setters in JavaScript/JScript (ECMAScript) are not an option
-     * as it is hard to get workin cross-browser/platform!
+     * as it is hard to make it work cross-browser/platform!
      * There is a solution here, but only down to IE9:
      * Source: http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/
      * 
@@ -101,6 +101,7 @@ var MVC = {
     
     $object.RemoveGetSet = function(prop) {
       //implement it
+      $($object).unbind('get'+prop).unbind('set'+prop);
     }
     
     //Use whenever you need to update a models value and reflect in the DOM
@@ -113,7 +114,7 @@ var MVC = {
      * Must only be used if 'reflectModelChangeInView' is TRUE.
      * 
      * @param key The property key
-     * @return The value from 
+     * @return The value from the object's property 
      */
     $object.Get = function(key) {
       //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
@@ -124,23 +125,35 @@ var MVC = {
       return result['val'];
     }
     
-    $object.SetDomVal = function() {
-      CMN.LOG("SetDomVal()");
+    /**
+     * Updates the elements in the View from the Model.
+     */
+    $object.SetViewFromModel = function() {
+      CMN.LOG("SetViewFromModel()");
       //Set the values in the DOM
       $(viewId).getSetHtml($object);
     }
-    $object.GetDomVal = function() {
-      CMN.LOG("GetDomVal()");
+    /**
+     * Return the View data as an JSON object literal.
+     * @return The View data as JSON object
+     */
+    $object.GetViewData = function() {
+      CMN.LOG("GetViewData()");
       //Get the values from the DOM
       return $(viewId).getSetHtml();
     }
     
-    //Update the model and databound elements
+    /**
+     * Update the model and databound elements
+     * @param updateDataboundValues If undefined or true, databound elements 
+     * inside and/or outside the the View will also get updated. If false, then
+     * they won't. 
+     */
     $object.SetModelFromView = function(updateDataboundValues) {
       CMN.LOG("SetModelFromView()");
       //Get the values from the DOM
-      //var pars = MVC.GetDomVal(viewId);
-      var pars = $object.GetDomVal();
+      //var pars = MVC.GetViewData(viewId);
+      var pars = $object.GetViewData();
       //alert(MVC.CMN.JSTR(pars));
       //alert(CMN.JSTR($formParams, null, 2));
       //Update the model using the DOM values
@@ -184,9 +197,9 @@ var MVC = {
     /**
      * Update the databound elements!
      * 
-     * @param {Object} datasrc
-     * @param {Object} name
-     * @param {Object} value
+     * @param {String} datasrc
+     * @param {String} name
+     * @param {String} value
      */
     $object.SetDataboundDomVal = function(datasrc, name, value) {
       CMN.LOG("SetDataboundDomVal()");
@@ -199,9 +212,17 @@ var MVC = {
       counter++;
     }
     
+    $object.toArray = function() {
+      return $.makeArray($object);
+    }
+    
+    // END: Internal methods
+    
+    // START: Setup
+    
     //Set the DOM values from the Model
-    //MVC.SetDomVal(viewId, $object);
-    $object.SetDomVal();
+    //MVC.SetViewFromModel(viewId, $object);
+    $object.SetViewFromModel();
     //Initialize the View with the Model data if they aren't specified in the Model
     //MVC.SetModelFromView(viewId, $object);
     $object.SetModelFromView();
@@ -216,15 +237,15 @@ var MVC = {
       //Loop throught the object's properties
       $.each($object, function(k,v) {
         //alert(k + " : " + v);
-        //var pars = MVC.GetDomVal(viewId);
+        //var pars = MVC.GetViewData(viewId);
         //Add the Getter and Setter methods
         //n: name, ov: old value, nv: new value
         //MVC.AddGetSet($object, k, function(n, ov, nv) {
         $object.AddGetSet(k, function(n, ov, nv) {
           //alert(n + ": " + ov + "=>" + nv);
           //Update the view accordingly
-          //MVC.SetDomVal(viewId, $object); //$(viewId).getSetHtml($object);
-          $object.SetDomVal();
+          //MVC.SetViewFromModel(viewId, $object); //$(viewId).getSetHtml($object);
+          $object.SetViewFromModel();
           
           //Make sure that the input will have the change event triggered,
           //so that the views bound to this element will also be updated.
