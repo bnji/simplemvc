@@ -25,17 +25,35 @@ var CMN = {
   }
 };
 /**
- * 
+ * Provides the core MVC classes: Controller & ModelView 
+ * @module MVC
+ * @main MVC
  */
 var MVC = {
+  /**
+   * Controller which handles the logic, such as saving, updating or deleting
+   * the object.
+   * 
+   * @class Controller
+   * @constructor
+   */
   Controller : function(data) {
     return data;
   },
+  /**
+   * ModelView creates a new object with data and settings. The data and 
+   * settings are (JSON) object literals and merged and returned after all the
+   * internal setup is done.
+   * The ModelView contains all the information about the object, which keeps
+   * the View synchronized with the Model and vice versa.
+   * 
+   * @class ModelView
+   * @constructor
+   */
   ModelView : function(viewId, $object, $settings) {
     CMN.LOG("ModelView Created...");
     
-    
-    //Always have object data. Only require viewId
+    //Make sure that there always is object data. Only require 'viewId'
     if($object === null || $object === undefined) {
       $object = {};
     }
@@ -52,19 +70,49 @@ var MVC = {
     }
     //alert(CMN.JSTR($settings));
     
+    //Start: Methods
     
+    /**
+     * Call the .Save() method whenever you want to save the object.
+     * Notice: This is intended behaviour, but the implementation of the
+     * method is up to the individual how and what is done when this method
+     * is called/executed.
+     * 
+     * @method Save
+     * @param {Object} par Provide extra parameters if needed. 
+     */
     $object.Save = function(par) {
-      MVC.CtrRun('Save', $object, par);
+      $object.ExecuteController('Save', par);
     }
+    /**
+     * Call the .Update() method whenever you want to update the object.
+     * Notice: This is intended behaviour, but the implementation of the
+     * method is up to the individual how and what is done when this method
+     * is called/executed.
+     * 
+     * @method Update
+     * @param {Object} par Provide extra parameters if needed. 
+     */
     $object.Update = function(par) {
-      MVC.CtrRun('Update', $object, par);
+      $object.ExecuteController('Update', par);
     }
+    /**
+     * Call the .Delete() method whenever you want to delete the object.
+     * Notice: This is intended behaviour, but the implementation of the
+     * method is up to the individual how and what is done when this method
+     * is called/executed.
+     * 
+     * @method Delete
+     * @param {Object} par Provide extra parameters if needed. 
+     */
     $object.Delete = function(par) {
-      MVC.CtrRun('Delete', $object, par);
+      $object.ExecuteController('Delete', par);
     }
     
     /**
-     * AddGetSet: Add getters and setters
+     * AddGetSet
+     * 
+     * Add getter and setter methods for a property
      * 
      * Getters and Setters in JavaScript/JScript (ECMAScript) are not an option
      * as it is hard to make it work cross-browser/platform!
@@ -78,17 +126,19 @@ var MVC = {
      * 
      * Works in IE 7+: http://jsfiddle.net/cTJZN/
      * 
-     * @param obj The data object literal (JSON) 
-     * @param prop The property name
-     * @param onUpdate callBack function will execute, whenever the get/set 
-     * event handlers bound with .bind() method.
+     * @method AddGetSet
+     * @param {String} prop The object's property name
+     * @param {Function} onUpdate callBack function will execute, whenever 
+     * the get/set event handlers bound with .bind() method are triggered.
      */
     $object.AddGetSet = function(prop, onUpdate) {
       CMN.LOG("AddGetSet");
-      //var thisProp = Common.FstChrUp(thisProp);
-      $($object).bind('get'+prop, function(event, ret) {
-        ret['val'] = $object[prop];
-      }).bind('set'+prop, function (event, newVal) {
+      //var prop = Common.FstChrUp(prop);
+      $($object)
+      .bind('get'+prop, function(event, ret) {
+        ret['value'] = $object[prop];
+      })
+      .bind('set'+prop, function (event, newVal) {
         //Replace the old value with the new value in the model
         var oldVal = $object[prop];
         //Only update values if they're changed
@@ -99,55 +149,91 @@ var MVC = {
       });
     }
     
+    /**
+     * RemoveGetSet
+     * 
+     * Remove getter and setter methods for a property
+     * 
+     * @method RemoveGetSet
+     * @param {String} prop The object's property name 
+     */
     $object.RemoveGetSet = function(prop) {
-      //implement it
-      $($object).unbind('get'+prop).unbind('set'+prop);
+      $($object)
+      .unbind('get'+prop)
+      .unbind('set'+prop);
     }
     
-    //Use whenever you need to update a models value and reflect in the DOM
-    $object.Set = function(key, val) {
+    /**
+     * Set
+     * 
+     * Notice: Must only be used if 'reflectModelChangeInView' is TRUE.
+     * 
+     * When you need to update a value in the Model and reflect in the View.
+     * 
+     * @method Set
+     * @param {String} prop The object's property name
+     * @param {String} value The new value to set for the property
+     * 
+     */
+    $object.Set = function(prop, value) {
       CMN.LOG("Set()");
       //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
-      $($object).trigger('set'+key, [val]);
+      $($object).trigger('set'+prop, [value]);
     }
     /**
-     * Must only be used if 'reflectModelChangeInView' is TRUE.
+     * Get
      * 
-     * @param key The property key
-     * @return The value from the object's property 
+     * Notice: Must only be used if 'reflectModelChangeInView' is TRUE.
+     * 
+     * @method Get
+     * @param {String} prop The object's property name
+     * @return {Object} value The value from the object's property 
      */
-    $object.Get = function(key) {
+    $object.Get = function(prop) {
       //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
       CMN.LOG("Get()");
-      var result = { val : undefined };
+      var result = { value : undefined };
       //$($object).triggerHandler('get'+Common.FstChrUp(key), [result]);
-      $($object).triggerHandler('get'+key, [result]);
-      return result['val'];
+      $($object).triggerHandler('get'+prop, [result]);
+      return result['value'];
     }
     
     /**
+     * SetViewFromModel
+     * 
      * Updates the elements in the View from the Model.
+     * 
+     * @method SetViewFromModel
      */
     $object.SetViewFromModel = function() {
       CMN.LOG("SetViewFromModel()");
       //Set the values in the DOM
       $(viewId).getSetHtml($object);
     }
+    
     /**
+     * GetViewData
+     * 
      * Return the View data as an JSON object literal.
-     * @return The View data as JSON object
+     * 
+     * @method GetViewData
+     * @return {Object} The View data as JSON object
      */
     $object.GetViewData = function() {
       CMN.LOG("GetViewData()");
-      //Get the values from the DOM
+      //Get the values from the View (DOM)
       return $(viewId).getSetHtml();
     }
     
     /**
+     * SetModelFromView
+     * 
      * Update the model and databound elements
-     * @param updateDataboundValues If undefined or true, databound elements 
-     * inside and/or outside the the View will also get updated. If false, then
-     * they won't. 
+     * 
+     * @method SetModelFromView
+     * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or 
+     * true, databound elements inside and/or outside the the View will also 
+     * get updated. If false, then they won't. 
      */
     $object.SetModelFromView = function(updateDataboundValues) {
       CMN.LOG("SetModelFromView()");
@@ -194,12 +280,16 @@ var MVC = {
       //Return the values in JSON format
       return pars;
     }
+    
     /**
-     * Update the databound elements!
+     * SetDataboundDomVal
      * 
-     * @param {String} datasrc
-     * @param {String} name
-     * @param {String} value
+     * Update the databound elements inside or outside the View.
+     * 
+     * @method SetDataboundDomVal
+     * @param {String} datasrc A viewId.
+     * @param {String} name An element's name.
+     * @param {String} value A new value.
      */
     $object.SetDataboundDomVal = function(datasrc, name, value) {
       CMN.LOG("SetDataboundDomVal()");
@@ -212,6 +302,59 @@ var MVC = {
       counter++;
     }
     
+    /**
+     * RunEvent
+     * 
+     * Trigger an event if specified in the settings.
+     * 
+     * @method RunEvent
+     * @param {String} event The eventName to trigger/execute.
+     */
+    $object.RunEvent = function(event) {
+      //alert(event.target.name);
+      var type = event.type;
+      if(type === undefined) {
+        type = event;
+      }
+      if(event === undefined) {
+        CMN.LOG('event "e" is undefined!');
+        return;
+      }
+      if($.trim(event.target.name).length > 0) {
+        if($settings['settings'][type] !== undefined && $settings['settings'][type] !== null) {
+          $settings['settings'][type](event, event.target.name, event.target.value);
+        }
+      } else {
+        CMN.LOG("source element has no name attribute assigned (required!)");
+      }
+    }
+    
+    /**
+     * ExecuteController
+     * 
+     * Execute a method in the controller.
+     * 
+     * @method ExecuteController
+     * @param {String} method The methods name specified in the controller.
+     * @param {Object} par If needed you can provide optional parameters.
+     */
+    $object.ExecuteController = function(method, par) {
+      var exec = $object['settings']['controller'][method];
+      if(exec !== undefined && exec !== null) {
+        exec($object, par);
+      } else {
+        alert('Missing ' + method + '() method!');
+      }
+    }
+    
+    /**
+     * toArray
+     * 
+     * Convert the object to a real Array.
+     * 
+     * @method toArray
+     * @return {Array} The object converted into a real Array.
+     */
     $object.toArray = function() {
       return $.makeArray($object);
     }
@@ -289,22 +432,22 @@ var MVC = {
     $(viewId+' :input').not('.excludeFromModel')
     .focus(function(e){
       //http://jsfiddle.net/PKVVP/
-      MVC.EvtRun($settings, e);
+      $object.RunEvent(e);
     })
     .blur(function(e) {
-      MVC.EvtRun($settings, e);      
+      $object.RunEvent(e);      
     })
     .change(function(e){
       //Update the model and also the databound elements
       //MVC.SetModelFromView(viewId, $object); //Always do this (core concept!)
       $object.SetModelFromView(); //Always do this (core concept!)
-      MVC.EvtRun($settings, e);
+      $object.RunEvent(e);
     })
     .select(function(e) {
-      MVC.EvtRun($settings, e);
+      $object.RunEvent(e);
     })
     .submit(function(e){
-      MVC.EvtRun($settings, e);
+      $object.RunEvent(e);
     })
     .keyup(function(e){
       //If the 'keyup' event hasn't been specified in the settings, then
@@ -314,17 +457,17 @@ var MVC = {
         //MVC.SetModelFromView(viewId, $object);
         $object.SetModelFromView();
       }
-      MVC.EvtRun($settings, e);
-      //MVC.EvtRun($settings, 'change');
+      $object.RunEvent(e);
+      //MVC.RunEvent($settings, 'change');
       /*var n = $(this).attr('name');
       var v = $(this).val();
       MVC.SetDataboundDomVal(viewId, n, v);*/
     })
     .keypress(function(e) {
-      MVC.EvtRun($settings, e);
+      $object.RunEvent(e);
     })
     .keydown(function(e) {
-      MVC.EvtRun($settings, e);
+      $object.RunEvent(e);
     });
 
     //Add the settings to the Model object
@@ -339,32 +482,6 @@ var MVC = {
     //Return the new object in JSON format
     //alert(CMN.JSTR($object, null, 2));
     return $object;
-  },
-  EvtRun : function(settings, event) {
-    //alert(event.target.name);
-    var type = event.type;
-    if(type === undefined) {
-      type = event;
-    }
-    if(event === undefined) {
-      CMN.LOG('event "e" is undefined!');
-      return;
-    }
-    if($.trim(event.target.name).length > 0) {
-      if(settings['settings'][type] !== undefined && settings['settings'][type] !== null) {
-        settings['settings'][type](event, event.target.name, event.target.value);
-      }
-    } else {
-      CMN.LOG("source element has no name attribute assigned (required!)");
-    }
-  },
-  CtrRun : function(methodName, obj, par) {
-    var exec = obj['settings']['controller'][methodName];
-    if(exec !== undefined && exec !== null) {
-      exec(obj, par);
-    } else {
-      alert('Missing ' + methodName + '() method!');
-    }
   }
 };
 
