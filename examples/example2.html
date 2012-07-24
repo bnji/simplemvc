@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 2</title>
+    <!--IE fixes -->
+    <script type="text/javascript" src="../lib/json2.js"></script>
+    <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
+    <!--//end IE fixes -->
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>-->
+    <script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <!--optional:-->
+    <script type="text/javascript" src="../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
+    <!--//end optional-->
+  </head>
+  <body style="background-color:#fcfcfc; border:1px solid #ccc; padding: 5px;">
+    <h1>Events</h1>
+    <br />
+    <h2>Inside the View</h2>
+    <!-- View ID: testArea -->
+    <div id="testArea">
+      Name: <input type="text" name="name" />
+      <br />
+      Birthday: <input type="text" name="birthday" />
+      <br />
+      Gender: 
+      <input checked="checked" type="radio" name="gender" value="male" id="male" /> Male 
+      <input type="radio" name="gender" value="female" id="female" /> Female
+      <input type="radio" name="gender" value="other" id="other" /> Other
+      <br />
+      <br />
+      On blur set this value: <span id="dataBoundElement"> Changing name and/or birthday will update this value on the 'blur' event</span>
+      <br />
+      Databound inside (to 'name' property): <span name="name" datasrc="#testArea" class="excludeFromModel"> This value will change when 'name' input value changes on the 'keyup' event  </span>
+    </div><!-- //end of view -->
+    <br />
+    <h2>Outside the View</h2>
+    <div id="outside">
+      Databound outside (to 'birthday' property): <span name="birthday" datasrc="#testArea"> This value will change when 'name' input value changes on the 'keyup' event  </span>      
+    </div>
+    <script>
+    var obj,
+        settings;
+        
+    $(function() {
+      settings = {
+        keyup : function(e, n, v) {
+          //Uncomment the keyup event to make the databound values update on 'change' event instead of 'keyup'
+          DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+        },
+        focus : function(e, n, v) {//, n, v) {
+          DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+        },
+        change : function(e, n, v) {
+          DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+        },
+        blur : function(e, n, v) {
+          obj.Set('dataBoundElement', obj.Get('name') + " - " + obj.Get('birthday'));
+          DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+        }
+      };
+      
+      obj = MVC.ModelView('#testArea', {
+        name : 'Benjamin Hammer',
+        birthday : '29-08-XXXX'
+      }, settings);
+    });
+    </script>
+    <div id="debug"> </div>
+    <script src="debug.js"></script>
+  </body>
+</html>

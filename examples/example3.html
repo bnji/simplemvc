@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 3</title>
+    <!--IE fixes -->
+    <script type="text/javascript" src="../lib/json2.js"></script>
+    <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
+    <!--//end IE fixes -->
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>-->
+    <script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <!--optional:-->
+    <script type="text/javascript" src="../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
+    <!--//end optional-->
+  </head>
+  <body style="background-color:#fcfcfc; border:1px solid #ccc; padding: 5px;">
+    <h1>Controller</h1>
+    <p>
+      Click on <b>Save</b>, <b>Update</b> or <b>Delete</b>
+    </p>
+    <h2>Inside the View</h2>
+    <!-- View ID: testArea -->
+    <div id="testArea">
+      ID: <input name="id" id="id" />
+      <br />
+      <p>
+        Change the values below (using numerical values: 0-9) and check the debug information.
+      </p>
+      <br />
+      Is a number: <input type="text" class="isNumber" name="thisIsNumber" value="42" />
+      <br />
+      Is not a number: <input type="text" name="thisIsNotANumber" value="42" />
+      <br />
+      <span datafld="notInModelButWillBeAdded">Not specified in Model, but will be added.</span>
+      <br />
+      <br />
+      <button class="btn btn-inverse" name="save" id="save">Save</button>
+      <button class="btn btn-inverse" name="update" id="update">Update</button>
+      <button class="btn btn-inverse" name="delete" id="delete">Delete</button>
+    </div><!-- //end of view -->
+    <br />
+    <h2>Outside the View</h2>
+    <p>
+      This input element will be databound to the property 'type' in the MVC 'testArea'.
+      <br /> 
+      <span name="type" datasrc="#testArea"> </span>
+    </p>
+    <script>
+    var ctr,
+        settings,
+        obj;
+    
+    $(function() {
+      ctr = MVC.Controller({
+        Save : function(obj, par){
+          alert('Saving!\nExtra parameter: ' + par + '\nObject:\n' + JSON.stringify(obj, null, 2));
+          DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+        },
+        Update : function(obj, par) {
+          alert('Updating!\nExtra parameter: ' + par + '\nObject:\n' + JSON.stringify(obj, null, 2));
+          DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+        },
+        Delete : function(obj, par) {
+          alert('Deleting!\nExtra parameter: ' + par + '\nObject:\n' + JSON.stringify(obj, null, 2));
+          DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+        }
+      });
+      
+      settings = {
+        controller : ctr,
+        reflectModelChangeInView : true,
+        keyup : function(e, n, v) {
+          obj.SetModelFromView();
+          DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+        }
+      };
+      
+      obj = MVC.ModelView('#testArea', {
+        id : $.now()
+      }, settings);
+      
+      $('#save').click(function() {
+        obj.Save();
+      });
+      
+      $('#update').click(function() {
+        //Change the value of 'id'
+        obj.Update({id:$.now()});
+      });
+      
+      $('#delete').click(function() {
+        obj.Delete();
+      });
+    });
+    </script>
+    <div id="debug"> </div>
+    <script src="debug.js"></script>
+  </body>
+</html>

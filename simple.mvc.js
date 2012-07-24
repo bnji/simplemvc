@@ -4,7 +4,6 @@
 // License:   Licensed under MIT license (see LICENCE.MD)
 // To minify: http://localhost/minify/min/?f=simplemvc/simple.mvc.js
 // ==========================================================================
-//var counter = 0;
 /**
  * Helper functions (helps reduce code base)
  */
@@ -53,12 +52,15 @@ var MVC = {
   ModelView : function(viewId, $object, $settings) {
     //CMN.LOG("ModelView Created...");
     
-    //Make sure that there always is object data. Only require 'viewId'
+    //$object = {};
+    
+    //Make sure that the object data always exists. Only require 'viewId'
     if($object === null || $object === undefined) {
       $object = {};
     }
     
-    //Always have the following settings even not specified (null or undefined)
+    
+    //Make sure that the settings always exist and with certain properties.
     if($settings === null || $settings === undefined) {
       $settings = {};
     }
@@ -67,6 +69,9 @@ var MVC = {
     }
     if($settings['reflectModelChangeInView'] === undefined) {
       $.extend($settings, {reflectModelChangeInView : true});
+    }
+    if($settings['eventUsed'] === undefined) {
+      $.extend($settings, {eventUsed : ''});
     }
     //alert(CMN.JSTR($settings));
     
@@ -110,6 +115,29 @@ var MVC = {
     }
     
     /**
+     * Clear
+     * 
+     * Clears a property's value in the Model and the View.
+     * 
+     * 
+     * @method Clear
+     */
+    $object.Clear = function(prop) {
+      $object.Set(prop, '');
+    }
+    
+    /**
+     * Clear All
+     * 
+     * Clears all the data in the Model and the View.
+     * 
+     * @method ClearAll
+     */
+    $object.ClearAll = function() {
+      //implement it
+    }
+    
+    /**
      * AddGetSet
      * 
      * Add getter and setter methods for a property
@@ -134,6 +162,7 @@ var MVC = {
     $object.AddGetSet = function(prop, onUpdate) {
       //CMN.LOG("AddGetSet");
       //var prop = Common.FstChrUp(prop);
+      
       $($object)
       .bind('get'+prop, function(event, ret) {
         ret['value'] = $object[prop];
@@ -176,9 +205,13 @@ var MVC = {
      * 
      */
     $object.Set = function(prop, value) {
+      //alert("Setting");
       //CMN.LOG("Set()");
       //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
+      //$($object).triggerHandler('set'+prop, [value]); ?
       $($object).triggerHandler('set'+prop, [value]);
+      //Update databound DOM values 
+      $object.SetDataboundDomVal(viewId, prop, value);
     }
     /**
      * Get
@@ -194,21 +227,9 @@ var MVC = {
       //CMN.LOG("Get()");
       var result = { value : undefined };
       //$($object).triggerHandler('get'+Common.FstChrUp(key), [result]);
+      //$($object).triggerHandler('get'+prop, [result]); ?
       $($object).triggerHandler('get'+prop, [result]);
       return result['value'];
-    }
-    
-    /**
-     * SetViewFromModel
-     * 
-     * Updates the elements in the View from the Model.
-     * 
-     * @method SetViewFromModel
-     */
-    $object.SetViewFromModel = function() {
-      //CMN.LOG("SetViewFromModel()");
-      //Set the values in the DOM
-      $(viewId).getSetHtml($object);
     }
     
     /**
@@ -226,33 +247,51 @@ var MVC = {
     }
     
     /**
+     * SetViewFromModel
+     * 
+     * Updates the elements in the View from the Model.
+     * 
+     * @method SetViewFromModel
+     */
+    $object.SetViewFromModel = function() {
+      //CMN.LOG("SetViewFromModel()");
+      //Set the values in the DOM
+      //alert(JSON.stringify($object));
+      $(viewId).getSetHtml($object);
+    }
+    
+    /**
      * SetModelFromView
      * 
-     * Update the model and databound elements
+     * Update the model and databound elements.
+     * 
+     * This method is internally every time a 'change' and 'keyup' event occur 
+     * in form elements. This is part of the concept to always update the Model, 
+     * so it is synchronized with the View.
+     * 
+     * It is possible to override the call to this method for the 'keyup' event
+     * if it is implemented manually in the settings. Therefore it's important
+     * to know that if overriding this event, but still want 'live' updating 
+     * of the Model to occur, then this method must be called from the custom
+     * implementation of the 'keyup' event! 
      * 
      * @method SetModelFromView
      * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or 
      * true, databound elements inside and/or outside the the View will also 
      * get updated. If false, then they won't. 
      */
-    $object.SetModelFromView = function(updateDataboundValues) {
+     //$object.SetModelFromView = function(updateDataboundValues) {
+     $object.SetModelFromView = function() {
       //CMN.LOG("SetModelFromView()");
-      //Get the values from the DOM
-      //var pars = MVC.GetViewData(viewId);
-      var pars = $object.GetViewData();
-      //alert(MVC.CMN.JSTR(pars));
-      //alert(CMN.JSTR($formParams, null, 2));
-      //Update the model using the DOM values
-      $.each(pars, function(key, newVal) {
+      //Get the values from the View (DOM)
+      var data = $object.GetViewData();
+      //Update the model using the View values
+      $.each(data, function(key, newVal) {
         var oldVal = $object[key];
         //Only update values if they're changed
-        //alert(typeof oldVal + " " + oldVal);
-        //alert((typeof oldVal) + " - " + (typeof oldVal) == 'String');
         //Check the value of oldVal (not newVal)
-        //See why when checking valType === 'undefined' below
         var valType = typeof oldVal;
         if(oldVal !== newVal) {
-          
           //alert("Key: " + key + "\nOld value: " + oldVal + " (" + typeof oldVal + ")\nNew value: " + newVal + " (" + typeof newVal + ")");
           //A problem arises when comparing object literals!!!
           //should valType (string, number, boolean, object, undefined, function)
@@ -266,10 +305,12 @@ var MVC = {
             
             //Update the model with the value from DOM
             $object[key] = newVal;
-            if(updateDataboundValues === undefined || updateDataboundValues === true) {
+            //$object.Set(key, newVal);
+            //if(updateDataboundValues === undefined || updateDataboundValues === true) {
+              //alert("OK");
               //Update databound DOM values 
               $object.SetDataboundDomVal(viewId, key, newVal);
-            }
+            //}
             
           //}
           //else {
@@ -278,7 +319,7 @@ var MVC = {
         }
       });
       //Return the values in JSON format
-      return pars;
+      return data;
     }
     
     /**
@@ -322,6 +363,8 @@ var MVC = {
       }
       if($.trim(event.target.name).length > 0) {
         if($settings['settings'][type] !== undefined && $settings['settings'][type] !== null) {
+          $settings['settings']['eventUsed'] = type;
+          console.log(type);
           $settings['settings'][type](event, event.target.name, event.target.value);
         }
       } else {
@@ -341,7 +384,7 @@ var MVC = {
     $object.ExecuteController = function(method, par) {
       var exec = $object['settings']['controller'][method];
       if(exec !== undefined && exec !== null) {
-        exec($object, par);
+        exec($object, par); //?
       } else {
         CMN.LOG('Missing ' + method + '() method!');
       }
@@ -377,6 +420,7 @@ var MVC = {
     //MVC.Set() and MVC.Get() methods.
     //Note: Changing the Model's properties directly won't update the view.
     if($settings['reflectModelChangeInView']) {
+      //alert("reflect on");
       //Loop throught the object's properties
       $.each($object, function(k,v) {
         //alert(k + " : " + v);
@@ -421,6 +465,7 @@ var MVC = {
     }
     */
     if($settings['autoSaveInterval'] > 0) {
+      $settings['eventUsed'] = '"autoSave"';
       setInterval(function() { 
         $object.Save();
       }, $settings['autoSaveInterval']);
@@ -448,12 +493,23 @@ var MVC = {
     .submit(function(e){
       $object.RunEvent(e);
     })
+    /**
+     * keyup event
+     * 
+     * It's important to know that when overriding this event, 
+     * but still want 'live' updating of the Model to occur,
+     * then this method must be called from the custom implementation 
+     * of the 'keyup' event!
+     * 
+     * @event keyup ...
+     * 
+     */
     .keyup(function(e){
       //If the 'keyup' event hasn't been specified in the settings, then
       //by default update the Model and databound values using the
       //SetModelFromView() method
       if($settings['settings']['keyup'] === undefined) {
-        //MVC.SetModelFromView(viewId, $object);
+        //$object.SetDataboundDomVal(viewId, e.target.name, e.target.value);
         $object.SetModelFromView();
       }
       $object.RunEvent(e); //e should euqal 'change' 
@@ -470,7 +526,11 @@ var MVC = {
 
     //Add the settings to the Model object
     $settings = { settings : $settings };
+    //$.extend($object, $settings);
+    //Add the data to the Model object
+    //$data = { data : $data };
     $.extend($object, $settings);
+    //alert(JSON.stringify($object, null, 2));
     return $object;
   }
 };

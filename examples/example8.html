@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 8</title>
+    <!--IE fixes -->
+    <script type="text/javascript" src="../lib/json2.js"></script>
+    <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
+    <!--//end IE fixes -->
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>-->
+    <script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <!--optional:-->
+    <script type="text/javascript" src="../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
+    <!--//end optional-->
+  </head>
+  <body style="background-color:#fcfcfc; border:1px solid #ccc; padding: 5px;">
+    <h1>Cloning templates</h1>
+    <!-- View ID: testArea -->
+    <div id="testArea" style="display: none;">
+      <h2>The View area with a template</h2>
+      Name: <input type="text" name="name" id="name" value="" />
+      <br />
+      Address: <input type="text" name="address" id="address" value="" />
+      <br />
+      You wrote:
+      <br />
+      Name: <span datasrc="#testArea" name="name" class="excludeFromModel"> </span> & Address: <span datasrc="#testArea" name="address" class="excludeFromModel"> </span>
+    </div><!-- //end of view -->
+    <br />
+    <h2>Copies of the template</h2>
+    <div id="copies">
+      Clones will be place here...
+    </div>
+     
+    <script>
+    var obj,
+        viewId = '#testArea';
+    $(function() {
+      obj1 = MVC.ModelView(viewId, { name : 'foo', address : 'bar' }, {
+        keyup: function(e, n, v) {
+          $this = e.currentTarget;
+          MVC.SetDataboundDomVal(viewId, n, v);
+        },
+        clone : {
+          id : Date.now(),
+          target : '#copies'
+        }
+      });
+      
+      obj2 = MVC.ModelView(viewId, { name : 'foo', address : 'bar' }, {
+        keyup: function(e, n, v) {
+          $this = e.currentTarget;
+          MVC.SetDataboundDomVal(viewId, n, v);
+        },
+        clone : {
+          id : Date.now(),
+          target : '#copies'
+        }
+      });
+    });
+    </script>
+    <div id="debug"> </div>
+    <script src="debug.js"></script>
+  </body>
+</html>

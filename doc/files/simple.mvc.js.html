@@ -96,7 +96,6 @@
 &#x2F;&#x2F; License:   Licensed under MIT license (see LICENCE.MD)
 &#x2F;&#x2F; To minify: http:&#x2F;&#x2F;localhost&#x2F;minify&#x2F;min&#x2F;?f=simplemvc&#x2F;simple.mvc.js
 &#x2F;&#x2F; ==========================================================================
-var counter = 0;
 &#x2F;**
  * Helper functions (helps reduce code base)
  *&#x2F;
@@ -143,14 +142,17 @@ var MVC = {
    * @constructor
    *&#x2F;
   ModelView : function(viewId, $object, $settings) {
-    CMN.LOG(&quot;ModelView Created...&quot;);
+    &#x2F;&#x2F;CMN.LOG(&quot;ModelView Created...&quot;);
     
-    &#x2F;&#x2F;Make sure that there always is object data. Only require &#x27;viewId&#x27;
+    &#x2F;&#x2F;$object = {};
+    
+    &#x2F;&#x2F;Make sure that the object data always exists. Only require &#x27;viewId&#x27;
     if($object === null || $object === undefined) {
       $object = {};
     }
     
-    &#x2F;&#x2F;Always have the following settings even not specified (null or undefined)
+    
+    &#x2F;&#x2F;Make sure that the settings always exist and with certain properties.
     if($settings === null || $settings === undefined) {
       $settings = {};
     }
@@ -159,6 +161,9 @@ var MVC = {
     }
     if($settings[&#x27;reflectModelChangeInView&#x27;] === undefined) {
       $.extend($settings, {reflectModelChangeInView : true});
+    }
+    if($settings[&#x27;eventUsed&#x27;] === undefined) {
+      $.extend($settings, {eventUsed : &#x27;&#x27;});
     }
     &#x2F;&#x2F;alert(CMN.JSTR($settings));
     
@@ -202,6 +207,29 @@ var MVC = {
     }
     
     &#x2F;**
+     * Clear
+     * 
+     * Clears a property&#x27;s value in the Model and the View.
+     * 
+     * 
+     * @method Clear
+     *&#x2F;
+    $object.Clear = function(prop) {
+      $object.Set(prop, &#x27;&#x27;);
+    }
+    
+    &#x2F;**
+     * Clear All
+     * 
+     * Clears all the data in the Model and the View.
+     * 
+     * @method ClearAll
+     *&#x2F;
+    $object.ClearAll = function() {
+      &#x2F;&#x2F;implement it
+    }
+    
+    &#x2F;**
      * AddGetSet
      * 
      * Add getter and setter methods for a property
@@ -224,8 +252,9 @@ var MVC = {
      * the get&#x2F;set event handlers bound with .bind() method are triggered.
      *&#x2F;
     $object.AddGetSet = function(prop, onUpdate) {
-      CMN.LOG(&quot;AddGetSet&quot;);
+      &#x2F;&#x2F;CMN.LOG(&quot;AddGetSet&quot;);
       &#x2F;&#x2F;var prop = Common.FstChrUp(prop);
+      
       $($object)
       .bind(&#x27;get&#x27;+prop, function(event, ret) {
         ret[&#x27;value&#x27;] = $object[prop];
@@ -268,9 +297,13 @@ var MVC = {
      * 
      *&#x2F;
     $object.Set = function(prop, value) {
-      CMN.LOG(&quot;Set()&quot;);
+      &#x2F;&#x2F;alert(&quot;Setting&quot;);
+      &#x2F;&#x2F;CMN.LOG(&quot;Set()&quot;);
       &#x2F;&#x2F;$(obj).trigger(&#x27;set&#x27;+Common.FstChrUp(key), [val]);
-      $($object).trigger(&#x27;set&#x27;+prop, [value]);
+      &#x2F;&#x2F;$($object).triggerHandler(&#x27;set&#x27;+prop, [value]); ?
+      $($object).triggerHandler(&#x27;set&#x27;+prop, [value]);
+      &#x2F;&#x2F;Update databound DOM values 
+      $object.SetDataboundDomVal(viewId, prop, value);
     }
     &#x2F;**
      * Get
@@ -283,24 +316,12 @@ var MVC = {
      *&#x2F;
     $object.Get = function(prop) {
       &#x2F;&#x2F;http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;9145347&#x2F;jquery-returning-value-from-trigger
-      CMN.LOG(&quot;Get()&quot;);
+      &#x2F;&#x2F;CMN.LOG(&quot;Get()&quot;);
       var result = { value : undefined };
       &#x2F;&#x2F;$($object).triggerHandler(&#x27;get&#x27;+Common.FstChrUp(key), [result]);
+      &#x2F;&#x2F;$($object).triggerHandler(&#x27;get&#x27;+prop, [result]); ?
       $($object).triggerHandler(&#x27;get&#x27;+prop, [result]);
       return result[&#x27;value&#x27;];
-    }
-    
-    &#x2F;**
-     * SetViewFromModel
-     * 
-     * Updates the elements in the View from the Model.
-     * 
-     * @method SetViewFromModel
-     *&#x2F;
-    $object.SetViewFromModel = function() {
-      CMN.LOG(&quot;SetViewFromModel()&quot;);
-      &#x2F;&#x2F;Set the values in the DOM
-      $(viewId).getSetHtml($object);
     }
     
     &#x2F;**
@@ -312,39 +333,57 @@ var MVC = {
      * @return {Object} The View data as JSON object
      *&#x2F;
     $object.GetViewData = function() {
-      CMN.LOG(&quot;GetViewData()&quot;);
+      &#x2F;&#x2F;CMN.LOG(&quot;GetViewData()&quot;);
       &#x2F;&#x2F;Get the values from the View (DOM)
       return $(viewId).getSetHtml();
     }
     
     &#x2F;**
+     * SetViewFromModel
+     * 
+     * Updates the elements in the View from the Model.
+     * 
+     * @method SetViewFromModel
+     *&#x2F;
+    $object.SetViewFromModel = function() {
+      &#x2F;&#x2F;CMN.LOG(&quot;SetViewFromModel()&quot;);
+      &#x2F;&#x2F;Set the values in the DOM
+      &#x2F;&#x2F;alert(JSON.stringify($object));
+      $(viewId).getSetHtml($object);
+    }
+    
+    &#x2F;**
      * SetModelFromView
      * 
-     * Update the model and databound elements
+     * Update the model and databound elements.
+     * 
+     * This method is internally every time a &#x27;change&#x27; and &#x27;keyup&#x27; event occur 
+     * in form elements. This is part of the concept to always update the Model, 
+     * so it is synchronized with the View.
+     * 
+     * It is possible to override the call to this method for the &#x27;keyup&#x27; event
+     * if it is implemented manually in the settings. Therefore it&#x27;s important
+     * to know that if overriding this event, but still want &#x27;live&#x27; updating 
+     * of the Model to occur, then this method must be called from the custom
+     * implementation of the &#x27;keyup&#x27; event! 
      * 
      * @method SetModelFromView
      * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or 
      * true, databound elements inside and&#x2F;or outside the the View will also 
      * get updated. If false, then they won&#x27;t. 
      *&#x2F;
-    $object.SetModelFromView = function(updateDataboundValues) {
-      CMN.LOG(&quot;SetModelFromView()&quot;);
-      &#x2F;&#x2F;Get the values from the DOM
-      &#x2F;&#x2F;var pars = MVC.GetViewData(viewId);
-      var pars = $object.GetViewData();
-      &#x2F;&#x2F;alert(MVC.CMN.JSTR(pars));
-      &#x2F;&#x2F;alert(CMN.JSTR($formParams, null, 2));
-      &#x2F;&#x2F;Update the model using the DOM values
-      $.each(pars, function(key, newVal) {
+     &#x2F;&#x2F;$object.SetModelFromView = function(updateDataboundValues) {
+     $object.SetModelFromView = function() {
+      &#x2F;&#x2F;CMN.LOG(&quot;SetModelFromView()&quot;);
+      &#x2F;&#x2F;Get the values from the View (DOM)
+      var data = $object.GetViewData();
+      &#x2F;&#x2F;Update the model using the View values
+      $.each(data, function(key, newVal) {
         var oldVal = $object[key];
         &#x2F;&#x2F;Only update values if they&#x27;re changed
-        &#x2F;&#x2F;alert(typeof oldVal + &quot; &quot; + oldVal);
-        &#x2F;&#x2F;alert((typeof oldVal) + &quot; - &quot; + (typeof oldVal) == &#x27;String&#x27;);
         &#x2F;&#x2F;Check the value of oldVal (not newVal)
-        &#x2F;&#x2F;See why when checking valType === &#x27;undefined&#x27; below
         var valType = typeof oldVal;
         if(oldVal !== newVal) {
-          
           &#x2F;&#x2F;alert(&quot;Key: &quot; + key + &quot;\nOld value: &quot; + oldVal + &quot; (&quot; + typeof oldVal + &quot;)\nNew value: &quot; + newVal + &quot; (&quot; + typeof newVal + &quot;)&quot;);
           &#x2F;&#x2F;A problem arises when comparing object literals!!!
           &#x2F;&#x2F;should valType (string, number, boolean, object, undefined, function)
@@ -358,10 +397,12 @@ var MVC = {
             
             &#x2F;&#x2F;Update the model with the value from DOM
             $object[key] = newVal;
-            if(updateDataboundValues === undefined || updateDataboundValues === true) {
+            &#x2F;&#x2F;$object.Set(key, newVal);
+            &#x2F;&#x2F;if(updateDataboundValues === undefined || updateDataboundValues === true) {
+              &#x2F;&#x2F;alert(&quot;OK&quot;);
               &#x2F;&#x2F;Update databound DOM values 
               $object.SetDataboundDomVal(viewId, key, newVal);
-            }
+            &#x2F;&#x2F;}
             
           &#x2F;&#x2F;}
           &#x2F;&#x2F;else {
@@ -370,7 +411,7 @@ var MVC = {
         }
       });
       &#x2F;&#x2F;Return the values in JSON format
-      return pars;
+      return data;
     }
     
     &#x2F;**
@@ -384,14 +425,14 @@ var MVC = {
      * @param {String} value A new value.
      *&#x2F;
     $object.SetDataboundDomVal = function(datasrc, name, value) {
-      CMN.LOG(&quot;SetDataboundDomVal()&quot;);
+      &#x2F;&#x2F;CMN.LOG(&quot;SetDataboundDomVal()&quot;);
       &#x2F;&#x2F;The following works fine, except it breaks in IE&lt;9!!!
       &#x2F;&#x2F;$(&#x27;[datasrc=&#x27;+datasrc+&#x27;][name=&#x27;+name+&#x27;]&#x27;).text(value).val(value);
       &#x2F;&#x2F;This works though:
-      CMN.LOG(counter + &quot; - datasrc: &quot; + datasrc + &quot; - name: &quot; + name + &quot; - value: &quot; + value);
+      &#x2F;&#x2F;CMN.LOG(counter + &quot; - datasrc: &quot; + datasrc + &quot; - name: &quot; + name + &quot; - value: &quot; + value);
       $(&#x27;div[datasrc|=&#x27;+datasrc+&#x27;][name|=&#x27;+name+&#x27;],p[datasrc|=&#x27;+datasrc+&#x27;][name|=&#x27;+name+&#x27;],span[datasrc|=&#x27;+datasrc+&#x27;][name|=&#x27;+name+&#x27;]&#x27;).text(value);
       $(&#x27;input[datasrc|=&#x27;+datasrc+&#x27;][name|=&#x27;+name+&#x27;]&#x27;).val(value);
-      counter++;
+      &#x2F;&#x2F;counter++;
     }
     
     &#x2F;**
@@ -409,11 +450,13 @@ var MVC = {
         type = event;
       }
       if(event === undefined) {
-        CMN.LOG(&#x27;event &quot;e&quot; is undefined!&#x27;);
+        &#x2F;&#x2F;CMN.LOG(&#x27;event &quot;e&quot; is undefined!&#x27;);
         return;
       }
       if($.trim(event.target.name).length &gt; 0) {
         if($settings[&#x27;settings&#x27;][type] !== undefined &amp;&amp; $settings[&#x27;settings&#x27;][type] !== null) {
+          $settings[&#x27;settings&#x27;][&#x27;eventUsed&#x27;] = type;
+          console.log(type);
           $settings[&#x27;settings&#x27;][type](event, event.target.name, event.target.value);
         }
       } else {
@@ -433,9 +476,9 @@ var MVC = {
     $object.ExecuteController = function(method, par) {
       var exec = $object[&#x27;settings&#x27;][&#x27;controller&#x27;][method];
       if(exec !== undefined &amp;&amp; exec !== null) {
-        exec($object, par);
+        exec($object, par); &#x2F;&#x2F;?
       } else {
-        alert(&#x27;Missing &#x27; + method + &#x27;() method!&#x27;);
+        CMN.LOG(&#x27;Missing &#x27; + method + &#x27;() method!&#x27;);
       }
     }
     
@@ -469,6 +512,7 @@ var MVC = {
     &#x2F;&#x2F;MVC.Set() and MVC.Get() methods.
     &#x2F;&#x2F;Note: Changing the Model&#x27;s properties directly won&#x27;t update the view.
     if($settings[&#x27;reflectModelChangeInView&#x27;]) {
+      &#x2F;&#x2F;alert(&quot;reflect on&quot;);
       &#x2F;&#x2F;Loop throught the object&#x27;s properties
       $.each($object, function(k,v) {
         &#x2F;&#x2F;alert(k + &quot; : &quot; + v);
@@ -512,16 +556,16 @@ var MVC = {
       $(clone[&#x27;target&#x27;]).append($copy);
     }
     *&#x2F;
-    var autoSaveInterval = $settings[&#x27;autoSaveInterval&#x27;];
-    if(autoSaveInterval &gt; 0) {
+    if($settings[&#x27;autoSaveInterval&#x27;] &gt; 0) {
+      $settings[&#x27;eventUsed&#x27;] = &#x27;&quot;autoSave&quot;&#x27;;
       setInterval(function() { 
         $object.Save();
-        &#x2F;&#x2F;MVC.Save($object);
-      }, autoSaveInterval);
+      }, $settings[&#x27;autoSaveInterval&#x27;]);
     }
     
     &#x2F;&#x2F;Update the model view, whenever a change occurs
-    $(viewId+&#x27; :input&#x27;).not(&#x27;.excludeFromModel&#x27;)
+    $(viewId+&#x27; :input&#x27;)
+    .not(&#x27;.excludeFromModel&#x27;)
     .focus(function(e){
       &#x2F;&#x2F;http:&#x2F;&#x2F;jsfiddle.net&#x2F;PKVVP&#x2F;
       $object.RunEvent(e);
@@ -541,16 +585,26 @@ var MVC = {
     .submit(function(e){
       $object.RunEvent(e);
     })
+    &#x2F;**
+     * keyup event
+     * 
+     * It&#x27;s important to know that when overriding this event, 
+     * but still want &#x27;live&#x27; updating of the Model to occur,
+     * then this method must be called from the custom implementation 
+     * of the &#x27;keyup&#x27; event!
+     * 
+     * @event keyup ...
+     * 
+     *&#x2F;
     .keyup(function(e){
       &#x2F;&#x2F;If the &#x27;keyup&#x27; event hasn&#x27;t been specified in the settings, then
       &#x2F;&#x2F;by default update the Model and databound values using the
       &#x2F;&#x2F;SetModelFromView() method
       if($settings[&#x27;settings&#x27;][&#x27;keyup&#x27;] === undefined) {
-        &#x2F;&#x2F;MVC.SetModelFromView(viewId, $object);
+        &#x2F;&#x2F;$object.SetDataboundDomVal(viewId, e.target.name, e.target.value);
         $object.SetModelFromView();
       }
-      $object.RunEvent(e);
-      &#x2F;&#x2F;MVC.RunEvent($settings, &#x27;change&#x27;);
+      $object.RunEvent(e); &#x2F;&#x2F;e should euqal &#x27;change&#x27; 
       &#x2F;*var n = $(this).attr(&#x27;name&#x27;);
       var v = $(this).val();
       MVC.SetDataboundDomVal(viewId, n, v);*&#x2F;
@@ -564,15 +618,11 @@ var MVC = {
 
     &#x2F;&#x2F;Add the settings to the Model object
     $settings = { settings : $settings };
-    &#x2F;&#x2F;alert(CMN.JSTR($object, null, 2));
+    &#x2F;&#x2F;$.extend($object, $settings);
+    &#x2F;&#x2F;Add the data to the Model object
+    &#x2F;&#x2F;$data = { data : $data };
     $.extend($object, $settings);
-    
-    
-    
-    &#x2F;&#x2F;alert(viewId + &quot;: &quot; + CMN.JSTR($settings, null, 2));
-    &#x2F;&#x2F;alert(CMN.JSTR($object, null, 2));
-    &#x2F;&#x2F;Return the new object in JSON format
-    &#x2F;&#x2F;alert(CMN.JSTR($object, null, 2));
+    &#x2F;&#x2F;alert(JSON.stringify($object, null, 2));
     return $object;
   }
 };

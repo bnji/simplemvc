@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 1</title>
+    <!--IE fixes -->
+    <script type="text/javascript" src="../lib/json2.js"></script>
+    <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
+    <!--//end IE fixes -->
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>-->
+    <script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <!--optional:-->
+    <script type="text/javascript" src="../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
+    <!--//end optional-->
+  </head>
+  <body style="background-color:#fcfcfc; border:1px solid #ccc; padding: 5px;">
+    <h1>Autosave demo</h1>
+    <br />
+    <h2>Inside the view</h2>
+    <!-- View ID: testArea -->
+    <div id="testArea">
+      <p>
+        <i>Try changing the value and wait 5 seconds and voila!</i>
+        <br />
+        <br />
+        ID: <span datafld="id"> </span>
+        <br />
+        Name: <input type="text" name="name" />
+      </p>
+    </div><!-- //end of view -->
+    <br />
+    <h2>Outside the view</h2>
+    <!-- View ID: testArea -->
+    <div id="results">
+      <p>
+        ID: <span datafld="id"> </span>
+        <br />
+        Name: <span datafld="name"> </span>
+      </p>
+    </div><!-- //end of view -->
+    <span id="autoSaveResult"> </span>
+    <script>
+    var ctr,
+        obj;
+        
+    $(function() {
+      ctr =  MVC.Controller({
+        Save : function(obj) {
+          MVC.ModelView('#results', {
+            id : obj['id'],
+            name : obj['name']
+          });
+          $('#results')
+          .hide()
+          .animate({"opacity": "show"}, 1000);
+          
+          DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+        }
+      });
+      
+      obj = MVC.ModelView('#testArea', {
+        id: $.now(),
+        name: 'Benjamin Hammer'
+      }, {
+        controller:ctr,
+        autoSaveInterval: 5000 //autosave every 5 seconds
+      });
+      //Call the save method to initialize the 'autoSaveResult' div with the values!
+      obj.Save();
+    });
+    </script>
+    <div id="debug"> </div>
+    <script src="debug.js"></script>
+  </body>
+</html>
