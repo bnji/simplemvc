@@ -12,3 +12,26 @@ function DebugObj(target, obj) {
   });
   $(target).html('<hr /><h3>Debug info:</h3><pre class="prettyprint">' + objOut + '</pre>');
 }
+function moveDown(selector, topPadding) {
+    var offset = $(selector).offset();
+    if(offset === null) {
+      return;
+    }
+    $(window).scroll(function () {
+      try {
+         if ($(window).scrollTop() > offset.top) {
+            $(selector).stop().animate({
+                marginTop: $(window).scrollTop() - offset.top + topPadding
+                //$(selector).css({"background-color", "red" })
+                //marginTop: event.pageY - divOffset.top - adjustOffset;
+            }, {duration:500, queue:false});
+        } else {
+            $(selector).stop().animate({
+                marginTop: 0
+            });
+        }
+      } catch(e) {
+        alert(e);
+      }
+    });
+}

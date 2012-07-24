@@ -8,7 +8,16 @@
 <link rel="stylesheet" type="text/css" href="lib/jasmine/jasmine.css" />
 <script type="text/javascript" src="lib/jasmine/jasmine.js"></script>
 <script type="text/javascript" src="lib/jasmine/jasmine-html.js"></script>
+
+<span id="datafldTestElementDatabound" name="datafldTestElement" datasrc="#testArea">datafldTestElementValue</span>
+<span id="idTestElementDatabound" name="idTestElement" datasrc="#testArea">idTestElementValue</span>
+
 <div id="testArea" style="display: none;">
+  <span datafld="datafldSpan"> </span>
+  <br />
+  <input name="datafldTestElement" type="text" />
+  <br />
+  <input name="idTestElement" type="text" />
   ID (input): <input class="isNumber" name="id" id="id" />
   <br />
   <input name="id2" id="id2" />
@@ -130,6 +139,9 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     };
     
     obj = MVC.ModelView(viewId, {
+      datafldSpan : '',
+      datafldTestElement : '',
+      idTestElement : '',
       id : 123,
       id2 : 456,
       type : 'typeVal'
@@ -171,6 +183,21 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
   it("Calling MVC.Delete() method should work", function() {
     //MVC.Delete(obj, 'deleteExtraParameter');
     obj.Delete('deleteExtraParameter');
+  });
+  
+  it("using datafld and id should work", function() {
+    var newVal = ''+$.now();
+    
+    obj.Set('datafldSpan', newVal);
+    expect(obj.Get('datafldSpan')).toBe(newVal);
+    
+    obj.Set('datafldTestElement', newVal);
+    var domVal = $('#datafldTestElementDatabound').text();// obj.Get('datafldTestElement');
+    expect(domVal).toBe(newVal);
+    
+    obj.Set('idTestElement', newVal);
+    domVal = $('#idTestElementDatabound').text();// obj.Get('idTestElement');
+    expect(domVal).toBe(newVal);
   });
   
   it("elements which have the class 'excludeFromModel' should not be included in the Model (even when inside the (DOM) View)", function() {

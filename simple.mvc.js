@@ -59,6 +59,23 @@ var MVC = {
       $object = {};
     }
     
+    var clone = $settings['clone'];
+    clone['template'] = viewId;
+    //alert(clone['template']);
+    if(clone !== undefined) {
+      viewId = clone['id'];
+      //var newViewId = clone['id'];
+      //Clone the source
+      var viewIdNoHash = viewId.substring(1, viewId.length);
+      var element = $($(clone['template']).clone(clone['withDataAndEvents'])).attr('id', viewIdNoHash);
+      $(element).find('[datasrc]').attr('datasrc', viewId);
+      //console.log(element);
+      //If the template originally was hidden using 'display: none;' - make it visible to the user
+      element.show();
+      //Append the copy to the target
+      $(clone['target']).append(element);
+    }
+    //alert(viewId);
     
     //Make sure that the settings always exist and with certain properties.
     if($settings === null || $settings === undefined) {
@@ -443,27 +460,7 @@ var MVC = {
         });
       });
     }
-    /*
-    var clone = $settings['clone'];
-    if(clone !== undefined) {
-      var newViewId = clone['id'];
-      //Clone the source
-      var element = $(viewId).clone();
-      //CMN.LOG('element old id: #' + element.attr('id'));
-      var $copy = $(element).attr('id', newViewId);
-      //CMN.LOG('element new id: #' + element.attr('id'));
-      //CMN.LOG($copy.html());
-      var newId = $.now();
-      var elem = $('span,p,div,input');
-      CMN.LOG('name: ' + elem.attr('name'));
-      elem.attr('name', name + "_" + newId);//.attr('id', newId);
-      CMN.LOG($copy.html());
-      //If the template originally was hidden using 'display: none;' - make it visible to the user
-      $copy.show();
-      //Append the copy to the target
-      $(clone['target']).append($copy);
-    }
-    */
+    
     if($settings['autoSaveInterval'] > 0) {
       $settings['eventUsed'] = '"autoSave"';
       setInterval(function() { 
@@ -538,6 +535,8 @@ var MVC = {
 /**
  * Get or set HTML (DOM) values
  * 
+ * Inspired by formParams: http://jquerypp.com/#formparams
+ * 
  * @param {Object} jQuery
  */
 (function( $ ) {
@@ -551,9 +550,7 @@ var MVC = {
       }
     },
     getInputElements : function(target) {
-      var selItems = target.find('input,select,textarea').filter(':not(.excludeFromModel)');
-      //CMN.LOG(selItems);
-      return selItems;
+      return target.find('input,select,textarea').filter(':not(.excludeFromModel)');
     },
     getElementKey : function(element) {
       var key = $(element).attr("datafld");
@@ -561,15 +558,13 @@ var MVC = {
         key = $(element).attr("id");
       }
       return key;
+      //return $(element).attr("datafld") ? undefined : $(element).attr("id"); 
     },
     getDivElements : function(target) {
-      var selItems =  target.find('p,span,div').filter(':not(.excludeFromModel)');
-      //CMN.LOG(selItems);
-      return selItems;
+      return target.find('p,span,div').filter(':not(.excludeFromModel)');
     },
-    
     setValues : function(params) {
-      CMN.LOG('setValues called!');
+      //CMN.LOG('setValues called!');
       //CMN.LOG(this.getDivElements(this));
       //Set the values for  'p', 'div' and 'span' elements
       $this = this;
@@ -581,7 +576,7 @@ var MVC = {
         //alert(key);
         var value = params[key];
         //alert(key + " = " + value);
-        CMN.LOG(value);
+        //CMN.LOG(value);
         $(this).text(value);
         //var toReplace = $.trim($(this).text());
         //alert(toReplace);
@@ -593,12 +588,9 @@ var MVC = {
         if ( value !== undefined) {
           $this = $(this);
           
-          // Nested these if statements for performance
           if ( $this.is(":radio") ) {
             if ( $this.val() === value ) {
-              //alert(value);
               $this.attr("checked", true);
-              //value = $this.val();
             }
           } else if ( $this.is(":checkbox") ) {
             // Convert single value to an array to reduce
@@ -653,23 +645,19 @@ var MVC = {
       $this.getDivElements(this).each(function() {
         var elem = $(this);
         var value = elem.text();
-        //alert(value);
         if(value !== undefined) {
-          
           var key = $this.getElementKey(this);
           if(key === undefined) {
             return;
           }
-          
           if(elem.hasClass('isNumber')) {
             value = parseInt(value);
           } 
-          
           //alert(key + " = " + value);
           data[key] = value;
         }
       });
-      data = $.extend(data, formData);
+      $.extend(data, formData);
       //alert(CMN.JSTR(data, null, 2));
       return data;
     }
