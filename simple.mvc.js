@@ -59,28 +59,45 @@ var MVC = {
       $object = {};
     }
     
-    var clone = $settings['clone'];
-    clone['template'] = viewId;
-    //alert(clone['template']);
-    if(clone !== undefined) {
-      viewId = clone['id'];
-      //var newViewId = clone['id'];
-      //Clone the source
-      var viewIdNoHash = viewId.substring(1, viewId.length);
-      var element = $($(clone['template']).clone(clone['withDataAndEvents'])).attr('id', viewIdNoHash);
-      $(element).find('[datasrc]').attr('datasrc', viewId);
-      //console.log(element);
-      //If the template originally was hidden using 'display: none;' - make it visible to the user
-      element.show();
-      //Append the copy to the target
-      $(clone['target']).append(element);
-    }
-    //alert(viewId);
     
     //Make sure that the settings always exist and with certain properties.
     if($settings === null || $settings === undefined) {
       $settings = {};
     }
+    
+    var clone = $settings['clone'];
+    if(clone !== undefined) {
+      //Set the clone template to be the view id
+      clone['template'] = viewId;
+      //Update the view id with the new clone id
+      viewId = clone['id'];
+      var viewIdNoHash = viewId.substring(1, viewId.length);
+      //Clone the source
+      var element = $($(clone['template'])
+                    .clone(clone['withDataAndEvents']))
+                    .attr('id', viewIdNoHash);
+      
+      //Update the datasrc with the new view id
+      $(element)
+      .find('[datasrc]')
+      .attr('datasrc', viewId);
+      //Attach events to the save, update, delete (more?) buttons/submit.
+      $(element).find('button,:submit').each(function(i, e) {
+        $(this).attr('id', e.id+'_'+viewIdNoHash)
+        .bind('click', function(e) {
+          //$object.ExecuteController($id, par);
+          //$object.Save();
+          $object.ExecuteController(e.target.name);
+        });
+        console.log(i + " " + e.id);
+      });
+      //If the template originally was hidden using 'display: none;' - make it visible to the user
+      element.show();
+      //Append the copy to the target
+      clone['append'](element);
+    }
+    //alert(viewId);
+    
     if($settings['viewId'] === undefined) {
       $.extend($settings, {viewId : viewId});
     }
@@ -90,7 +107,7 @@ var MVC = {
     if($settings['eventUsed'] === undefined) {
       $.extend($settings, {eventUsed : ''});
     }
-    //alert(CMN.JSTR($settings));
+    
     
     //Start: Methods
     

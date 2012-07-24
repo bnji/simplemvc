@@ -36,6 +36,11 @@
         Address: <span style="font-weight: bold;" datasrc="#testArea" name="address" class="excludeFromModel"> </span>
       </p>
       <br />
+      <button class="btn btn-primary" name="Save" id="Save">Save</button>
+      <button class="btn btn-inverse" name="Update" id="Update">Update</button>
+      <button class="btn btn-danger" name="Delete" id="Delete">Delete</button>
+      <input type="submit" value="submit" name="Send" id="Send" />
+      <br />
       <hr />
       
     </div><!-- //end of template view -->
@@ -87,10 +92,25 @@
     });
     
     function createClone(_name, _address) {
-      var o = MVC.ModelView("#template", {
-        name : _name, 
-        address : _address 
-      }, {
+      
+      var ctr = MVC.Controller({
+        Save : function(obj, par){
+          alert("saving...\n" + JSON.stringify(obj, null, 2));
+        },
+        Update : function(obj, par) {
+          alert("updating...\n" + JSON.stringify(obj, null, 2));
+        },
+        Delete : function() {
+          //alert("deleting...\n" + JSON.stringify(o, null, 2));
+          //$(o['settings']['viewId']).remove();
+          //clones[o].remove();
+          //$('#cloneCount').text(clones.length);
+        }
+      });
+      
+      var settings = {
+        controller : ctr,
+        reflectModelChangeInView : true,
         focus : function(e, n, v) {
           printDebugInfo(o);
         },
@@ -105,14 +125,27 @@
         },
         clone : {
           id : '#'+Date.now(),
-          target : '#copies',
-          withDataAndEvents : true
+          //target : '#copies',
+          withDataAndEvents : true,
+          append : function(element) {
+            $("#copies").append(element);
+          }
         }
-      });
+      };
+      
+      
+      var o = MVC.ModelView("#template", {
+        name : _name, 
+        address : _address 
+      }, settings);
       //o['id'] = o['settings']['viewId']; o.SetViewFromModel();
       o.Set('id', o['settings']['viewId']);
       clones.push(o);
       printDebugInfo(o);
+      
+      /*$('#save').click(function() {
+        o.Save();
+      });*/
     }
     
     function printDebugInfo(o) {
