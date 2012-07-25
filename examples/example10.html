@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 10</title>
+    <!--IE fixes -->
+    <script type="text/javascript" src="../lib/json2.js"></script>
+    <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
+    <!--//end IE fixes -->
+    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>-->
+    <script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <!--optional:-->
+    <script type="text/javascript" src="../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
+    <!--//end optional-->
+  </head>
+  <body style="background-color:#fcfcfc; border:1px solid #ccc; padding: 5px;">
+    <h1>Array -> Object</h1>
+    <!-- View ID: testArea -->
+    <div id="testArea">
+      
+    </div><!-- //end of view -->
+    <script>
+    var obj;
+    
+    $(function() {
+      
+      var array = ['a']
+      
+      obj = MVC.ModelView('#testArea', );
+      
+      
+      function printDebugObj() {
+        DebugObj('#debug', { o1 : { object : obj, readDom : true } });
+      }
+    });
+    </script>
+    <div id="debug"> </div>
+    <script src="debug.js"></script>
+  </body>
+</html>

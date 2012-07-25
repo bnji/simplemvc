@@ -57,8 +57,7 @@ var MVC = {
     //Make sure that the object data always exists. Only require 'viewId'
     if($object === null || $object === undefined) {
       $object = {};
-    }
-    
+    } 
     
     //Make sure that the settings always exist and with certain properties.
     if($settings === null || $settings === undefined) {
@@ -79,20 +78,23 @@ var MVC = {
       
       //Update the datasrc with the new view id
       $(element)
-      .find('[datasrc]')
+      .find(viewId + ' div[datasrc=""],p[datasrc=""],span[datasrc=""]')
       .attr('datasrc', viewId);
       //Attach events to the save, update, delete (more?) buttons/submit.
-      $(element).find('button,:submit').each(function(i, e) {
-        $(this).attr('id', e.id+'_'+viewIdNoHash)
-        .bind('click', function(e) {
+      $(element)
+      .find('a,button,:submit,i')
+      .each(function(i, e) {
+        $(this)
+        .attr('id', e.id+'_'+viewId)//NoHash)
+        .click(function(e) {
           //$object.ExecuteController($id, par);
           //$object.Save();
           $object.ExecuteController(e.target.name);
         });
-        console.log(i + " " + e.id);
+        //console.log(i + " " + e.id);
       });
       //If the template originally was hidden using 'display: none;' - make it visible to the user
-      element.show();
+      //element.show();
       //Append the copy to the target
       clone['append'](element);
     }

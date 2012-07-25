@@ -125,10 +125,10 @@
         },
         clone : {
           id : '#'+Date.now(),
-          //target : '#copies',
           withDataAndEvents : true,
           append : function(element) {
             $("#copies").append(element);
+            $(element).show();
           }
         }
       };
