@@ -35,3 +35,6 @@ function moveDown(selector, topPadding) {
       }
     });
 }
+function getFiddleUrl(fiddleName) {
+  return 'http://jsfiddle.net/bendot/'+fiddleName+'/embedded/result,js,html';
+}

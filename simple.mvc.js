@@ -71,7 +71,7 @@ var MVC = {
       //Update the view id with the new clone id
       viewId = clone['id'];
       var viewIdNoHash = viewId.substring(1, viewId.length);
-      //Clone the source
+      //Clone the source and update the viewId
       var element = $($(clone['template'])
                     .clone(clone['withDataAndEvents']))
                     .attr('id', viewIdNoHash);
@@ -80,19 +80,6 @@ var MVC = {
       $(element)
       .find(viewId + ' div[datasrc=""],p[datasrc=""],span[datasrc=""]')
       .attr('datasrc', viewId);
-      //Attach events to the save, update, delete (more?) buttons/submit.
-      $(element)
-      .find('a,button,:submit,i')
-      .each(function(i, e) {
-        $(this)
-        .attr('id', e.id+'_'+viewId)//NoHash)
-        .click(function(e) {
-          //$object.ExecuteController($id, par);
-          //$object.Save();
-          $object.ExecuteController(e.target.name);
-        });
-        //console.log(i + " " + e.id);
-      });
       //If the template originally was hidden using 'display: none;' - make it visible to the user
       //element.show();
       //Append the copy to the target
@@ -109,7 +96,20 @@ var MVC = {
     if($settings['eventUsed'] === undefined) {
       $.extend($settings, {eventUsed : ''});
     }
-    
+  
+    //Attach events to the save, update, delete (more?) buttons/submit.
+    $(viewId)
+    .find('button,a,submit,i')
+    .each(function(i, e) {
+      $(this)
+      //.attr('id', e.id+'_'+viewId)//NoHash)
+      .click(function(e) {
+        //$object.ExecuteController($id, par);
+        //$object.Save();
+        $object.ExecuteController(e.target.name);
+      });
+      //console.log(i + " " + e.id);
+    });
     
     //Start: Methods
     

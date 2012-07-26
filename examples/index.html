@@ -6,10 +6,8 @@
     <!--IE fixes -->
     <script type="text/javascript" src="../lib/json2.js"></script>
     <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
     <!--//end IE fixes -->
-    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>-->
-    <script type="text/javascript" src="../lib/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="../simple.mvc.js"></script>
     <!--optional:-->
     <script type="text/javascript" src="../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
@@ -17,72 +15,59 @@
     <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/google.code.prettify/css/twitter.bootstrap.css" />
     <!--//end optional-->
   </head>
-  <body onload="prettyPrint()">
+  <body>
     <div class="container-fluid">
-      <h1>Examples overview <small>Click on an example below to load it</small></h1>
+      <h1>
+        Examples overview 
+        <small>Click on an example below to load it</small>
+      </h1>
+      <p>
+        To create a new example: <a href="http://jsfiddle.net/bendot/RPqMr/">fork this template on fiddle</a>
+      </p>
       <br />
       <div class="row-fluid">
         <div class="span2">
           <ol>
-            <li>Autosave</li>
-            <li>Events</li>
-            <li>Controller</li>
-            <li>Complete Example</li>
-            <li>Set View / Model Data</li>
-            <li>Databound elements</li>
-            <li>Databound (+excludeFromModel)</li>
-            <li>Cloning templates</li>
-            <li>Setting values</li>
-            <li></li>
-            <li></li>
+            <li id="ky2fc">Autosave</li>
+            <li id="MSDfF">Events</li>
+            <li id="HEPWk">Controller</li>
+            <li id="">Complete Example</li>
+            <li id="skCqj">Set View / Model Data</li>
+            <li id="ULdeP">Databound elements</li>
+            <li id="k4nyM">Databound (+excludeFromModel)</li>
+            <li id="Dfh9r">Setting values</li>
+            <li id="tLNbC">All form elements test</li>
+            <li id="mfa7D">Cloning templates #1</li>
+            <li id="ejG4v">Cloning templates #2</li>
           </ol>
         </div>
         <div class="span10">
-          <pre id="code" class="prettyprint linenums lang-js" style="display: none;">
-            var o = {};
-          </pre>
-          <iframe id="exampleDiv" style="display: inline; border:0; width: 100%;" scrolling="no" width="100%" height="2000px">
-            
-          </iframe>
+          <iframe id="exampleFrame" style="width: 100%; height: 1000px" src="http://jsfiddle.net/bendot/tLNbC/embedded/" allowfullscreen="allowfullscreen" frameborder="0"> </iframe>
         </div>
       </div>
     </div>
     <script>
     $(function() {
-      
-      $('li').each(function(i) {
-        $this = $(this); //li element
-        $value = $this.text();
-        i = i+1;
-        $this.empty();
-        $href = "example"+i+".html";
-        $link = $($('<a href="#"></a>')).attr('id', $href).attr('name', 'demo').text($value);
-        $this.append($link);
-        $this.append(" | ");
-        $code = $('<a href="#"></a>').attr('id', $href).attr('name', 'code').text('code');
-        $this.append($code);
+      $('li').each(function() {
+        $(this)
+          .html(
+            $('<a href="#"></a>')
+            .attr('id', $(this).attr('id'))
+            .text($(this).text())
+          );
       });
       
       
       $('a').click(function(e) {
-        var name = e.target.name;
-        var url = e.target.id;
-        if(name === 'demo') {
-          $('#code').hide();
-          $('#exampleDiv').attr('src', url).show('slow');//.attr( 'src', function ( i, val ) { return val; }).toggle();
-        }
-        else if(name === 'code') {
-          $('#exampleDiv').hide();
-          $.get(url, function(data) {
-            //data = data.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            $('#code').text(data).show('slow');
-            prettyPrint();
-          });
-        }
+        $('#exampleFrame')
+          .attr('src', getFiddleUrl(e.target.id))
+          .show();
+        e.preventDefault();
       });
       
-      $('a[name="demo"][id="example1.html"]').click();
+      $('a[id="tLNbC"]').click();
     });
     </script>
+    <script src="debug.js"></script>
   </body>
 </html>

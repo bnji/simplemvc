@@ -22,7 +22,7 @@
     </p>
     <!-- View ID: testArea -->
     <div id="testArea">
-      <input name="theValue" type="text" disabled="true" class="span12" /> <button class="btn btn-inverse" id="clear">Clear</button>
+      <input name="theValue" type="text" disabled="true" class="span12" /> <button class="btn btn-inverse" name="Clear">Clear</button>
       <br />
       <p>
         <h3>Set the value in both View and the Model using obj.Set(n, v);</h3>
@@ -40,57 +40,60 @@
         <br />
         When the name changes in the view or the model, this value should change too. Click on the button to try it out...
         <br />
-        Go ahead and <button class="btn btn-inverse" id="setValueInViewAndModel">Try it! (button #1)</button>
+        Go ahead and <button class="btn btn-inverse" name="setValueInViewAndModel">Try it! (button #1)</button>
         <br />
         <br />
         <h3>Set the value only in the Model using obj[n] = v;</h3>
         <br />
         Even though that worked... this won't...
         <br />
-        Go ahead and <button class="btn btn-inverse" id="setValueInModelOnly">Try it! (button #2)</button>
+        Go ahead and <button class="btn btn-inverse" name="setValueInModelOnly">Try it! (button #2)</button>
         <br />
         <br />
         <h3>Set the value only in the Model using obj[n] = v; and update the View with values from the Model using the .SetViewFromModel() method.</h3>
         <br />
         That did only set the value in the Model and not in the View. To update the View with the Model's values...
         <br />
-        Go ahead and <button class="btn btn-inverse" id="setValueInModelOnlyButUpdateViewFromModel">Try it! (button #3)</button>
+        Go ahead and <button class="btn btn-inverse" name="setValueInModelOnlyButUpdateViewFromModel">Try it! (button #3)</button>
       </p>
     </div><!-- //end of view -->
     <script>
-    var obj;
+    var obj, ctr;
     
     $(function() {
       
-      obj = MVC.ModelView('#testArea', {});
-      
-      $('#setValueInViewAndModel').click(function() {
-        //clearInputs();
-        obj.Set('theValue', 'Value is both in the Model and View');
-        printDebugObj();
+      ctr = MVC.Controller({
+        Clear : function() {
+          clearInputs();
+          printDebugObj();
+        },
+        setValueInViewAndModel : function() {
+          obj.Set('theValue', 'Value is both in the Model and View');
+          printDebugObj();
+        },
+        setValueInModelOnly : function() {
+          //clearInputs();
+          obj['theValue'] = 'Value is only in model';
+          printDebugObj();
+        },
+        setValueInModelOnlyButUpdateViewFromModel : function() {
+          //clearInputs();
+          obj['theValue'] = 'Value was originally only in the Model, but values in the View have been set from the Model.';
+          obj.SetViewFromModel();
+          printDebugObj();
+        }
       });
       
-      $('#setValueInModelOnly').click(function() {
-        //clearInputs();
-        obj['theValue'] = 'Value is only in model';
-        printDebugObj();
+      obj = MVC.ModelView('#testArea', {
+        id: $.now()
+      }, {
+        controller : ctr
       });
       
-      $('#setValueInModelOnlyButUpdateViewFromModel').click(function() {
-        //clearInputs();
-        obj['theValue'] = 'Value was originally only in the Model, but values in the View have been set from the Model.';
-        obj.SetViewFromModel();
-        printDebugObj();
-      });
-      
-      $('#clear').click(function() {
-        clearInputs();
-        printDebugObj();
-      });
-        
       function clearInputs() {
         obj.Clear('theValue');
       }
+      
       function printDebugObj() {
         DebugObj('#debug', { o1 : { object : obj, readDom : true } });
       }
