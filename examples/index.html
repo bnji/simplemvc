@@ -22,7 +22,7 @@
         <small>Click on an example below to load it</small>
       </h1>
       <p>
-        To create a new example: <a href="http://jsfiddle.net/bendot/RPqMr/">fork this template on fiddle</a>
+        To create a new example: <a href="http://jsfiddle.net/bendot/RPqMr/" target="_blank">fork this template on fiddle</a>
       </p>
       <br />
       <div class="row-fluid">
@@ -39,6 +39,7 @@
             <li id="tLNbC">All form elements test</li>
             <li id="mfa7D">Cloning templates #1</li>
             <li id="ejG4v">Cloning templates #2</li>
+            <li id="bZ7ZJ">Add property</li>
           </ol>
         </div>
         <div class="span10">
@@ -58,7 +59,7 @@
       });
       
       
-      $('a').click(function(e) {
+      $('a[href="#"]').click(function(e) {
         $('#exampleFrame')
           .attr('src', getFiddleUrl(e.target.id))
           .show();

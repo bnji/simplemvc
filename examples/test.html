@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 10</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <!--optional:-->
+    <script type="text/javascript" src="../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
+    <script src="debug.js"></script>
+    <!--//end optional-->
+    <script>
+      $(function() {
+        
+        var ctr, settings, obj, cloneCount = 0;
+        $(function() {
+          ctr = MVC.Controller({
+            addCloneFromInsideView : function(obj, par) {
+              cloneCount++;
+              $templateId = '#inputTemplateInsideView';
+              $key = 'fromInside_' + cloneCount;
+              $value = 'From inside - #' + cloneCount;
+              
+              $clone = $($templateId).clone(true); //true: with data and events - false: without...
+              $clone
+                .attr('name', $key) //make sure we change the name or else we update the 'template'
+                .attr('placeholder', $value);
+              
+              $('ul').append($('<li />').html($clone));
+              
+              obj.AddProperty($key);
+              //obj.RemoveProperty($key);
+            },
+            addCloneFromOutsideView : function(obj, par) {
+              cloneCount++;
+              $templateId = '#inputTemplateOutsideView';
+              $key = 'fromOutside_' + cloneCount;
+              $value = 'From outside - #' + cloneCount;
+              
+              $clone = $($templateId).clone(false); //true: with data and events - false: without...
+              $clone
+                .attr('name', $key) //make sure we change the name or else we update the 'template'
+                .attr('placeholder', $value);
+              
+              $('ul').append($('<li />').html($clone));
+              
+              obj.AddProperty($key);
+              //obj.RemoveProperty($key);
+            },
+            addNew : function(obj, par) {
+              cloneCount++;
+              $key = 'jQueryNewElem_' + cloneCount;
+              $value = '$(<input />) - #' + cloneCount;
+              
+              $clone = $('<input />')
+                .attr('type', 'text')
+                .attr('name', $key)
+                .attr('placeholder', $value);
+              $clone = $($clone);
+              
+              $('ul').append($('<li />').html($clone));
+              
+              obj.AddProperty($key);
+              //obj.RemoveProperty($key);
+            }
+          });
+      
+          settings = {
+            controller : ctr,
+            reflectModelChangeInView : true,
+            keyup : function(e, n, v) {
+              obj.SetModelFromView();
+              DebugObj('#debug', {
+                o1 : {
+                  object : obj,
+                  readDom : true
+                }
+              });
+            }
+          };
+      
+          obj = MVC.ModelView('#testArea', {
+            someValue : ''
+          }, settings);
+        });
+      });
+    </script>
+  </head>
+  <body>
+    
+    <div id="debug"> </div>
+    <h2>Inside the View</h2>
+<!-- View ID: testArea -->
+<div id="testArea">
+  <input class="" type="text" placeholder="Clone and append me" name="someValue" id="inputTemplateInsideView" value="" />
+  <ul>
+  </ul>
+  <br />
+  <br />
+  <button class="btn btn-inverse" name="addCloneFromInsideView">Add Clone from inside the View</button>
+  <button class="btn btn-inverse" name="addCloneFromOutsideView">Add Clone from outside the View</button>
+  <button class="btn btn-inverse" name="addNew">Add New</button>
+</div><!-- //end of view -->
+<br />
+<h2>Outside the View</h2>
+<p>
+    <input type="text" placeholder="Clone and append me" name="someValue" id="inputTemplateOutsideView" value="" />
+</p>​
+  </body>
+</html>
