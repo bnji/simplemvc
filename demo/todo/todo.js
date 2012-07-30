@@ -248,6 +248,7 @@ $(function() {
 
 /**
  * An implementation using jStorage (localstorage) which saves/loads the notes.
+ * http://www.jstorage.info/
  */
 var store = {
   add : function(note) {
