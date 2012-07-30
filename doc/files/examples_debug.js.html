@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>MVC</title>
+    <title>examples&#x2F;debug.js</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -88,85 +88,63 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>MVC Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: examples&#x2F;debug.js</h1>
 
-    
-
-    
-        <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l144"><code>simple.mvc.js:144</code></a>
-        </div>
-    
-
-    
-</div>
-
-
-
-<div class="box intro">
-    <p>Provides the core MVC classes: Controller &amp; ModelView </p>
-
-<h1>1 Design Rule - Capitalization</h1>
-
-<p>Internal methods (except the .toArray() method) have the first letter
-capitalized. This is by design for two reasons:</p>
-
-<p>1) JavaScript has many built in methods which already 'belong' to an object
-    so this is a good 'solution' which makes it possible to use methods such 
-    as .Delete() (as .delete wouldn't be valid in JavaScript).</p>
-
-<p>2) To distinguish between the object's and JS built-in and 'custom' (passed
-  with the object data when a ModelView instance is created) methods. </p>
-
-<h1>2 Design Rule - Associative vs '.'-notation</h1>
-
-<p>Internet Explorer (not all) don't like when an element/property in an 
-object literal or array is being accessed using dot notation. Even though
-it's generally encouraged (e.g. www.jshint.com) to use the dot notation, 
-this would very likely break when evaluated in IE! Therefore all 
-elements/properties should be accessed associatively:
- obj = {foo : 'bar'}; 
- obj['foo']; //(OK!)
- obj.foo; //(Breaks in IE (older versions)
- obj.someMethod(); //(OK! - also in IE!)</p>
-</div>
-
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/Controller.html">
-                        Controller
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/List.html">
-                        List
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="..&#x2F;classes/ModelView.html">
-                        ModelView
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+<div class="file">
+    <pre class="code prettyprint linenums">
+function DebugObj(target, obj) {
+  var objOut = &#x27;&#x27;;
+  $.each(obj, function(k, v) {
+    objOut += &#x27;&lt;h2&gt;ViewID: &#x27; + v[&#x27;object&#x27;][&#x27;settings&#x27;][&#x27;viewId&#x27;] + &#x27;&lt;&#x2F;h2&gt;&#x27;;
+    objOut += &#x27;&lt;h3&gt;Event type: &#x27; + v[&#x27;object&#x27;][&#x27;settings&#x27;][&#x27;eventUsed&#x27;] + &#x27;&lt;&#x2F;h3&gt;&lt;br &#x2F;&gt;&#x27;;
+    objOut += &#x27;&lt;div class=&quot;row-fluid&quot;&gt;&#x27;;
+    if(v[&#x27;readDom&#x27;]) {
+      objOut += &#x27;&lt;div class=&quot;span6&quot;&gt;&lt;h4&gt;Object View Data:&lt;&#x2F;h4&gt;&#x27; + JSON.stringify(v[&#x27;object&#x27;].GetViewData(), null, 2) + &#x27;&lt;&#x2F;div&gt;&#x27;;
+    }
+    objOut += &#x27;&lt;div class=&quot;span6&quot;&gt;&lt;h4&gt;Object Model Data:&lt;&#x2F;h4&gt;&#x27; + JSON.stringify(v[&#x27;object&#x27;], null, 2) + &#x27;&lt;&#x2F;div&gt;&#x27;;
+    objOut += &#x27;&lt;&#x2F;div&gt;&lt;br &#x2F;&gt;&#x27;;
+  });
+  $(target).html(&#x27;&lt;hr &#x2F;&gt;&lt;h3&gt;Debug info:&lt;&#x2F;h3&gt;&lt;pre class=&quot;prettyprint&quot;&gt;&#x27; + objOut + &#x27;&lt;&#x2F;pre&gt;&#x27;);
+}
+function moveDown(selector, topPadding) {
+    var offset = $(selector).offset();
+    if(offset === null) {
+      return;
+    }
+    $(window).scroll(function () {
+      try {
+         if ($(window).scrollTop() &gt; offset.top) {
+            $(selector).stop().animate({
+                marginTop: $(window).scrollTop() - offset.top + topPadding
+                &#x2F;&#x2F;$(selector).css({&quot;background-color&quot;, &quot;red&quot; })
+                &#x2F;&#x2F;marginTop: event.pageY - divOffset.top - adjustOffset;
+            }, {duration:500, queue:false});
+        } else {
+            $(selector).stop().animate({
+                marginTop: 0
+            });
+        }
+      } catch(e) {
+        alert(e);
+      }
+    });
+}
+function getFiddleUrl(fiddleName) {
+  return &#x27;http:&#x2F;&#x2F;jsfiddle.net&#x2F;bendot&#x2F;&#x27;+fiddleName+&#x27;&#x2F;embedded&#x2F;result,js,html&#x27;;
+}
+&#x2F;**
+ * Only test for a name, dot(.) and 2-5 letters after the dot... 
+ * @param {Object} str
+ *&#x2F;
+function isValidUrl(str) {
+  var pattern = RegExp(&#x27;[a-zA-Z0-9\-\.]{1,255}\.[a-z]{1,255}\s*&#x27;);
+  if(!pattern.test(str)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+    </pre>
 </div>
 
                     </div>

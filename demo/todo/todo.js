@@ -6,6 +6,8 @@ var ctr,
     
 $(function() {
   
+  
+  
   //Controller
   ctr = MVC.Controller({
     clearDone : function() {
@@ -13,6 +15,20 @@ $(function() {
     },
     clearAll : function() {
       notebook.clearAll();
+    },
+    exportJSON : function() {
+      $.ajax({
+        type : "POST",
+        url : "http://hammerbenjamin.com/simplemvc-showcase/savejson.php",
+        dataType : 'json', 
+        data : {
+            json : JSON.stringify(notebook.getNotes(), null, 2)
+        },
+        success : function(result) {
+          $linkToJsonFile = '<a href="'+result['url']+'">Open the JSON file.</a>';
+          $('#jsonFileUrl').html($linkToJsonFile);
+        }
+      });
     }
   });
   
@@ -23,14 +39,25 @@ $(function() {
       return $.trim(data).length > 0;
     },
     //Add a new note
-    createNote : function(note, isComplete, id) {
+    createNote : function(value, isComplete, id) {
       //Only if the note has some text
-      if(notebook.isValidInput(note)) {
+      if(notebook.isValidInput(value)) {
+        
+        /*//var value = "a b.c d f.o sdf";
+        var regUrl = /[a-zA-Z0-9\-\.]{1,255}\.[a-z]{1,255}/;
+        var match = regUrl.exec(value);
+        var url = '<a href="'+match+'">'+match+'</a>';
+        console.log(value);
+        if(regUrl.test(value)) {
+          //value = url;
+          value = value.replace(match, url);
+          //console.log(match);
+        }*/
         //The note data (it's field members and methods)
         var noteData = {
           id: (id === undefined || id === null ? $.now() : id),
           isComplete: isComplete,
-          note: note,
+          note: value,
           toggleMode : function() {
             //don't toggle modes if the note is done
             if(!note.Get('isComplete')) {
@@ -79,9 +106,11 @@ $(function() {
                   .toggleMode(); //Toggle to view mode again
               }
               if(MVC.KeyCheck(e, 'escape')) {
-                note
-                  .FindElement(':input[name="note"]')
-                  .blur();
+                if(notebook.isValidInput(note)) {
+                  note
+                    .FindElement(':input[name="note"]')
+                    .blur();
+                }
               }
             }
           },
@@ -264,14 +293,6 @@ $(function() {
     }
   });*/
   
-  $('.note').tooltip({
-    animation: true,
-    placement: 'left',
-    title: 'Click to edit',
-    trigger: 'hover',
-    delay: { show: 100, hide: 250 }
-  });
-  
   
 });
 
@@ -299,10 +320,13 @@ var store = {
   },
   getAll : function() {
     var data = {};
-    $.each($.jStorage.index(), function(k, v) {
-      data[v] = store.get(v);
-      //console.log(data[v]);
-    });
+    var storeData = $.jStorage.index();
+    if(storeData !== undefined || storeData !== null) {
+      $.each(storeData, function(k, v) {
+        data[v] = store.get(v);
+        //console.log(data[v]);
+      });
+    }
     return data;
   }
 }

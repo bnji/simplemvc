@@ -43,6 +43,8 @@
             
                 <li><a href="..&#x2F;classes/Controller.html">Controller</a></li>
             
+                <li><a href="..&#x2F;classes/List.html">List</a></li>
+            
                 <li><a href="..&#x2F;classes/ModelView.html">ModelView</a></li>
             
             </ul>
@@ -94,7 +96,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l42"><code>simple.mvc.js:42</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l144"><code>simple.mvc.js:144</code></a>
         </div>
     
 
@@ -152,7 +154,7 @@ the View synchronized with the Model and vice versa.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l42"><code>simple.mvc.js:42</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l144"><code>simple.mvc.js:144</code></a>
         
         </p>
 
@@ -201,7 +203,21 @@ the View synchronized with the Model and vice versa.</p>
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
+                                <a href="#method_AddEvents">AddEvents</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_AddGetSet">AddGetSet</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_AddProperty">AddProperty</a>
 
                                 
                                 
@@ -229,7 +245,7 @@ the View synchronized with the Model and vice versa.</p>
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_ExecuteController">ExecuteController</a>
+                                <a href="#method_FindElement">FindElement</a>
 
                                 
                                 
@@ -250,7 +266,28 @@ the View synchronized with the Model and vice versa.</p>
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_GetViewId">GetViewId</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_RemoveGetSet">RemoveGetSet</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_RemoveProperty">RemoveProperty</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_RunCtr">RunCtr</a>
 
                                 
                                 
@@ -306,6 +343,13 @@ the View synchronized with the Model and vice versa.</p>
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_triggerEvent">triggerEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_Update">Update</a>
 
                                 
@@ -343,29 +387,17 @@ the View synchronized with the Model and vice versa.</p>
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_AddGetSet" class="method item">
-    <h3 class="name"><code>AddGetSet</code></h3>
+                    <div id="method_AddEvents" class="method item">
+    <h3 class="name"><code>AddEvents</code></h3>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>prop</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>onUpdate</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
     
 
     
@@ -391,7 +423,96 @@ the View synchronized with the Model and vice versa.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l140"><code>simple.mvc.js:140</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l663"><code>simple.mvc.js:663</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>AddEvents</p>
+
+<p>Add events to the object's input fields</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_AddGetSet" class="method item">
+    <h3 class="name"><code>AddGetSet</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>prop</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>onUpdate</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l286"><code>simple.mvc.js:286</code></a>
         
         </p>
 
@@ -461,18 +582,45 @@ the get/set event handlers bound with .bind() method are triggered.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
 
                 
-                    <div id="method_Clear" class="method item">
-    <h3 class="name"><code>Clear</code></h3>
+                    <div id="method_AddProperty" class="method item">
+    <h3 class="name"><code>AddProperty</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>prop</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
     
 
     
@@ -498,7 +646,103 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l117"><code>simple.mvc.js:117</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l378"><code>simple.mvc.js:378</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>AddProperty</p>
+
+<p>Add a property to the Model</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The property name</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_Clear" class="method item">
+    <h3 class="name"><code>Clear</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l259"><code>simple.mvc.js:259</code></a>
         
         </p>
 
@@ -517,6 +761,19 @@ the get/set event handlers bound with .bind() method are triggered.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -529,6 +786,10 @@ the get/set event handlers bound with .bind() method are triggered.</p>
         <span class="paren">()</span>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
     
 
     
@@ -554,7 +815,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l129"><code>simple.mvc.js:129</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l273"><code>simple.mvc.js:273</code></a>
         
         </p>
 
@@ -572,6 +833,19 @@ the get/set event handlers bound with .bind() method are triggered.</p>
 
     
 
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
     
 
     
@@ -596,6 +870,10 @@ the get/set event handlers bound with .bind() method are triggered.</p>
     
 
     
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
 
     
 
@@ -620,7 +898,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l104"><code>simple.mvc.js:104</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l244"><code>simple.mvc.js:244</code></a>
         
         </p>
 
@@ -663,34 +941,35 @@ is called/executed.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
 
                 
-                    <div id="method_ExecuteController" class="method item">
-    <h3 class="name"><code>ExecuteController</code></h3>
+                    <div id="method_FindElement" class="method item">
+    <h3 class="name"><code>FindElement</code></h3>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>method</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>par</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
     
 
     
@@ -716,7 +995,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l375"><code>simple.mvc.js:375</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l649"><code>simple.mvc.js:649</code></a>
         
         </p>
 
@@ -727,51 +1006,28 @@ is called/executed.</p>
     </div>
 
     <div class="description">
-        <p>ExecuteController</p>
+        <p>FindElement</p>
 
-<p>Execute a method in the controller.</p>
+<p>Find and return one or many element/s within the View using a (id or class) selector.</p>
+
+<p>If the elemenet is not found an empty array is returned.</p>
     </div>
 
     
-        <div class="params">
-            <h4>Parameters:</h4>
 
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">method</code>
-                        <span class="type">String</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The methods name specified in the controller.</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">par</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>If needed you can provide optional parameters.</p>
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
     
+        <div class="returns">
+            <h4>Returns:</h4>
 
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Array</span>:
+                    
+                    An element from the View.
+                
+            </div>
+        </div>
     
 
     
@@ -824,7 +1080,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l216"><code>simple.mvc.js:216</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l437"><code>simple.mvc.js:437</code></a>
         
         </p>
 
@@ -874,7 +1130,7 @@ is called/executed.</p>
                     
                         <span class="type">Object</span>:
                     
-                    value The value from the object's property
+                    The object (itself)
                 
             </div>
         </div>
@@ -920,7 +1176,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l235"><code>simple.mvc.js:235</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l458"><code>simple.mvc.js:458</code></a>
         
         </p>
 
@@ -957,23 +1213,17 @@ is called/executed.</p>
 </div>
 
                 
-                    <div id="method_RemoveGetSet" class="method item">
-    <h3 class="name"><code>RemoveGetSet</code></h3>
+                    <div id="method_GetViewId" class="method item">
+    <h3 class="name"><code>GetViewId</code></h3>
 
     
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>prop</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
+        <span class="paren">()</span>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
     
 
     
@@ -999,7 +1249,90 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l181"><code>simple.mvc.js:181</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l637"><code>simple.mvc.js:637</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>GetViewId</p>
+
+<p>Get the ID of the View</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">String</span>:
+                    
+                    The View ID
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_RemoveGetSet" class="method item">
+    <h3 class="name"><code>RemoveGetSet</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>prop</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l343"><code>simple.mvc.js:343</code></a>
         
         </p>
 
@@ -1041,13 +1374,26 @@ is called/executed.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
 
                 
-                    <div id="method_RunEvent" class="method item">
-    <h3 class="name"><code>RunEvent</code></h3>
+                    <div id="method_RemoveProperty" class="method item">
+    <h3 class="name"><code>RemoveProperty</code></h3>
 
     
         <div class="args">
@@ -1055,7 +1401,7 @@ is called/executed.</p>
             
                 <li class="arg">
                     
-                        <code>event</code>
+                        <code>prop</code>
                     
                 </li>
             
@@ -1063,6 +1409,10 @@ is called/executed.</p>
         </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
     
 
     
@@ -1088,7 +1438,240 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l346"><code>simple.mvc.js:346</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l396"><code>simple.mvc.js:396</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>RemoveProperty</p>
+
+<p>Remove a property from the Model</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The property name</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_RunCtr" class="method item">
+    <h3 class="name"><code>RunCtr</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>method</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>par</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l605"><code>simple.mvc.js:605</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>RunCtr</p>
+
+<p>Execute a method in the controller.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">method</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The methods name specified in the controller.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">par</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>If needed you can provide optional parameters.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_RunEvent" class="method item">
+    <h3 class="name"><code>RunEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>event</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l574"><code>simple.mvc.js:574</code></a>
         
         </p>
 
@@ -1130,6 +1713,19 @@ is called/executed.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -1152,6 +1748,10 @@ is called/executed.</p>
         </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
     
 
     
@@ -1177,7 +1777,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l80"><code>simple.mvc.js:80</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l216"><code>simple.mvc.js:216</code></a>
         
         </p>
 
@@ -1220,6 +1820,19 @@ is called/executed.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -1249,6 +1862,10 @@ is called/executed.</p>
     
 
     
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
 
     
 
@@ -1273,7 +1890,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l195"><code>simple.mvc.js:195</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l415"><code>simple.mvc.js:415</code></a>
         
         </p>
 
@@ -1332,6 +1949,19 @@ is called/executed.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -1367,6 +1997,10 @@ is called/executed.</p>
     
 
     
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
 
     
 
@@ -1391,7 +2025,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l325"><code>simple.mvc.js:325</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l551"><code>simple.mvc.js:551</code></a>
         
         </p>
 
@@ -1463,6 +2097,19 @@ is called/executed.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -1485,6 +2132,10 @@ is called/executed.</p>
         </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
     
 
     
@@ -1510,7 +2161,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l263"><code>simple.mvc.js:263</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l487"><code>simple.mvc.js:487</code></a>
         
         </p>
 
@@ -1564,6 +2215,19 @@ get updated. If false, then they won't.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -1601,7 +2265,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l249"><code>simple.mvc.js:249</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l472"><code>simple.mvc.js:472</code></a>
         
         </p>
 
@@ -1661,7 +2325,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l393"><code>simple.mvc.js:393</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l625"><code>simple.mvc.js:625</code></a>
         
         </p>
 
@@ -1698,8 +2362,8 @@ get updated. If false, then they won't.</p>
 </div>
 
                 
-                    <div id="method_Update" class="method item">
-    <h3 class="name"><code>Update</code></h3>
+                    <div id="method_triggerEvent" class="method item">
+    <h3 class="name"><code>triggerEvent</code></h3>
 
     
         <div class="args">
@@ -1707,7 +2371,13 @@ get updated. If false, then they won't.</p>
             
                 <li class="arg">
                     
-                        <code>par</code>
+                        <code>prop</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>evt</code>
                     
                 </li>
             
@@ -1715,6 +2385,10 @@ get updated. If false, then they won't.</p>
         </div>
     
 
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
     
 
     
@@ -1740,7 +2414,128 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l92"><code>simple.mvc.js:92</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l360"><code>simple.mvc.js:360</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Trigger Event</p>
+
+<p>Trigger an event on an input element inside the view</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Property name</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">evt</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Event type/name (e.g. 'keyup')</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_Update" class="method item">
+    <h3 class="name"><code>Update</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>par</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l230"><code>simple.mvc.js:230</code></a>
         
         </p>
 
@@ -1783,6 +2578,19 @@ is called/executed.</p>
     
 
     
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    The object (itself)
+                
+            </div>
+        </div>
+    
 
     
 </div>
@@ -1823,7 +2631,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l496"><code>simple.mvc.js:496</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l694"><code>simple.mvc.js:694</code></a>
         
         </p>
 

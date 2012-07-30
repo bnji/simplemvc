@@ -50,7 +50,7 @@ var MVC = {
    * @param {String} n Name of the key to check against (e.g. 'enter', 'escape')
    */
   KeyCheck : function(e, n) {
-    if(e.keyCode === 13 && n === 'enter' | 'return') {
+    if(e.keyCode === 13 && (n === 'enter' || n === 'return')) {
       return true;
     } else if(e.keyCode === 27 && n === 'escape') {
       return true;
@@ -97,7 +97,10 @@ var MVC = {
     array.Remove = function(element) {
       //More about deleting elements from an array in JavaScript:
       //http://stackoverflow.com/questions/500606/javascript-array-delete-elements
-      var i = array.indexOf(element);
+      //indexOf breaks in IE < 9!
+      //var i = array.indexOf(element);
+      //Solution:
+      var i = $.inArray(element, array);
       if(i !== -1) {
         array.splice(i, 1);
         return true;
@@ -116,8 +119,8 @@ var MVC = {
      */
     array.Find = function(element) {
       var foundItems = [];
-      var index = array.indexOf(element)
-      while (index != -1)
+      var index = array.indexOf(element);
+      while (index !== -1)
       {
         foundItems.push(index);
         index = array.indexOf(element, ++index);
@@ -373,7 +376,7 @@ var MVC = {
         .trigger(evt);
         
       return $object;
-    }
+    };
     
     /**
      * AddProperty
@@ -658,7 +661,7 @@ var MVC = {
      */
     $object.FindElement = function(selector) {
       return $($object.GetViewId() + ' ' + selector);
-    }
+    };
     
     /**
      * AddEvents
@@ -822,7 +825,7 @@ var MVC = {
      */
     var init = $object['init'];
     //Do not run the .init() method if it is undefined or null!
-    if(init != undefined && init !== null) {
+    if(init !== undefined && init !== null) {
       setTimeout(function() {
         init();
       }, 1);
@@ -867,7 +870,7 @@ var MVC = {
       //console.log('setValues called!');
       //console.log(this.getDivElements(this));
       //Set the values for  'p', 'div' and 'span' elements
-      $this = this;
+      var $this = this;
       $this.getDivElements(this).each(function() {
         var key = $this.getElementKey(this);
         if(key === undefined) {
@@ -915,7 +918,7 @@ var MVC = {
     getValues : function() {
       var data = {},      
           formData = {};
-      $this = this;
+      var $this = this;
       $this.getInputElements(this).each(function() {
         var elm = $(this);
         var type = elm.attr('type'),

@@ -43,6 +43,8 @@
             
                 <li><a href="..&#x2F;classes/Controller.html">Controller</a></li>
             
+                <li><a href="..&#x2F;classes/List.html">List</a></li>
+            
                 <li><a href="..&#x2F;classes/ModelView.html">ModelView</a></li>
             
             </ul>
@@ -97,33 +99,135 @@
 &#x2F;&#x2F; To minify: http:&#x2F;&#x2F;localhost&#x2F;minify&#x2F;min&#x2F;?f=simplemvc&#x2F;simple.mvc.js
 &#x2F;&#x2F; ==========================================================================
 &#x2F;**
- * Helper functions (helps reduce code base)
- *&#x2F;
-var CMN = {
-  &#x2F;**
-   * 
-   * @param {String} input
-   * @return The input string, but with the first char in upper case
-   *&#x2F;
-  &#x2F;*FstChrUp : function(input) {
-    return input.substring(0, 1).toUpperCase() + input.substring(1, input.length);
-  }*&#x2F;
-  LOG : function(data) {
-    console.log(data);
-  },
-  JSTR : function(o) {
-    return CMN.JSTR(o, null, 2);
-  }
-};
-&#x2F;**
  * Provides the core MVC classes: Controller &amp; ModelView 
+ * 
+ * #1 Design Rule - Capitalization
+ * 
+ * Internal methods (except the .toArray() method) have the first letter
+ * capitalized. This is by design for two reasons:
+ * 
+ *  1) JavaScript has many built in methods which already &#x27;belong&#x27; to an object
+ *     so this is a good &#x27;solution&#x27; which makes it possible to use methods such 
+ *     as .Delete() (as .delete wouldn&#x27;t be valid in JavaScript).
+ * 
+ * 2) To distinguish between the object&#x27;s and JS built-in and &#x27;custom&#x27; (passed
+ *   with the object data when a ModelView instance is created) methods. 
+ * 
+ * #2 Design Rule - Associative vs &#x27;.&#x27;-notation
+ * 
+ * Internet Explorer (not all) don&#x27;t like when an element&#x2F;property in an 
+ * object literal or array is being accessed using dot notation. Even though
+ * it&#x27;s generally encouraged (e.g. www.jshint.com) to use the dot notation, 
+ * this would very likely break when evaluated in IE! Therefore all 
+ * elements&#x2F;properties should be accessed associatively:
+ *  obj = {foo : &#x27;bar&#x27;}; 
+ *  obj[&#x27;foo&#x27;]; &#x2F;&#x2F;(OK!)
+ *  obj.foo; &#x2F;&#x2F;(Breaks in IE (older versions)
+ *  obj.someMethod(); &#x2F;&#x2F;(OK! - also in IE!)
+ * 
+ * 
+ * 
+ * 
  * @module MVC
  * @main MVC
  *&#x2F;
 var MVC = {
   &#x2F;**
+   * KeyCheck
+   * 
+   * A human way to check which key was used.
+   * This is supposed to simulate a static method known from other languages such
+   * as Java.
+   * 
+   * @method KeyCheck
+   * @param {Object} e Event
+   * @param {String} n Name of the key to check against (e.g. &#x27;enter&#x27;, &#x27;escape&#x27;)
+   *&#x2F;
+  KeyCheck : function(e, n) {
+    if(e.keyCode === 13 &amp;&amp; n === &#x27;enter&#x27; | &#x27;return&#x27;) {
+      return true;
+    } else if(e.keyCode === 27 &amp;&amp; n === &#x27;escape&#x27;) {
+      return true;
+    }
+  },
+  &#x2F;**
+   * List
+   * 
+   * A more human way of handling array&#x27;s in JavaScript. it extends the array 
+   * (currently) with two extra methods which makes it more easy and semantic
+   * when adding and removing elements using .Add() and .Remove() methods 
+   * respectively.
+   * 
+   * @class List
+   * @param {Object} An array (is optional)
+   *&#x2F;
+  List : function(array) {
+    &#x2F;&#x2F;If the optional paramater &#x27;array&#x27; hasn&#x27;t been specified, then create an
+    &#x2F;&#x2F;empty Array.
+    if(array === undefined || array === null) {
+      array = [];
+    }
+    &#x2F;**
+     * Add
+     * 
+     * Add a new element - It&#x27;s more semantic to use .Add() instead of .push().
+     * 
+     * @method Add
+     * @param {Object} An element.
+     * @return {Array} The array.
+     *&#x2F;
+    array.Add = function(element) {
+      array.push(element);
+      return array;
+    };
+    &#x2F;**
+     * Remove
+     * 
+     * Remove an element (if found) from the array.
+     * 
+     * @method Remove
+     * @param {Object} An element.
+     *&#x2F;
+    array.Remove = function(element) {
+      &#x2F;&#x2F;More about deleting elements from an array in JavaScript:
+      &#x2F;&#x2F;http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;500606&#x2F;javascript-array-delete-elements
+      var i = array.indexOf(element);
+      if(i !== -1) {
+        array.splice(i, 1);
+        return true;
+      }
+      return false;
+    };
+    &#x2F;**
+     * Find
+     * 
+     * Find elements in the array and return those elemens in a new array.
+     * 
+     * @method Find
+     * @param {Object} An element.
+     * @return {Array} A new Array containing the found elements.
+     * 
+     *&#x2F;
+    array.Find = function(element) {
+      var foundItems = [];
+      var index = array.indexOf(element)
+      while (index != -1)
+      {
+        foundItems.push(index);
+        index = array.indexOf(element, ++index);
+      }
+    };
+    return array;
+  },
+  &#x2F;**
    * Controller which handles the logic, such as saving, updating or deleting
    * the object.
+   * 
+   * For the time being the Controller class doesn&#x27;t do much more than returning
+   * the same data as entered (JSON) object literal. Still this is by design, as
+   * there is a possibility for the &#x27;controller&#x27; to do more than this &#x27;stuff&#x27; 
+   * (handling more than returning data) in the future.
+   *  
    * 
    * @class Controller
    * @constructor
@@ -142,20 +246,40 @@ var MVC = {
    * @constructor
    *&#x2F;
   ModelView : function(viewId, $object, $settings) {
-    &#x2F;&#x2F;CMN.LOG(&quot;ModelView Created...&quot;);
-    
-    &#x2F;&#x2F;$object = {};
+    &#x2F;&#x2F;console.log(&quot;ModelView Created...&quot;);
     
     &#x2F;&#x2F;Make sure that the object data always exists. Only require &#x27;viewId&#x27;
     if($object === null || $object === undefined) {
       $object = {};
-    }
-    
+    } 
     
     &#x2F;&#x2F;Make sure that the settings always exist and with certain properties.
     if($settings === null || $settings === undefined) {
       $settings = {};
     }
+    
+    var clone = $settings[&#x27;clone&#x27;];
+    if(clone !== undefined) {
+      &#x2F;&#x2F;Set the clone template to be the view id
+      clone[&#x27;template&#x27;] = viewId;
+      &#x2F;&#x2F;Update the view id with the new clone id
+      viewId = clone[&#x27;id&#x27;];
+      var viewIdNoHash = viewId.substring(1, viewId.length);
+      &#x2F;&#x2F;Clone the source and update the viewId
+      var element = $($(clone[&#x27;template&#x27;]).clone(clone[&#x27;withDataAndEvents&#x27;]))
+                      .attr(&#x27;id&#x27;, viewIdNoHash);
+      
+      &#x2F;&#x2F;Update the datasrc with the new view id
+      $(element)
+        &#x2F;&#x2F;.find(viewId + &#x27; li[datasrc=&quot;&quot;]&#x27;)
+        .find(&#x27;[datasrc=&quot;&quot;]&#x27;)
+        .attr(&#x27;datasrc&#x27;, viewId);
+      &#x2F;&#x2F;If the template originally was hidden using &#x27;display: none;&#x27; - make it visible to the user
+      &#x2F;&#x2F;element.show();
+      &#x2F;&#x2F;Append the copy to the target
+      clone[&#x27;append&#x27;](element);
+    }
+    
     if($settings[&#x27;viewId&#x27;] === undefined) {
       $.extend($settings, {viewId : viewId});
     }
@@ -165,7 +289,21 @@ var MVC = {
     if($settings[&#x27;eventUsed&#x27;] === undefined) {
       $.extend($settings, {eventUsed : &#x27;&#x27;});
     }
-    &#x2F;&#x2F;alert(CMN.JSTR($settings));
+  
+    &#x2F;&#x2F;Attach events to the save, update, delete (more?) buttons&#x2F;submit.
+    $(viewId + &#x27; button,&#x27; + viewId + &#x27; a,&#x27; + viewId + &#x27; submit,&#x27; + viewId + &#x27; i&#x27;)
+      &#x2F;&#x2F;.find(&#x27;button,a,submit,i&#x27;)
+      .each(function(i, e) {
+        $(this)
+        &#x2F;&#x2F;.attr(&#x27;id&#x27;, e.id+&#x27;_&#x27;+viewId)&#x2F;&#x2F;NoHash)
+        .click(function(e) {
+          &#x2F;&#x2F;$object.RunCtr($id, par);
+          &#x2F;&#x2F;$object.Save();
+          &#x2F;&#x2F;console.log(e.target.name);
+          $object.RunCtr(e.target.name);
+        });
+        &#x2F;&#x2F;console.log(i + &quot; &quot; + e.id);
+      });
     
     &#x2F;&#x2F;Start: Methods
     
@@ -177,10 +315,12 @@ var MVC = {
      * 
      * @method Save
      * @param {Object} par Provide extra parameters if needed. 
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.Save = function(par) {
-      $object.ExecuteController(&#x27;Save&#x27;, par);
-    }
+      $object.RunCtr(&#x27;Save&#x27;, par);
+      return $object;
+    };
     &#x2F;**
      * Call the .Update() method whenever you want to update the object.
      * Notice: This is intended behaviour, but the implementation of the
@@ -189,10 +329,12 @@ var MVC = {
      * 
      * @method Update
      * @param {Object} par Provide extra parameters if needed. 
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.Update = function(par) {
-      $object.ExecuteController(&#x27;Update&#x27;, par);
-    }
+      $object.RunCtr(&#x27;Update&#x27;, par);
+      return $object;
+    };
     &#x2F;**
      * Call the .Delete() method whenever you want to delete the object.
      * Notice: This is intended behaviour, but the implementation of the
@@ -200,11 +342,13 @@ var MVC = {
      * is called&#x2F;executed.
      * 
      * @method Delete
-     * @param {Object} par Provide extra parameters if needed. 
+     * @param {Object} par Provide extra parameters if needed.
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.Delete = function(par) {
-      $object.ExecuteController(&#x27;Delete&#x27;, par);
-    }
+      $object.RunCtr(&#x27;Delete&#x27;, par);
+      return $object;
+    };
     
     &#x2F;**
      * Clear
@@ -213,10 +357,12 @@ var MVC = {
      * 
      * 
      * @method Clear
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.Clear = function(prop) {
       $object.Set(prop, &#x27;&#x27;);
-    }
+      return $object;
+    };
     
     &#x2F;**
      * Clear All
@@ -224,10 +370,12 @@ var MVC = {
      * Clears all the data in the Model and the View.
      * 
      * @method ClearAll
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.ClearAll = function() {
       &#x2F;&#x2F;implement it
-    }
+      return $object;
+    };
     
     &#x2F;**
      * AddGetSet
@@ -250,25 +398,41 @@ var MVC = {
      * @param {String} prop The object&#x27;s property name
      * @param {Function} onUpdate callBack function will execute, whenever 
      * the get&#x2F;set event handlers bound with .bind() method are triggered.
+     * @return {Object} The object (itself)
      *&#x2F;
-    $object.AddGetSet = function(prop, onUpdate) {
-      &#x2F;&#x2F;CMN.LOG(&quot;AddGetSet&quot;);
+    $object.AddGetSet = function(prop) {&#x2F;&#x2F;, onUpdate) {
+      &#x2F;&#x2F;console.log(&quot;AddGetSet&quot;);
       &#x2F;&#x2F;var prop = Common.FstChrUp(prop);
       
       $($object)
-      .bind(&#x27;get&#x27;+prop, function(event, ret) {
-        ret[&#x27;value&#x27;] = $object[prop];
-      })
-      .bind(&#x27;set&#x27;+prop, function (event, newVal) {
-        &#x2F;&#x2F;Replace the old value with the new value in the model
-        var oldVal = $object[prop];
-        &#x2F;&#x2F;Only update values if they&#x27;re changed
-        if(oldVal !== newVal) {
-          $object[prop] = newVal;
-          onUpdate(prop, oldVal, newVal);
-        }
-      });
-    }
+        .bind(&#x27;get&#x27;+prop, function(event, ret) {
+          ret[&#x27;value&#x27;] = $object[prop];
+        })
+        .bind(&#x27;set&#x27;+prop, function (event, newVal) {
+          &#x2F;&#x2F;Replace the old value with the new value in the model
+          var oldVal = $object[prop];
+          &#x2F;&#x2F;Only update values if they&#x27;re changed
+          if(oldVal !== newVal) {
+            $object[prop] = newVal;
+            
+            
+            &#x2F;&#x2F;alert(n + &quot;: &quot; + ov + &quot;=&gt;&quot; + nv);
+            &#x2F;&#x2F;Update the view accordingly
+            &#x2F;&#x2F;MVC.SetViewFromModel(viewId, $object); &#x2F;&#x2F;$(viewId).getSetHtml($object);
+            $object.SetViewFromModel();
+            
+            &#x2F;&#x2F;Make sure that the input will have the change event triggered,
+            &#x2F;&#x2F;so that the views bound to this element will also be updated.
+            &#x2F;&#x2F;This is important in case the model is changed using setTimeout()
+            &#x2F;&#x2F;which will update the model, then this change must simulate
+            &#x2F;&#x2F;a user setting the value of the input. 
+            $object.triggerEvent(prop, &#x27;change&#x27;);&#x2F;&#x2F;.triggerEvent(prop, &#x27;keyup&#x27;);
+            &#x2F;&#x2F;alert(&quot;OK&quot;);
+            &#x2F;&#x2F;onUpdate(prop, oldVal, newVal);
+          }
+        });
+        return $object;
+    };
     
     &#x2F;**
      * RemoveGetSet
@@ -277,12 +441,70 @@ var MVC = {
      * 
      * @method RemoveGetSet
      * @param {String} prop The object&#x27;s property name 
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.RemoveGetSet = function(prop) {
       $($object)
-      .unbind(&#x27;get&#x27;+prop)
-      .unbind(&#x27;set&#x27;+prop);
+        .unbind(&#x27;get&#x27;+prop)
+        .unbind(&#x27;set&#x27;+prop);
+        
+      return $object;
+    };
+    
+    &#x2F;**
+     * Trigger Event
+     * 
+     * Trigger an event on an input element inside the view
+     * 
+     * @method triggerEvent
+     * @param {String} prop Property name
+     * @param {String} evt Event type&#x2F;name (e.g. &#x27;keyup&#x27;)
+     * @return {Object} The object (itself)
+     *&#x2F;
+    $object.triggerEvent = function(prop, evt) {
+      $(viewId + &#x27; :input[name=&quot;&#x27;+prop+&#x27;&quot;]&#x27;)
+        .not(&#x27;.excludeFromModel&#x27;)
+        .trigger(evt);
+        
+      return $object;
     }
+    
+    &#x2F;**
+     * AddProperty
+     * 
+     * Add a property to the Model
+     * 
+     * @method AddProperty
+     * @param {String} prop The property name 
+     * @return {Object} The object (itself)
+     *&#x2F;
+    $object.AddProperty = function(prop) {
+      $object
+        .AddEvents()
+        .AddGetSet(prop)
+        .triggerEvent(prop, &#x27;keyup&#x27;);
+      console.log(&quot;Added property &quot; + prop + &quot; to the Model.&quot;);
+      return $object;
+    };
+    
+    &#x2F;**
+     * RemoveProperty
+     * 
+     * Remove a property from the Model
+     * 
+     * @method RemoveProperty
+     * @param {String} prop The property name 
+     * @return {Object} The object (itself)
+     *&#x2F;
+    $object.RemoveProperty = function(prop) {
+      $object.RemoveGetSet(prop);
+      delete $object[prop];
+      $(viewId + &#x27; :input[name=&quot;&#x27;+prop+&#x27;&quot;]&#x27;)
+        .not(&#x27;.excludeFromModel&#x27;)
+        .remove();
+      console.log(&quot;Removed property &quot; + prop + &quot; from the Model.&quot;);
+      return $object;
+    };
     
     &#x2F;**
      * Set
@@ -294,17 +516,18 @@ var MVC = {
      * @method Set
      * @param {String} prop The object&#x27;s property name
      * @param {String} value The new value to set for the property
-     * 
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.Set = function(prop, value) {
       &#x2F;&#x2F;alert(&quot;Setting&quot;);
-      &#x2F;&#x2F;CMN.LOG(&quot;Set()&quot;);
+      &#x2F;&#x2F;console.log(&quot;Set()&quot;);
       &#x2F;&#x2F;$(obj).trigger(&#x27;set&#x27;+Common.FstChrUp(key), [val]);
       &#x2F;&#x2F;$($object).triggerHandler(&#x27;set&#x27;+prop, [value]); ?
       $($object).triggerHandler(&#x27;set&#x27;+prop, [value]);
       &#x2F;&#x2F;Update databound DOM values 
       $object.SetDataboundDomVal(viewId, prop, value);
-    }
+      return $object;
+    };
     &#x2F;**
      * Get
      * 
@@ -313,16 +536,18 @@ var MVC = {
      * @method Get
      * @param {String} prop The object&#x27;s property name
      * @return {Object} value The value from the object&#x27;s property 
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.Get = function(prop) {
       &#x2F;&#x2F;http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;9145347&#x2F;jquery-returning-value-from-trigger
-      &#x2F;&#x2F;CMN.LOG(&quot;Get()&quot;);
+      &#x2F;&#x2F;console.log(&quot;Get()&quot;);
       var result = { value : undefined };
       &#x2F;&#x2F;$($object).triggerHandler(&#x27;get&#x27;+Common.FstChrUp(key), [result]);
       &#x2F;&#x2F;$($object).triggerHandler(&#x27;get&#x27;+prop, [result]); ?
       $($object).triggerHandler(&#x27;get&#x27;+prop, [result]);
       return result[&#x27;value&#x27;];
-    }
+    };
+    
     
     &#x2F;**
      * GetViewData
@@ -333,10 +558,10 @@ var MVC = {
      * @return {Object} The View data as JSON object
      *&#x2F;
     $object.GetViewData = function() {
-      &#x2F;&#x2F;CMN.LOG(&quot;GetViewData()&quot;);
+      &#x2F;&#x2F;console.log(&quot;GetViewData()&quot;);
       &#x2F;&#x2F;Get the values from the View (DOM)
       return $(viewId).getSetHtml();
-    }
+    };
     
     &#x2F;**
      * SetViewFromModel
@@ -346,11 +571,12 @@ var MVC = {
      * @method SetViewFromModel
      *&#x2F;
     $object.SetViewFromModel = function() {
-      &#x2F;&#x2F;CMN.LOG(&quot;SetViewFromModel()&quot;);
+      &#x2F;&#x2F;console.log(&quot;SetViewFromModel()&quot;);
       &#x2F;&#x2F;Set the values in the DOM
       &#x2F;&#x2F;alert(JSON.stringify($object));
       $(viewId).getSetHtml($object);
-    }
+      return $object;
+    };
     
     &#x2F;**
      * SetModelFromView
@@ -371,10 +597,11 @@ var MVC = {
      * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or 
      * true, databound elements inside and&#x2F;or outside the the View will also 
      * get updated. If false, then they won&#x27;t. 
+     * @return {Object} The object (itself)
      *&#x2F;
      &#x2F;&#x2F;$object.SetModelFromView = function(updateDataboundValues) {
      $object.SetModelFromView = function() {
-      &#x2F;&#x2F;CMN.LOG(&quot;SetModelFromView()&quot;);
+      &#x2F;&#x2F;console.log(&quot;SetModelFromView()&quot;);
       &#x2F;&#x2F;Get the values from the View (DOM)
       var data = $object.GetViewData();
       &#x2F;&#x2F;Update the model using the View values
@@ -411,8 +638,9 @@ var MVC = {
         }
       });
       &#x2F;&#x2F;Return the values in JSON format
-      return data;
-    }
+      &#x2F;&#x2F;return data;
+      return $object;
+    };
     
     &#x2F;**
      * SetDataboundDomVal
@@ -423,17 +651,19 @@ var MVC = {
      * @param {String} datasrc A viewId.
      * @param {String} name An element&#x27;s name.
      * @param {String} value A new value.
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.SetDataboundDomVal = function(datasrc, name, value) {
-      &#x2F;&#x2F;CMN.LOG(&quot;SetDataboundDomVal()&quot;);
+      &#x2F;&#x2F;console.log(&quot;SetDataboundDomVal()&quot;);
       &#x2F;&#x2F;The following works fine, except it breaks in IE&lt;9!!!
       &#x2F;&#x2F;$(&#x27;[datasrc=&#x27;+datasrc+&#x27;][name=&#x27;+name+&#x27;]&#x27;).text(value).val(value);
       &#x2F;&#x2F;This works though:
-      &#x2F;&#x2F;CMN.LOG(counter + &quot; - datasrc: &quot; + datasrc + &quot; - name: &quot; + name + &quot; - value: &quot; + value);
+      &#x2F;&#x2F;console.log(counter + &quot; - datasrc: &quot; + datasrc + &quot; - name: &quot; + name + &quot; - value: &quot; + value);
       $(&#x27;div[datasrc|=&#x27;+datasrc+&#x27;][name|=&#x27;+name+&#x27;],p[datasrc|=&#x27;+datasrc+&#x27;][name|=&#x27;+name+&#x27;],span[datasrc|=&#x27;+datasrc+&#x27;][name|=&#x27;+name+&#x27;]&#x27;).text(value);
       $(&#x27;input[datasrc|=&#x27;+datasrc+&#x27;][name|=&#x27;+name+&#x27;]&#x27;).val(value);
       &#x2F;&#x2F;counter++;
-    }
+      return $object;
+    };
     
     &#x2F;**
      * RunEvent
@@ -442,6 +672,7 @@ var MVC = {
      * 
      * @method RunEvent
      * @param {String} event The eventName to trigger&#x2F;execute.
+     * @return {Object} The object (itself)
      *&#x2F;
     $object.RunEvent = function(event) {
       &#x2F;&#x2F;alert(event.target.name);
@@ -450,37 +681,40 @@ var MVC = {
         type = event;
       }
       if(event === undefined) {
-        &#x2F;&#x2F;CMN.LOG(&#x27;event &quot;e&quot; is undefined!&#x27;);
+        &#x2F;&#x2F;console.log(&#x27;event &quot;e&quot; is undefined!&#x27;);
         return;
       }
       if($.trim(event.target.name).length &gt; 0) {
         if($settings[&#x27;settings&#x27;][type] !== undefined &amp;&amp; $settings[&#x27;settings&#x27;][type] !== null) {
           $settings[&#x27;settings&#x27;][&#x27;eventUsed&#x27;] = type;
-          console.log(type);
+          &#x2F;&#x2F;console.log(type);
           $settings[&#x27;settings&#x27;][type](event, event.target.name, event.target.value);
         }
       } else {
-        CMN.LOG(&quot;source element has no name attribute assigned (required!)&quot;);
+        console.log(&quot;source element has no name attribute assigned (required!)&quot;);
       }
-    }
+      return $object;
+    };
     
     &#x2F;**
-     * ExecuteController
+     * RunCtr
      * 
      * Execute a method in the controller.
      * 
-     * @method ExecuteController
+     * @method RunCtr
      * @param {String} method The methods name specified in the controller.
      * @param {Object} par If needed you can provide optional parameters.
+     * @return {Object} The object (itself)
      *&#x2F;
-    $object.ExecuteController = function(method, par) {
+    $object.RunCtr = function(method, par) {
       var exec = $object[&#x27;settings&#x27;][&#x27;controller&#x27;][method];
       if(exec !== undefined &amp;&amp; exec !== null) {
-        exec($object, par); &#x2F;&#x2F;?
+        exec(par);
       } else {
-        CMN.LOG(&#x27;Missing &#x27; + method + &#x27;() method!&#x27;);
+        console.log(&#x27;Missing &#x27; + method + &#x27;() method!&#x27;);
       }
-    }
+      return $object;
+    };
     
     &#x2F;**
      * toArray
@@ -492,7 +726,104 @@ var MVC = {
      *&#x2F;
     $object.toArray = function() {
       return $.makeArray($object);
+    };
+    
+    &#x2F;**
+     * GetViewId
+     * 
+     * Get the ID of the View
+     * 
+     * @method GetViewId
+     * @return {String} The View ID
+     *&#x2F;
+    $object.GetViewId = function() {
+      return $object[&#x27;settings&#x27;][&#x27;viewId&#x27;];
+    };
+    
+    &#x2F;**
+     * FindElement
+     * 
+     * Find and return one or many element&#x2F;s within the View using a (id or class) selector.
+     * 
+     * If the elemenet is not found an empty array is returned.
+     * 
+     * @method FindElement
+     * @return {Array} An element from the View.
+     *&#x2F;
+    $object.FindElement = function(selector) {
+      return $($object.GetViewId() + &#x27; &#x27; + selector);
     }
+    
+    &#x2F;**
+     * AddEvents
+     * 
+     * Add events to the object&#x27;s input fields
+     * 
+     * @method AddEvents
+     * @return {Object} The object
+     *&#x2F;
+    $object.AddEvents = function() {
+      &#x2F;&#x2F;Update the model view, whenever a change occurs
+      $(viewId + &#x27; :input&#x27;)
+        .not(&#x27;.excludeFromModel&#x27;)
+        .focus(function(e){
+          &#x2F;&#x2F;http:&#x2F;&#x2F;jsfiddle.net&#x2F;PKVVP&#x2F;
+          $object.RunEvent(e);
+        })
+        .blur(function(e) {
+          $object.RunEvent(e);      
+        })
+        .change(function(e){
+          &#x2F;&#x2F;Update the model and also the databound elements
+          &#x2F;&#x2F;MVC.SetModelFromView(viewId, $object); &#x2F;&#x2F;Always do this (core concept!)
+          $object.SetModelFromView(); &#x2F;&#x2F;Always do this (core concept!)
+          $object.RunEvent(e);
+        })
+        .select(function(e) {
+          $object.RunEvent(e);
+        })
+        .submit(function(e){
+          $object.RunEvent(e);
+        })
+        &#x2F;**
+         * keyup event
+         * 
+         * It&#x27;s important to know that when overriding this event, 
+         * but still want &#x27;live&#x27; updating of the Model to occur,
+         * then this method must be called from the custom implementation 
+         * of the &#x27;keyup&#x27; event!
+         * 
+         * @event keyup ...
+         * 
+         *&#x2F;
+        .keyup(function(e){
+          &#x2F;&#x2F;console.log(&quot;keyup&quot;);
+          &#x2F;&#x2F;If the &#x27;keyup&#x27; event hasn&#x27;t been specified in the settings, then
+          &#x2F;&#x2F;by default update the Model and databound values using the
+          &#x2F;&#x2F;SetModelFromView() method
+          if($settings[&#x27;settings&#x27;][&#x27;keyup&#x27;] === undefined) {
+            &#x2F;&#x2F;$object.SetDataboundDomVal(viewId, e.target.name, e.target.value);
+            $object.SetModelFromView();
+          }
+          $object.RunEvent(e); &#x2F;&#x2F;e should euqal &#x27;change&#x27; 
+          &#x2F;*var n = $(this).attr(&#x27;name&#x27;);
+          var v = $(this).val();
+          MVC.SetDataboundDomVal(viewId, n, v);*&#x2F;
+        })
+        .keypress(function(e) {
+          $object.RunEvent(e);
+        })
+        .keydown(function(e) {
+          $object.RunEvent(e);
+        })
+        .mouseenter(function(e) {
+          $object.RunEvent(e);
+        })
+        .mouseleave(function(e) {
+          $object.RunEvent(e);
+        });
+        return $object;
+    };
     
     &#x2F;&#x2F; END: Internal methods
     
@@ -520,7 +851,7 @@ var MVC = {
         &#x2F;&#x2F;Add the Getter and Setter methods
         &#x2F;&#x2F;n: name, ov: old value, nv: new value
         &#x2F;&#x2F;MVC.AddGetSet($object, k, function(n, ov, nv) {
-        $object.AddGetSet(k, function(n, ov, nv) {
+        $object.AddGetSet(k);&#x2F;*, function(n, ov, nv) {
           &#x2F;&#x2F;alert(n + &quot;: &quot; + ov + &quot;=&gt;&quot; + nv);
           &#x2F;&#x2F;Update the view accordingly
           &#x2F;&#x2F;MVC.SetViewFromModel(viewId, $object); &#x2F;&#x2F;$(viewId).getSetHtml($object);
@@ -532,30 +863,10 @@ var MVC = {
           &#x2F;&#x2F;which will update the model, then this change must simulate
           &#x2F;&#x2F;a user setting the value of the input. 
           $(&#x27;:input[name=&#x27;+n+&#x27;]&#x27;).not(&#x27;.excludeFromModel&#x27;).trigger(&#x27;change&#x27;);
-        });
+        });*&#x2F;
       });
     }
-    &#x2F;*
-    var clone = $settings[&#x27;clone&#x27;];
-    if(clone !== undefined) {
-      var newViewId = clone[&#x27;id&#x27;];
-      &#x2F;&#x2F;Clone the source
-      var element = $(viewId).clone();
-      &#x2F;&#x2F;CMN.LOG(&#x27;element old id: #&#x27; + element.attr(&#x27;id&#x27;));
-      var $copy = $(element).attr(&#x27;id&#x27;, newViewId);
-      &#x2F;&#x2F;CMN.LOG(&#x27;element new id: #&#x27; + element.attr(&#x27;id&#x27;));
-      &#x2F;&#x2F;CMN.LOG($copy.html());
-      var newId = $.now();
-      var elem = $(&#x27;span,p,div,input&#x27;);
-      CMN.LOG(&#x27;name: &#x27; + elem.attr(&#x27;name&#x27;));
-      elem.attr(&#x27;name&#x27;, name + &quot;_&quot; + newId);&#x2F;&#x2F;.attr(&#x27;id&#x27;, newId);
-      CMN.LOG($copy.html());
-      &#x2F;&#x2F;If the template originally was hidden using &#x27;display: none;&#x27; - make it visible to the user
-      $copy.show();
-      &#x2F;&#x2F;Append the copy to the target
-      $(clone[&#x27;target&#x27;]).append($copy);
-    }
-    *&#x2F;
+    
     if($settings[&#x27;autoSaveInterval&#x27;] &gt; 0) {
       $settings[&#x27;eventUsed&#x27;] = &#x27;&quot;autoSave&quot;&#x27;;
       setInterval(function() { 
@@ -563,58 +874,7 @@ var MVC = {
       }, $settings[&#x27;autoSaveInterval&#x27;]);
     }
     
-    &#x2F;&#x2F;Update the model view, whenever a change occurs
-    $(viewId+&#x27; :input&#x27;)
-    .not(&#x27;.excludeFromModel&#x27;)
-    .focus(function(e){
-      &#x2F;&#x2F;http:&#x2F;&#x2F;jsfiddle.net&#x2F;PKVVP&#x2F;
-      $object.RunEvent(e);
-    })
-    .blur(function(e) {
-      $object.RunEvent(e);      
-    })
-    .change(function(e){
-      &#x2F;&#x2F;Update the model and also the databound elements
-      &#x2F;&#x2F;MVC.SetModelFromView(viewId, $object); &#x2F;&#x2F;Always do this (core concept!)
-      $object.SetModelFromView(); &#x2F;&#x2F;Always do this (core concept!)
-      $object.RunEvent(e);
-    })
-    .select(function(e) {
-      $object.RunEvent(e);
-    })
-    .submit(function(e){
-      $object.RunEvent(e);
-    })
-    &#x2F;**
-     * keyup event
-     * 
-     * It&#x27;s important to know that when overriding this event, 
-     * but still want &#x27;live&#x27; updating of the Model to occur,
-     * then this method must be called from the custom implementation 
-     * of the &#x27;keyup&#x27; event!
-     * 
-     * @event keyup ...
-     * 
-     *&#x2F;
-    .keyup(function(e){
-      &#x2F;&#x2F;If the &#x27;keyup&#x27; event hasn&#x27;t been specified in the settings, then
-      &#x2F;&#x2F;by default update the Model and databound values using the
-      &#x2F;&#x2F;SetModelFromView() method
-      if($settings[&#x27;settings&#x27;][&#x27;keyup&#x27;] === undefined) {
-        &#x2F;&#x2F;$object.SetDataboundDomVal(viewId, e.target.name, e.target.value);
-        $object.SetModelFromView();
-      }
-      $object.RunEvent(e); &#x2F;&#x2F;e should euqal &#x27;change&#x27; 
-      &#x2F;*var n = $(this).attr(&#x27;name&#x27;);
-      var v = $(this).val();
-      MVC.SetDataboundDomVal(viewId, n, v);*&#x2F;
-    })
-    .keypress(function(e) {
-      $object.RunEvent(e);
-    })
-    .keydown(function(e) {
-      $object.RunEvent(e);
-    });
+    $object.AddEvents();
 
     &#x2F;&#x2F;Add the settings to the Model object
     $settings = { settings : $settings };
@@ -623,12 +883,53 @@ var MVC = {
     &#x2F;&#x2F;$data = { data : $data };
     $.extend($object, $settings);
     &#x2F;&#x2F;alert(JSON.stringify($object, null, 2));
+    
+    
+    &#x2F;**
+     * To keep the code which belongs to the object, but normally would be 
+     * placed after object instantiation, we isntead want to place it inside
+     * the .init() method, which gets executed 1ms after the object has been
+     * created.
+     * 
+     * Why we use setTimeout: read below...
+     * 
+     * In some cases the user wants to call the object itself like this:
+     * 
+     * 
+     * &#x2F;&#x2F;Create a new object
+     * obj = MVC.ModelView(&#x27;#viewId&#x27;, {
+     *   &#x2F;&#x2F;Data:
+     *   foo : &#x27;bar&#x27;,
+     *   &#x2F;&#x2F;Method
+     *   aCustomMethod : function() {
+     *    &#x2F;&#x2F;does something
+     *   }
+     *   init : function() {
+     *     &#x2F;&#x2F;All methods and other &#x27;stuff&#x27; placed inside the .init() method
+     *     &#x2F;&#x2F;gets executed immediately after the object has been created (setup).
+     *     &#x2F;&#x2F;Therefore it&#x27;s important (and necessary) to use setTimeout, as the
+     *     &#x2F;&#x2F;object actually hasn&#x27;t been created yet. So we set it to 1 ms! 
+     *     obj.aCustomMethod();
+     *   }
+     * }
+     * });
+     *&#x2F;
+    var init = $object[&#x27;init&#x27;];
+    &#x2F;&#x2F;Do not run the .init() method if it is undefined or null!
+    if(init != undefined &amp;&amp; init !== null) {
+      setTimeout(function() {
+        init();
+      }, 1);
+    }
+    
     return $object;
   }
 };
 
 &#x2F;**
  * Get or set HTML (DOM) values
+ * 
+ * Inspired by formParams: http:&#x2F;&#x2F;jquerypp.com&#x2F;#formparams
  * 
  * @param {Object} jQuery
  *&#x2F;
@@ -643,9 +944,7 @@ var MVC = {
       }
     },
     getInputElements : function(target) {
-      var selItems = target.find(&#x27;input,select,textarea&#x27;).filter(&#x27;:not(.excludeFromModel)&#x27;);
-      &#x2F;&#x2F;CMN.LOG(selItems);
-      return selItems;
+      return target.find(&#x27;input,select,textarea&#x27;).filter(&#x27;:not(.excludeFromModel)&#x27;);
     },
     getElementKey : function(element) {
       var key = $(element).attr(&quot;datafld&quot;);
@@ -653,16 +952,14 @@ var MVC = {
         key = $(element).attr(&quot;id&quot;);
       }
       return key;
+      &#x2F;&#x2F;return $(element).attr(&quot;datafld&quot;) ? undefined : $(element).attr(&quot;id&quot;); 
     },
     getDivElements : function(target) {
-      var selItems =  target.find(&#x27;p,span,div&#x27;).filter(&#x27;:not(.excludeFromModel)&#x27;);
-      &#x2F;&#x2F;CMN.LOG(selItems);
-      return selItems;
+      return target.find(&#x27;p,span,div&#x27;).filter(&#x27;:not(.excludeFromModel)&#x27;);
     },
-    
     setValues : function(params) {
-      CMN.LOG(&#x27;setValues called!&#x27;);
-      &#x2F;&#x2F;CMN.LOG(this.getDivElements(this));
+      &#x2F;&#x2F;console.log(&#x27;setValues called!&#x27;);
+      &#x2F;&#x2F;console.log(this.getDivElements(this));
       &#x2F;&#x2F;Set the values for  &#x27;p&#x27;, &#x27;div&#x27; and &#x27;span&#x27; elements
       $this = this;
       $this.getDivElements(this).each(function() {
@@ -673,8 +970,8 @@ var MVC = {
         &#x2F;&#x2F;alert(key);
         var value = params[key];
         &#x2F;&#x2F;alert(key + &quot; = &quot; + value);
-        CMN.LOG(value);
-        $(this).text(value);
+        &#x2F;&#x2F;console.log(value);
+        $(this).html(value);
         &#x2F;&#x2F;var toReplace = $.trim($(this).text());
         &#x2F;&#x2F;alert(toReplace);
       });
@@ -685,19 +982,21 @@ var MVC = {
         if ( value !== undefined) {
           $this = $(this);
           
-          &#x2F;&#x2F; Nested these if statements for performance
           if ( $this.is(&quot;:radio&quot;) ) {
             if ( $this.val() === value ) {
-              &#x2F;&#x2F;alert(value);
               $this.attr(&quot;checked&quot;, true);
-              &#x2F;&#x2F;value = $this.val();
             }
           } else if ( $this.is(&quot;:checkbox&quot;) ) {
             &#x2F;&#x2F; Convert single value to an array to reduce
             &#x2F;&#x2F; complexity
-            value = $.isArray( value ) ? value : [value];
-            if ( $.inArray( $this.val(), value ) &gt; -1) {
+            if(value) {
               $this.attr(&quot;checked&quot;, true);
+            }
+            else {
+              value = $.isArray( value ) ? value : [value];
+              if ( $.inArray( $this.val(), value ) &gt; -1) {
+                $this.attr(&quot;checked&quot;, true);
+              }
             }
             $this.val( value );
           } else {
@@ -720,10 +1019,10 @@ var MVC = {
           return;
         }
         
-        &#x2F;&#x2F;CMN.LOG(&quot;type: &quot; + type + &quot; - name: &quot; + name + &quot; - value: &quot; + value);
+        &#x2F;&#x2F;console.log(&quot;type: &quot; + type + &quot; - name: &quot; + name + &quot; - value: &quot; + value);
         if(elm.hasClass(&#x27;isNumber&#x27;)) {
           value = parseInt(value);
-        } 
+        }
         
         if(elm.is(&#x27;:checkbox&#x27;)) {
           value = false;
@@ -745,24 +1044,20 @@ var MVC = {
       $this.getDivElements(this).each(function() {
         var elem = $(this);
         var value = elem.text();
-        &#x2F;&#x2F;alert(value);
         if(value !== undefined) {
-          
           var key = $this.getElementKey(this);
           if(key === undefined) {
             return;
           }
-          
           if(elem.hasClass(&#x27;isNumber&#x27;)) {
             value = parseInt(value);
           } 
-          
           &#x2F;&#x2F;alert(key + &quot; = &quot; + value);
           data[key] = value;
         }
       });
-      data = $.extend(data, formData);
-      &#x2F;&#x2F;alert(CMN.JSTR(data, null, 2));
+      $.extend(data, formData);
+      &#x2F;&#x2F;alert(CMN.JSON.stringify(data, null, 2));
       return data;
     }
   });

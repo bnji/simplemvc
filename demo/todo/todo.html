@@ -1,0 +1,62 @@
+<!-- 
+  Note: This template is part of the 'index.html'-file in the same directory. 
+  It depends on jQuery, jStorage and simple.mvc.js (+todo.css).
+  This template is for readability and easier maintenance placed here.
+-->
+<!-- Todo View -->
+<div id='todos' class="well">
+  <div class="page-header">
+    <h1>Todos</h1>
+  </div>
+  <!-- Input -->
+  <input type='text' class='create' name='create' class="excludeFromModel" placeholder="Enter a todo item..." />
+  
+  <!-- List of notes -->
+  <ul id='note-list'>
+    <!-- Note View (template) -->
+    <li class="todo" id="list-template" style="display: none;">
+      <div class="row-fluid">
+        <div class="span9">
+          <!-- isComplete and note are members of the Notes' Model -->
+          <input type="checkbox" name="isComplete" />
+          <span rel="tooltip" datasrc="" name="note" class="note" id="note"> a note </span>
+          <input type="text" name="note" style="display: none;" />
+        </div>
+        <div class="span3">
+          <!-- A controller button (for testing) -->
+          <a class="btn btn-primary btn-mini pull-right" href="#" name="showData">show data</a>
+        </div>
+      </div>
+    </li><!-- //end Note View (template) -->
+  </ul>
+  
+  <!-- "Databound" elements: Information about the Model & View data -->
+  <div id='todo-stats' class="excludeFromModel">
+    <span id="notesCount" class="notesCount"> 0 </span> <span class="notesCountText"> item/s </span> left.
+    <br />
+    <a href="#" name="clearAll" id="clearAll" class="btn btn-danger btn-mini">
+      Remove all
+    </a>
+    <a href="#" name="clearDone" id="clearDone" class="btn btn-danger btn-mini" style="display: none;">
+      Remove <span id="notesDone"> 0 </span> completed <span class="notesDone"> item/s </span>
+    </a>
+    
+    <a href="#" name="exportJSON" id="exportJSON" class="btn btn-primary btn-mini">
+      Export JSON
+    </a>
+    <div id="jsonFileUrl" class="excludeFromModel pull-right"> </div>
+  </div>
+  
+</div><!-- //end Todo View -->
+<!-- Include the todo core script here -->
+<script src="todo.js"></script>
+<!-- Extra functionality: -->
+<script>
+  $('.note').tooltip({
+    animation: true,
+    placement: 'left',
+    title: 'Click to edit',
+    trigger: 'hover',
+    delay: { show: 100, hide: 250 }
+  });
+</script>
