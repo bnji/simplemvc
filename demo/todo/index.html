@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+            "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script type="text/javascript" src="../../simple.mvc.js"></script>
+    <link rel="stylesheet" type='text/css' href='todo.css' />
+    <script type="text/javascript" src="../../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
+    <script src="https://raw.github.com/andris9/jStorage/master/jstorage.min.js"></script>
+    <script src="../../examples/debug.js"></script>
+    <script src="todo.js"></script>
+    <title>todo</title>
+  </head>
+  <body>
+    
+    <div id='todos'>
+      <h1>Todos</h1>
+      
+      <input type='text' class='create' name='create' class="excludeFromModel" placeholder="Enter a todo item..." />
+      
+      <ul id='note-list'>
+        <li class="todo" id="list-template" style="display: none;">
+          <div class="row-fluid">
+            <div class="span9">
+              <input type="checkbox" name="isComplete" />
+              <span rel="tooltip" class="note" datasrc="" name="note" id="note"> a note </span>
+              <input type="text" name="note" style="display: none;" />
+            </div>
+            <div class="span3">
+              <a class="btn btn-primary btn-mini pull-right" href="#" name="showData">show data</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+      
+      <button class="btn btn-primary" name="addNote" style="display: none;">Add note</button>
+      
+      <div id='todo-stats' class="excludeFromModel">
+        <span id="notesCount" class="notesCount"> 0 </span> <span class="notesCountText"> item/s </span> left.
+        <br />
+        <a href="#" name="clearAll" id="clearAll" class="btn btn-inverse btn-mini">
+          Remove all
+        </a>
+        <a href="#" name="clearDone" id="clearDone" class="btn btn-inverse btn-mini" style="display: none;">
+          Remove <span id="notesDone"> 0 </span> completed <span class="notesDone"> item/s </span>
+        </a>
+      </div>
+      
+    </div>
+    
+    <div id="debug"> </div>
+    
+    
+  </body>
+</html>

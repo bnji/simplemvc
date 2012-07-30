@@ -38,3 +38,15 @@ function moveDown(selector, topPadding) {
 function getFiddleUrl(fiddleName) {
   return 'http://jsfiddle.net/bendot/'+fiddleName+'/embedded/result,js,html';
 }
+/**
+ * Only test for a name, dot(.) and 2-5 letters after the dot... 
+ * @param {Object} str
+ */
+function isValidUrl(str) {
+  var pattern = RegExp('[a-zA-Z0-9\-\.]{1,255}\.[a-z]{1,255}\s*');
+  if(!pattern.test(str)) {
+    return false;
+  } else {
+    return true;
+  }
+}

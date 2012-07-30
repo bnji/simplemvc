@@ -6,10 +6,125 @@
 // ==========================================================================
 /**
  * Provides the core MVC classes: Controller & ModelView 
+ * 
+ * #1 Design Rule - Capitalization
+ * 
+ * Internal methods (except the .toArray() method) have the first letter
+ * capitalized. This is by design for two reasons:
+ * 
+ *  1) JavaScript has many built in methods which already 'belong' to an object
+ *     so this is a good 'solution' which makes it possible to use methods such 
+ *     as .Delete() (as .delete wouldn't be valid in JavaScript).
+ * 
+ * 2) To distinguish between the object's and JS built-in and 'custom' (passed
+ *   with the object data when a ModelView instance is created) methods. 
+ * 
+ * #2 Design Rule - Associative vs '.'-notation
+ * 
+ * Internet Explorer (not all) don't like when an element/property in an 
+ * object literal or array is being accessed using dot notation. Even though
+ * it's generally encouraged (e.g. www.jshint.com) to use the dot notation, 
+ * this would very likely break when evaluated in IE! Therefore all 
+ * elements/properties should be accessed associatively:
+ *  obj = {foo : 'bar'}; 
+ *  obj['foo']; //(OK!)
+ *  obj.foo; //(Breaks in IE (older versions)
+ *  obj.someMethod(); //(OK! - also in IE!)
+ * 
+ * 
+ * 
+ * 
  * @module MVC
  * @main MVC
  */
 var MVC = {
+  /**
+   * KeyCheck
+   * 
+   * A human way to check which key was used.
+   * This is supposed to simulate a static method known from other languages such
+   * as Java.
+   * 
+   * @method KeyCheck
+   * @param {Object} e Event
+   * @param {String} n Name of the key to check against (e.g. 'enter', 'escape')
+   */
+  KeyCheck : function(e, n) {
+    if(e.keyCode === 13 && n === 'enter' | 'return') {
+      return true;
+    } else if(e.keyCode === 27 && n === 'escape') {
+      return true;
+    }
+  },
+  /**
+   * List
+   * 
+   * A more human way of handling array's in JavaScript. it extends the array 
+   * (currently) with two extra methods which makes it more easy and semantic
+   * when adding and removing elements using .Add() and .Remove() methods 
+   * respectively.
+   * 
+   * @class List
+   * @param {Object} An array (is optional)
+   */
+  List : function(array) {
+    //If the optional paramater 'array' hasn't been specified, then create an
+    //empty Array.
+    if(array === undefined || array === null) {
+      array = [];
+    }
+    /**
+     * Add
+     * 
+     * Add a new element - It's more semantic to use .Add() instead of .push().
+     * 
+     * @method Add
+     * @param {Object} An element.
+     * @return {Array} The array.
+     */
+    array.Add = function(element) {
+      array.push(element);
+      return array;
+    };
+    /**
+     * Remove
+     * 
+     * Remove an element (if found) from the array.
+     * 
+     * @method Remove
+     * @param {Object} An element.
+     */
+    array.Remove = function(element) {
+      //More about deleting elements from an array in JavaScript:
+      //http://stackoverflow.com/questions/500606/javascript-array-delete-elements
+      var i = array.indexOf(element);
+      if(i !== -1) {
+        array.splice(i, 1);
+        return true;
+      }
+      return false;
+    };
+    /**
+     * Find
+     * 
+     * Find elements in the array and return those elemens in a new array.
+     * 
+     * @method Find
+     * @param {Object} An element.
+     * @return {Array} A new Array containing the found elements.
+     * 
+     */
+    array.Find = function(element) {
+      var foundItems = [];
+      var index = array.indexOf(element)
+      while (index != -1)
+      {
+        foundItems.push(index);
+        index = array.indexOf(element, ++index);
+      }
+    };
+    return array;
+  },
   /**
    * Controller which handles the logic, such as saving, updating or deleting
    * the object.
@@ -39,8 +154,6 @@ var MVC = {
   ModelView : function(viewId, $object, $settings) {
     //console.log("ModelView Created...");
     
-    //$object = {};
-    
     //Make sure that the object data always exists. Only require 'viewId'
     if($object === null || $object === undefined) {
       $object = {};
@@ -64,7 +177,8 @@ var MVC = {
       
       //Update the datasrc with the new view id
       $(element)
-        .find(viewId + ' div[datasrc=""],p[datasrc=""],span[datasrc=""]')
+        //.find(viewId + ' li[datasrc=""]')
+        .find('[datasrc=""]')
         .attr('datasrc', viewId);
       //If the template originally was hidden using 'display: none;' - make it visible to the user
       //element.show();
@@ -83,15 +197,16 @@ var MVC = {
     }
   
     //Attach events to the save, update, delete (more?) buttons/submit.
-    $(viewId + ' button,a,submit,i')
+    $(viewId + ' button,' + viewId + ' a,' + viewId + ' submit,' + viewId + ' i')
       //.find('button,a,submit,i')
       .each(function(i, e) {
         $(this)
         //.attr('id', e.id+'_'+viewId)//NoHash)
         .click(function(e) {
-          //$object.ExecuteController($id, par);
+          //$object.RunCtr($id, par);
           //$object.Save();
-          $object.ExecuteController(e.target.name);
+          //console.log(e.target.name);
+          $object.RunCtr(e.target.name);
         });
         //console.log(i + " " + e.id);
       });
@@ -106,9 +221,10 @@ var MVC = {
      * 
      * @method Save
      * @param {Object} par Provide extra parameters if needed. 
+     * @return {Object} The object (itself)
      */
     $object.Save = function(par) {
-      $object.ExecuteController('Save', par);
+      $object.RunCtr('Save', par);
       return $object;
     };
     /**
@@ -119,9 +235,10 @@ var MVC = {
      * 
      * @method Update
      * @param {Object} par Provide extra parameters if needed. 
+     * @return {Object} The object (itself)
      */
     $object.Update = function(par) {
-      $object.ExecuteController('Update', par);
+      $object.RunCtr('Update', par);
       return $object;
     };
     /**
@@ -131,10 +248,11 @@ var MVC = {
      * is called/executed.
      * 
      * @method Delete
-     * @param {Object} par Provide extra parameters if needed. 
+     * @param {Object} par Provide extra parameters if needed.
+     * @return {Object} The object (itself)
      */
     $object.Delete = function(par) {
-      $object.ExecuteController('Delete', par);
+      $object.RunCtr('Delete', par);
       return $object;
     };
     
@@ -145,6 +263,7 @@ var MVC = {
      * 
      * 
      * @method Clear
+     * @return {Object} The object (itself)
      */
     $object.Clear = function(prop) {
       $object.Set(prop, '');
@@ -157,6 +276,7 @@ var MVC = {
      * Clears all the data in the Model and the View.
      * 
      * @method ClearAll
+     * @return {Object} The object (itself)
      */
     $object.ClearAll = function() {
       //implement it
@@ -184,6 +304,7 @@ var MVC = {
      * @param {String} prop The object's property name
      * @param {Function} onUpdate callBack function will execute, whenever 
      * the get/set event handlers bound with .bind() method are triggered.
+     * @return {Object} The object (itself)
      */
     $object.AddGetSet = function(prop) {//, onUpdate) {
       //console.log("AddGetSet");
@@ -226,6 +347,7 @@ var MVC = {
      * 
      * @method RemoveGetSet
      * @param {String} prop The object's property name 
+     * @return {Object} The object (itself)
      */
     $object.RemoveGetSet = function(prop) {
       $($object)
@@ -243,9 +365,10 @@ var MVC = {
      * @method triggerEvent
      * @param {String} prop Property name
      * @param {String} evt Event type/name (e.g. 'keyup')
+     * @return {Object} The object (itself)
      */
     $object.triggerEvent = function(prop, evt) {
-      $(viewId + ' :input[name='+prop+']')
+      $(viewId + ' :input[name="'+prop+'"]')
         .not('.excludeFromModel')
         .trigger(evt);
         
@@ -259,14 +382,13 @@ var MVC = {
      * 
      * @method AddProperty
      * @param {String} prop The property name 
+     * @return {Object} The object (itself)
      */
     $object.AddProperty = function(prop) {
       $object
         .AddEvents()
         .AddGetSet(prop)
         .triggerEvent(prop, 'keyup');
-      //$object.Set($key,"I'm a clone from outside the view using .clone()");
-      //console.log($object.Get($key));
       console.log("Added property " + prop + " to the Model.");
       return $object;
     };
@@ -278,11 +400,14 @@ var MVC = {
      * 
      * @method RemoveProperty
      * @param {String} prop The property name 
+     * @return {Object} The object (itself)
      */
     $object.RemoveProperty = function(prop) {
       $object.RemoveGetSet(prop);
       delete $object[prop];
-      $(viewId + ' :input[name="'+prop+'"]').remove();
+      $(viewId + ' :input[name="'+prop+'"]')
+        .not('.excludeFromModel')
+        .remove();
       console.log("Removed property " + prop + " from the Model.");
       return $object;
     };
@@ -297,7 +422,7 @@ var MVC = {
      * @method Set
      * @param {String} prop The object's property name
      * @param {String} value The new value to set for the property
-     * 
+     * @return {Object} The object (itself)
      */
     $object.Set = function(prop, value) {
       //alert("Setting");
@@ -317,6 +442,7 @@ var MVC = {
      * @method Get
      * @param {String} prop The object's property name
      * @return {Object} value The value from the object's property 
+     * @return {Object} The object (itself)
      */
     $object.Get = function(prop) {
       //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
@@ -377,6 +503,7 @@ var MVC = {
      * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or 
      * true, databound elements inside and/or outside the the View will also 
      * get updated. If false, then they won't. 
+     * @return {Object} The object (itself)
      */
      //$object.SetModelFromView = function(updateDataboundValues) {
      $object.SetModelFromView = function() {
@@ -430,6 +557,7 @@ var MVC = {
      * @param {String} datasrc A viewId.
      * @param {String} name An element's name.
      * @param {String} value A new value.
+     * @return {Object} The object (itself)
      */
     $object.SetDataboundDomVal = function(datasrc, name, value) {
       //console.log("SetDataboundDomVal()");
@@ -450,6 +578,7 @@ var MVC = {
      * 
      * @method RunEvent
      * @param {String} event The eventName to trigger/execute.
+     * @return {Object} The object (itself)
      */
     $object.RunEvent = function(event) {
       //alert(event.target.name);
@@ -464,7 +593,7 @@ var MVC = {
       if($.trim(event.target.name).length > 0) {
         if($settings['settings'][type] !== undefined && $settings['settings'][type] !== null) {
           $settings['settings']['eventUsed'] = type;
-          console.log(type);
+          //console.log(type);
           $settings['settings'][type](event, event.target.name, event.target.value);
         }
       } else {
@@ -474,18 +603,19 @@ var MVC = {
     };
     
     /**
-     * ExecuteController
+     * RunCtr
      * 
      * Execute a method in the controller.
      * 
-     * @method ExecuteController
+     * @method RunCtr
      * @param {String} method The methods name specified in the controller.
      * @param {Object} par If needed you can provide optional parameters.
+     * @return {Object} The object (itself)
      */
-    $object.ExecuteController = function(method, par) {
+    $object.RunCtr = function(method, par) {
       var exec = $object['settings']['controller'][method];
       if(exec !== undefined && exec !== null) {
-        exec($object, par); //?
+        exec(par);
       } else {
         console.log('Missing ' + method + '() method!');
       }
@@ -504,6 +634,40 @@ var MVC = {
       return $.makeArray($object);
     };
     
+    /**
+     * GetViewId
+     * 
+     * Get the ID of the View
+     * 
+     * @method GetViewId
+     * @return {String} The View ID
+     */
+    $object.GetViewId = function() {
+      return $object['settings']['viewId'];
+    };
+    
+    /**
+     * FindElement
+     * 
+     * Find and return one or many element/s within the View using a (id or class) selector.
+     * 
+     * If the elemenet is not found an empty array is returned.
+     * 
+     * @method FindElement
+     * @return {Array} An element from the View.
+     */
+    $object.FindElement = function(selector) {
+      return $($object.GetViewId() + ' ' + selector);
+    }
+    
+    /**
+     * AddEvents
+     * 
+     * Add events to the object's input fields
+     * 
+     * @method AddEvents
+     * @return {Object} The object
+     */
     $object.AddEvents = function() {
       //Update the model view, whenever a change occurs
       $(viewId + ' :input')
@@ -556,6 +720,12 @@ var MVC = {
           $object.RunEvent(e);
         })
         .keydown(function(e) {
+          $object.RunEvent(e);
+        })
+        .mouseenter(function(e) {
+          $object.RunEvent(e);
+        })
+        .mouseleave(function(e) {
           $object.RunEvent(e);
         });
         return $object;
@@ -619,6 +789,45 @@ var MVC = {
     //$data = { data : $data };
     $.extend($object, $settings);
     //alert(JSON.stringify($object, null, 2));
+    
+    
+    /**
+     * To keep the code which belongs to the object, but normally would be 
+     * placed after object instantiation, we isntead want to place it inside
+     * the .init() method, which gets executed 1ms after the object has been
+     * created.
+     * 
+     * Why we use setTimeout: read below...
+     * 
+     * In some cases the user wants to call the object itself like this:
+     * 
+     * 
+     * //Create a new object
+     * obj = MVC.ModelView('#viewId', {
+     *   //Data:
+     *   foo : 'bar',
+     *   //Method
+     *   aCustomMethod : function() {
+     *    //does something
+     *   }
+     *   init : function() {
+     *     //All methods and other 'stuff' placed inside the .init() method
+     *     //gets executed immediately after the object has been created (setup).
+     *     //Therefore it's important (and necessary) to use setTimeout, as the
+     *     //object actually hasn't been created yet. So we set it to 1 ms! 
+     *     obj.aCustomMethod();
+     *   }
+     * }
+     * });
+     */
+    var init = $object['init'];
+    //Do not run the .init() method if it is undefined or null!
+    if(init != undefined && init !== null) {
+      setTimeout(function() {
+        init();
+      }, 1);
+    }
+    
     return $object;
   }
 };
@@ -668,7 +877,7 @@ var MVC = {
         var value = params[key];
         //alert(key + " = " + value);
         //console.log(value);
-        $(this).text(value);
+        $(this).html(value);
         //var toReplace = $.trim($(this).text());
         //alert(toReplace);
       });
@@ -686,9 +895,14 @@ var MVC = {
           } else if ( $this.is(":checkbox") ) {
             // Convert single value to an array to reduce
             // complexity
-            value = $.isArray( value ) ? value : [value];
-            if ( $.inArray( $this.val(), value ) > -1) {
+            if(value) {
               $this.attr("checked", true);
+            }
+            else {
+              value = $.isArray( value ) ? value : [value];
+              if ( $.inArray( $this.val(), value ) > -1) {
+                $this.attr("checked", true);
+              }
             }
             $this.val( value );
           } else {

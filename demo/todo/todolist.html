@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Todo Demo</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <!--optional:-->
+    <script type="text/javascript" src="../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
+    <script src="debug.js"></script>
+    <!--//end optional-->
+    <script>
+    var ctr, obj, settings, viewId = '#testArea';
+    
+    $(function() {
+      ctr = MVC.Controller({
+        
+      });
+      
+      settings = {
+        controller: ctr
+        
+      };
+      
+      obj = MVC.ModelView(viewId, {
+        
+      }, settings);
+    });
+    </script>
+  </head>
+  <body>
+    
+    <div id="testArea">
+      
+    </div>
+    
+    <div id="debug"> </div>
+    
+  </body>
+</html>

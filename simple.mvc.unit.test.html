@@ -112,20 +112,20 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     viewId = '#testArea';
     
     ctr = MVC.Controller({
-      Save : function(o, par) {
-        expect(par).not.toBe(undefined);
-        expect(par).toBe('saveExtraParameter');
-        expect(obj).toEqual(o);
+      Save : function(par) {
+        expect(par['a']).not.toBe(undefined);
+        expect(par['a']).toBe('saveExtraParameter');
+        //expect(obj).toEqual(o);
       },
-      Update : function(o, par) {
-        expect(par).not.toBe(undefined);
-        expect(par).toBe('updateExtraParameter');
-        expect(obj).toEqual(o);
+      Update : function(par) {
+        expect(par['b']).not.toBe(undefined);
+        expect(par['b']).toBe('updateExtraParameter');
+        //expect(obj).toEqual(o);
       },
-      Delete : function(o, par) {
-        expect(par).not.toBe(undefined);
-        expect(par).toBe('deleteExtraParameter');
-        expect(obj).toEqual(o);
+      Delete : function(par) {
+        expect(par['c']).not.toBe(undefined);
+        expect(par['c']).toBe('deleteExtraParameter');
+        //expect(obj).toEqual(o);
       }
     });
     
@@ -172,17 +172,17 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
   
   it("Calling MVC.Save() method should work", function() {
     //MVC.Save(obj, 'saveExtraParameter');
-    obj.Save('saveExtraParameter');
+    obj.Save({a:'saveExtraParameter'});
   });
   
   it("Calling MVC.Update() method should work", function() {
     //MVC.Update(obj, 'updateExtraParameter');
-    obj.Update('updateExtraParameter');
+    obj.Update({b:'updateExtraParameter'});
   });
   
   it("Calling MVC.Delete() method should work", function() {
     //MVC.Delete(obj, 'deleteExtraParameter');
-    obj.Delete('deleteExtraParameter');
+    obj.Delete({c:'deleteExtraParameter'});
   });
   
   it("using datafld and id should work", function() {
