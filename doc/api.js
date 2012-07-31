@@ -6,9 +6,15 @@ YUI.add("yuidoc-meta", function(Y) {
         "ModelView"
     ],
     "modules": [
+        "JSON",
         "MVC"
     ],
     "allModules": [
+        {
+            "displayName": "JSON",
+            "name": "JSON",
+            "description": "An extension of the JSON object."
+        },
         {
             "displayName": "MVC",
             "name": "MVC",

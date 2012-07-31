@@ -170,6 +170,14 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     expect(obj).not.toBe(undefined);
   });
   
+  it(".Has() should return true when it has a given property", function() {
+    expect(obj.Has('id')).toBe(true);
+  });
+  
+  it(".Has() should return false when it does NOT have a given property", function() {
+    expect(obj.Has('doesntexistinmodel')).toBe(false);
+  });
+  
   it("Calling MVC.Save() method should work", function() {
     //MVC.Save(obj, 'saveExtraParameter');
     obj.Save({a:'saveExtraParameter'});
@@ -571,6 +579,49 @@ describe("MVC Object without object data", function() {
   
   it("Model should have property added, even when not object data intially where passed (only viewId)", function() {
     expect(obj['inModel']).toEqual('foobar');
+  });
+  
+});
+
+
+
+describe(".GetModelData()", function() {
+  var obj,
+      data,
+      methods,
+      id = $.now();
+  
+  //Some data specified by the Model (the model's data)
+  data = {
+    id : id,
+    aValue : 'I am a string value',
+    anObject : {
+      apple: 'I love apple pie',
+      pie: 'Pie loves apples'
+    },
+    anArray : ['hello','world']
+  };
+  
+  methods = {
+    aMethod : function() {
+      return true;
+    }
+  }
+  
+  var objectData = $.extend({}, true, data, methods);
+  
+  beforeEach(function(){
+    obj = MVC.ModelView('#doesntExistInDom', objectData);
+  });
+  
+  it("The data specified by the Model NOT to be same as the object 'obj'", function() {
+    //console.log(data);
+    expect(data).not.toEqual(obj);
+  });
+  
+  it("The data specified by the Model to be same as the obj.GetModelData()", function() {
+    console.log(data);
+    expect(data).toEqual(obj.GetModelData());
   });
   
 });

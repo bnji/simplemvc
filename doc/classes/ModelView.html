@@ -51,6 +51,8 @@
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/JSON.html">JSON</a></li>
+            
                 <li><a href="..&#x2F;modules/MVC.html">MVC</a></li>
             
             </ul>
@@ -96,7 +98,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l144"><code>simple.mvc.js:144</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l128"><code>simple.mvc.js:128</code></a>
         </div>
     
 
@@ -154,7 +156,7 @@ the View synchronized with the Model and vice versa.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l144"><code>simple.mvc.js:144</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l128"><code>simple.mvc.js:128</code></a>
         
         </p>
 
@@ -259,6 +261,13 @@ the View synchronized with the Model and vice versa.</p>
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_GetModelData">GetModelData</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_GetViewData">GetViewData</a>
 
                                 
@@ -267,6 +276,13 @@ the View synchronized with the Model and vice versa.</p>
                         
                             <li class="index-item method">
                                 <a href="#method_GetViewId">GetViewId</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_Has">Has</a>
 
                                 
                                 
@@ -343,7 +359,7 @@ the View synchronized with the Model and vice versa.</p>
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_triggerEvent">triggerEvent</a>
+                                <a href="#method_TriggerEvent">TriggerEvent</a>
 
                                 
                                 
@@ -423,7 +439,7 @@ the View synchronized with the Model and vice versa.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l663"><code>simple.mvc.js:663</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l710"><code>simple.mvc.js:710</code></a>
         
         </p>
 
@@ -512,7 +528,7 @@ the View synchronized with the Model and vice versa.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l286"><code>simple.mvc.js:286</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l281"><code>simple.mvc.js:281</code></a>
         
         </p>
 
@@ -646,7 +662,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l378"><code>simple.mvc.js:378</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l373"><code>simple.mvc.js:373</code></a>
         
         </p>
 
@@ -742,7 +758,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l259"><code>simple.mvc.js:259</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l254"><code>simple.mvc.js:254</code></a>
         
         </p>
 
@@ -815,7 +831,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l273"><code>simple.mvc.js:273</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l268"><code>simple.mvc.js:268</code></a>
         
         </p>
 
@@ -898,7 +914,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l244"><code>simple.mvc.js:244</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l239"><code>simple.mvc.js:239</code></a>
         
         </p>
 
@@ -995,7 +1011,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l649"><code>simple.mvc.js:649</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l696"><code>simple.mvc.js:696</code></a>
         
         </p>
 
@@ -1080,7 +1096,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l437"><code>simple.mvc.js:437</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l432"><code>simple.mvc.js:432</code></a>
         
         </p>
 
@@ -1111,7 +1127,7 @@ is called/executed.</p>
                     
 
                     <div class="param-description">
-                        <p>The object's property name</p>
+                        <p>The object's property name.</p>
                     </div>
 
                     
@@ -1130,7 +1146,118 @@ is called/executed.</p>
                     
                         <span class="type">Object</span>:
                     
-                    The object (itself)
+                    value The value from the object's property.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_GetModelData" class="method item">
+    <h3 class="name"><code>GetModelData</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>withSettings</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l467"><code>simple.mvc.js:467</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>GetModelData</p>
+
+<p>Return's a copy of the Model's data without it's functions. 
+Useful when storing the data.</p>
+
+<p>Note: As this object has all of it's functions/methods removed, then
+it's not possible to use the .toArray() (if needed for any reason) anymore.
+Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">withSettings</code>
+                        <span class="type">Boolean</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>If TRUE, then append the settings object.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    A copy of the Model's data (as JSON object literal).
                 
             </div>
         </div>
@@ -1176,7 +1303,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l458"><code>simple.mvc.js:458</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l505"><code>simple.mvc.js:505</code></a>
         
         </p>
 
@@ -1249,7 +1376,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l637"><code>simple.mvc.js:637</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l684"><code>simple.mvc.js:684</code></a>
         
         </p>
 
@@ -1277,6 +1404,112 @@ is called/executed.</p>
                         <span class="type">String</span>:
                     
                     The View ID
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_Has" class="method item">
+    <h3 class="name"><code>Has</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>prop</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l451"><code>simple.mvc.js:451</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Has</p>
+
+<p>Checks if the Model has a given property (true) or not (false).</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    TRUE if the property exists. Otherwise FALSE.
                 
             </div>
         </div>
@@ -1332,7 +1565,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l343"><code>simple.mvc.js:343</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l338"><code>simple.mvc.js:338</code></a>
         
         </p>
 
@@ -1438,7 +1671,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l396"><code>simple.mvc.js:396</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l391"><code>simple.mvc.js:391</code></a>
         
         </p>
 
@@ -1550,7 +1783,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l605"><code>simple.mvc.js:605</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l652"><code>simple.mvc.js:652</code></a>
         
         </p>
 
@@ -1671,7 +1904,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l574"><code>simple.mvc.js:574</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l621"><code>simple.mvc.js:621</code></a>
         
         </p>
 
@@ -1777,7 +2010,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l216"><code>simple.mvc.js:216</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l211"><code>simple.mvc.js:211</code></a>
         
         </p>
 
@@ -1890,7 +2123,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l415"><code>simple.mvc.js:415</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l410"><code>simple.mvc.js:410</code></a>
         
         </p>
 
@@ -2025,7 +2258,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l551"><code>simple.mvc.js:551</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l598"><code>simple.mvc.js:598</code></a>
         
         </p>
 
@@ -2161,7 +2394,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l487"><code>simple.mvc.js:487</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l534"><code>simple.mvc.js:534</code></a>
         
         </p>
 
@@ -2265,7 +2498,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l472"><code>simple.mvc.js:472</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l519"><code>simple.mvc.js:519</code></a>
         
         </p>
 
@@ -2325,7 +2558,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l625"><code>simple.mvc.js:625</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l672"><code>simple.mvc.js:672</code></a>
         
         </p>
 
@@ -2362,8 +2595,8 @@ get updated. If false, then they won't.</p>
 </div>
 
                 
-                    <div id="method_triggerEvent" class="method item">
-    <h3 class="name"><code>triggerEvent</code></h3>
+                    <div id="method_TriggerEvent" class="method item">
+    <h3 class="name"><code>TriggerEvent</code></h3>
 
     
         <div class="args">
@@ -2414,7 +2647,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l360"><code>simple.mvc.js:360</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l355"><code>simple.mvc.js:355</code></a>
         
         </p>
 
@@ -2535,7 +2768,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l230"><code>simple.mvc.js:230</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l225"><code>simple.mvc.js:225</code></a>
         
         </p>
 
@@ -2631,7 +2864,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l694"><code>simple.mvc.js:694</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l741"><code>simple.mvc.js:741</code></a>
         
         </p>
 

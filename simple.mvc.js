@@ -107,25 +107,6 @@ var MVC = {
       }
       return false;
     };
-    /**
-     * Find
-     * 
-     * Find elements in the array and return those elemens in a new array.
-     * 
-     * @method Find
-     * @param {Object} An element.
-     * @return {Array} A new Array containing the found elements.
-     * 
-     */
-    array.Find = function(element) {
-      var foundItems = [];
-      var index = array.indexOf(element);
-      while (index !== -1)
-      {
-        foundItems.push(index);
-        index = array.indexOf(element, ++index);
-      }
-    };
     return array;
   },
   /**
@@ -154,16 +135,27 @@ var MVC = {
    * @class ModelView
    * @constructor
    */
-  ModelView : function(viewId, $object, $settings) {
+  ModelView : function(viewId, $object, $settings, $methods) {
     //console.log("ModelView Created...");
     
     //Make sure that the object data always exists. Only require 'viewId'
-    if($object === null || $object === undefined) {
+    if(!$object) { //$object === null || $object === undefined) {
       $object = {};
-    } 
+    }
+    else {
+      $object = $.extend({}, true, $object);
+    }
+    
+    //Make sure that the object methods always exists. Only require 'viewId'
+    if(!$methods) { //if($methods === null || $methods === undefined) {
+      $methods = {};
+    }
+    else {
+      $object = $.extend({}, true, $object, $methods);
+    }
     
     //Make sure that the settings always exist and with certain properties.
-    if($settings === null || $settings === undefined) {
+    if(!$settings) { //if($settings === null || $settings === undefined) {
       $settings = {};
     }
     
@@ -335,7 +327,7 @@ var MVC = {
             //This is important in case the model is changed using setTimeout()
             //which will update the model, then this change must simulate
             //a user setting the value of the input. 
-            $object.triggerEvent(prop, 'change');//.triggerEvent(prop, 'keyup');
+            $object.TriggerEvent(prop, 'change');//.TriggerEvent(prop, 'keyup');
             //alert("OK");
             //onUpdate(prop, oldVal, newVal);
           }
@@ -365,12 +357,12 @@ var MVC = {
      * 
      * Trigger an event on an input element inside the view
      * 
-     * @method triggerEvent
+     * @method TriggerEvent
      * @param {String} prop Property name
      * @param {String} evt Event type/name (e.g. 'keyup')
      * @return {Object} The object (itself)
      */
-    $object.triggerEvent = function(prop, evt) {
+    $object.TriggerEvent = function(prop, evt) {
       $(viewId + ' :input[name="'+prop+'"]')
         .not('.excludeFromModel')
         .trigger(evt);
@@ -391,7 +383,7 @@ var MVC = {
       $object
         .AddEvents()
         .AddGetSet(prop)
-        .triggerEvent(prop, 'keyup');
+        .TriggerEvent(prop, 'keyup');
       console.log("Added property " + prop + " to the Model.");
       return $object;
     };
@@ -443,9 +435,8 @@ var MVC = {
      * Notice: Must only be used if 'reflectModelChangeInView' is TRUE.
      * 
      * @method Get
-     * @param {String} prop The object's property name
-     * @return {Object} value The value from the object's property 
-     * @return {Object} The object (itself)
+     * @param {String} prop The object's property name.
+     * @return {Object} value The value from the object's property.
      */
     $object.Get = function(prop) {
       //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
@@ -457,6 +448,59 @@ var MVC = {
       return result['value'];
     };
     
+    /**
+     * Has
+     * 
+     * Checks if the Model has a given property (true) or not (false).
+     * 
+     * @method Has
+     * @param {String} prop The object's property name
+     * @return {Boolean} TRUE if the property exists. Otherwise FALSE.
+     */
+    $object.Has = function(prop) {
+      if($object.Get(prop) !== undefined) {
+        return true;
+      }
+      return false;
+    }
+    
+    /**
+     * GetModelData
+     * 
+     * Return's a copy of the Model's data without it's functions. 
+     * Useful when storing the data.
+     * 
+     * Note: As this object has all of it's functions/methods removed, then
+     * it's not possible to use the .toArray() (if needed for any reason) anymore.
+     * Instead use $.makeArray(theObject); which is what .toArray() uses.
+     * 
+     * @method GetModelData
+     * @param {Boolean} withSettings If TRUE, then append the settings object.
+     * @return {Object} A copy of the Model's data (as JSON object literal).
+     */
+    $object.GetModelData = function(withSettings) {
+      var modelObjectData = {};
+        $.each($object, function(k, v) {
+        //Only add types which aren't functions
+        if((typeof v).toString() !== 'function') {
+          //Don't add the jQuery object which is use for .Set() & .Get()
+          //Regex test on Rubular: http://www.rubular.com/r/KZQH0gdHyy
+          if((/jQuery\d*/).test(k)) {
+            return true;
+          }
+          //Only add the settings object if withSettings is TRUE.
+          else if(!withSettings && k === 'settings') {
+            return true;
+          }
+          //Add strings and objects (JSON literals and Arrays)
+          else {
+            modelObjectData[k] = v;
+          }
+          //console.log(k + " is a " + typeof v);
+        }
+      });
+      return modelObjectData;
+    }
     
     /**
      * GetViewData
@@ -830,7 +874,6 @@ var MVC = {
         init();
       }, 1);
     }
-    
     return $object;
   }
 };

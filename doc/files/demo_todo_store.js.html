@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>examples&#x2F;debug.js</title>
+    <title>demo&#x2F;todo&#x2F;store.js</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -90,60 +90,37 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: examples&#x2F;debug.js</h1>
+                        <h1 class="file-heading">File: demo&#x2F;todo&#x2F;store.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-function DebugObj(target, obj) {
-  var objOut = &#x27;&#x27;;
-  $.each(obj, function(k, v) {
-    objOut += &#x27;&lt;h2&gt;ViewID: &#x27; + v[&#x27;object&#x27;][&#x27;settings&#x27;][&#x27;viewId&#x27;] + &#x27;&lt;&#x2F;h2&gt;&#x27;;
-    objOut += &#x27;&lt;h3&gt;Event type: &#x27; + v[&#x27;object&#x27;][&#x27;settings&#x27;][&#x27;eventUsed&#x27;] + &#x27;&lt;&#x2F;h3&gt;&lt;br &#x2F;&gt;&#x27;;
-    objOut += &#x27;&lt;div class=&quot;row-fluid&quot;&gt;&#x27;;
-    if(v[&#x27;readDom&#x27;]) {
-      objOut += &#x27;&lt;div class=&quot;span6&quot;&gt;&lt;h4&gt;Object View Data:&lt;&#x2F;h4&gt;&#x27; + JSON.stringify(v[&#x27;object&#x27;].GetViewData(), null, 2) + &#x27;&lt;&#x2F;div&gt;&#x27;;
-    }
-    objOut += &#x27;&lt;div class=&quot;span6&quot;&gt;&lt;h4&gt;Object Model Data:&lt;&#x2F;h4&gt;&#x27; + JSON.stringify(v[&#x27;object&#x27;], null, 2) + &#x27;&lt;&#x2F;div&gt;&#x27;;
-    objOut += &#x27;&lt;&#x2F;div&gt;&lt;br &#x2F;&gt;&#x27;;
-  });
-  $(target).html(&#x27;&lt;hr &#x2F;&gt;&lt;h3&gt;Debug info:&lt;&#x2F;h3&gt;&lt;pre class=&quot;prettyprint&quot;&gt;&#x27; + objOut + &#x27;&lt;&#x2F;pre&gt;&#x27;);
-}
-function moveDown(selector, topPadding) {
-    var offset = $(selector).offset();
-    if(offset === null) {
-      return;
-    }
-    $(window).scroll(function () {
-      try {
-         if ($(window).scrollTop() &gt; offset.top) {
-            $(selector).stop().animate({
-                marginTop: $(window).scrollTop() - offset.top + topPadding
-                &#x2F;&#x2F;$(selector).css({&quot;background-color&quot;, &quot;red&quot; })
-                &#x2F;&#x2F;marginTop: event.pageY - divOffset.top - adjustOffset;
-            }, {duration:500, queue:false});
-        } else {
-            $(selector).stop().animate({
-                marginTop: 0
-            });
-        }
-      } catch(e) {
-        alert(e);
-      }
-    });
-}
-function getFiddleUrl(fiddleName) {
-  return &#x27;http:&#x2F;&#x2F;jsfiddle.net&#x2F;bendot&#x2F;&#x27;+fiddleName+&#x27;&#x2F;embedded&#x2F;result,js,html&#x27;;
-}
 &#x2F;**
- * Only test for a name, dot(.) and 2-5 letters after the dot... 
- * @param {Object} str
+ * An implementation using jStorage (localstorage) which saves&#x2F;loads the notes.
+ * http:&#x2F;&#x2F;www.jstorage.info&#x2F;
  *&#x2F;
-function isValidUrl(str) {
-  var pattern = RegExp(&#x27;[a-zA-Z0-9\-\.]{1,255}\.[a-z]{1,255}\s*&#x27;);
-  if(!pattern.test(str)) {
-    return false;
-  } else {
-    return true;
+var store = {
+  save : function(key, data) {
+    $.jStorage.set(key, data);
+  },
+  remove : function(key) {
+    $.jStorage.deleteKey(key);
+  },
+  clear : function() {
+    $.jStorage.flush();
+  },
+  get : function(key) {
+    return $.jStorage.get(key);
+  },
+  getAll : function() {
+    var data = {};
+    var storeData = $.jStorage.index();
+    if(storeData !== undefined || storeData !== null) {
+      $.each(storeData, function(k, v) {
+        data[v] = store.get(v);
+        &#x2F;&#x2F;console.log(data[v]);
+      });
+    }
+    return data;
   }
 }
     </pre>

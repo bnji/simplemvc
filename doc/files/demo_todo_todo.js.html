@@ -51,6 +51,8 @@
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/JSON.html">JSON</a></li>
+            
                 <li><a href="..&#x2F;modules/MVC.html">MVC</a></li>
             
             </ul>
@@ -92,55 +94,78 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-var ctr,
-    data,
-    notebook,
-    settings,
-    viewId = &#x27;#todos&#x27;;
-    
 $(function() {
-  
-  
-  
-  &#x2F;&#x2F;Controller
-  ctr = MVC.Controller({
+  &#x2F;**
+   * Implementation of three different methods, which will automatically get
+   * bound to the view.
+   *&#x2F;
+  var notebookController = MVC.Controller({
+    &#x2F;&#x2F;Button clear done will clear the done notes
     clearDone : function() {
       notebook.clearDone();
     },
+    &#x2F;&#x2F;Button clear all will clear all notes
     clearAll : function() {
       notebook.clearAll();
     },
+    &#x2F;&#x2F;Button export json will generate a file containing the notebooks notes as json objects
     exportJSON : function() {
-      $.ajax({
-        type : &quot;POST&quot;,
-        url : &quot;http:&#x2F;&#x2F;hammerbenjamin.com&#x2F;simplemvc-showcase&#x2F;savejson.php&quot;,
-        dataType : &#x27;json&#x27;, 
-        data : {
-            json : JSON.stringify(notebook.getNotes())
-        },
-        success : function(result) {
-          $linkToJsonFile = &#x27;&lt;a href=&quot;&#x27;+result[&#x27;url&#x27;]+&#x27;&quot;&gt;Open the JSON file.&lt;&#x2F;a&gt;&#x27;;
-          $(&#x27;#jsonFileUrl&#x27;).html($linkToJsonFile);
-        }
+      var data = {};
+      $.each(notebook.getNotes(), function(k, v) {
+        data[k] = v.GetModelData();
       });
+      JSON.save(JSON.stringify(data, null, 2), 
+          function(data) {
+            $(&#x27;#jsonFileUrl&#x27;).html(&#x27;&lt;a href=&quot;&#x27;+data[&#x27;url&#x27;]+&#x27;&quot;&gt;Open the JSON file.&lt;&#x2F;a&gt;&#x27;);
+          }
+        );
     }
   });
   
+  &#x2F;&#x2F;The Model&#x27;s data for the notebook
+  var notebookData = {
+    notes: MVC.List() &#x2F;&#x2F;Use our MVC Array with extra methods
+  };
   
-  data = {
-    notes: MVC.List(), &#x2F;&#x2F;Use our MVC Array with extra methods
+  &#x2F;&#x2F;Define extra functionality for the notebook object, by implementing new
+  &#x2F;&#x2F;functions&#x2F;methods here.
+  var notebookMethods = {
+    &#x2F;**
+     * Is the input data entered valid?
+     *&#x2F;
     isValidInput : function(data) {
       return $.trim(data).length &gt; 0;
     },
-    &#x2F;&#x2F;Add a new note
+    &#x2F;**
+     * Create a new note
+     *&#x2F;
     createNote : function(value, isComplete, id) {
       &#x2F;&#x2F;Only if the note has some text
       if(notebook.isValidInput(value)) {
-        &#x2F;&#x2F;The note data (it&#x27;s field members and methods)
+        
+        &#x2F;&#x2F;var value = &quot;a b.c d f.o sdf&quot;;
+        &#x2F;*var regUrl = &#x2F;[a-zA-Z0-9\-\.]{1,255}\.[a-z]{1,255}&#x2F;;
+        var match = regUrl.exec(value);
+        var url = &#x27;&lt;a href=&quot;&#x27;+match+&#x27;&quot;&gt;&#x27;+match+&#x27;&lt;&#x2F;a&gt;&#x27;;
+        console.log(value);
+        if(regUrl.test(value)) {
+          &#x2F;&#x2F;value = url;
+          value = value.replace(match, url);
+          &#x2F;&#x2F;console.log(match);
+        }*&#x2F;
+       
+       
         var noteData = {
           id: (id === undefined || id === null ? $.now() : id),
           isComplete: isComplete,
-          note: value,
+          note: value
+        }
+        
+        &#x2F;&#x2F;The note data (it&#x27;s field members and methods)
+        var noteMethods = {
+          save : function() {
+            store.save(note.Get(&#x27;id&#x27;), note.GetModelData()); &#x2F;&#x2F;Store the data
+          },
           toggleMode : function() {
             &#x2F;&#x2F;don&#x27;t toggle modes if the note is done
             if(!note.Get(&#x27;isComplete&#x27;)) {
@@ -166,8 +191,7 @@ $(function() {
         &#x2F;&#x2F;The note controller for the GUI buttons
         var noteController = MVC.Controller({
           showData : function() {
-            &#x2F;&#x2F;note.toggleMode();
-            alert(JSON.stringify(note, null, 2));
+            alert(JSON.stringify(note.GetModelData(), null, 2));
           }
         });
         
@@ -175,16 +199,16 @@ $(function() {
         var noteSettings = {
           controller: noteController,
           change: function(e, n, v) {
-            store
-              .save(note); &#x2F;&#x2F;Store the data
+            note
+              .save(); &#x2F;&#x2F;save the note
             notebook
               .onCheckNote(note);
           },
           keyup: function(e, n, v) {
             if(notebook.isValidInput(v)) {
               if(MVC.KeyCheck(e, &#x27;enter&#x27;)) {
-                store
-                  .save(note); &#x2F;&#x2F;Store the data
+                note
+                  .save(); &#x2F;&#x2F;save the note
                 note
                   .toggleMode(); &#x2F;&#x2F;Toggle to view mode again
               }
@@ -212,7 +236,7 @@ $(function() {
         };
         
         &#x2F;&#x2F;Create a new note using the MVC ModelView
-        var note = MVC.ModelView(&#x27;#list-template&#x27;, noteData, noteSettings);
+        var note = MVC.ModelView(&#x27;#list-template&#x27;, noteData, noteSettings, noteMethods);
         
         notebook.add(note);
       }
@@ -228,7 +252,7 @@ $(function() {
           .onCheckNote(note); &#x2F;&#x2F;Update databound elements
           
       store
-        .save(note); &#x2F;&#x2F;Store the note
+        .save(note.Get(&#x27;id&#x27;), note.GetModelData()); &#x2F;&#x2F;Store the data
         
       return notebook;
     },
@@ -243,7 +267,7 @@ $(function() {
           .focusInput();
           
         store
-          .remove(note); &#x2F;&#x2F;Remove the note (from the storage)
+          .remove(note.Get(&#x27;id&#x27;)); &#x2F;&#x2F;Remove the note (from the storage)
       }
       return notebook;
     },
@@ -335,11 +359,11 @@ $(function() {
       notebook.focusInput();
       notebook.loadNotes();
     }
-  }
+  };
   
   &#x2F;&#x2F;Settings
-  settings = {
-    controller: ctr,
+  var notebookSettings = {
+    controller: notebookController,
     keyup : function(e, n, v) {
       printDebug();
       if(n === &#x27;create&#x27;) {
@@ -356,7 +380,12 @@ $(function() {
   };
   
   &#x2F;&#x2F;Create a notebook (object literal) which manages the todo notes
-  notebook = MVC.ModelView(viewId, data, settings);
+  var notebook = MVC.ModelView(
+                          &#x27;#todos&#x27;, 
+                          notebookData, 
+                          notebookSettings, 
+                          notebookMethods
+                          );
   
   &#x2F;&#x2F;Clear the notebook and add 3 notes
   &#x2F;*notebook
@@ -366,50 +395,9 @@ $(function() {
     .createNote(&#x27;Open lifehacker.com&#x27;, false);
   *&#x2F;
   
-  
-  
-  
-  &#x2F;*$.each(notebook, function(k, v) {
-    var t = typeof v;
-    if(t.toString() !== &#x27;function&#x27; &amp;&amp; t.toString() !== &#x27;object&#x27;) {
-      console.log(k + &quot; is a &quot; + t);
-    }
-  });*&#x2F;
-  
-  
 });
 
-&#x2F;**
- * An implementation using jStorage (localstorage) which saves&#x2F;loads the notes.
- * http:&#x2F;&#x2F;www.jstorage.info&#x2F;
- *&#x2F;
-var store = {
-  save : function(note) {
-    var key = note.Get(&#x27;id&#x27;);
-    var value = {
-      note: note.Get(&#x27;note&#x27;), 
-      isComplete: note.Get(&#x27;isComplete&#x27;)
-    };
-    $.jStorage.set(key, value);
-  },
-  remove : function(note) {
-    $.jStorage.deleteKey(note.Get(&#x27;id&#x27;));
-  },
-  clear : function() {
-    $.jStorage.flush();
-  },
-  get : function(key) {
-    return $.jStorage.get(key);
-  },
-  getAll : function() {
-    var data = {};
-    $.each($.jStorage.index(), function(k, v) {
-      data[v] = store.get(v);
-      &#x2F;&#x2F;console.log(data[v]);
-    });
-    return data;
-  }
-}
+
 
 function printDebug() {
   &#x2F;*DebugObj(&#x27;#debug&#x27;, {

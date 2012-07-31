@@ -51,6 +51,8 @@
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/JSON.html">JSON</a></li>
+            
                 <li><a href="..&#x2F;modules/MVC.html">MVC</a></li>
             
             </ul>
@@ -144,7 +146,7 @@ var MVC = {
    * @param {String} n Name of the key to check against (e.g. &#x27;enter&#x27;, &#x27;escape&#x27;)
    *&#x2F;
   KeyCheck : function(e, n) {
-    if(e.keyCode === 13 &amp;&amp; n === &#x27;enter&#x27; | &#x27;return&#x27;) {
+    if(e.keyCode === 13 &amp;&amp; (n === &#x27;enter&#x27; || n === &#x27;return&#x27;)) {
       return true;
     } else if(e.keyCode === 27 &amp;&amp; n === &#x27;escape&#x27;) {
       return true;
@@ -191,31 +193,15 @@ var MVC = {
     array.Remove = function(element) {
       &#x2F;&#x2F;More about deleting elements from an array in JavaScript:
       &#x2F;&#x2F;http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;500606&#x2F;javascript-array-delete-elements
-      var i = array.indexOf(element);
+      &#x2F;&#x2F;indexOf breaks in IE &lt; 9!
+      &#x2F;&#x2F;var i = array.indexOf(element);
+      &#x2F;&#x2F;Solution:
+      var i = $.inArray(element, array);
       if(i !== -1) {
         array.splice(i, 1);
         return true;
       }
       return false;
-    };
-    &#x2F;**
-     * Find
-     * 
-     * Find elements in the array and return those elemens in a new array.
-     * 
-     * @method Find
-     * @param {Object} An element.
-     * @return {Array} A new Array containing the found elements.
-     * 
-     *&#x2F;
-    array.Find = function(element) {
-      var foundItems = [];
-      var index = array.indexOf(element)
-      while (index != -1)
-      {
-        foundItems.push(index);
-        index = array.indexOf(element, ++index);
-      }
     };
     return array;
   },
@@ -245,16 +231,27 @@ var MVC = {
    * @class ModelView
    * @constructor
    *&#x2F;
-  ModelView : function(viewId, $object, $settings) {
+  ModelView : function(viewId, $object, $settings, $methods) {
     &#x2F;&#x2F;console.log(&quot;ModelView Created...&quot;);
     
     &#x2F;&#x2F;Make sure that the object data always exists. Only require &#x27;viewId&#x27;
-    if($object === null || $object === undefined) {
+    if(!$object) { &#x2F;&#x2F;$object === null || $object === undefined) {
       $object = {};
-    } 
+    }
+    else {
+      $object = $.extend({}, true, $object);
+    }
+    
+    &#x2F;&#x2F;Make sure that the object methods always exists. Only require &#x27;viewId&#x27;
+    if(!$methods) { &#x2F;&#x2F;if($methods === null || $methods === undefined) {
+      $methods = {};
+    }
+    else {
+      $object = $.extend({}, true, $object, $methods);
+    }
     
     &#x2F;&#x2F;Make sure that the settings always exist and with certain properties.
-    if($settings === null || $settings === undefined) {
+    if(!$settings) { &#x2F;&#x2F;if($settings === null || $settings === undefined) {
       $settings = {};
     }
     
@@ -426,7 +423,7 @@ var MVC = {
             &#x2F;&#x2F;This is important in case the model is changed using setTimeout()
             &#x2F;&#x2F;which will update the model, then this change must simulate
             &#x2F;&#x2F;a user setting the value of the input. 
-            $object.triggerEvent(prop, &#x27;change&#x27;);&#x2F;&#x2F;.triggerEvent(prop, &#x27;keyup&#x27;);
+            $object.TriggerEvent(prop, &#x27;change&#x27;);&#x2F;&#x2F;.TriggerEvent(prop, &#x27;keyup&#x27;);
             &#x2F;&#x2F;alert(&quot;OK&quot;);
             &#x2F;&#x2F;onUpdate(prop, oldVal, newVal);
           }
@@ -456,18 +453,18 @@ var MVC = {
      * 
      * Trigger an event on an input element inside the view
      * 
-     * @method triggerEvent
+     * @method TriggerEvent
      * @param {String} prop Property name
      * @param {String} evt Event type&#x2F;name (e.g. &#x27;keyup&#x27;)
      * @return {Object} The object (itself)
      *&#x2F;
-    $object.triggerEvent = function(prop, evt) {
+    $object.TriggerEvent = function(prop, evt) {
       $(viewId + &#x27; :input[name=&quot;&#x27;+prop+&#x27;&quot;]&#x27;)
         .not(&#x27;.excludeFromModel&#x27;)
         .trigger(evt);
         
       return $object;
-    }
+    };
     
     &#x2F;**
      * AddProperty
@@ -482,7 +479,7 @@ var MVC = {
       $object
         .AddEvents()
         .AddGetSet(prop)
-        .triggerEvent(prop, &#x27;keyup&#x27;);
+        .TriggerEvent(prop, &#x27;keyup&#x27;);
       console.log(&quot;Added property &quot; + prop + &quot; to the Model.&quot;);
       return $object;
     };
@@ -534,9 +531,8 @@ var MVC = {
      * Notice: Must only be used if &#x27;reflectModelChangeInView&#x27; is TRUE.
      * 
      * @method Get
-     * @param {String} prop The object&#x27;s property name
-     * @return {Object} value The value from the object&#x27;s property 
-     * @return {Object} The object (itself)
+     * @param {String} prop The object&#x27;s property name.
+     * @return {Object} value The value from the object&#x27;s property.
      *&#x2F;
     $object.Get = function(prop) {
       &#x2F;&#x2F;http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;9145347&#x2F;jquery-returning-value-from-trigger
@@ -548,6 +544,59 @@ var MVC = {
       return result[&#x27;value&#x27;];
     };
     
+    &#x2F;**
+     * Has
+     * 
+     * Checks if the Model has a given property (true) or not (false).
+     * 
+     * @method Has
+     * @param {String} prop The object&#x27;s property name
+     * @return {Boolean} TRUE if the property exists. Otherwise FALSE.
+     *&#x2F;
+    $object.Has = function(prop) {
+      if($object.Get(prop) !== undefined) {
+        return true;
+      }
+      return false;
+    }
+    
+    &#x2F;**
+     * GetModelData
+     * 
+     * Return&#x27;s a copy of the Model&#x27;s data without it&#x27;s functions. 
+     * Useful when storing the data.
+     * 
+     * Note: As this object has all of it&#x27;s functions&#x2F;methods removed, then
+     * it&#x27;s not possible to use the .toArray() (if needed for any reason) anymore.
+     * Instead use $.makeArray(theObject); which is what .toArray() uses.
+     * 
+     * @method GetModelData
+     * @param {Boolean} withSettings If TRUE, then append the settings object.
+     * @return {Object} A copy of the Model&#x27;s data (as JSON object literal).
+     *&#x2F;
+    $object.GetModelData = function(withSettings) {
+      var modelObjectData = {};
+        $.each($object, function(k, v) {
+        &#x2F;&#x2F;Only add types which aren&#x27;t functions
+        if((typeof v).toString() !== &#x27;function&#x27;) {
+          &#x2F;&#x2F;Don&#x27;t add the jQuery object which is use for .Set() &amp; .Get()
+          &#x2F;&#x2F;Regex test on Rubular: http:&#x2F;&#x2F;www.rubular.com&#x2F;r&#x2F;KZQH0gdHyy
+          if((&#x2F;jQuery\d*&#x2F;).test(k)) {
+            return true;
+          }
+          &#x2F;&#x2F;Only add the settings object if withSettings is TRUE.
+          else if(!withSettings &amp;&amp; k === &#x27;settings&#x27;) {
+            return true;
+          }
+          &#x2F;&#x2F;Add strings and objects (JSON literals and Arrays)
+          else {
+            modelObjectData[k] = v;
+          }
+          &#x2F;&#x2F;console.log(k + &quot; is a &quot; + typeof v);
+        }
+      });
+      return modelObjectData;
+    }
     
     &#x2F;**
      * GetViewData
@@ -752,7 +801,7 @@ var MVC = {
      *&#x2F;
     $object.FindElement = function(selector) {
       return $($object.GetViewId() + &#x27; &#x27; + selector);
-    }
+    };
     
     &#x2F;**
      * AddEvents
@@ -916,12 +965,11 @@ var MVC = {
      *&#x2F;
     var init = $object[&#x27;init&#x27;];
     &#x2F;&#x2F;Do not run the .init() method if it is undefined or null!
-    if(init != undefined &amp;&amp; init !== null) {
+    if(init !== undefined &amp;&amp; init !== null) {
       setTimeout(function() {
         init();
       }, 1);
     }
-    
     return $object;
   }
 };
@@ -961,7 +1009,7 @@ var MVC = {
       &#x2F;&#x2F;console.log(&#x27;setValues called!&#x27;);
       &#x2F;&#x2F;console.log(this.getDivElements(this));
       &#x2F;&#x2F;Set the values for  &#x27;p&#x27;, &#x27;div&#x27; and &#x27;span&#x27; elements
-      $this = this;
+      var $this = this;
       $this.getDivElements(this).each(function() {
         var key = $this.getElementKey(this);
         if(key === undefined) {
@@ -1009,7 +1057,7 @@ var MVC = {
     getValues : function() {
       var data = {},      
           formData = {};
-      $this = this;
+      var $this = this;
       $this.getInputElements(this).each(function() {
         var elm = $(this);
         var type = elm.attr(&#x27;type&#x27;),
