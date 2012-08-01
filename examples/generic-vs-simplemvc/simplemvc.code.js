@@ -11,7 +11,7 @@ $(function() {
       obj.updatePreview(); //Put other 'generic' jQuery here for cleaner code.
     },
     updatePreview : function() { //Finds an element inside the View & Triggers a keyup event to initialize the preview
-      obj.FindElement('.previewData').html(obj.Get('name') + " - " + obj.Get('info'));
+      obj.Find('.previewData').html(obj.Get('name') + " - " + obj.Get('info'));
     } //Implement any extra methods below...
   };
   

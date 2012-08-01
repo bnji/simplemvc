@@ -170,10 +170,10 @@ $(function() {
             &#x2F;&#x2F;don&#x27;t toggle modes if the note is done
             if(!note.Get(&#x27;isComplete&#x27;)) {
               note
-                .FindElement(&#x27;#note&#x27;)
+                .Find(&#x27;#note&#x27;)
                 .toggle(500);
               note
-                .FindElement(&#x27;:input[name=&quot;note&quot;]&#x27;)
+                .Find(&#x27;:input[name=&quot;note&quot;]&#x27;)
                 .toggle(500, function(){
                   $(this).focus();
                 });
@@ -181,7 +181,7 @@ $(function() {
           },
           init : function() {
             note
-              .FindElement(&#x27;#note&#x27;)
+              .Find(&#x27;#note&#x27;)
               .click(function() {
                 note.toggleMode();
               });
@@ -215,7 +215,7 @@ $(function() {
               if(MVC.KeyCheck(e, &#x27;escape&#x27;)) {
                 if(notebook.isValidInput(note)) {
                   note
-                    .FindElement(&#x27;:input[name=&quot;note&quot;]&#x27;)
+                    .Find(&#x27;:input[name=&quot;note&quot;]&#x27;)
                     .blur();
                 }
               }
@@ -313,7 +313,7 @@ $(function() {
     },
     focusInput : function() {
       notebook
-        .FindElement(&#x27;.create&#x27;)
+        .Find(&#x27;.create&#x27;)
         .val(&#x27;&#x27;)
         .focus();
     },
@@ -333,7 +333,7 @@ $(function() {
       return notebook;
     },
     onCheckNote : function(note) {
-      var noteElem = note.FindElement(&#x27;#note&#x27;);
+      var noteElem = note.Find(&#x27;#note&#x27;);
       var notesDone = notebook.getNotesDoneCount();
       
       if(note.Get(&#x27;isComplete&#x27;)) {

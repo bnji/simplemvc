@@ -161,6 +161,8 @@ var MVC = {
       $settings = {};
     }
     
+    var datasrc = $settings['datasrc'];
+    
     var clone = $settings['clone'];
     if(clone !== undefined) {
       //Set the clone template to be the view id
@@ -169,14 +171,23 @@ var MVC = {
       viewId = clone['id'];
       var viewIdNoHash = viewId.substring(1, viewId.length);
       //Clone the source and update the viewId
-      var element = $($(clone['template']).clone(clone['withDataAndEvents']))
+      var withDataAndEvents = clone['withDataAndEvents'];
+      withDataAndEvents = withDataAndEvents !== undefined ? withDataAndEvents : false;
+      //console.log(withDataAndEvents);
+      var element = $($(clone['template']).clone(withDataAndEvents))
                       .attr('id', viewIdNoHash);
+      
+      //datasrc property to the settings, as it should be possible to create a 
+      //ModelView without any data, but solely relies on receiving updated 
+      //values from another view!
+      //If the datasrc isn't specified, then use the viewId as datasrc.
+      datasrc = datasrc !== undefined ? datasrc : viewId;
       
       //Update the datasrc with the new view id
       $(element)
         //.find(viewId + ' li[datasrc=""]')
         .find('[datasrc=""]')
-        .attr('datasrc', viewId);
+        .attr('datasrc', datasrc);
       //If the template originally was hidden using 'display: none;' - make it visible to the user
       //element.show();
       //Append the copy to the target
@@ -435,8 +446,10 @@ var MVC = {
       //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
       //$($object).triggerHandler('set'+prop, [value]); ?
       $($object).triggerHandler('set'+prop, [value]);
-      //Update databound DOM values 
-      $object.SetDataboundDomVal(viewId, prop, value);
+      //Update databound DOM values
+      //Update databound elements with datasrc if specified, otherwise with viewId. 
+      //$object.SetDataboundDomVal(viewId, prop, value);
+      $object.SetDataboundDomVal(datasrc, prop, value);
       return $object;
     };
     /**
@@ -511,6 +524,18 @@ var MVC = {
       });
       return modelObjectData;
     }
+    
+    /**
+     * GetDatasrcId
+     * 
+     * Return the (view) ID of the datasource.
+     * 
+     * @method GetDatasrcId
+     * @return {Number} The (View) ID of the datasource.
+     */
+    $object.GetDatasrcId = function() {
+      return $object.datasrc;
+    };
     
     /**
      * GetViewData
@@ -590,8 +615,6 @@ var MVC = {
             //$object.Set(key, newVal);
             //if(updateDataboundValues === undefined || updateDataboundValues === true) {
               //alert("OK");
-              //Update databound DOM values 
-              $object.SetDataboundDomVal(viewId, key, newVal);
             //}
             
           //}
@@ -599,6 +622,10 @@ var MVC = {
           //  alert("Missing implementation of primitive types in SetModelFromView() method for type: " + valType);
           //}
         }
+        //Update databound DOM values even
+        //When setting the values on .init() the databound items should ofcourse 
+        //get updated even if the model data is same as in the view.
+        $object.SetDataboundDomVal(viewId, key, newVal);
       });
       //Return the values in JSON format
       //return data;
@@ -704,16 +731,16 @@ var MVC = {
     };
     
     /**
-     * FindElement
+     * Find
      * 
      * Find and return one or many element/s within the View using a (id or class) selector.
      * 
      * If the elemenet is not found an empty array is returned.
      * 
-     * @method FindElement
+     * @method Find
      * @return {Array} An element from the View.
      */
-    $object.FindElement = function(selector) {
+    $object.Find = function(selector) {
       return $($object.GetViewId() + ' ' + selector);
     };
     
