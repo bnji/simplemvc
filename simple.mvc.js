@@ -32,6 +32,8 @@
  *  obj.someMethod(); //(OK! - also in IE!)
  * 
  * 
+ * Some helpful links:
+ * http://viralpatel.net/blogs/20-top-jquery-tips-tricks-for-jquery-programmers/
  * 
  * 
  * @module MVC
@@ -190,6 +192,9 @@ var MVC = {
     if($settings['eventUsed'] === undefined) {
       $.extend($settings, {eventUsed : ''});
     }
+    if($settings['preventDefault'] === undefined) {
+      $.extend($settings, {preventDefault : true});
+    }
   
     //Attach events to the save, update, delete (more?) buttons/submit.
     $(viewId + ' button,' + viewId + ' a,' + viewId + ' submit,' + viewId + ' i')
@@ -201,7 +206,10 @@ var MVC = {
           //$object.RunCtr($id, par);
           //$object.Save();
           //console.log(e.target.name);
-          $object.RunCtr(e.target.name);
+          $object.RunCtr(e.target.name, e);
+          if($settings['settings']['preventDefault']) {
+            e.preventDefault();
+          }
         });
         //console.log(i + " " + e.id);
       });
@@ -274,7 +282,9 @@ var MVC = {
      * @return {Object} The object (itself)
      */
     $object.ClearAll = function() {
-      //implement it
+      $.each($object.GetModelData(), function(prop) {
+        $object.Clear(prop);
+      });
       return $object;
     };
     
@@ -769,12 +779,6 @@ var MVC = {
         .keydown(function(e) {
           $object.RunEvent(e);
         })
-        .mouseenter(function(e) {
-          $object.RunEvent(e);
-        })
-        .mouseleave(function(e) {
-          $object.RunEvent(e);
-        });
         return $object;
     };
     

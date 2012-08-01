@@ -1,7 +1,8 @@
+//http://npmjs.org/doc/json.html
 {
     "type": "object",
     "name": "NPM package.json",
-    "description": "Package manifest file for Node.JS modules. Note that this is incomplete. http://npmjs.org/doc/json.html",
+    "description": "A simple - yet solving a complex task while being lightweight - MVC / MVVM solution to your jQuery + HTML apps/websites.",
     "properties": {
         "filename": {
             "type": "string",
