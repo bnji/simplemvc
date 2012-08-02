@@ -46,18 +46,6 @@ $(function() {
     createNote : function(value, isComplete, id) {
       //Only if the note has some text
       if(notebook.isValidInput(value)) {
-        
-        //var value = "a b.c d f.o sdf";
-        /*var regUrl = /[a-zA-Z0-9\-\.]{1,255}\.[a-z]{1,255}/;
-        var match = regUrl.exec(value);
-        var url = '<a href="'+match+'">'+match+'</a>';
-        console.log(value);
-        if(regUrl.test(value)) {
-          //value = url;
-          value = value.replace(match, url);
-          //console.log(match);
-        }*/
-       
        
         var noteData = {
           id: (id === undefined || id === null ? $.now() : id),
@@ -256,7 +244,6 @@ $(function() {
       $('.notesDone').html(notesDone === 1 ? 'item' : 'items');
       $('#notesDone').html(notesDone);
       $('#notesCount').html(notesDone + ' / ' + notebook.getNotesCount());
-      printDebug();
       return notebook;
     },
     init : function() {
@@ -269,7 +256,6 @@ $(function() {
   var notebookSettings = {
     controller: notebookController,
     keyup : function(e, n, v) {
-      printDebug();
       if(n === 'create') {
         if(MVC.KeyCheck(e, 'enter')) {
           $(e.target).val(''); //Clear the input
@@ -278,7 +264,6 @@ $(function() {
         }
       }
       notebook.SetModelFromView();
-      //notebook.SetViewFromModel();
     }
     
   };
@@ -291,23 +276,4 @@ $(function() {
                           notebookMethods
                           );
   
-  //Clear the notebook and add 3 notes
-  /*notebook
-    .clear()
-    .createNote('Buy some milk', true)
-    .createNote('Drink the milk', false)
-    .createNote('Open lifehacker.com', false);
-  */
-  
 });
-
-
-
-function printDebug() {
-  /*DebugObj('#debug', {
-    o1 : {
-      object : notebook,
-      readDom : true
-    }
-  });*/
-}
