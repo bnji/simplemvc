@@ -19,13 +19,14 @@
  * 2) To distinguish between the object's and JS built-in and 'custom' (passed
  *   with the object data when a ModelView instance is created) methods. 
  * 
- * #2 Design Rule - Associative vs '.'-notation
+ * #2 Design Rule - Bracket vs Dot notation
  * 
- * Internet Explorer (not all) don't like when an element/property in an 
+ * Internet Explorer (not all) don't like when an element/property in an
  * object literal or array is being accessed using dot notation. Even though
- * it's generally encouraged (e.g. www.jshint.com) to use the dot notation, 
- * this would very likely break when evaluated in IE! Therefore all 
- * elements/properties should be accessed associatively:
+ * it's generally encouraged (e.g. www.jshint.com) to use the dot notation,
+ * this would very likely break when evaluated in IE! Therefore all
+ * elements/properties should be accessed associatively with Bracket notation:
+ *  obj = {foo : 'bar'}; //An object literal (JSON)
  *  obj = {foo : 'bar'}; 
  *  obj['foo']; //(OK!)
  *  obj.foo; //(Breaks in IE (older versions)
@@ -44,8 +45,7 @@ var MVC = {
    * KeyCheck
    * 
    * A human way to check which key was used.
-   * This is supposed to simulate a static method known from other languages such
-   * as Java.
+   * This is supposed to simulate a static method known from other languages such as Java.
    * 
    * @method KeyCheck
    * @param {Object} e Event
@@ -57,6 +57,7 @@ var MVC = {
     } else if(e.keyCode === 27 && n === 'escape') {
       return true;
     }
+    return false;
   },
   /**
    * List
@@ -70,11 +71,28 @@ var MVC = {
    * @param {Object} An array (is optional)
    */
   List : function(array) {
+    //If the input array is an object literal, then convert it to an array
+    if(!$.isArray(array) && typeof(array) === 'object') {
+      //console.log('converted into array');
+      array = $.makeArray(array);
+    }
+
     //If the optional paramater 'array' hasn't been specified, then create an
     //empty Array.
     if(array === undefined || array === null) {
       array = [];
     }
+
+    /**
+     * Size
+     *
+     * Return the length of the array (same as array.length);
+     * @return {Number} The length of the array.
+     */
+    array.Size = function() {
+      return array.length;
+    };
+
     /**
      * Add
      * 
@@ -88,6 +106,7 @@ var MVC = {
       array.push(element);
       return array;
     };
+
     /**
      * Remove
      * 
@@ -162,8 +181,9 @@ var MVC = {
     }
     
     var datasrc = $settings['datasrc'];
-    
     var clone = $settings['clone'];
+
+    //If cloning-'functionality' is specified...
     if(clone !== undefined) {
       //Set the clone template to be the view id
       clone['template'] = viewId;
@@ -191,7 +211,13 @@ var MVC = {
       //If the template originally was hidden using 'display: none;' - make it visible to the user
       //element.show();
       //Append the copy to the target
-      clone['append'](element);
+      //Execute the append callback function which normally would involve
+      //appending and making it visible to the user (If the template originally was hidden using 'display: none;' - make it visible to the user)
+      //e.g.
+      //  Suppose we(you) in the callback function name the element 'elem':
+      //  $('#someElementId').append(elem); //append it
+      //  $(elem).show();                   //make it visible
+      clone['append'](element); //execute the callback function.
     }
     
     if($settings['viewId'] === undefined) {
@@ -206,8 +232,10 @@ var MVC = {
     if($settings['preventDefault'] === undefined) {
       $.extend($settings, {preventDefault : true});
     }
+    //Maybe move these settings a little up?
   
     //Attach events to the save, update, delete (more?) buttons/submit.
+    //For IE we need to specify each element with the viewId individually!
     $(viewId + ' button,' + viewId + ' a,' + viewId + ' submit,' + viewId + ' i')
       //.find('button,a,submit,i')
       .each(function(i, e) {
@@ -317,7 +345,7 @@ var MVC = {
      * Works in IE 7+: http://jsfiddle.net/cTJZN/
      * 
      * @method AddGetSet
-     * @param {String} prop The object's property name
+     * @param {String} prop The object's property name
      * @param {Function} onUpdate callBack function will execute, whenever 
      * the get/set event handlers bound with .bind() method are triggered.
      * @return {Object} The object (itself)
@@ -459,7 +487,7 @@ var MVC = {
      * 
      * @method Get
      * @param {String} prop The object's property name.
-     * @return {Object} value The value from the object's property.
+     * @return {Object} value The value from the object's property.
      */
     $object.Get = function(prop) {
       //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
@@ -582,7 +610,7 @@ var MVC = {
      * implementation of the 'keyup' event! 
      * 
      * @method SetModelFromView
-     * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or 
+     * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or 
      * true, databound elements inside and/or outside the the View will also 
      * get updated. If false, then they won't. 
      * @return {Object} The object (itself)
