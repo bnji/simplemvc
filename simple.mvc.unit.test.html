@@ -29,6 +29,10 @@
   <br />
   Type: <input type="text" name="type" />
   <br />
+  <div datasrc="#testArea" name="type" id="typeDataboundInsideDiv" class="excludeFromModel">&nbsp;</div>
+  <br />
+  <div datasrc="" name="type" id="typeDataboundInsideDivNoDatasrc" class="excludeFromModel">&nbsp;</div>
+  <br />
   <input type="text" name="canIjoinTheModelEvenNotSpecified" value="I'm not specified in the model, but the view wants me to join" class="" />
   
   <input type="submit" name="submitButton" value="submitValue" />
@@ -42,6 +46,7 @@
   ID (input): <input class="isNumber" name="id3" id="id3" />
   <br />
   Type: <input type="text" name="type2" value="typeValFromView" />
+  <div datasrc="#testArea" name="type" id="typeDataboundInsideDivBoundToOtherView" class="excludeFromModel">&nbsp;</div>
   <br />
   <span id="attachGetterSetterEvenNotSpecifiedInModel"> </span>
 </div>
@@ -63,9 +68,20 @@
   <p>
     This input element will be databound to the property 'type' in the MVC 'testArea'.
     <br /> 
-    <span datasrc="#testArea" name="type" id="typeDatabound">&nbsp;</span>
+    <input datasrc="#testArea" type="text" name="type" id="typeDataboundInput" />
+    <span datasrc="#testArea" name="type" id="typeDataboundSpan">&nbsp;</span>
+    <p datasrc="#testArea" name="type" id="typeDataboundParagraph">&nbsp;</p>
+    <div datasrc="#testArea" name="type" id="typeDataboundDiv">&nbsp;</div>
   </p>
 </div>
+
+
+<div style="display:none;" id="template-1">
+  <input type="text" name="id" />
+  <input type="text" name="foo" />
+</div>
+<div id="copies"></div>
+
 <script>
 $(function() {
   //Unit testing setup
@@ -192,6 +208,57 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     //MVC.Delete(obj, 'deleteExtraParameter');
     obj.Delete({c:'deleteExtraParameter'});
   });
+
+  it("Should work updating databound Input elements which are outside the View", function() {
+    var newVal = ''+$.now();
+    obj.Set('type', newVal);
+    expect(obj.Get('type')).toEqual(newVal);
+    expect($('#typeDataboundInput').val()).toEqual(obj.Get('type')); //Input
+  });
+
+  it("Should work updating databound Span elements which are outside the View", function() {
+    var newVal = ''+$.now();
+    obj.Set('type', newVal);
+    expect(obj.Get('type')).toEqual(newVal);
+    expect($('#typeDataboundSpan').text()).toEqual(obj.Get('type')); //Span
+  });
+
+  it("Should work updating databound Paragraph elements which are outside the View", function() {
+    var newVal = ''+$.now();
+    obj.Set('type', newVal);
+    expect(obj.Get('type')).toEqual(newVal);
+    expect($('#typeDataboundParagraph').text()).toEqual(obj.Get('type')); //Paragraph
+  });
+
+  it("Should work updating databound Div elements which are outside the View", function() {
+    var newVal = ''+$.now();
+    obj.Set('type', newVal);
+    expect(obj.Get('type')).toEqual(newVal);
+    expect($('#typeDataboundDiv').text()).toEqual(obj.Get('type')); //Div
+  });
+
+  it("Should work updating databound Div elements which are inside the View", function() {
+    var newVal = ''+$.now();
+    obj.Set('type', newVal);
+    expect(obj.Get('type')).toEqual(newVal);
+    expect($('#typeDataboundInsideDiv').text()).toEqual(obj.Get('type')); //Div Inside
+  });
+
+  //Actually it should be possible. Only when cloning the datasrc should be empty!
+  xit("Should work updating databound Div elements which are inside the View, but doesn't have the datasrc attribute set(specified)", function() {
+    var newVal = ''+$.now();
+    obj.Set('type', newVal);
+    expect(obj.Get('type')).toEqual(newVal);
+    expect($('#typeDataboundInsideDivNoDatasrc').text()).toEqual(obj.Get('type')); //Div without datasrc specified
+  });
+
+  it("Should work updating databound Div elements which are inside a different View", function() {
+    var newVal = ''+$.now();
+    obj.Set('type', newVal);
+    expect(obj.Get('type')).toEqual(newVal);
+    expect($('#typeDataboundInsideDivBoundToOtherView').text()).toEqual(obj.Get('type')); //Div Inside other View area
+  });
+  
   
   it("using datafld and id should work", function() {
     var newVal = ''+$.now();
@@ -212,7 +279,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     expect(obj['imNotInTheModel']).toBe(undefined);
     expect(obj['imNotInTheModelInput']).toBe(undefined);
   });
-  
+
   it("changing Model property using the MVC.Set() method should update the DOM value when 'isMirror' : true", function() {
     var newVal = ''+$.now();
     //MVC.Set(obj, 'type', newVal);
@@ -346,7 +413,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     }, 3000);
     //MVC.Set(obj, 'type', 'delay change!');
     obj.Set('type', 'delay change!');
-    var domVal = $('#typeDatabound').html();
+    var domVal = $('#typeDataboundSpan').html();
     expect(domVal).toBe(obj.type);
     //alert(domVal + " =?= " + obj.type);
   });
@@ -356,6 +423,65 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     expect($.isArray(obj.toArray())).toBe(true);
   });
   
+  it("Should work adding & removing a property in the Model with event's using .AddGetSet()", function() {
+    var newPropName = 'aNewProperty1',
+        newVal = $.now();
+
+    obj.AddProperty(newPropName, newVal);
+    expect(obj[newPropName]).toEqual(newVal);
+
+    newVal = 'changed value!';
+    obj.Set(newPropName, newVal); //Changing the value with .Set();
+    expect(obj.Get(newPropName)).toEqual(newVal); //Access value with .Get();
+
+    obj.RemoveProperty(newPropName);
+    expect(obj[newPropName]).toEqual(undefined);
+    expect(obj.Get(newPropName)).toEqual(undefined);
+  });
+
+  it("Should work determine whether or not the Model has a property using .Has() method", function() {
+    expect(obj.Has('id')).toBe(true);
+    obj.RemoveProperty('id');
+    expect(obj.Has('id')).toBe(false);
+  });
+
+  xit("Should be possible to set the Model from the View using .SetModelFromView()", function() {
+
+  });
+
+  it("Should be possible to set the View from the Model using .SetViewFromModel() which also should update databound values!", function() {
+    obj['id'] = 'Name was changed in Model! - Now you see it after updating the View from the Model.';
+    obj['type'] = 'Name was changed in Model! - Now you see it after updating the View from the Model.';
+    expect($('#id').val()).not.toEqual(obj.Get('id'));
+    expect($('#idDatabound').text()).not.toEqual(obj.Get('id'));
+    obj.SetViewFromModel();
+    expect($('#id').val()).toEqual(obj.Get('id'));
+    expect($('#idDatabound').text()).toEqual(obj.Get('id'));
+  });
+
+  //Should not set the value in the View when updating only in the model using Bracket notation
+  it("Should be possible to update the Model without changing the View (until .SetViewFromModel() has been called or on page refresh)", function() {
+    var newVal = '' + $.now();
+    obj['type'] = newVal;
+    expect($(viewId + ' [name="type"]').val()).not.toEqual(newVal);
+    obj.SetViewFromModel();
+    expect($(viewId + ' [name="type"]').val()).toEqual(newVal);
+    expect(obj.Get('type')).toEqual(newVal);
+  });
+
+  it("Should up update both Model and View, when using .Set()", function() {
+    var newVal = '' + $.now();
+    obj.Set('type', newVal);
+    expect($(viewId + ' [name="type"]').val()).toEqual(newVal);
+    expect(obj.Get('type')).toEqual(newVal);
+  });
+
+  it("Should be possible to find elements inside the View using the .Find() method", function() {
+    expect($(viewId + ' [name="type"]').val()).toBe(obj.Find('[name="type"]').val());
+    expect($(viewId + ' #id').text()).toBe(obj.Find('#id').text());
+  });
+
+
 });
 
 
@@ -375,8 +501,20 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
       }
     });
   });
+
+  it("Should clear all values in the model even when isMirror = false", function() {
+    obj.ClearAll();
+    expect(obj['id']).toBe('');
+    expect(obj['type']).toBe('');
+  });
+
+  it("Should clear a single value even when isMirror = false", function() {
+    obj.Clear('type');
+    expect(obj['id']).toBe(123);
+    expect(obj['type']).toBe('');
+  });
   
-  it("Changing Model property using the MVC.Set() method should not set the property or the DOM value when 'isMirror' : false", function() {
+  it("Changing Model property using the .Set() method should not set the property or the DOM value when 'isMirror' : false", function() {
     var newVal = ''+Date.now();
     //MVC.Set(obj, 'type', newVal);
     obj.Set('type', newVal);
@@ -391,7 +529,7 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     expect(objVal).toBe(undefined);
   });
   
-  it("Updating Model properties (and therefor also DOM values) using MVC.Set() should not work", function() {
+  it("Updating Model properties (and therefore also DOM values) using .Set() should not work", function() {
     var newVal = Date.now();
     //MVC.Set(obj, 'id', newVal);
     obj.Set('id', newVal);
@@ -588,12 +726,11 @@ describe("MVC Object without object data", function() {
 describe(".GetModelData()", function() {
   var obj,
       data,
-      methods,
-      id = $.now();
+      methods;
   
   //Some data specified by the Model (the model's data)
   data = {
-    id : id,
+    id : '#'+$.now(),
     aValue : 'I am a string value',
     anObject : {
       apple: 'I love apple pie',
@@ -625,6 +762,144 @@ describe(".GetModelData()", function() {
   });
   
 });
+
+
+
+
+describe("Cloning an object", function() {
+  var clones;
+  
+  beforeEach(function(){
+    clones = MVC.List();
+  });
+
+  it("Should work creating a clone from a template", function() {
+    var obj = createCloneWithDataAndEvents('#'+$.now());
+    expect(clones.Size()).toEqual(0);
+    clones.Add(obj);
+    expect(clones.Size()).toEqual(1);
+  });
+
+  it("Should work creating a clone using the hashtag", function() {
+    var newId = '#' + $.now();
+    var obj = createCloneWithDataAndEvents(newId);
+    expect(obj.GetViewId()).toEqual(newId);
+  });
+
+  it("Should work creating a clone without using the hashtag (and the viewId is now a string)", function() {
+    var newId = $.now(); //a number
+    var obj = createCloneWithDataAndEvents(newId);
+    expect(obj.GetViewId()).toEqual(''+newId); //make sure we test for a string!
+  });
+
+  it("If 'withDataAndEvents' has not been specified, it should become 'false'", function() {
+    var newId = $.now();
+    var obj = createCloneWithoutDataAndEvents(newId);
+    expect(obj['settings']['clone']['withDataAndEvents']).toBe(false);
+  });
+
+  function createCloneWithDataAndEvents(_id) {
+    return MVC.ModelView('#template-1', { 
+      //Data
+      id : 123,
+      foo : 'bar'
+    }, { 
+      //Settings
+      clone: {
+        id: _id,
+        withDataAndEvents: true,
+        append: function(elem) {
+          $('#copies').append(elem);
+          //$(elem).show(); //don't make the clones visible when testing
+        }
+      }
+    });
+  }
+
+  function createCloneWithoutDataAndEvents(_id) {
+    return MVC.ModelView('#template-1', { 
+      //Data
+      id : 123,
+      foo : 'bar'
+    }, { 
+      //Settings
+      clone: {
+        id: _id,
+        append: function(elem) {
+          $('#copies').append(elem);
+          //$(elem).show(); //don't make the clones visible when testing
+        }
+      }
+    });
+  }
+  
+});
+
+
+
+describe("MVC.List()", function() {
+  var o;
+  
+  beforeEach(function(){
+    o = {
+      id : $.now(),
+      foo : 'bar',
+      aFunc : function() {
+        return true;
+      },
+      arrayInside : ['a', 'b']
+    };
+  });
+
+  it("Object should not be an array ", function() {
+    expect($.isArray(o)).toBe(false);
+  });
+
+  it("MVC.List pass object should convert into array and not empty", function() {
+    a = MVC.List(o);
+    expect($.isArray(a)).toBe(true);
+    expect(a.Size()).toEqual(3);
+  });
+
+  it("MVC.List pass object should convert into array, but be empty (set to undefined)", function() {
+    o = undefined;
+    a = MVC.List(o);
+    expect($.isArray(a)).toBe(true);
+    expect(a.Size()).toEqual(0);
+  });
+
+  it("MVC.List pass object should convert into array, but be empty (set to null)", function() {
+    o = null;
+    a = MVC.List(o);
+    expect($.isArray(a)).toBe(true);
+    expect(a.Size()).toEqual(0);
+  });
+
+  it(".Add() should add a value to the array", function() {
+    a = MVC.List(o);
+    expect(a.Size()).toEqual(3);
+    a.Add('I am new');
+    expect(a.Size()).toEqual(4);
+  });
+
+  it(".Remove() should remove a value from the array", function() {
+    a = MVC.List(o);
+    expect(a.Size()).toEqual(3);
+    a.Remove('bar');
+    expect(a.Size()).toEqual(2);
+  });
+
+    /*
+        o['im_new'] = 'hello there';
+        //o = ['a', 'b'];
+        //o = 'bar';
+        console.log(o);
+        a = MVC.List(o);
+        console.log($.isArray(o));
+        console.log($.isArray(a));*/
+  
+});
+
 
   
 </script>

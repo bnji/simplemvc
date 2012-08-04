@@ -167,6 +167,22 @@ var MVC = {
    * @param {Object} An array (is optional)
    *&#x2F;
   List : function(array) {
+    if(array === null || array === undefined) {
+      array = [];
+      console.log(&quot;new array&quot;);
+    }
+    else if(!$.isArray(array) &amp;&amp; typeof(array) === &#x27;object&#x27;) {
+      var newArray = [], i = 0;
+      $.each(array, function(k, v) {
+        if(typeof v !== &#x27;function&#x27;) {
+          newArray[i] = v;
+          i++;
+        }
+      });
+      array = newArray;
+    }
+
+    &#x2F;*
     &#x2F;&#x2F;If the input array is an object literal, then convert it to an array
     if(!$.isArray(array) &amp;&amp; typeof(array) === &#x27;object&#x27;) {
       &#x2F;&#x2F;console.log(&#x27;converted into array&#x27;);
@@ -177,7 +193,8 @@ var MVC = {
     &#x2F;&#x2F;empty Array.
     if(array === undefined || array === null) {
       array = [];
-    }
+      console.log(&quot;new array&quot;);
+    }*&#x2F;
 
     &#x2F;**
      * Size
@@ -220,6 +237,7 @@ var MVC = {
       var i = $.inArray(element, array);
       if(i !== -1) {
         array.splice(i, 1);
+        console.log(&#x27;removed &#x27; + element + &#x27; from array&#x27;);
         return true;
       }
       return false;
@@ -284,12 +302,21 @@ var MVC = {
       &#x2F;&#x2F;Set the clone template to be the view id
       clone[&#x27;template&#x27;] = viewId;
       &#x2F;&#x2F;Update the view id with the new clone id
-      viewId = clone[&#x27;id&#x27;];
-      var viewIdNoHash = viewId.substring(1, viewId.length);
+      viewId = &#x27;&#x27; + clone[&#x27;id&#x27;]; &#x2F;&#x2F;Make sure it&#x27;s a string
+      
+      &#x2F;&#x2F;If the clone view id has hashtag specified
+      if(viewId.substring(0, 1) === &#x27;#&#x27;) {
+        viewIdNoHash = viewId.substring(1, viewId.length);
+      }
+      &#x2F;&#x2F;if there&#x27;s no hashtag
+      else {
+        viewIdNoHash = viewId;
+      }
+      
       &#x2F;&#x2F;Clone the source and update the viewId
-      var withDataAndEvents = clone[&#x27;withDataAndEvents&#x27;];
+      var withDataAndEvents = $settings[&#x27;clone&#x27;][&#x27;withDataAndEvents&#x27;];
       withDataAndEvents = withDataAndEvents !== undefined ? withDataAndEvents : false;
-      &#x2F;&#x2F;console.log(withDataAndEvents);
+      $settings[&#x27;clone&#x27;][&#x27;withDataAndEvents&#x27;] = withDataAndEvents;
       var element = $($(clone[&#x27;template&#x27;]).clone(withDataAndEvents))
                       .attr(&#x27;id&#x27;, viewIdNoHash);
       
@@ -362,8 +389,7 @@ var MVC = {
      * @return {Object} The object (itself)
      *&#x2F;
     $object.Save = function(par) {
-      $object.RunCtr(&#x27;Save&#x27;, par);
-      return $object;
+      return $object.RunCtr(&#x27;Save&#x27;, par);
     };
     &#x2F;**
      * Call the .Update() method whenever you want to update the object.
@@ -376,8 +402,7 @@ var MVC = {
      * @return {Object} The object (itself)
      *&#x2F;
     $object.Update = function(par) {
-      $object.RunCtr(&#x27;Update&#x27;, par);
-      return $object;
+      return $object.RunCtr(&#x27;Update&#x27;, par);
     };
     &#x2F;**
      * Call the .Delete() method whenever you want to delete the object.
@@ -390,8 +415,7 @@ var MVC = {
      * @return {Object} The object (itself)
      *&#x2F;
     $object.Delete = function(par) {
-      $object.RunCtr(&#x27;Delete&#x27;, par);
-      return $object;
+      return $object.RunCtr(&#x27;Delete&#x27;, par);
     };
     
     &#x2F;**
@@ -525,11 +549,12 @@ var MVC = {
      * @param {String} prop The property name
      * @return {Object} The object (itself)
      *&#x2F;
-    $object.AddProperty = function(prop) {
+    $object.AddProperty = function(prop, value) {
+      $object[prop] = value; &#x2F;&#x2F;Add the propery to the Model
       $object
-        .AddEvents()
-        .AddGetSet(prop)
-        .TriggerEvent(prop, &#x27;keyup&#x27;);
+&#x2F;&#x2F;        .AddEvents()
+        .AddGetSet(prop);
+        &#x2F;&#x2F;.TriggerEvent(prop, &#x27;keyup&#x27;);
       console.log(&quot;Added property &quot; + prop + &quot; to the Model.&quot;);
       return $object;
     };
@@ -546,9 +571,10 @@ var MVC = {
     $object.RemoveProperty = function(prop) {
       $object.RemoveGetSet(prop);
       delete $object[prop];
-      $(viewId + &#x27; :input[name=&quot;&#x27;+prop+&#x27;&quot;]&#x27;)
-        .not(&#x27;.excludeFromModel&#x27;)
-        .remove();
+      &#x2F;&#x2F;$object.Find(&#x27;[name=&quot;&#x27;+prop+&#x27;&quot;]&#x27;)
+      &#x2F;&#x2F;$(viewId + &#x27; :input[name=&quot;&#x27;+prop+&#x27;&quot;]&#x27;)
+        &#x2F;&#x2F;.not(&#x27;.excludeFromModel&#x27;)
+        &#x2F;&#x2F;.remove();
       console.log(&quot;Removed property &quot; + prop + &quot; from the Model.&quot;);
       return $object;
     };
@@ -613,6 +639,18 @@ var MVC = {
     };
     
     &#x2F;**
+     * GetDatasrcId
+     *
+     * Return the (view) ID of the datasource.
+     *
+     * @method GetDatasrcId
+     * @return {Number} The (View) ID of the datasource.
+     *&#x2F;
+    $object.GetDatasrcId = function() {
+      return $object.datasrc;
+    };
+    
+    &#x2F;**
      * GetModelData
      *
      * Return&#x27;s a copy of the Model&#x27;s data without it&#x27;s functions.
@@ -651,18 +689,6 @@ var MVC = {
     };
     
     &#x2F;**
-     * GetDatasrcId
-     *
-     * Return the (view) ID of the datasource.
-     *
-     * @method GetDatasrcId
-     * @return {Number} The (View) ID of the datasource.
-     *&#x2F;
-    $object.GetDatasrcId = function() {
-      return $object.datasrc;
-    };
-    
-    &#x2F;**
      * GetViewData
      *
      * Return the View data as an JSON object literal.
@@ -675,19 +701,34 @@ var MVC = {
       &#x2F;&#x2F;Get the values from the View (DOM)
       return $(viewId).getSetHtml();
     };
+
+    &#x2F;**
+     * SetViewData
+     *
+     * Set the View data from the Model (does not update databound elments)
+     *
+     * @method SetViewData
+     * @return {Object} The object (itself)
+     *&#x2F;
+    $object.SetViewData = function() {
+      &#x2F;&#x2F;Set the values in the DOM
+      $(viewId).getSetHtml($object);
+    };
     
     &#x2F;**
      * SetViewFromModel
      *
-     * Updates the elements in the View from the Model.
+     * Updates the elements in the View from the Model (including databound elements).
      *
      * @method SetViewFromModel
      *&#x2F;
     $object.SetViewFromModel = function() {
       &#x2F;&#x2F;console.log(&quot;SetViewFromModel()&quot;);
-      &#x2F;&#x2F;Set the values in the DOM
-      &#x2F;&#x2F;alert(JSON.stringify($object));
-      $(viewId).getSetHtml($object);
+      $object.SetViewData();
+      &#x2F;&#x2F;Update the databound values!!!
+      $.each($object.GetModelData(), function(key, newVal) {
+        $object.SetDataboundDomVal(viewId, key, newVal);
+      });
       return $object;
     };
     
@@ -712,7 +753,6 @@ var MVC = {
      * get updated. If false, then they won&#x27;t.
      * @return {Object} The object (itself)
      *&#x2F;
-     &#x2F;&#x2F;$object.SetModelFromView = function(updateDataboundValues) {
      $object.SetModelFromView = function() {
       &#x2F;&#x2F;console.log(&quot;SetModelFromView()&quot;);
       &#x2F;&#x2F;Get the values from the View (DOM)

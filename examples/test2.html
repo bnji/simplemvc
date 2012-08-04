@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 10</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <!--optional:-->
+    <script type="text/javascript" src="http://hammerbenjamin.com/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://hammerbenjamin.com/lib/bootstrap/css/bootstrap.css" />
+    <script src="debug.js"></script>
+    <!--//end optional-->
+  <body>
+    <div id="foo"></div>
+    <script>
+    $(function() {
+      var o = {
+        id : $.now(),
+        foo : 'bar',
+        aFunc : function() {
+          return true;
+        },
+        arrayInside : ['a', 'b']
+      };
+      //var arr = $.map(o, function (a) { return a; });
+      var arr = MVC.List(o);
+      console.log(arr);
+
+
+      /*MVC.ModelView('#foo', {
+        //Model data
+      }, {
+        //Config & view input events
+      }, {
+        //Custom methods
+      });*/
+
+      var obj2 = MVC.ModelView('#foo', {
+        id: $.now()
+      }, {
+        //Config & view input events
+      }, {
+        //Custom methods
+      });
+    });
+    </script>
+  </head>
+  <body>
+    
+  
+  </body>
+</html>
