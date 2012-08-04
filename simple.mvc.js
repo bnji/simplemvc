@@ -223,8 +223,8 @@ var MVC = {
     if($settings['viewId'] === undefined) {
       $.extend($settings, {viewId : viewId});
     }
-    if($settings['reflectModelChangeInView'] === undefined) {
-      $.extend($settings, {reflectModelChangeInView : true});
+    if($settings['isMirror'] === undefined) {
+      $.extend($settings, {isMirror : true});
     }
     if($settings['eventUsed'] === undefined) {
       $.extend($settings, {eventUsed : ''});
@@ -301,7 +301,7 @@ var MVC = {
     /**
      * Clear
      *
-     * Clears a property's value in the Model and optionally in the View if 'reflectModelChangeInView' = true.
+     * Clears a property's value in the Model and optionally in the View if 'isMirror' = true.
      *
      *
      * @method Clear
@@ -341,7 +341,7 @@ var MVC = {
      * If changes in the model properties should be reflected in the view
      * then setter and getter methods will be attached using jQuery.
      *
-     * Note: Will only be used(exec.) if 'reflectModelChangeInView' is TRUE.
+     * Note: Will only be used(exec.) if 'isMirror' is TRUE.
      *
      * Works in IE 7+: http://jsfiddle.net/cTJZN/
      *
@@ -460,7 +460,7 @@ var MVC = {
     /**
      * Set
      *
-     * Notice: Must only be used if 'reflectModelChangeInView' is TRUE.
+     * Notice: Must only be used if 'isMirror' is TRUE.
      *
      * When you need to update a value in the Model and reflect in the View.
      *
@@ -484,7 +484,7 @@ var MVC = {
     /**
      * Get
      *
-     * Notice: Must only be used if 'reflectModelChangeInView' is TRUE.
+     * Notice: Must only be used if 'isMirror' is TRUE.
      *
      * @method Get
      * @param {String} prop The object's property name.
@@ -855,7 +855,7 @@ var MVC = {
     //be achieved using the .trigger() method, which is implemented in the
     //MVC.Set() and MVC.Get() methods.
     //Note: Changing the Model's properties directly won't update the view.
-    if($settings['reflectModelChangeInView']) {
+    if($settings['isMirror']) {
       //alert("reflect on");
       //Loop throught the object's properties
       $.each($object, function(k,v) {

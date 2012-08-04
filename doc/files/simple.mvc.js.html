@@ -101,48 +101,48 @@
 &#x2F;&#x2F; To minify: http:&#x2F;&#x2F;localhost&#x2F;minify&#x2F;min&#x2F;?f=simplemvc&#x2F;simple.mvc.js
 &#x2F;&#x2F; ==========================================================================
 &#x2F;**
- * Provides the core MVC classes: Controller &amp; ModelView 
- * 
+ * Provides the core MVC classes: Controller &amp; ModelView
+ *
  * #1 Design Rule - Capitalization
- * 
+ *
  * Internal methods (except the .toArray() method) have the first letter
  * capitalized. This is by design for two reasons:
- * 
+ *
  *  1) JavaScript has many built in methods which already &#x27;belong&#x27; to an object
- *     so this is a good &#x27;solution&#x27; which makes it possible to use methods such 
+ *     so this is a good &#x27;solution&#x27; which makes it possible to use methods such
  *     as .Delete() (as .delete wouldn&#x27;t be valid in JavaScript).
- * 
+ *
  * 2) To distinguish between the object&#x27;s and JS built-in and &#x27;custom&#x27; (passed
- *   with the object data when a ModelView instance is created) methods. 
- * 
- * #2 Design Rule - Associative vs &#x27;.&#x27;-notation
- * 
- * Internet Explorer (not all) don&#x27;t like when an element&#x2F;property in an 
+ *   with the object data when a ModelView instance is created) methods.
+ *
+ * #2 Design Rule - Bracket vs Dot notation
+ *
+ * Internet Explorer (not all) don&#x27;t like when an element&#x2F;property in an
  * object literal or array is being accessed using dot notation. Even though
- * it&#x27;s generally encouraged (e.g. www.jshint.com) to use the dot notation, 
- * this would very likely break when evaluated in IE! Therefore all 
- * elements&#x2F;properties should be accessed associatively:
- *  obj = {foo : &#x27;bar&#x27;}; 
+ * it&#x27;s generally encouraged (e.g. www.jshint.com) to use the dot notation,
+ * this would very likely break when evaluated in IE! Therefore all
+ * elements&#x2F;properties should be accessed associatively with Bracket notation:
+ *  obj = {foo : &#x27;bar&#x27;}; &#x2F;&#x2F;An object literal (JSON)
+ *  obj = {foo : &#x27;bar&#x27;};
  *  obj[&#x27;foo&#x27;]; &#x2F;&#x2F;(OK!)
  *  obj.foo; &#x2F;&#x2F;(Breaks in IE (older versions)
  *  obj.someMethod(); &#x2F;&#x2F;(OK! - also in IE!)
- * 
- * 
+ *
+ *
  * Some helpful links:
  * http:&#x2F;&#x2F;viralpatel.net&#x2F;blogs&#x2F;20-top-jquery-tips-tricks-for-jquery-programmers&#x2F;
- * 
- * 
+ *
+ *
  * @module MVC
  * @main MVC
  *&#x2F;
 var MVC = {
   &#x2F;**
    * KeyCheck
-   * 
+   *
    * A human way to check which key was used.
-   * This is supposed to simulate a static method known from other languages such
-   * as Java.
-   * 
+   * This is supposed to simulate a static method known from other languages such as Java.
+   *
    * @method KeyCheck
    * @param {Object} e Event
    * @param {String} n Name of the key to check against (e.g. &#x27;enter&#x27;, &#x27;escape&#x27;)
@@ -153,29 +153,47 @@ var MVC = {
     } else if(e.keyCode === 27 &amp;&amp; n === &#x27;escape&#x27;) {
       return true;
     }
+    return false;
   },
   &#x2F;**
    * List
-   * 
-   * A more human way of handling array&#x27;s in JavaScript. it extends the array 
+   *
+   * A more human way of handling array&#x27;s in JavaScript. it extends the array
    * (currently) with two extra methods which makes it more easy and semantic
-   * when adding and removing elements using .Add() and .Remove() methods 
+   * when adding and removing elements using .Add() and .Remove() methods
    * respectively.
-   * 
+   *
    * @class List
    * @param {Object} An array (is optional)
    *&#x2F;
   List : function(array) {
+    &#x2F;&#x2F;If the input array is an object literal, then convert it to an array
+    if(!$.isArray(array) &amp;&amp; typeof(array) === &#x27;object&#x27;) {
+      &#x2F;&#x2F;console.log(&#x27;converted into array&#x27;);
+      array = $.makeArray(array);
+    }
+
     &#x2F;&#x2F;If the optional paramater &#x27;array&#x27; hasn&#x27;t been specified, then create an
     &#x2F;&#x2F;empty Array.
     if(array === undefined || array === null) {
       array = [];
     }
+
+    &#x2F;**
+     * Size
+     *
+     * Return the length of the array (same as array.length);
+     * @return {Number} The length of the array.
+     *&#x2F;
+    array.Size = function() {
+      return array.length;
+    };
+
     &#x2F;**
      * Add
-     * 
+     *
      * Add a new element - It&#x27;s more semantic to use .Add() instead of .push().
-     * 
+     *
      * @method Add
      * @param {Object} An element.
      * @return {Array} The array.
@@ -184,11 +202,12 @@ var MVC = {
       array.push(element);
       return array;
     };
+
     &#x2F;**
      * Remove
-     * 
+     *
      * Remove an element (if found) from the array.
-     * 
+     *
      * @method Remove
      * @param {Object} An element.
      *&#x2F;
@@ -210,13 +229,13 @@ var MVC = {
   &#x2F;**
    * Controller which handles the logic, such as saving, updating or deleting
    * the object.
-   * 
+   *
    * For the time being the Controller class doesn&#x27;t do much more than returning
    * the same data as entered (JSON) object literal. Still this is by design, as
-   * there is a possibility for the &#x27;controller&#x27; to do more than this &#x27;stuff&#x27; 
+   * there is a possibility for the &#x27;controller&#x27; to do more than this &#x27;stuff&#x27;
    * (handling more than returning data) in the future.
-   *  
-   * 
+   *
+   *
    * @class Controller
    * @constructor
    *&#x2F;
@@ -224,12 +243,12 @@ var MVC = {
     return data;
   },
   &#x2F;**
-   * ModelView creates a new object with data and settings. The data and 
+   * ModelView creates a new object with data and settings. The data and
    * settings are (JSON) object literals and merged and returned after all the
    * internal setup is done.
    * The ModelView contains all the information about the object, which keeps
    * the View synchronized with the Model and vice versa.
-   * 
+   *
    * @class ModelView
    * @constructor
    *&#x2F;
@@ -258,8 +277,9 @@ var MVC = {
     }
     
     var datasrc = $settings[&#x27;datasrc&#x27;];
-    
     var clone = $settings[&#x27;clone&#x27;];
+
+    &#x2F;&#x2F;If cloning-&#x27;functionality&#x27; is specified...
     if(clone !== undefined) {
       &#x2F;&#x2F;Set the clone template to be the view id
       clone[&#x27;template&#x27;] = viewId;
@@ -267,11 +287,14 @@ var MVC = {
       viewId = clone[&#x27;id&#x27;];
       var viewIdNoHash = viewId.substring(1, viewId.length);
       &#x2F;&#x2F;Clone the source and update the viewId
-      var element = $($(clone[&#x27;template&#x27;]).clone(clone[&#x27;withDataAndEvents&#x27;]))
+      var withDataAndEvents = clone[&#x27;withDataAndEvents&#x27;];
+      withDataAndEvents = withDataAndEvents !== undefined ? withDataAndEvents : false;
+      &#x2F;&#x2F;console.log(withDataAndEvents);
+      var element = $($(clone[&#x27;template&#x27;]).clone(withDataAndEvents))
                       .attr(&#x27;id&#x27;, viewIdNoHash);
       
-      &#x2F;&#x2F;datasrc property to the settings, as it should be possible to create a 
-      &#x2F;&#x2F;ModelView without any data, but solely relies on receiving updated 
+      &#x2F;&#x2F;datasrc property to the settings, as it should be possible to create a
+      &#x2F;&#x2F;ModelView without any data, but solely relies on receiving updated
       &#x2F;&#x2F;values from another view!
       &#x2F;&#x2F;If the datasrc isn&#x27;t specified, then use the viewId as datasrc.
       datasrc = datasrc !== undefined ? datasrc : viewId;
@@ -284,14 +307,20 @@ var MVC = {
       &#x2F;&#x2F;If the template originally was hidden using &#x27;display: none;&#x27; - make it visible to the user
       &#x2F;&#x2F;element.show();
       &#x2F;&#x2F;Append the copy to the target
-      clone[&#x27;append&#x27;](element);
+      &#x2F;&#x2F;Execute the append callback function which normally would involve
+      &#x2F;&#x2F;appending and making it visible to the user (If the template originally was hidden using &#x27;display: none;&#x27; - make it visible to the user)
+      &#x2F;&#x2F;e.g.
+      &#x2F;&#x2F;  Suppose we(you) in the callback function name the element &#x27;elem&#x27;:
+      &#x2F;&#x2F;  $(&#x27;#someElementId&#x27;).append(elem); &#x2F;&#x2F;append it
+      &#x2F;&#x2F;  $(elem).show();                   &#x2F;&#x2F;make it visible
+      clone[&#x27;append&#x27;](element); &#x2F;&#x2F;execute the callback function.
     }
     
     if($settings[&#x27;viewId&#x27;] === undefined) {
       $.extend($settings, {viewId : viewId});
     }
-    if($settings[&#x27;reflectModelChangeInView&#x27;] === undefined) {
-      $.extend($settings, {reflectModelChangeInView : true});
+    if($settings[&#x27;isMirror&#x27;] === undefined) {
+      $.extend($settings, {isMirror : true});
     }
     if($settings[&#x27;eventUsed&#x27;] === undefined) {
       $.extend($settings, {eventUsed : &#x27;&#x27;});
@@ -299,8 +328,10 @@ var MVC = {
     if($settings[&#x27;preventDefault&#x27;] === undefined) {
       $.extend($settings, {preventDefault : true});
     }
+    &#x2F;&#x2F;Maybe move these settings a little up?
   
     &#x2F;&#x2F;Attach events to the save, update, delete (more?) buttons&#x2F;submit.
+    &#x2F;&#x2F;For IE we need to specify each element with the viewId individually!
     $(viewId + &#x27; button,&#x27; + viewId + &#x27; a,&#x27; + viewId + &#x27; submit,&#x27; + viewId + &#x27; i&#x27;)
       &#x2F;&#x2F;.find(&#x27;button,a,submit,i&#x27;)
       .each(function(i, e) {
@@ -325,9 +356,9 @@ var MVC = {
      * Notice: This is intended behaviour, but the implementation of the
      * method is up to the individual how and what is done when this method
      * is called&#x2F;executed.
-     * 
+     *
      * @method Save
-     * @param {Object} par Provide extra parameters if needed. 
+     * @param {Object} par Provide extra parameters if needed.
      * @return {Object} The object (itself)
      *&#x2F;
     $object.Save = function(par) {
@@ -339,9 +370,9 @@ var MVC = {
      * Notice: This is intended behaviour, but the implementation of the
      * method is up to the individual how and what is done when this method
      * is called&#x2F;executed.
-     * 
+     *
      * @method Update
-     * @param {Object} par Provide extra parameters if needed. 
+     * @param {Object} par Provide extra parameters if needed.
      * @return {Object} The object (itself)
      *&#x2F;
     $object.Update = function(par) {
@@ -353,7 +384,7 @@ var MVC = {
      * Notice: This is intended behaviour, but the implementation of the
      * method is up to the individual how and what is done when this method
      * is called&#x2F;executed.
-     * 
+     *
      * @method Delete
      * @param {Object} par Provide extra parameters if needed.
      * @return {Object} The object (itself)
@@ -365,23 +396,24 @@ var MVC = {
     
     &#x2F;**
      * Clear
-     * 
-     * Clears a property&#x27;s value in the Model and the View.
-     * 
-     * 
+     *
+     * Clears a property&#x27;s value in the Model and optionally in the View if &#x27;isMirror&#x27; = true.
+     *
+     *
      * @method Clear
      * @return {Object} The object (itself)
      *&#x2F;
     $object.Clear = function(prop) {
+      $object[prop] = &#x27;&#x27;;
       $object.Set(prop, &#x27;&#x27;);
       return $object;
     };
     
     &#x2F;**
      * Clear All
-     * 
+     *
      * Clears all the data in the Model and the View.
-     * 
+     *
      * @method ClearAll
      * @return {Object} The object (itself)
      *&#x2F;
@@ -394,24 +426,24 @@ var MVC = {
     
     &#x2F;**
      * AddGetSet
-     * 
+     *
      * Add getter and setter methods for a property
-     * 
+     *
      * Getters and Setters in JavaScript&#x2F;JScript (ECMAScript) are not an option
      * as it is hard to make it work cross-browser&#x2F;platform!
      * There is a solution here, but only down to IE9:
      * Source: http:&#x2F;&#x2F;javascriptweblog.wordpress.com&#x2F;2010&#x2F;11&#x2F;15&#x2F;extending-objects-with-javascript-getters&#x2F;
-     * 
+     *
      * If changes in the model properties should be reflected in the view
      * then setter and getter methods will be attached using jQuery.
-     * 
-     * Note: Will only be used(exec.) if &#x27;reflectModelChangeInView&#x27; is TRUE.
-     * 
+     *
+     * Note: Will only be used(exec.) if &#x27;isMirror&#x27; is TRUE.
+     *
      * Works in IE 7+: http:&#x2F;&#x2F;jsfiddle.net&#x2F;cTJZN&#x2F;
-     * 
+     *
      * @method AddGetSet
-     * @param {String} prop The object&#x27;s property name
-     * @param {Function} onUpdate callBack function will execute, whenever 
+     * @param {String} prop The object&#x27;s property name
+     * @param {Function} onUpdate callBack function will execute, whenever
      * the get&#x2F;set event handlers bound with .bind() method are triggered.
      * @return {Object} The object (itself)
      *&#x2F;
@@ -440,7 +472,7 @@ var MVC = {
             &#x2F;&#x2F;so that the views bound to this element will also be updated.
             &#x2F;&#x2F;This is important in case the model is changed using setTimeout()
             &#x2F;&#x2F;which will update the model, then this change must simulate
-            &#x2F;&#x2F;a user setting the value of the input. 
+            &#x2F;&#x2F;a user setting the value of the input.
             $object.TriggerEvent(prop, &#x27;change&#x27;);&#x2F;&#x2F;.TriggerEvent(prop, &#x27;keyup&#x27;);
             &#x2F;&#x2F;alert(&quot;OK&quot;);
             &#x2F;&#x2F;onUpdate(prop, oldVal, newVal);
@@ -451,11 +483,11 @@ var MVC = {
     
     &#x2F;**
      * RemoveGetSet
-     * 
+     *
      * Remove getter and setter methods for a property
-     * 
+     *
      * @method RemoveGetSet
-     * @param {String} prop The object&#x27;s property name 
+     * @param {String} prop The object&#x27;s property name
      * @return {Object} The object (itself)
      *&#x2F;
     $object.RemoveGetSet = function(prop) {
@@ -468,9 +500,9 @@ var MVC = {
     
     &#x2F;**
      * Trigger Event
-     * 
+     *
      * Trigger an event on an input element inside the view
-     * 
+     *
      * @method TriggerEvent
      * @param {String} prop Property name
      * @param {String} evt Event type&#x2F;name (e.g. &#x27;keyup&#x27;)
@@ -486,11 +518,11 @@ var MVC = {
     
     &#x2F;**
      * AddProperty
-     * 
+     *
      * Add a property to the Model
-     * 
+     *
      * @method AddProperty
-     * @param {String} prop The property name 
+     * @param {String} prop The property name
      * @return {Object} The object (itself)
      *&#x2F;
     $object.AddProperty = function(prop) {
@@ -504,11 +536,11 @@ var MVC = {
     
     &#x2F;**
      * RemoveProperty
-     * 
+     *
      * Remove a property from the Model
-     * 
+     *
      * @method RemoveProperty
-     * @param {String} prop The property name 
+     * @param {String} prop The property name
      * @return {Object} The object (itself)
      *&#x2F;
     $object.RemoveProperty = function(prop) {
@@ -523,11 +555,11 @@ var MVC = {
     
     &#x2F;**
      * Set
-     * 
-     * Notice: Must only be used if &#x27;reflectModelChangeInView&#x27; is TRUE.
-     * 
+     *
+     * Notice: Must only be used if &#x27;isMirror&#x27; is TRUE.
+     *
      * When you need to update a value in the Model and reflect in the View.
-     * 
+     *
      * @method Set
      * @param {String} prop The object&#x27;s property name
      * @param {String} value The new value to set for the property
@@ -540,19 +572,19 @@ var MVC = {
       &#x2F;&#x2F;$($object).triggerHandler(&#x27;set&#x27;+prop, [value]); ?
       $($object).triggerHandler(&#x27;set&#x27;+prop, [value]);
       &#x2F;&#x2F;Update databound DOM values
-      &#x2F;&#x2F;Update databound elements with datasrc if specified, otherwise with viewId. 
+      &#x2F;&#x2F;Update databound elements with datasrc if specified, otherwise with viewId.
       &#x2F;&#x2F;$object.SetDataboundDomVal(viewId, prop, value);
       $object.SetDataboundDomVal(datasrc, prop, value);
       return $object;
     };
     &#x2F;**
      * Get
-     * 
-     * Notice: Must only be used if &#x27;reflectModelChangeInView&#x27; is TRUE.
-     * 
+     *
+     * Notice: Must only be used if &#x27;isMirror&#x27; is TRUE.
+     *
      * @method Get
      * @param {String} prop The object&#x27;s property name.
-     * @return {Object} value The value from the object&#x27;s property.
+     * @return {Object} value The value from the object&#x27;s property.
      *&#x2F;
     $object.Get = function(prop) {
       &#x2F;&#x2F;http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;9145347&#x2F;jquery-returning-value-from-trigger
@@ -566,9 +598,9 @@ var MVC = {
     
     &#x2F;**
      * Has
-     * 
+     *
      * Checks if the Model has a given property (true) or not (false).
-     * 
+     *
      * @method Has
      * @param {String} prop The object&#x27;s property name
      * @return {Boolean} TRUE if the property exists. Otherwise FALSE.
@@ -578,18 +610,18 @@ var MVC = {
         return true;
       }
       return false;
-    }
+    };
     
     &#x2F;**
      * GetModelData
-     * 
-     * Return&#x27;s a copy of the Model&#x27;s data without it&#x27;s functions. 
+     *
+     * Return&#x27;s a copy of the Model&#x27;s data without it&#x27;s functions.
      * Useful when storing the data.
-     * 
+     *
      * Note: As this object has all of it&#x27;s functions&#x2F;methods removed, then
      * it&#x27;s not possible to use the .toArray() (if needed for any reason) anymore.
      * Instead use $.makeArray(theObject); which is what .toArray() uses.
-     * 
+     *
      * @method GetModelData
      * @param {Boolean} withSettings If TRUE, then append the settings object.
      * @return {Object} A copy of the Model&#x27;s data (as JSON object literal).
@@ -616,13 +648,13 @@ var MVC = {
         }
       });
       return modelObjectData;
-    }
+    };
     
     &#x2F;**
      * GetDatasrcId
-     * 
+     *
      * Return the (view) ID of the datasource.
-     * 
+     *
      * @method GetDatasrcId
      * @return {Number} The (View) ID of the datasource.
      *&#x2F;
@@ -632,9 +664,9 @@ var MVC = {
     
     &#x2F;**
      * GetViewData
-     * 
+     *
      * Return the View data as an JSON object literal.
-     * 
+     *
      * @method GetViewData
      * @return {Object} The View data as JSON object
      *&#x2F;
@@ -646,9 +678,9 @@ var MVC = {
     
     &#x2F;**
      * SetViewFromModel
-     * 
+     *
      * Updates the elements in the View from the Model.
-     * 
+     *
      * @method SetViewFromModel
      *&#x2F;
     $object.SetViewFromModel = function() {
@@ -661,23 +693,23 @@ var MVC = {
     
     &#x2F;**
      * SetModelFromView
-     * 
+     *
      * Update the model and databound elements.
-     * 
-     * This method is internally every time a &#x27;change&#x27; and &#x27;keyup&#x27; event occur 
-     * in form elements. This is part of the concept to always update the Model, 
+     *
+     * This method is internally every time a &#x27;change&#x27; and &#x27;keyup&#x27; event occur
+     * in form elements. This is part of the concept to always update the Model,
      * so it is synchronized with the View.
-     * 
+     *
      * It is possible to override the call to this method for the &#x27;keyup&#x27; event
      * if it is implemented manually in the settings. Therefore it&#x27;s important
-     * to know that if overriding this event, but still want &#x27;live&#x27; updating 
+     * to know that if overriding this event, but still want &#x27;live&#x27; updating
      * of the Model to occur, then this method must be called from the custom
-     * implementation of the &#x27;keyup&#x27; event! 
-     * 
+     * implementation of the &#x27;keyup&#x27; event!
+     *
      * @method SetModelFromView
-     * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or 
-     * true, databound elements inside and&#x2F;or outside the the View will also 
-     * get updated. If false, then they won&#x27;t. 
+     * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or
+     * true, databound elements inside and&#x2F;or outside the the View will also
+     * get updated. If false, then they won&#x27;t.
      * @return {Object} The object (itself)
      *&#x2F;
      &#x2F;&#x2F;$object.SetModelFromView = function(updateDataboundValues) {
@@ -716,7 +748,7 @@ var MVC = {
           &#x2F;&#x2F;}
         }
         &#x2F;&#x2F;Update databound DOM values even
-        &#x2F;&#x2F;When setting the values on .init() the databound items should ofcourse 
+        &#x2F;&#x2F;When setting the values on .init() the databound items should ofcourse
         &#x2F;&#x2F;get updated even if the model data is same as in the view.
         $object.SetDataboundDomVal(viewId, key, newVal);
       });
@@ -727,9 +759,9 @@ var MVC = {
     
     &#x2F;**
      * SetDataboundDomVal
-     * 
+     *
      * Update the databound elements inside or outside the View.
-     * 
+     *
      * @method SetDataboundDomVal
      * @param {String} datasrc A viewId.
      * @param {String} name An element&#x27;s name.
@@ -750,9 +782,9 @@ var MVC = {
     
     &#x2F;**
      * RunEvent
-     * 
+     *
      * Trigger an event if specified in the settings.
-     * 
+     *
      * @method RunEvent
      * @param {String} event The eventName to trigger&#x2F;execute.
      * @return {Object} The object (itself)
@@ -781,9 +813,9 @@ var MVC = {
     
     &#x2F;**
      * RunCtr
-     * 
+     *
      * Execute a method in the controller.
-     * 
+     *
      * @method RunCtr
      * @param {String} method The methods name specified in the controller.
      * @param {Object} par If needed you can provide optional parameters.
@@ -801,9 +833,9 @@ var MVC = {
     
     &#x2F;**
      * toArray
-     * 
+     *
      * Convert the object to a real Array.
-     * 
+     *
      * @method toArray
      * @return {Array} The object converted into a real Array.
      *&#x2F;
@@ -813,9 +845,9 @@ var MVC = {
     
     &#x2F;**
      * GetViewId
-     * 
+     *
      * Get the ID of the View
-     * 
+     *
      * @method GetViewId
      * @return {String} The View ID
      *&#x2F;
@@ -825,11 +857,11 @@ var MVC = {
     
     &#x2F;**
      * Find
-     * 
+     *
      * Find and return one or many element&#x2F;s within the View using a (id or class) selector.
-     * 
+     *
      * If the elemenet is not found an empty array is returned.
-     * 
+     *
      * @method Find
      * @return {Array} An element from the View.
      *&#x2F;
@@ -839,9 +871,9 @@ var MVC = {
     
     &#x2F;**
      * AddEvents
-     * 
+     *
      * Add events to the object&#x27;s input fields
-     * 
+     *
      * @method AddEvents
      * @return {Object} The object
      *&#x2F;
@@ -854,7 +886,7 @@ var MVC = {
           $object.RunEvent(e);
         })
         .blur(function(e) {
-          $object.RunEvent(e);      
+          $object.RunEvent(e);
         })
         .change(function(e){
           &#x2F;&#x2F;Update the model and also the databound elements
@@ -870,14 +902,14 @@ var MVC = {
         })
         &#x2F;**
          * keyup event
-         * 
-         * It&#x27;s important to know that when overriding this event, 
+         *
+         * It&#x27;s important to know that when overriding this event,
          * but still want &#x27;live&#x27; updating of the Model to occur,
-         * then this method must be called from the custom implementation 
+         * then this method must be called from the custom implementation
          * of the &#x27;keyup&#x27; event!
-         * 
+         *
          * @event keyup ...
-         * 
+         *
          *&#x2F;
         .keyup(function(e){
           &#x2F;&#x2F;console.log(&quot;keyup&quot;);
@@ -888,7 +920,7 @@ var MVC = {
             &#x2F;&#x2F;$object.SetDataboundDomVal(viewId, e.target.name, e.target.value);
             $object.SetModelFromView();
           }
-          $object.RunEvent(e); &#x2F;&#x2F;e should euqal &#x27;change&#x27; 
+          $object.RunEvent(e); &#x2F;&#x2F;e should euqal &#x27;change&#x27;
           &#x2F;*var n = $(this).attr(&#x27;name&#x27;);
           var v = $(this).val();
           MVC.SetDataboundDomVal(viewId, n, v);*&#x2F;
@@ -898,7 +930,7 @@ var MVC = {
         })
         .keydown(function(e) {
           $object.RunEvent(e);
-        })
+        });
         return $object;
     };
     
@@ -915,11 +947,11 @@ var MVC = {
     
     &#x2F;&#x2F;If Model property changes should be reflected&#x2F;displayed in the View:
     &#x2F;&#x2F;Loop throught the properties within the object and attach events using the
-    &#x2F;&#x2F;jQuery .bind() method. Whenever the user wants to update a value it can 
+    &#x2F;&#x2F;jQuery .bind() method. Whenever the user wants to update a value it can
     &#x2F;&#x2F;be achieved using the .trigger() method, which is implemented in the
     &#x2F;&#x2F;MVC.Set() and MVC.Get() methods.
     &#x2F;&#x2F;Note: Changing the Model&#x27;s properties directly won&#x27;t update the view.
-    if($settings[&#x27;reflectModelChangeInView&#x27;]) {
+    if($settings[&#x27;isMirror&#x27;]) {
       &#x2F;&#x2F;alert(&quot;reflect on&quot;);
       &#x2F;&#x2F;Loop throught the object&#x27;s properties
       $.each($object, function(k,v) {
@@ -938,7 +970,7 @@ var MVC = {
           &#x2F;&#x2F;so that the views bound to this element will also be updated.
           &#x2F;&#x2F;This is important in case the model is changed using setTimeout()
           &#x2F;&#x2F;which will update the model, then this change must simulate
-          &#x2F;&#x2F;a user setting the value of the input. 
+          &#x2F;&#x2F;a user setting the value of the input.
           $(&#x27;:input[name=&#x27;+n+&#x27;]&#x27;).not(&#x27;.excludeFromModel&#x27;).trigger(&#x27;change&#x27;);
         });*&#x2F;
       });
@@ -946,7 +978,7 @@ var MVC = {
     
     if($settings[&#x27;autoSaveInterval&#x27;] &gt; 0) {
       $settings[&#x27;eventUsed&#x27;] = &#x27;&quot;autoSave&quot;&#x27;;
-      setInterval(function() { 
+      setInterval(function() {
         $object.Save();
       }, $settings[&#x27;autoSaveInterval&#x27;]);
     }
@@ -963,16 +995,16 @@ var MVC = {
     
     
     &#x2F;**
-     * To keep the code which belongs to the object, but normally would be 
+     * To keep the code which belongs to the object, but normally would be
      * placed after object instantiation, we isntead want to place it inside
      * the .init() method, which gets executed 1ms after the object has been
      * created.
-     * 
+     *
      * Why we use setTimeout: read below...
-     * 
+     *
      * In some cases the user wants to call the object itself like this:
-     * 
-     * 
+     *
+     *
      * &#x2F;&#x2F;Create a new object
      * obj = MVC.ModelView(&#x27;#viewId&#x27;, {
      *   &#x2F;&#x2F;Data:
@@ -985,7 +1017,7 @@ var MVC = {
      *     &#x2F;&#x2F;All methods and other &#x27;stuff&#x27; placed inside the .init() method
      *     &#x2F;&#x2F;gets executed immediately after the object has been created (setup).
      *     &#x2F;&#x2F;Therefore it&#x27;s important (and necessary) to use setTimeout, as the
-     *     &#x2F;&#x2F;object actually hasn&#x27;t been created yet. So we set it to 1 ms! 
+     *     &#x2F;&#x2F;object actually hasn&#x27;t been created yet. So we set it to 1 ms!
      *     obj.aCustomMethod();
      *   }
      * }
@@ -1004,9 +1036,9 @@ var MVC = {
 
 &#x2F;**
  * Get or set HTML (DOM) values
- * 
+ *
  * Inspired by formParams: http:&#x2F;&#x2F;jquerypp.com&#x2F;#formparams
- * 
+ *
  * @param {Object} jQuery
  *&#x2F;
 (function( $ ) {
@@ -1028,7 +1060,7 @@ var MVC = {
         key = $(element).attr(&quot;id&quot;);
       }
       return key;
-      &#x2F;&#x2F;return $(element).attr(&quot;datafld&quot;) ? undefined : $(element).attr(&quot;id&quot;); 
+      &#x2F;&#x2F;return $(element).attr(&quot;datafld&quot;) ? undefined : $(element).attr(&quot;id&quot;);
     },
     getDivElements : function(target) {
       return target.find(&#x27;p,span,div&#x27;).filter(&#x27;:not(.excludeFromModel)&#x27;);
@@ -1083,7 +1115,7 @@ var MVC = {
       
     },
     getValues : function() {
-      var data = {},      
+      var data = {},
           formData = {};
       var $this = this;
       $this.getInputElements(this).each(function() {
@@ -1097,7 +1129,7 @@ var MVC = {
         
         &#x2F;&#x2F;console.log(&quot;type: &quot; + type + &quot; - name: &quot; + name + &quot; - value: &quot; + value);
         if(elm.hasClass(&#x27;isNumber&#x27;)) {
-          value = parseInt(value);
+          value = parseInt(value, null);
         }
         
         if(elm.is(&#x27;:checkbox&#x27;)) {
@@ -1126,8 +1158,8 @@ var MVC = {
             return;
           }
           if(elem.hasClass(&#x27;isNumber&#x27;)) {
-            value = parseInt(value);
-          } 
+            value = parseInt(value, null);
+          }
           &#x2F;&#x2F;alert(key + &quot; = &quot; + value);
           data[key] = value;
         }

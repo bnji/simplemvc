@@ -131,7 +131,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     
     settings = {
       controller : ctr,
-      reflectModelChangeInView : true,
+      isMirror : true,
       change : function(e, n, v) {
         onChangeResultData = {'name':n,'value':v};
         //return {'name':n,'value':v};
@@ -213,7 +213,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     expect(obj['imNotInTheModelInput']).toBe(undefined);
   });
   
-  it("changing Model property using the MVC.Set() method should update the DOM value when 'reflectModelChangeInView' : true", function() {
+  it("changing Model property using the MVC.Set() method should update the DOM value when 'isMirror' : true", function() {
     var newVal = ''+$.now();
     //MVC.Set(obj, 'type', newVal);
     obj.Set('type', newVal);
@@ -369,14 +369,14 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
       id : 123,
       type : 'typeVal'
     }, {
-      reflectModelChangeInView:false,
+      isMirror:false,
       change: function(e, n, v) {
         alert("ok");
       }
     });
   });
   
-  it("Changing Model property using the MVC.Set() method should not set the property or the DOM value when 'reflectModelChangeInView' : false", function() {
+  it("Changing Model property using the MVC.Set() method should not set the property or the DOM value when 'isMirror' : false", function() {
     var newVal = ''+Date.now();
     //MVC.Set(obj, 'type', newVal);
     obj.Set('type', newVal);
@@ -386,7 +386,7 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     expect(propVal).not.toBe(newVal);
   });
   
-  it("Getting a Model property value using the MVC.Get() method should be undefined when 'reflectModelChangeInView' : false", function() {
+  it("Getting a Model property value using the MVC.Get() method should be undefined when 'isMirror' : false", function() {
     var objVal = obj.Get('type'); //MVC.Get(obj, 'type');
     expect(objVal).toBe(undefined);
   });
@@ -423,8 +423,8 @@ describe("MVC Object without settings", function() {
     expect(obj['settings']['viewId']).toEqual(viewId);
   });
   
-  it("obj settings should contain the reflectModelChangeInView property and be set to true", function(){
-    expect(obj['settings']['reflectModelChangeInView']).toEqual(true);
+  it("obj settings should contain the isMirror property and be set to true", function(){
+    expect(obj['settings']['isMirror']).toEqual(true);
   });
   
 });
@@ -513,11 +513,11 @@ describe("MVC Object Getter & Setter", function() {
       id3 : 123,
       type2 : 'typeValFromModel'
     }, {
-      reflectModelChangeInView : true
+      isMirror : true
     });
   });
   
-  it("Getter & Setter methods should be attached to properties which are specified by the DOM but not in Model (when 'reflectModelChangeInView' : true)", function() {
+  it("Getter & Setter methods should be attached to properties which are specified by the DOM but not in Model (when 'isMirror' : true)", function() {
     var newVal = ''+$.now();
     //MVC.Set(obj, 'attachGetterSetterEvenNotSpecifiedInModel', newVal);
     obj.Set('attachGetterSetterEvenNotSpecifiedInModel', newVal);

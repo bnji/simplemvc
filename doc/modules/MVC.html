@@ -98,7 +98,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l130"><code>simple.mvc.js:130</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l149"><code>simple.mvc.js:149</code></a>
         </div>
     
 
@@ -108,7 +108,7 @@
 
 
 <div class="box intro">
-    <p>Provides the core MVC classes: Controller &amp; ModelView </p>
+    <p>Provides the core MVC classes: Controller &amp; ModelView</p>
 
 <h1>1 Design Rule - Capitalization</h1>
 
@@ -116,20 +116,21 @@
 capitalized. This is by design for two reasons:</p>
 
 <p>1) JavaScript has many built in methods which already 'belong' to an object
-    so this is a good 'solution' which makes it possible to use methods such 
+    so this is a good 'solution' which makes it possible to use methods such
     as .Delete() (as .delete wouldn't be valid in JavaScript).</p>
 
 <p>2) To distinguish between the object's and JS built-in and 'custom' (passed
-  with the object data when a ModelView instance is created) methods. </p>
+  with the object data when a ModelView instance is created) methods.</p>
 
-<h1>2 Design Rule - Associative vs '.'-notation</h1>
+<h1>2 Design Rule - Bracket vs Dot notation</h1>
 
-<p>Internet Explorer (not all) don't like when an element/property in an 
+<p>Internet Explorer (not all) don't like when an element/property in an
 object literal or array is being accessed using dot notation. Even though
-it's generally encouraged (e.g. www.jshint.com) to use the dot notation, 
-this would very likely break when evaluated in IE! Therefore all 
-elements/properties should be accessed associatively:
- obj = {foo : 'bar'}; 
+it's generally encouraged (e.g. www.jshint.com) to use the dot notation,
+this would very likely break when evaluated in IE! Therefore all
+elements/properties should be accessed associatively with Bracket notation:
+ obj = {foo : 'bar'}; //An object literal (JSON)
+ obj = {foo : 'bar'};
  obj['foo']; //(OK!)
  obj.foo; //(Breaks in IE (older versions)
  obj.someMethod(); //(OK! - also in IE!)</p>
