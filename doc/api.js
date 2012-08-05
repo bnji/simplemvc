@@ -3,7 +3,8 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "Controller",
         "List",
-        "ModelView"
+        "ModelView",
+        "getSetHtml"
     ],
     "modules": [
         "JSON",

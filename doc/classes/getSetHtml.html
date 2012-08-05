@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>MVC</title>
+    <title>getSetHtml</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.5.1&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -92,8 +92,8 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>MVC Module</h1>
-<div class="box clearfix meta">
+                        <h1>getSetHtml Class</h1>
+<div class="box meta">
     
 
     
@@ -105,80 +105,185 @@
     
 
     
+        
+            Module: <a href="../modules/MVC.html">MVC</a>
+        
+    
+
+    
 </div>
 
 
 
 <div class="box intro">
-    <p>Provides the core MVC classes: Controller &amp; ModelView</p>
+    <p>Get or set HTML (DOM) values</p>
 
-<h1>1 Design Rule - Capitalization</h1>
-
-<p>Internal methods (except the .toArray() method) have the first letter
-capitalized. This is by design for two reasons:</p>
-
-<p>1) JavaScript has many built in methods which already 'belong' to an object
-    so this is a good 'solution' which makes it possible to use methods such
-    as .Delete() (as .delete wouldn't be valid in JavaScript).</p>
-
-<p>2) To distinguish between the object's and JS built-in and 'custom' (passed
-  with the object data when a ModelView instance is created) methods.</p>
-
-<h1>2 Design Rule - Bracket vs Dot notation</h1>
-
-<p>Internet Explorer (not all) don't like when an element/property in an
-object literal or array is being accessed using dot notation. Even though
-it's generally encouraged (e.g. www.jshint.com) to use the dot notation,
-this would very likely break when evaluated in IE! Therefore all
-elements/properties should be accessed associatively with Bracket notation:
- obj = {foo : 'bar'}; //An object literal (JSON)
- obj = {foo : 'bar'};
- obj['foo']; //(OK!)
- obj.foo; //(Breaks in IE (older versions)
- obj.someMethod(); //(OK! - also in IE!)</p>
-
-<p>Some helpful links:
-http://viralpatel.net/blogs/20-top-jquery-tips-tricks-for-jquery-programmers/</p>
+<p>Inspired by formParams: http://jquerypp.com/#formparams</p>
 </div>
 
 
 
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
 
-            <ul class="module-classes">
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
             
-                <li class="module-class">
-                    <a href="..&#x2F;classes/Controller.html">
-                        Controller
-                    </a>
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_getSetHtml">getSetHtml</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_getSetHtml" class="method item">
+    <h3 class="name"><code>getSetHtml</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>params</code>
+                    
                 </li>
             
-                <li class="module-class">
-                    <a href="..&#x2F;classes/getSetHtml.html">
-                        getSetHtml
-                    </a>
-                </li>
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
             
-                <li class="module-class">
-                    <a href="..&#x2F;classes/List.html">
-                        List
-                    </a>
-                </li>
+                
+                <p>
+                
+                Defined in
+                
             
-                <li class="module-class">
-                    <a href="..&#x2F;classes/ModelView.html">
-                        ModelView
-                    </a>
-                </li>
-            
-            </ul>
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l1025"><code>simple.mvc.js:1025</code></a>
+        
+        </p>
+
+
+        
+
         
     </div>
 
-    <div class="yui3-u-1-2">
+    <div class="description">
+        <p>getSetHtml</p>
+
+<p>Get or set HTML (DOM) values.
+If you pass this method any parameters it will try to set the HTML.
+Otherwise it will try get the HTML values from the view.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">params</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Object literal with keys that correspond with
+either an ID or NAME attribute of an element in the View (DOM).</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    Object literal with data from the View (DOM).
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+
         
     </div>
 </div>

@@ -37,7 +37,8 @@
             "classes": {
                 "List": 1,
                 "Controller": 1,
-                "ModelView": 1
+                "ModelView": 1,
+                "getSetHtml": 1
             },
             "fors": {},
             "namespaces": {}
@@ -59,13 +60,14 @@
             "classes": {
                 "List": 1,
                 "Controller": 1,
-                "ModelView": 1
+                "ModelView": 1,
+                "getSetHtml": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "main",
             "file": "simple.mvc.js",
-            "line": 167,
+            "line": 1015,
             "description": "Provides the core MVC classes: Controller & ModelView\n\n#1 Design Rule - Capitalization\n\nInternal methods (except the .toArray() method) have the first letter\ncapitalized. This is by design for two reasons:\n\n 1) JavaScript has many built in methods which already 'belong' to an object\n    so this is a good 'solution' which makes it possible to use methods such\n    as .Delete() (as .delete wouldn't be valid in JavaScript).\n\n2) To distinguish between the object's and JS built-in and 'custom' (passed\n  with the object data when a ModelView instance is created) methods.\n\n#2 Design Rule - Bracket vs Dot notation\n\nInternet Explorer (not all) don't like when an element/property in an\nobject literal or array is being accessed using dot notation. Even though\nit's generally encouraged (e.g. www.jshint.com) to use the dot notation,\nthis would very likely break when evaluated in IE! Therefore all\nelements/properties should be accessed associatively with Bracket notation:\n obj = {foo : 'bar'}; //An object literal (JSON)\n obj = {foo : 'bar'};\n obj['foo']; //(OK!)\n obj.foo; //(Breaks in IE (older versions)\n obj.someMethod(); //(OK! - also in IE!)\n\n\nSome helpful links:\nhttp://viralpatel.net/blogs/20-top-jquery-tips-tricks-for-jquery-programmers/",
             "itemtype": "main"
         },
@@ -114,7 +116,7 @@
             "module": "MVC",
             "namespace": "",
             "file": "simple.mvc.js",
-            "line": 151,
+            "line": 141,
             "description": "Controller which handles the logic, such as saving, updating or deleting\nthe object.\n\nFor the time being the Controller class doesn't do much more than returning\nthe same data as entered (JSON) object literal. Still this is by design, as\nthere is a possibility for the 'controller' to do more than this 'stuff'\n(handling more than returning data) in the future.",
             "is_constructor": 1
         },
@@ -129,9 +131,47 @@
             "module": "MVC",
             "namespace": "",
             "file": "simple.mvc.js",
-            "line": 167,
-            "description": "ModelView creates a new object with data and settings. The data and\nsettings are (JSON) object literals and merged and returned after all the\ninternal setup is done.\nThe ModelView contains all the information about the object, which keeps\nthe View synchronized with the Model and vice versa.",
-            "is_constructor": 1
+            "line": 175,
+            "description": "ModelView\n\nModelView creates the glue which binds the UI(View) with the Backend code\nfunctionality of the program. It keeps the View synchronized with the 'Model'.\n\nModelView creates a new object with data and settings. The data and\nsettings are (JSON) object literals and merged and returned after all the\ninternal setup is done.\nThe ModelView contains all the information about the object, which keeps\nthe View synchronized with the Model and vice versa.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "$object",
+                    "description": "Model data",
+                    "type": "Object"
+                },
+                {
+                    "name": "$settings",
+                    "description": "Config & view input events",
+                    "type": "Object"
+                },
+                {
+                    "name": "$methods",
+                    "description": "Custom user defined methods/functions",
+                    "type": "Object"
+                }
+            ]
+        },
+        "getSetHtml": {
+            "name": "getSetHtml",
+            "shortname": "getSetHtml",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "MVC",
+            "namespace": "",
+            "file": "simple.mvc.js",
+            "line": 1015,
+            "description": "Get or set HTML (DOM) values\n\nInspired by formParams: http://jquerypp.com/#formparams",
+            "params": [
+                {
+                    "name": "jQuery",
+                    "description": "",
+                    "type": "Object"
+                }
+            ]
         }
     },
     "classitems": [
@@ -1391,7 +1431,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 103,
+            "line": 93,
             "description": "Size\n\nReturn the length of the array (same as array.length);",
             "return": {
                 "description": "The length of the array.",
@@ -1402,7 +1442,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 113,
+            "line": 103,
             "description": "Add\n\nAdd a new element - It's more semantic to use .Add() instead of .push().",
             "itemtype": "method",
             "name": "Add",
@@ -1422,7 +1462,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 127,
+            "line": 117,
             "description": "Remove\n\nRemove an element (if found) from the array.",
             "itemtype": "method",
             "name": "Remove",
@@ -1438,7 +1478,14 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 285,
+            "line": 160,
+            "description": "ModelView written as a jQuery plugin (most basic form of plugin authoring).\n\nReasons for this:\n 1) Code convention.\n 2) Reusablity and extensibility.\n 3) Easier for anyone who knows jQuery to start using Simplemvc.\n 4)\n\nFor more information on different jQuery plugin design patterns:\nhttps://github.com/addyosmani/jquery-plugin-patterns/tree/master/patterns",
+            "class": "Controller",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 303,
             "description": "Call the .Save() method whenever you want to save the object.\nNotice: This is intended behaviour, but the implementation of the\nmethod is up to the individual how and what is done when this method\nis called/executed.",
             "itemtype": "method",
             "name": "Save",
@@ -1458,7 +1505,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 298,
+            "line": 316,
             "description": "Call the .Update() method whenever you want to update the object.\nNotice: This is intended behaviour, but the implementation of the\nmethod is up to the individual how and what is done when this method\nis called/executed.",
             "itemtype": "method",
             "name": "Update",
@@ -1478,7 +1525,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 311,
+            "line": 329,
             "description": "Call the .Delete() method whenever you want to delete the object.\nNotice: This is intended behaviour, but the implementation of the\nmethod is up to the individual how and what is done when this method\nis called/executed.",
             "itemtype": "method",
             "name": "Delete",
@@ -1498,7 +1545,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 325,
+            "line": 343,
             "description": "Clear\n\nClears a property's value in the Model and optionally in the View if 'isMirror' = true.",
             "itemtype": "method",
             "name": "Clear",
@@ -1511,7 +1558,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 340,
+            "line": 358,
             "description": "Clear All\n\nClears all the data in the Model and the View.",
             "itemtype": "method",
             "name": "ClearAll",
@@ -1524,7 +1571,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 355,
+            "line": 373,
             "description": "AddGetSet\n\nAdd getter and setter methods for a property\n\nGetters and Setters in JavaScript/JScript (ECMAScript) are not an option\nas it is hard to make it work cross-browser/platform!\nThere is a solution here, but only down to IE9:\nSource: http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/\n\nIf changes in the model properties should be reflected in the view\nthen setter and getter methods will be attached using jQuery.\n\nNote: Will only be used(exec.) if 'isMirror' is TRUE.\n\nWorks in IE 7+: http://jsfiddle.net/cTJZN/",
             "itemtype": "method",
             "name": "AddGetSet",
@@ -1549,7 +1596,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 412,
+            "line": 430,
             "description": "RemoveGetSet\n\nRemove getter and setter methods for a property",
             "itemtype": "method",
             "name": "RemoveGetSet",
@@ -1569,7 +1616,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 429,
+            "line": 447,
             "description": "Trigger Event\n\nTrigger an event on an input element inside the view",
             "itemtype": "method",
             "name": "TriggerEvent",
@@ -1594,7 +1641,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 447,
+            "line": 465,
             "description": "AddProperty\n\nAdd a property to the Model",
             "itemtype": "method",
             "name": "AddProperty",
@@ -1614,7 +1661,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 466,
+            "line": 484,
             "description": "RemoveProperty\n\nRemove a property from the Model",
             "itemtype": "method",
             "name": "RemoveProperty",
@@ -1634,7 +1681,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 486,
+            "line": 504,
             "description": "Set\n\nNotice: Must only be used if 'isMirror' is TRUE.\n\nWhen you need to update a value in the Model and reflect in the View.",
             "itemtype": "method",
             "name": "Set",
@@ -1659,7 +1706,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 510,
+            "line": 528,
             "description": "Get\n\nNotice: Must only be used if 'isMirror' is TRUE.",
             "itemtype": "method",
             "name": "Get",
@@ -1679,7 +1726,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 529,
+            "line": 547,
             "description": "Has\n\nChecks if the Model has a given property (true) or not (false).",
             "itemtype": "method",
             "name": "Has",
@@ -1699,7 +1746,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 545,
+            "line": 563,
             "description": "GetDatasrcId\n\nReturn the (view) ID of the datasource.",
             "itemtype": "method",
             "name": "GetDatasrcId",
@@ -1712,7 +1759,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 557,
+            "line": 575,
             "description": "GetModelData\n\nReturn's a copy of the Model's data without it's functions.\nUseful when storing the data.\n\nNote: As this object has all of it's functions/methods removed, then\nit's not possible to use the .toArray() (if needed for any reason) anymore.\nInstead use $.makeArray(theObject); which is what .toArray() uses.",
             "itemtype": "method",
             "name": "GetModelData",
@@ -1732,7 +1779,20 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 595,
+            "line": 613,
+            "description": "GetViewHtml\n\nReturns the jQuery object.",
+            "itemtype": "method",
+            "name": "GetViewHtml",
+            "return": {
+                "description": "jQuery object.",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 625,
             "description": "GetViewData\n\nReturn the View data as an JSON object literal.",
             "itemtype": "method",
             "name": "GetViewData",
@@ -1745,7 +1805,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 609,
+            "line": 639,
             "description": "SetViewData\n\nSet the View data from the Model (does not update databound elments)",
             "itemtype": "method",
             "name": "SetViewData",
@@ -1758,7 +1818,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 622,
+            "line": 652,
             "description": "SetViewFromModel\n\nUpdates the elements in the View from the Model (including databound elements).",
             "itemtype": "method",
             "name": "SetViewFromModel",
@@ -1767,7 +1827,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 639,
+            "line": 669,
             "description": "SetModelFromView\n\nUpdate the model and databound elements.\n\nThis method is internally every time a 'change' and 'keyup' event occur\nin form elements. This is part of the concept to always update the Model,\nso it is synchronized with the View.\n\nIt is possible to override the call to this method for the 'keyup' event\nif it is implemented manually in the settings. Therefore it's important\nto know that if overriding this event, but still want 'live' updating\nof the Model to occur, then this method must be called from the custom\nimplementation of the 'keyup' event!",
             "itemtype": "method",
             "name": "SetModelFromView",
@@ -1787,7 +1847,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 704,
+            "line": 734,
             "description": "SetDataboundDomVal\n\nUpdate the databound elements inside or outside the View.",
             "itemtype": "method",
             "name": "SetDataboundDomVal",
@@ -1817,7 +1877,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 727,
+            "line": 757,
             "description": "RunEvent\n\nTrigger an event if specified in the settings.",
             "itemtype": "method",
             "name": "RunEvent",
@@ -1837,7 +1897,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 758,
+            "line": 788,
             "description": "RunCtr\n\nExecute a method in the controller.",
             "itemtype": "method",
             "name": "RunCtr",
@@ -1862,7 +1922,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 778,
+            "line": 808,
             "description": "toArray\n\nConvert the object to a real Array.",
             "itemtype": "method",
             "name": "toArray",
@@ -1875,7 +1935,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 790,
+            "line": 820,
             "description": "GetViewId\n\nGet the ID of the View",
             "itemtype": "method",
             "name": "GetViewId",
@@ -1888,7 +1948,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 802,
+            "line": 832,
             "description": "Find\n\nFind and return one or many element/s within the View using a (id or class) selector.\n\nIf the elemenet is not found an empty array is returned.",
             "itemtype": "method",
             "name": "Find",
@@ -1901,7 +1961,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 816,
+            "line": 846,
             "description": "AddEvents\n\nAdd events to the object's input fields",
             "itemtype": "method",
             "name": "AddEvents",
@@ -1914,7 +1974,7 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 847,
+            "line": 877,
             "description": "keyup event\n\nIt's important to know that when overriding this event,\nbut still want 'live' updating of the Model to occur,\nthen this method must be called from the custom implementation\nof the 'keyup' event!",
             "itemtype": "event",
             "name": "keyup ...",
@@ -1923,23 +1983,29 @@
         },
         {
             "file": "simple.mvc.js",
-            "line": 941,
+            "line": 971,
             "description": "To keep the code which belongs to the object, but normally would be\nplaced after object instantiation, we isntead want to place it inside\nthe .init() method, which gets executed 1ms after the object has been\ncreated.\n\nWhy we use setTimeout: read below...\n\nIn some cases the user wants to call the object itself like this:\n\n\n//Create a new object\nobj = MVC.ModelView('#viewId', {\n  //Data:\n  foo : 'bar',\n  //Method\n  aCustomMethod : function() {\n   //does something\n  }\n  init : function() {\n    //All methods and other 'stuff' placed inside the .init() method\n    //gets executed immediately after the object has been created (setup).\n    //Therefore it's important (and necessary) to use setTimeout, as the\n    //object actually hasn't been created yet. So we set it to 1 ms!\n    obj.aCustomMethod();\n  }\n}\n});",
             "class": "ModelView",
             "module": "MVC"
         },
         {
             "file": "simple.mvc.js",
-            "line": 981,
-            "description": "Get or set HTML (DOM) values\n\nInspired by formParams: http://jquerypp.com/#formparams",
+            "line": 1025,
+            "description": "getSetHtml\n\n\nGet or set HTML (DOM) values.\nIf you pass this method any parameters it will try to set the HTML.\nOtherwise it will try get the HTML values from the view.",
             "params": [
                 {
-                    "name": "jQuery",
-                    "description": "",
+                    "name": "params",
+                    "description": "Object literal with keys that correspond with\neither an ID or NAME attribute of an element in the View (DOM).",
                     "type": "Object"
                 }
             ],
-            "class": "ModelView",
+            "return": {
+                "description": "Object literal with data from the View (DOM).",
+                "type": "Object"
+            },
+            "itemtype": "method",
+            "name": "getSetHtml",
+            "class": "getSetHtml",
             "module": "MVC"
         },
         {

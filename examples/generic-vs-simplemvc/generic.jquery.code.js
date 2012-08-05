@@ -1,5 +1,5 @@
 $(function() {
-  var viewNoHash = $.now(),
+  var viewNoHash = Date.now(),
       obj2, objModel2, view2 = '#'+viewNoHash;
   $('#jQueryView').html($('#template').clone(false).attr('id', viewNoHash).show());
   

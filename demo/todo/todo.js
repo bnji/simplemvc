@@ -18,11 +18,11 @@ $(function() {
       $.each(notebook.getNotes(), function(k, v) {
         data[k] = v.GetModelData();
       });
-      JSON.save(JSON.stringify(data, null, 2), 
-          function(data) {
-            $('#jsonFileUrl').html('<a href="'+data['url']+'">Open the JSON file.</a>');
-          }
-        );
+      JSON.save(JSON.stringify(data, null, 2),
+        function(data) {
+          $('#jsonFileUrl').html('<a href="'+data['url']+'">Open the JSON file.</a>');
+        }
+      );
     }
   });
   
@@ -46,24 +46,12 @@ $(function() {
     createNote : function(value, isComplete, id) {
       //Only if the note has some text
       if(notebook.isValidInput(value)) {
-        
-        //var value = "a b.c d f.o sdf";
-        /*var regUrl = /[a-zA-Z0-9\-\.]{1,255}\.[a-z]{1,255}/;
-        var match = regUrl.exec(value);
-        var url = '<a href="'+match+'">'+match+'</a>';
-        console.log(value);
-        if(regUrl.test(value)) {
-          //value = url;
-          value = value.replace(match, url);
-          //console.log(match);
-        }*/
-       
        
         var noteData = {
-          id: (id === undefined || id === null ? $.now() : id),
+          id: (id === undefined || id === null ? Date.now() : id),
           isComplete: isComplete,
           note: value
-        }
+        };
         
         //The note data (it's field members and methods)
         var noteMethods = {
@@ -130,7 +118,7 @@ $(function() {
               .toggleMode();
           },
           clone: {
-              id: '#liNoteElem'+$.now(),
+              id: '#liNoteElem'+Date.now(),
               withDataAndEvents: false,
               append: function(elem) {
                 $('#note-list').prepend(elem);
@@ -140,7 +128,7 @@ $(function() {
         };
         
         //Create a new note using the MVC ModelView
-        var note = MVC.ModelView('#list-template', noteData, noteSettings, noteMethods);
+        var note = $('#list-template').ModelView(noteData, noteSettings, noteMethods);
         
         notebook.add(note);
       }
@@ -256,7 +244,6 @@ $(function() {
       $('.notesDone').html(notesDone === 1 ? 'item' : 'items');
       $('#notesDone').html(notesDone);
       $('#notesCount').html(notesDone + ' / ' + notebook.getNotesCount());
-      printDebug();
       return notebook;
     },
     init : function() {
@@ -269,7 +256,6 @@ $(function() {
   var notebookSettings = {
     controller: notebookController,
     keyup : function(e, n, v) {
-      printDebug();
       if(n === 'create') {
         if(MVC.KeyCheck(e, 'enter')) {
           $(e.target).val(''); //Clear the input
@@ -284,30 +270,6 @@ $(function() {
   };
   
   //Create a notebook (object literal) which manages the todo notes
-  var notebook = MVC.ModelView(
-                          '#todos', 
-                          notebookData, 
-                          notebookSettings, 
-                          notebookMethods
-                          );
-  
-  //Clear the notebook and add 3 notes
-  /*notebook
-    .clear()
-    .createNote('Buy some milk', true)
-    .createNote('Drink the milk', false)
-    .createNote('Open lifehacker.com', false);
-  */
+  var notebook = $('#todos').ModelView( notebookData, notebookSettings, notebookMethods );
   
 });
-
-
-
-function printDebug() {
-  /*DebugObj('#debug', {
-    o1 : {
-      object : notebook,
-      readDom : true
-    }
-  });*/
-}

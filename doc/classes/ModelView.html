@@ -43,6 +43,8 @@
             
                 <li><a href="..&#x2F;classes/Controller.html">Controller</a></li>
             
+                <li><a href="..&#x2F;classes/getSetHtml.html">getSetHtml</a></li>
+            
                 <li><a href="..&#x2F;classes/List.html">List</a></li>
             
                 <li><a href="..&#x2F;classes/ModelView.html">ModelView</a></li>
@@ -98,7 +100,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l167"><code>simple.mvc.js:167</code></a>
+            Defined in: <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l175"><code>simple.mvc.js:175</code></a>
         </div>
     
 
@@ -114,7 +116,12 @@
 
 
 <div class="box intro">
-    <p>ModelView creates a new object with data and settings. The data and
+    <p>ModelView</p>
+
+<p>ModelView creates the glue which binds the UI(View) with the Backend code
+functionality of the program. It keeps the View synchronized with the 'Model'.</p>
+
+<p>ModelView creates a new object with data and settings. The data and
 settings are (JSON) object literals and merged and returned after all the
 internal setup is done.
 The ModelView contains all the information about the object, which keeps
@@ -128,7 +135,29 @@ the View synchronized with the Model and vice versa.</p>
     <h3 class="name"><code>ModelView</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>$object</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>$settings</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>$methods</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -156,7 +185,7 @@ the View synchronized with the Model and vice versa.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l167"><code>simple.mvc.js:167</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l175"><code>simple.mvc.js:175</code></a>
         
         </p>
 
@@ -170,6 +199,59 @@ the View synchronized with the Model and vice versa.</p>
         
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">$object</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Model data</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">$settings</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Config &amp; view input events</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">$methods</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Custom user defined methods/functions</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -276,6 +358,13 @@ the View synchronized with the Model and vice versa.</p>
                         
                             <li class="index-item method">
                                 <a href="#method_GetViewData">GetViewData</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_GetViewHtml">GetViewHtml</a>
 
                                 
                                 
@@ -453,7 +542,7 @@ the View synchronized with the Model and vice versa.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l816"><code>simple.mvc.js:816</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l846"><code>simple.mvc.js:846</code></a>
         
         </p>
 
@@ -542,7 +631,7 @@ the View synchronized with the Model and vice versa.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l355"><code>simple.mvc.js:355</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l373"><code>simple.mvc.js:373</code></a>
         
         </p>
 
@@ -676,7 +765,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l447"><code>simple.mvc.js:447</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l465"><code>simple.mvc.js:465</code></a>
         
         </p>
 
@@ -772,7 +861,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l325"><code>simple.mvc.js:325</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l343"><code>simple.mvc.js:343</code></a>
         
         </p>
 
@@ -845,7 +934,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l340"><code>simple.mvc.js:340</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l358"><code>simple.mvc.js:358</code></a>
         
         </p>
 
@@ -928,7 +1017,7 @@ the get/set event handlers bound with .bind() method are triggered.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l311"><code>simple.mvc.js:311</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l329"><code>simple.mvc.js:329</code></a>
         
         </p>
 
@@ -1025,7 +1114,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l802"><code>simple.mvc.js:802</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l832"><code>simple.mvc.js:832</code></a>
         
         </p>
 
@@ -1110,7 +1199,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l510"><code>simple.mvc.js:510</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l528"><code>simple.mvc.js:528</code></a>
         
         </p>
 
@@ -1206,7 +1295,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l545"><code>simple.mvc.js:545</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l563"><code>simple.mvc.js:563</code></a>
         
         </p>
 
@@ -1289,7 +1378,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l557"><code>simple.mvc.js:557</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l575"><code>simple.mvc.js:575</code></a>
         
         </p>
 
@@ -1390,7 +1479,7 @@ Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l595"><code>simple.mvc.js:595</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l625"><code>simple.mvc.js:625</code></a>
         
         </p>
 
@@ -1418,6 +1507,79 @@ Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
                         <span class="type">Object</span>:
                     
                     The View data as JSON object
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_GetViewHtml" class="method item">
+    <h3 class="name"><code>GetViewHtml</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l613"><code>simple.mvc.js:613</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>GetViewHtml</p>
+
+<p>Returns the jQuery object.</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Object</span>:
+                    
+                    jQuery object.
                 
             </div>
         </div>
@@ -1463,7 +1625,7 @@ Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l790"><code>simple.mvc.js:790</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l820"><code>simple.mvc.js:820</code></a>
         
         </p>
 
@@ -1546,7 +1708,7 @@ Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l529"><code>simple.mvc.js:529</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l547"><code>simple.mvc.js:547</code></a>
         
         </p>
 
@@ -1652,7 +1814,7 @@ Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l412"><code>simple.mvc.js:412</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l430"><code>simple.mvc.js:430</code></a>
         
         </p>
 
@@ -1758,7 +1920,7 @@ Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l466"><code>simple.mvc.js:466</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l484"><code>simple.mvc.js:484</code></a>
         
         </p>
 
@@ -1870,7 +2032,7 @@ Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l758"><code>simple.mvc.js:758</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l788"><code>simple.mvc.js:788</code></a>
         
         </p>
 
@@ -1991,7 +2153,7 @@ Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l727"><code>simple.mvc.js:727</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l757"><code>simple.mvc.js:757</code></a>
         
         </p>
 
@@ -2097,7 +2259,7 @@ Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l285"><code>simple.mvc.js:285</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l303"><code>simple.mvc.js:303</code></a>
         
         </p>
 
@@ -2210,7 +2372,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l486"><code>simple.mvc.js:486</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l504"><code>simple.mvc.js:504</code></a>
         
         </p>
 
@@ -2345,7 +2507,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l704"><code>simple.mvc.js:704</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l734"><code>simple.mvc.js:734</code></a>
         
         </p>
 
@@ -2481,7 +2643,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l639"><code>simple.mvc.js:639</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l669"><code>simple.mvc.js:669</code></a>
         
         </p>
 
@@ -2589,7 +2751,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l609"><code>simple.mvc.js:609</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l639"><code>simple.mvc.js:639</code></a>
         
         </p>
 
@@ -2658,7 +2820,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l622"><code>simple.mvc.js:622</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l652"><code>simple.mvc.js:652</code></a>
         
         </p>
 
@@ -2718,7 +2880,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l778"><code>simple.mvc.js:778</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l808"><code>simple.mvc.js:808</code></a>
         
         </p>
 
@@ -2807,7 +2969,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l429"><code>simple.mvc.js:429</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l447"><code>simple.mvc.js:447</code></a>
         
         </p>
 
@@ -2928,7 +3090,7 @@ get updated. If false, then they won't.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l298"><code>simple.mvc.js:298</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l316"><code>simple.mvc.js:316</code></a>
         
         </p>
 
@@ -3024,7 +3186,7 @@ is called/executed.</p>
             
         
         
-        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l847"><code>simple.mvc.js:847</code></a>
+        <a href="..&#x2F;files&#x2F;simple.mvc.js.html#l877"><code>simple.mvc.js:877</code></a>
         
         </p>
 

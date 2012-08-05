@@ -194,7 +194,8 @@
         appendDataToSelect(':input[name=country]', data);
         
         //New phone instance
-        obj = MVC.ModelView(viewId, {
+        $(viewId).ModelView({
+        //obj = MVC.ModelView(viewId, {
           phone_id : '123',
           dontReceiveValueFromModel : '????',
           type : 'type old value',
@@ -223,7 +224,8 @@
         
         appendDataToSelect(':input[name=props]', obj);
         
-        objCopy = MVC.ModelView(viewId2, {
+        objCopy = $(viewId2).ModelView({
+        //objCopy = MVC.ModelView(viewId2, {
           foo : 123,
           //phone : obj
           toString : '<input type="text" name="phone_id" id="phone_id" value="'+obj.phone_id+'" /> & type of phone: <input type="text" name="type" value="' + obj.type + '" /> and has the color: ' + obj.color

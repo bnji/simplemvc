@@ -43,6 +43,8 @@
             
                 <li><a href="..&#x2F;classes/Controller.html">Controller</a></li>
             
+                <li><a href="..&#x2F;classes/getSetHtml.html">getSetHtml</a></li>
+            
                 <li><a href="..&#x2F;classes/List.html">List</a></li>
             
                 <li><a href="..&#x2F;classes/ModelView.html">ModelView</a></li>
@@ -114,7 +116,7 @@ $(function() {
       $.each(notebook.getNotes(), function(k, v) {
         data[k] = v.GetModelData();
       });
-      JSON.save(JSON.stringify(data, null, 2), 
+      JSON.save(JSON.stringify(data, null, 2),
           function(data) {
             $(&#x27;#jsonFileUrl&#x27;).html(&#x27;&lt;a href=&quot;&#x27;+data[&#x27;url&#x27;]+&#x27;&quot;&gt;Open the JSON file.&lt;&#x2F;a&gt;&#x27;);
           }
@@ -142,24 +144,12 @@ $(function() {
     createNote : function(value, isComplete, id) {
       &#x2F;&#x2F;Only if the note has some text
       if(notebook.isValidInput(value)) {
-        
-        &#x2F;&#x2F;var value = &quot;a b.c d f.o sdf&quot;;
-        &#x2F;*var regUrl = &#x2F;[a-zA-Z0-9\-\.]{1,255}\.[a-z]{1,255}&#x2F;;
-        var match = regUrl.exec(value);
-        var url = &#x27;&lt;a href=&quot;&#x27;+match+&#x27;&quot;&gt;&#x27;+match+&#x27;&lt;&#x2F;a&gt;&#x27;;
-        console.log(value);
-        if(regUrl.test(value)) {
-          &#x2F;&#x2F;value = url;
-          value = value.replace(match, url);
-          &#x2F;&#x2F;console.log(match);
-        }*&#x2F;
-       
        
         var noteData = {
-          id: (id === undefined || id === null ? $.now() : id),
+          id: (id === undefined || id === null ? Date.now() : id),
           isComplete: isComplete,
           note: value
-        }
+        };
         
         &#x2F;&#x2F;The note data (it&#x27;s field members and methods)
         var noteMethods = {
@@ -226,7 +216,7 @@ $(function() {
               .toggleMode();
           },
           clone: {
-              id: &#x27;#liNoteElem&#x27;+$.now(),
+              id: &#x27;#liNoteElem&#x27;+Date.now(),
               withDataAndEvents: false,
               append: function(elem) {
                 $(&#x27;#note-list&#x27;).prepend(elem);
@@ -236,7 +226,8 @@ $(function() {
         };
         
         &#x2F;&#x2F;Create a new note using the MVC ModelView
-        var note = MVC.ModelView(&#x27;#list-template&#x27;, noteData, noteSettings, noteMethods);
+        &#x2F;&#x2F;var note = MVC.ModelView(&#x27;#list-template&#x27;, noteData, noteSettings, noteMethods);
+        var note = $(&#x27;#list-template&#x27;).ModelView(noteData, noteSettings, noteMethods);
         
         notebook.add(note);
       }
@@ -380,12 +371,8 @@ $(function() {
   };
   
   &#x2F;&#x2F;Create a notebook (object literal) which manages the todo notes
-  var notebook = MVC.ModelView(
-                          &#x27;#todos&#x27;, 
-                          notebookData, 
-                          notebookSettings, 
-                          notebookMethods
-                          );
+  &#x2F;&#x2F;var notebook = MVC.ModelView(&#x27;#todos&#x27;,
+  var notebook = $(&#x27;#todos&#x27;).ModelView( notebookData, notebookSettings, notebookMethods );
   
   &#x2F;&#x2F;Clear the notebook and add 3 notes
   &#x2F;*notebook
