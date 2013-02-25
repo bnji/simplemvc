@@ -15,7 +15,7 @@
     <div id="view-1">
       <div id="foo">foo value</div>
       <br />
-      <input type="text" name="bar" value="bar value" />
+      <input type="text" name="bar" value="bar value" isRequired />
     </div>
     
     <script>
@@ -31,7 +31,6 @@
         inModel: Date.now(),
         foo: 'override'
       });
-
 
       //console.log(obj.GetModelData());
       //console.log(obj.GetViewHtml());

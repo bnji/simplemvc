@@ -25,12 +25,12 @@ $(function() {
       );
     }
   });
-  
+
   //The Model's data for the notebook
   var notebookData = {
     notes: MVC.List() //Use our MVC Array with extra methods
   };
-  
+
   //Define extra functionality for the notebook object, by implementing new
   //functions/methods here.
   var notebookMethods = {
@@ -46,13 +46,13 @@ $(function() {
     createNote : function(value, isComplete, id) {
       //Only if the note has some text
       if(notebook.isValidInput(value)) {
-       
+
         var noteData = {
           id: (id === undefined || id === null ? Date.now() : id),
           isComplete: isComplete,
           note: value
         };
-        
+
         //The note data (it's field members and methods)
         var noteMethods = {
           save : function() {
@@ -79,32 +79,28 @@ $(function() {
               });
           }
         };
-       
+
         //The note controller for the GUI buttons
         var noteController = MVC.Controller({
           showData : function() {
             alert(JSON.stringify(note.GetModelData(), null, 2));
           }
         });
-        
+
         //
         var noteSettings = {
           controller: noteController,
-          change: function(e, n, v) {
-            note
-              .save(); //save the note
-            notebook
-              .onCheckNote(note);
+          change : function(e, n, v) {
+            note.save(); //save the note
+            notebook.onCheckNote(note);
           },
-          keyup: function(e, n, v) {
-            if(notebook.isValidInput(v)) {
-              if(MVC.KeyCheck(e, 'enter')) {
-                note
-                  .save(); //save the note
-                note
-                  .toggleMode(); //Toggle to view mode again
+          keyup : function(e, n, v) {
+            if(notebook.isValidInput(v)) { // Input is valid
+              if(MVC.KeyCheck(e, 'enter')) { // User pressed on return key
+                note.save(); // Save the note
+                note.toggleMode(); // Toggle to view mode again
               }
-              if(MVC.KeyCheck(e, 'escape')) {
+              if(MVC.KeyCheck(e, 'escape')) { // User pressed on escape key
                 if(notebook.isValidInput(note)) {
                   note
                     .Find(':input[name="note"]')
@@ -113,11 +109,10 @@ $(function() {
               }
             }
           },
-          blur: function() {
-            note
-              .toggleMode();
+          blur : function() {
+            note.toggleMode();
           },
-          clone: {
+          clone : {
               id: '#liNoteElem'+Date.now(),
               withDataAndEvents: false,
               append: function(elem) {
@@ -126,10 +121,9 @@ $(function() {
               }
           }
         };
-        
+
         //Create a new note using the MVC ModelView
         var note = $('#list-template').ModelView(noteData, noteSettings, noteMethods);
-        
         notebook.add(note);
       }
       return notebook;
@@ -138,14 +132,14 @@ $(function() {
       notebook
           .getNotes() //Retrieve the list of notes
           .Add(note); //Add the note to the notebook
-          
+
       notebook
           .onAddRemove(note) //Update databound elements
           .onCheckNote(note); //Update databound elements
-          
+
       store
         .save(note.Get('id'), note.GetModelData()); //Store the data
-        
+
       return notebook;
     },
     remove : function(note) {
@@ -157,7 +151,7 @@ $(function() {
           .onAddRemove(note) //Update databound elements
           .onCheckNote(note) //Update databound elements
           .focusInput();
-          
+
         store
           .remove(note.Get('id')); //Remove the note (from the storage)
       }
@@ -227,20 +221,20 @@ $(function() {
     onCheckNote : function(note) {
       var noteElem = note.Find('#note');
       var notesDone = notebook.getNotesDoneCount();
-      
+
       if(note.Get('isComplete')) {
         noteElem.addClass('isComplete');
       } else {
         noteElem.removeClass('isComplete');
       }
-      
+
       if(notesDone > 0) {
         $('#clearDone').fadeIn(500);
       }
       else {
         $('#clearDone').fadeOut(500);
       }
-      
+
       $('.notesDone').html(notesDone === 1 ? 'item' : 'items');
       $('#notesDone').html(notesDone);
       $('#notesCount').html(notesDone + ' / ' + notebook.getNotesCount());
@@ -251,8 +245,10 @@ $(function() {
       notebook.loadNotes();
     }
   };
-  
-  //Settings
+
+  /**
+   * Settings
+   */
   var notebookSettings = {
     controller: notebookController,
     keyup : function(e, n, v) {
@@ -266,10 +262,11 @@ $(function() {
       notebook.SetModelFromView();
       //notebook.SetViewFromModel();
     }
-    
   };
-  
-  //Create a notebook (object literal) which manages the todo notes
+
+  /**
+   * Create a notebook (object literal) which manages the todo notes
+   */
   var notebook = $('#todos').ModelView( notebookData, notebookSettings, notebookMethods );
-  
+
 });
