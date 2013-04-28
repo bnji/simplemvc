@@ -297,10 +297,10 @@ var MVC = {
           $(this)
           //.attr('id', e.id+'_'+viewId)//NoHash)
           .click(function(e) {
-            //$object.RunCtr($id, par);
+            //$object.Start($id, par);
             //$object.Save();
             //console.log(e.target.name);
-            $object.RunCtr(e.target.name, e);
+            $object.Start(e.target.name, e);
             if($settings['settings']['preventDefault']) {
               e.preventDefault();
             }
@@ -321,7 +321,7 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.Save = function(par) {
-        return $object.RunCtr('Save', par);
+        return $object.Start('Save', par);
       };
       /**
        * Call the .Update() method whenever you want to update the object.
@@ -334,7 +334,7 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.Update = function(par) {
-        return $object.RunCtr('Update', par);
+        return $object.Start('Update', par);
       };
       /**
        * Call the .Delete() method whenever you want to delete the object.
@@ -347,7 +347,7 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.Delete = function(par) {
-        return $object.RunCtr('Delete', par);
+        return $object.Start('Delete', par);
       };
 
       /**
@@ -795,17 +795,21 @@ var MVC = {
         return $object;
       };
 
+      $object.RunCtr = function(method, par) {
+        $object.Start(method, par);
+      };
+
       /**
-       * RunCtr
+       * Start
        *
        * Execute a method in the controller.
        *
-       * @method RunCtr
+       * @method Start
        * @param {String} method The methods name specified in the controller.
        * @param {Object} par If needed you can provide optional parameters.
        * @return {Object} The object (itself)
        */
-      $object.RunCtr = function(method, par) {
+      $object.Start = function(method, par) {
         var exec = $object['settings']['controller'][method];
         if(exec !== undefined && exec !== null) {
           exec(par);

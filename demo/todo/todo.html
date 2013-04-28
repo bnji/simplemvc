@@ -1,5 +1,5 @@
-<!-- 
-  Note: This template is part of the 'index.html'-file in the same directory. 
+<!--
+  Note: This template is part of the 'index.html'-file in the same directory.
   It depends on jQuery, jStorage and simple.mvc.js (+todo.css).
   This template is for readability and easier maintenance placed here.
 -->
@@ -10,7 +10,7 @@
   </div>
   <!-- Input -->
   <input type='text' class='create' name='create' class="excludeFromModel" placeholder="Enter a todo item..." />
-  
+
   <!-- List of notes -->
   <ul id='note-list'>
     <!-- Note View (template) -->
@@ -29,7 +29,7 @@
       </div>
     </li><!-- //end Note View (template) -->
   </ul>
-  
+
   <!-- "Databound" elements: Information about the Model & View data -->
   <div id='todo-stats' class="excludeFromModel">
     <span id="notesCount" class="notesCount"> 0 </span> <span class="notesCountText"> item/s </span> left.
@@ -40,13 +40,13 @@
     <a href="#" name="clearDone" id="clearDone" class="btn btn-danger btn-mini" style="display: none;">
       Remove <span id="notesDone"> 0 </span> completed <span class="notesDone"> item/s </span>
     </a>
-    
+
     <a href="#" name="exportJSON" id="exportJSON" class="btn btn-primary btn-mini">
       Export JSON
     </a>
     <div id="jsonFileUrl" class="excludeFromModel pull-right"> </div>
   </div>
-  
+
 </div><!-- //end Todo View -->
 <!-- Include the todo core script here -->
 <script src="todo.js"></script>
