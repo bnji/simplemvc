@@ -4,21 +4,21 @@
     <meta charset="utf-8">
     <title>Examples overview</title>
     <!--IE fixes -->
-    <script type="text/javascript" src="../lib/json2.js"></script>
+    <script type="text/javascript" src="//rawgit.com/douglascrockford/JSON-js/master/json2.js"></script>
     <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.7.2.min.js"></script>
     <!--//end IE fixes -->
     <!--optional:-->
-    <script type="text/javascript" src="../../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
-    <script type="text/javascript" src="../../simplemvc-showcase/lib/google.code.prettify/js/prettify.js"></script>
-    <link type="text/css" rel="stylesheet" href="../../simplemvc-showcase/lib/google.code.prettify/css/twitter.bootstrap.css" />
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/css/bootstrap.min.css" />
+    <!--<script type="text/javascript" src="../../simplemvc-showcase/lib/google.code.prettify/js/prettify.js"></script>-->
+
     <!--//end optional-->
   </head>
   <body>
     <div class="container-fluid">
       <h1>
-        Examples overview 
+        Examples overview
         <small>Click on an example below to load it</small>
       </h1>
       <p>
@@ -57,18 +57,18 @@
             .text($(this).text())
           );
       });
-      
-      
+
+
       $('a[href="#"]').click(function(e) {
         $('#exampleFrame')
           .attr('src', getFiddleUrl(e.target.id))
           .show();
         e.preventDefault();
       });
-      
+
       $('a[id="tLNbC"]').click();
     });
     </script>
-    <script src="debug.js"></script>
+    <script src="//rawgit.com/bnji/simplemvc/master/examples/debug.js"></script>
   </body>
 </html>
