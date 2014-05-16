@@ -6,8 +6,8 @@
     <script type="text/javascript" src="../../simple.mvc.js"></script>
     <script type="text/javascript" src="../../simple.mvc.json.js"></script>
     <link rel="stylesheet" type='text/css' href='todo.css' />
-    <script type="text/javascript" src="http://hammerbenjamin.com/lib/bootstrap/js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="http://hammerbenjamin.com/lib/bootstrap/css/bootstrap.css" />
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/css/bootstrap.min.css" />
     <!--IE fixes -->
     <script type="text/javascript" src="../../lib/json2.js"></script>
     <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
@@ -17,13 +17,14 @@
     <!--//end IE fixes -->
     <!--<script src="https://raw.github.com/andris9/jStorage/master/jstorage.min.js"></script>-->
     <script src="../../lib/jstorage.min.js"></script>
-    <script type="text/javascript" src="http://hammerbenjamin.com/lib/google.code.prettify/js/prettify.js"></script>
-    <link type="text/css" rel="stylesheet" href="http://hammerbenjamin.com/lib/google.code.prettify/css/twitter.bootstrap.css" />
+    <!--<script type="text/javascript" src="http://hammerbenjamin.com/lib/google.code.prettify/js/prettify.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://hammerbenjamin.com/lib/google.code.prettify/css/twitter.bootstrap.css" />-->
     <script src="../../examples/debug.js"></script>
     <title>todo</title>
   </head>
-  <body onload="prettyPrint()">
-    
+  <!--<body onload="prettyPrint()">-->
+  <body>
+
     <div id="data">
       <!-- you should not see this text, but instead data from the template.html file! -->
     </div>
@@ -32,8 +33,8 @@
         $('#data').html(data);
       });
     </script>
-    
+
     <div id="debug"> </div>
-    
+
   </body>
 </html>

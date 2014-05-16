@@ -164,7 +164,7 @@ var notebookMethods = {
     });
     return notebook;
   },
-  clearAll : function(isCompleteFilter) {
+  clearAll : function() {
     $.each(notebook.getNotes(), function(k, note) {
       $(note.GetViewId()).slideUp('slow', function() {
         notebook.remove(note); //Remove the note the Model
@@ -265,9 +265,5 @@ var notebookSettings = {
 };
 
 //Create a notebook (object literal) which manages the todo notes
-var notebook = $('#todos').ModelView(
-                                    notebookData,
-                                    notebookSettings,
-                                    notebookMethods
-                                    );
+var notebook = $('#todos').ModelView(notebookData, notebookSettings, notebookMethods);
 });
