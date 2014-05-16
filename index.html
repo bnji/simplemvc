@@ -5,9 +5,9 @@
 <!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
 <!--[if gt IE 8]><!-->
 <html class="no-js" lang="en">
-  <!--<![endif]-->
-  <head>
-    <meta charset="utf-8">
+<!--<![endif]-->
+<head>
+  <meta charset="utf-8">
 
     <!-- Use the .htaccess and remove these lines to avoid edge case issues.
     More info: h5bp.com/i/378 -->
@@ -38,12 +38,12 @@
       /*All JavaScript at the bottom, except this Modernizr build.
        Modernizr enables HTML5 elements & feature detects for optimal performance.
        Create your own custom Modernizr build: www.modernizr.com/download/*/
-    </script>
-    <script type="text/javascript" src="//rawgit.com/bnji/simplemvc/master/simple.mvc.js"></script>
-    <script type="text/javascript" src="//rawgit.com/bnji/simplemvc/master/simple.mvc.json.js"></script>
+       </script>
+       <script type="text/javascript" src="//rawgit.com/bnji/simplemvc/master/simple.mvc.js"></script>
+       <script type="text/javascript" src="//rawgit.com/bnji/simplemvc/master/simple.mvc.json.js"></script>
 
-    <style>
-      .center {
+       <style>
+       .center {
         text-align: center;
       }
       .spacer {
@@ -59,22 +59,22 @@
       .spacer2 {
         padding:75px;
       }
-    </style>
+      </style>
 
-    <script>
+      <script>
       var isMobile = jQuery.browser.mobile;
-    </script>
+      </script>
 
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="">
+      <!-- Le fav and touch icons -->
+      <link rel="shortcut icon" href="">
     <!--
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-    -->
+  -->
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
     <!--[if lt IE 9]>
     <script src="<?php echo $GLOBALS['urlLibs']; ?>/html5shiv.js"></script>
     <![endif]-->
@@ -89,28 +89,44 @@
     <div class="header">
       <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
+
           <div class="container">
-            <ul class="nav">
+
+            <div class="pull-left">
+              <a class="brand" href="#"><i class="icon icon-heart"></i> Simple MVC / MVVM</a>
+            </div>
+
+            <ul class="nav pull-right">
               <li class=""><a href="#download">Download / Learn</a></li>
-              <li class=""><a href="#featureOverview">Features</a></li>
-              <li class=""><a href="#problem">Problem</a></li>
-              <li class=""><a href="#solution">Solution</a></li>
-              <li class=""><a href="#setup">Setup</a></li>
-              <li class=""><a href="#codeExamples">Examples</a></li>
-              <li class=""><a href="#api">API</a></li>
-              <li class=""><a href="#unittest">Unit tests</a></li>
-              <li class=""><a href="#comments">Comments</a></li>
+
+              <ul class="nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    More...
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class=""><a id="featureOverview" href="#">Features</a></li>
+                    <li class=""><a id="problem" href="#">Problem</a></li>
+                    <li class=""><a id="solution" href="#">Solution</a></li>
+                    <li class=""><a id="setup" href="#">Setup</a></li>
+                    <li class=""><a id="codeExamples" href="#">Examples</a></li>
+                    <li class=""><a id="api" href="#">API</a></li>
+                    <li class=""><a id="unittest" href="#">Unit tests</a></li>
+                    <li class=""><a id="comments" href="#">Comments</a></li>
+                  </ul>
+                </li>
+              </ul>
             </ul>
 
-            <div class="pull-right">
-              <h3><a class="brand" href="#"><i class="icon icon-heart"></i> Simple MVC / MVVM</a></h3>
-            </div>
             <div class="nav-collapse">
               <ul class="nav pull-right">
                 <li class="divider-vertical"></li>
               </ul>
             </div>
+
           </div>
+
         </div>
       </div>
     </div>
@@ -125,200 +141,200 @@
 
 
 
-<div class="hero-unit center">
-  <h1 class="header" id="download">Simple MVC / MVVM</h1>
-  <p>
-    <h2>using jQuery <i class="icon icon-heart-empty"></i> HTML</h2>
-    <br />
-    <p>
-      A simple - yet solving a complex task while being lightweight - MVC / MVVM solution to your jQuery + HTML.
-    </p>
-    <br />
+        <div class="hero-unit center">
+          <h1 class="header" id="download">Simple MVC / MVVM</h1>
+          <p>
+            <h2>using jQuery <i class="icon icon-heart-empty"></i> HTML</h2>
+            <br />
+            <p>
+              A simple - yet solving a complex task while being lightweight - MVC / MVVM solution to your jQuery + HTML.
+            </p>
+            <br />
 
-    <div class="btn-toolbar">
-      <div class="btn-group">
-        <a class="btn btn-large btn-primary"><i class="icon icon-download icon-large"></i> &nbsp; Download</a>
-        <button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown"><span style="height: 10px;" class="caret"></span></button>
-        <ul class="dropdown-menu">
-          <li><a href="https://github.com/bnji/simplemvc/zipball/master">w/ Documentation</a></li>
-          <li><a href="https://raw.github.com/bnji/simplemvc/master/simple.mvc.min.js">Minified</a></li>
-          <li><a href="https://raw.github.com/bnji/simplemvc/master/simple.mvc.js">Normal</a></li>
-        </ul>
+            <div class="btn-toolbar">
+              <div class="btn-group">
+                <a class="btn btn-large btn-primary"><i class="icon icon-download icon-large"></i> &nbsp; Download</a>
+                <button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown"><span style="height: 10px;" class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="https://github.com/bnji/simplemvc/zipball/master">w/ Documentation</a></li>
+                  <li><a href="https://raw.github.com/bnji/simplemvc/master/simple.mvc.min.js">Minified</a></li>
+                  <li><a href="https://raw.github.com/bnji/simplemvc/master/simple.mvc.js">Normal</a></li>
+                </ul>
+              </div>
+              <div class="btn-group">
+                <a href="#codeExamples" class="btn btn-large btn-inverse"><i class="icon icon-book icon-large"></i> &nbsp; Learn</a>
+              </div>
+            </div>
+          </p>
+        </div>
+
+        <br />
+
+        <div id="featureOverviewBody">
+          <div class="row">
+            <div class="span4">
+              <h2><i class="icon icon-cloud"></i> Light weight</h2>
+              <p>The simple.mvc.js library is ~4KB minified, which means it's very light weight.</p>
+            </div>
+            <div class="span4">
+              <h2><i class="icon icon-heart"></i> jQuery + HTML</h2>
+              <p>All you need to know is a little jQuery & HTML. Don't hesitate continue reading even if you don't.</p>
+            </div>
+            <div class="span4">
+              <h2><i class="icon icon-ok"></i> Cross-browser</h2>
+              <p>Works wherever jQuery does, which means it's cross-browser (back to IE6!) - All thanks to jQuery! :)<br /><br /></p>
+            </div>
+          </div><!--/row-->
+          <div class="row">
+            <div class="span4">
+              <h2><i class="icon icon-file"></i> Easy</h2>
+              <p>No need for learning a new templating system, as HTML attributes are used, which means there's no need for learning or creating new HTML attributes or using HTML elements with jQuery functionality "wrapped inside them".<br /><br /></p>
+            </div>
+            <div class="span4">
+              <h2><i class="icon icon-fullscreen"></i> MVC / MVVM design pattern</h2>
+              <p>The design pattern (kept in mind?) while developing the library was to <b>A) Separating concerns</b> (<a id="modelViewControllerWiki" href="#">Model View Controller</a>) & <b>B) Keeping the view and model synchronized</b> (<a id="modelViewViewModelWiki" href="#" rel="tooltip">Model View MVC</a>).</p>
+            </div>
+            <div class="span4">
+              <h2><i class="icon icon-star"></i> Code quality</h2>
+              <p>High code quality using unit testing is of great importance. Therefore a behavior-driven development framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a> for testing the JavaScript is used.<br /><br /></p>
+            </div>
+          </div><!--/row-->
+          <div class="row">
+            <div class="span4">
+              <h2><i class="icon icon-sign-blank"></i> Simplicity</h2>
+              <p>Keeping things simple while solving a complex task without any clutter or unnecessary extravagance functionality which would increase the codebase.</p>
+            </div>
+            <div class="span4">
+              <h2><i class="icon icon-plus-sign"></i> Requirements</h2>
+              <p>
+                <ul>
+                  <li>jQuery 1.5.1 or newer</li>
+                  <li>simplemvc.js</li>
+                </ul>
+              </p>
+            </div>
+            <div class="span4">
+              <h2><i class="icon"></i> </h2>
+              <p></p>
+            </div>
+          </div><!--/row-->
+        </div>
+
+        <p class="spacer2"></p>
+
+        <div>
+          <div class="page-header">
+            <h1 id="problemBody">
+              The problem
+              <small>
+                <i>
+                 How to keep the DOM/HTML(view) synchronized with the JavaScript(model)?
+               </i>
+             </small>
+           </h1>
+         </div>
+
+         <p>
+          The view should always be synchronized with the model and optionally the other way around.
+          To solve this problem I've researched a little on how other libraries solve this problem
+          and found Ember.js (42KB min.) & Angular.js(78KB min.) to be one of the people's favorites - mine included.
+          Although these libraries solve the problem at hand - quite well - I still found myself
+          left with a few questions:
+          <ul>
+            <li>Do I need all this extra code which is more than 42KB?</li>
+            <li>Can I achieve this with my current libraries (e.g. jQuery)?</li>
+            <li>Do I really need to learn a new templating system (e.g. handlebars)?</li>
+            <li>Is it possible to use the existing HTML attributes instead of creating new ones for gluing things together?</li>
+            <li>How can I combine the best from both of these mentioned libraries, but only solving the task of keeping the view and model synchronized without too much extra functionality added?</li>
+          </ul>
+          <br />
+          <b>Note:</b>
+          <i>
+            With all these questions in mind, it should be worth noting that these
+            libraries are of great value and probably are of higher standards
+            developed by more clever people than me.
+
+          </i>
+        </p>
+
+
       </div>
-      <div class="btn-group">
-        <a href="#codeExamples" class="btn btn-large btn-inverse"><i class="icon icon-book icon-large"></i> &nbsp; Learn</a>
-      </div>
-    </div>
-  </p>
-</div>
 
-<br />
+      <p class="spacer2"></p>
 
-<div id="featureOverview">
-  <div class="row">
-    <div class="span4">
-      <h2><i class="icon icon-cloud"></i> Light weight</h2>
-      <p>The simple.mvc.js library is ~4KB minified, which means it's very light weight.</p>
-    </div>
-    <div class="span4">
-      <h2><i class="icon icon-heart"></i> jQuery + HTML</h2>
-      <p>All you need to know is a little jQuery & HTML. Don't hesitate continue reading even if you don't.</p>
-    </div>
-    <div class="span4">
-      <h2><i class="icon icon-ok"></i> Cross-browser</h2>
-      <p>Works wherever jQuery does, which means it's cross-browser (back to IE6!) - All thanks to jQuery! :)<br /><br /></p>
-    </div>
-  </div><!--/row-->
-  <div class="row">
-    <div class="span4">
-      <h2><i class="icon icon-file"></i> Easy</h2>
-      <p>No need for learning a new templating system, as HTML attributes are used, which means there's no need for learning or creating new HTML attributes or using HTML elements with jQuery functionality "wrapped inside them".<br /><br /></p>
-    </div>
-    <div class="span4">
-      <h2><i class="icon icon-fullscreen"></i> MVC / MVVM design pattern</h2>
-      <p>The design pattern (kept in mind?) while developing the library was to <b>A) Separating concerns</b> (<a id="modelViewControllerWiki" href="#">Model View Controller</a>) & <b>B) Keeping the view and model synchronized</b> (<a id="modelViewViewModelWiki" href="#" rel="tooltip">Model View MVC</a>).</p>
-    </div>
-    <div class="span4">
-      <h2><i class="icon icon-star"></i> Code quality</h2>
-      <p>High code quality using unit testing is of great importance. Therefore a behavior-driven development framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a> for testing the JavaScript is used.<br /><br /></p>
-    </div>
-  </div><!--/row-->
-  <div class="row">
-    <div class="span4">
-      <h2><i class="icon icon-sign-blank"></i> Simplicity</h2>
-      <p>Keeping things simple while solving a complex task without any clutter or unnecessary extravagance functionality which would increase the codebase.</p>
-    </div>
-    <div class="span4">
-      <h2><i class="icon icon-plus-sign"></i> Requirements</h2>
+      <div id="solutionBody">
+        <div class="page-header">
+          <h1>
+            The solution
+            <small>
+              <i>
+               MVC / MVVM design pattern solution using jQuery + HTML.
+             </i>
+           </small>
+         </h1>
+       </div>
+
+       <p>
+        The solution to these questions could not be implemented (for cross-browser functionality) without jQuery, as there is a problem with
+        event driven design using getters and setters in browsers like IE. Therefore the problem was solved using jQuery's
+        <code><a href="http://api.jquery.com/bind/">.bind()</a></code> and <code><a href="http://api.jquery.com/trigger/">.trigger()</a></code> methods bound to the object's properties.
+      </p>
+      <h2>Philosophy behind</h2>
       <p>
         <ul>
-          <li>jQuery 1.5.1 or newer</li>
-          <li>simplemvc.js</li>
+          <li>Keep the code as light weight as possible.</li>
+          <li>Use existing HTML elements and attributes instead of a templating system.</li>
+          <li>Cross-browser back to IE6!</li>
+          <li>Always update the Model when the View changes.</li>
+          <li>Optionally update the View, if <code>isMirror</code> is set to be <code>true</code>, when the Model is changed.</li>
+          <li>Code quality and testing!</li>
+          <li>Never add extravagance functionality!</li>
         </ul>
       </p>
     </div>
-    <div class="span4">
-      <h2><i class="icon"></i> </h2>
-      <p></p>
+
+    <p class="spacer2"></p>
+
+    <div id="setupBody">
+      <div class="page-header">
+        <h1>
+          Setup
+          <small>
+            <i>How to get started using the library.</i>
+          </small>
+        </h1>
+      </div>
+
+      <p>
+        <ol>
+          <li><a href="https://github.com/bnji/simplemvc/zipball/master">Download</a> the <code>simple.mvc.js</code> library.</li>
+          <li>Include jQuery: <code>https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js</code> *Only if it's not included with your project already!</li>
+          <li>Include the <code>simple.mvc.js</code> library in your project.</li>
+          <li>Check out the examples: You can copy & paste them into your project and test them out or try the online demo below.</li>
+        </ol>
+      </p>
     </div>
-  </div><!--/row-->
-</div>
 
-<p class="spacer2"></p>
+    <p class="spacer2"></p>
 
-<div>
-  <div class="page-header">
-    <h1 id="problem">
-      The problem
-      <small>
-        <i>
-           How to keep the DOM/HTML(view) synchronized with the JavaScript(model)?
-        </i>
-      </small>
-    </h1>
-  </div>
-
-  <p>
-    The view should always be synchronized with the model and optionally the other way around.
-    To solve this problem I've researched a little on how other libraries solve this problem
-    and found Ember.js (42KB min.) & Angular.js(78KB min.) to be one of the people's favorites - mine included.
-    Although these libraries solve the problem at hand - quite well - I still found myself
-    left with a few questions:
-    <ul>
-      <li>Do I need all this extra code which is more than 42KB?</li>
-      <li>Can I achieve this with my current libraries (e.g. jQuery)?</li>
-      <li>Do I really need to learn a new templating system (e.g. handlebars)?</li>
-      <li>Is it possible to use the existing HTML attributes instead of creating new ones for gluing things together?</li>
-      <li>How can I combine the best from both of these mentioned libraries, but only solving the task of keeping the view and model synchronized without too much extra functionality added?</li>
-    </ul>
-    <br />
-    <b>Note:</b>
-    <i>
-      With all these questions in mind, it should be worth noting that these
-      libraries are of great value and probably are of higher standards
-      developed by more clever people than me.
-
-    </i>
-  </p>
-
-
-</div>
-
-<p class="spacer2"></p>
-
-<div id="solution">
-  <div class="page-header">
-    <h1>
-      The solution
-      <small>
-        <i>
-           MVC / MVVM design pattern solution using jQuery + HTML.
-        </i>
-      </small>
-    </h1>
-  </div>
-
-  <p>
-    The solution to these questions could not be implemented (for cross-browser functionality) without jQuery, as there is a problem with
-    event driven design using getters and setters in browsers like IE. Therefore the problem was solved using jQuery's
-    <code><a href="http://api.jquery.com/bind/">.bind()</a></code> and <code><a href="http://api.jquery.com/trigger/">.trigger()</a></code> methods bound to the object's properties.
-  </p>
-  <h2>Philosophy behind</h2>
-  <p>
-    <ul>
-      <li>Keep the code as light weight as possible.</li>
-      <li>Use existing HTML elements and attributes instead of a templating system.</li>
-      <li>Cross-browser back to IE6!</li>
-      <li>Always update the Model when the View changes.</li>
-      <li>Optionally update the View, if <code>isMirror</code> is set to be <code>true</code>, when the Model is changed.</li>
-      <li>Code quality and testing!</li>
-      <li>Never add extravagance functionality!</li>
-    </ul>
-  </p>
-</div>
-
-<p class="spacer2"></p>
-
-<div id="setup">
-  <div class="page-header">
-    <h1>
-      Setup
-      <small>
-        <i>How to get started using the library.</i>
-      </small>
-    </h1>
-  </div>
-
-  <p>
-    <ol>
-      <li><a href="https://github.com/bnji/simplemvc/zipball/master">Download</a> the <code>simple.mvc.js</code> library.</li>
-      <li>Include jQuery: <code>https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js</code> *Only if it's not included with your project already!</li>
-      <li>Include the <code>simple.mvc.js</code> library in your project.</li>
-      <li>Check out the examples: You can copy & paste them into your project and test them out or try the online demo below.</li>
-    </ol>
-  </p>
-</div>
-
-<p class="spacer2"></p>
-
-<div id="codeExamples">
-  <div class="page-header">
-    <h1>
-      Examples
-      <small>
-        <i>Code examples which show how to use the library.
-          <br />
-          For more examples <a href="../simplemvc/examples/index.html">click here</a>
-          <br />
-          <a href="../simplemvc/examples/todo">Todo App Demo</a>
-          <br />
-          <a href="../simplemvc/examples/generic-vs-simplemvc">Generic JavaScript vs jQuery + SimpleMVC Demo</a>
-        </i>
-      </small>
-    </h1>
-  </div>
-  <br />
-  <iframe style="width: 100%; height: 600px" src="http://jsfiddle.net/bendot/tLNbC/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+    <div id="codeExamplesBody">
+      <div class="page-header">
+        <h1>
+          Examples
+          <small>
+            <i>Code examples which show how to use the library.
+              <br />
+              For more examples <a href="../simplemvc/examples/index.html">click here</a>
+              <br />
+              <a href="../simplemvc/examples/todo">Todo App Demo</a>
+              <br />
+              <a href="../simplemvc/examples/generic-vs-simplemvc">Generic JavaScript vs jQuery + SimpleMVC Demo</a>
+            </i>
+          </small>
+        </h1>
+      </div>
+      <br />
+      <iframe style="width: 100%; height: 600px" src="http://jsfiddle.net/bendot/tLNbC/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
   <!--
   <p>
     <i><a id="example4Toggle" href="#">Try it out right here</a> <b>or</b> <a target="_blank" href="../simplemvc/examples/example4.html">Open in new tab!</a></i>
@@ -339,7 +355,7 @@ echo htmlspecialchars(file_get_contents('../simplemvc/examples/example4.html'));
 
 <p class="spacer2"></p>
 
-<div id="api">
+<div id="apiBody">
   <div class="page-header">
     <h1>
       API
@@ -354,51 +370,51 @@ echo htmlspecialchars(file_get_contents('../simplemvc/examples/example4.html'));
     Here is an overview for creating a MVC Object. Every part of it is described in detail below (starting with 'MVC Object Parameters').
   </p>
   <br />
-<pre class="prettyprint linenums lang-js">
-var viewId,
+  <pre class="prettyprint linenums lang-js">
+    var viewId,
     ctr,
     settings,
     objectData,
     obj;
 
-//The view ID should be a selector of the element containing all the data relevant to the model.
-//*** Note: The data can still be used and updated outside the View ***
-viewId = '#testArea';
+    //The view ID should be a selector of the element containing all the data relevant to the model.
+    //*** Note: The data can still be used and updated outside the View ***
+    viewId = '#testArea';
 
-//The data which are specified by the model (object literal)
-//Treat this as an instance of a Class
-objectData = {
-  id : 'foo',
-  type : 'bar'
-}
-
-//The Controller
-ctr = MVC.Controller({
-  Save : function(obj, par) {
-    //do something with object 'obj'
-  },
-  Update : function(obj, par) {
-    //do something with object 'obj'
-  },
-  Delete : function(obj, par) {
-    //do something with object 'obj'
+    //The data which are specified by the model (object literal)
+    //Treat this as an instance of a Class
+    objectData = {
+    id : 'foo',
+    type : 'bar'
   }
+
+  //The Controller
+  ctr = MVC.Controller({
+  Save : function(obj, par) {
+  //do something with object 'obj'
+},
+Update : function(obj, par) {
+//do something with object 'obj'
+},
+Delete : function(obj, par) {
+//do something with object 'obj'
+}
 });
 
 //Settings (object literal)
 settings = {
-  //Add the controller
-  controller : ctr,
-  //Should changes in the model be reflected in the view?
-  //*** Changes in the view will always be reflected in the model, but the other way is optional. ***
-  isMirror : true|false,
-  //Set the model to autosave every X ms. Remember to implement the Save() method in the controller!
-  autoSaveInterval : 15000, //15 seconds (15000ms)
-  //Callback function - When input elements change (not <b>div</b>, <b>span</b> or <b>p</b> elements).
-  change : function() {
-    //do something when input changes
-  }
-  //other event types: focus, blur, change, select, submit, keyup, keydown and keypress
+//Add the controller
+controller : ctr,
+//Should changes in the model be reflected in the view?
+//*** Changes in the view will always be reflected in the model, but the other way is optional. ***
+isMirror : true|false,
+//Set the model to autosave every X ms. Remember to implement the Save() method in the controller!
+autoSaveInterval : 15000, //15 seconds (15000ms)
+//Callback function - When input elements change (not <b>div</b>, <b>span</b> or <b>p</b> elements).
+change : function() {
+//do something when input changes
+}
+//other event types: focus, blur, change, select, submit, keyup, keydown and keypress
 }
 
 //The objectData and settings object literals are merged and returned
@@ -416,152 +432,152 @@ var foo = obj.Get('type'); //Access DOM value
 var bar = obj['type']; //Access Object's value
 
 $('#saveObj').click(function() {
-  var extraPar = $('#someId').text();
-  obj.Save(extraPar);
+var extraPar = $('#someId').text();
+obj.Save(extraPar);
 });
 
 $('#updateObj').click(function() {
-  var extraPar = $('#someId').text();
-  obj.Update(extraPar);
+var extraPar = $('#someId').text();
+obj.Update(extraPar);
 });
 
 $('#deleteObj').click(function() {
-  var extraPar = $('#someId').text();
-  obj.Delete(extraPar);
+var extraPar = $('#someId').text();
+obj.Delete(extraPar);
 });
 </pre>
 
-  <br />
+<br />
 
-  <h2>MVC Object Parameters</h2>
+<h2>MVC Object Parameters</h2>
+<p>
   <p>
-    <p>
-      The <code>ModelView()</code> takes 3 parameters: <code>viewId</code> <b>(required)</b>, <code>objectData</code> (optional) and <code>settings</code> (optional).
-      <br />
-    </p>
-<pre class="prettyprint lang-js">
-var obj = MVC.ModelView(viewId, objectData, settings);
-</pre>
+    The <code>ModelView()</code> takes 3 parameters: <code>viewId</code> <b>(required)</b>, <code>objectData</code> (optional) and <code>settings</code> (optional).
     <br />
-    <dl>
-      <dt><code>viewId</code></dt>
-      <dd>
-        <p>
-          <br />
-          The <code>viewId</code> should be a selector of the element containing all the data relevant to the model.
-          <br />
-          <span class="label label-info">Note:</span> The data passed from the elements in the View to the Model can still be used and updated outside the View.
-          <br />
-        </p>
-      </dd>
+  </p>
+  <pre class="prettyprint lang-js">
+    var obj = MVC.ModelView(viewId, objectData, settings);
+  </pre>
+  <br />
+  <dl>
+    <dt><code>viewId</code></dt>
+    <dd>
+      <p>
+        <br />
+        The <code>viewId</code> should be a selector of the element containing all the data relevant to the model.
+        <br />
+        <span class="label label-info">Note:</span> The data passed from the elements in the View to the Model can still be used and updated outside the View.
+        <br />
+      </p>
+    </dd>
 
-      <br />
-      <br />
+    <br />
+    <br />
 
-      <dt><code>objectData</code></dt>
-      <dd>
-        <p>
-          <br />
-          The <code>objectData</code> is an Object Literal (JSON) which basically is the Model object passed as a parameter and returned (merged with the settings object) after all the internal setup of the object is done.
-          <br />
-          <span class="label label-important">Important</span>
-          <br />
-          The property name in the Model should be identical to:
-          <ul>
-            <li>The <code>name</code> attribute of the <code>form</code> elements in the View</li>
-            <li>The <code>id</code> or <code>datafld</code> attribute of <code>p</code>, <code>span</code> or <code>div</code> elements in the View.</li>
-          </ul>
-          <h3>Example</h3>
-<pre class="prettyprint lang-js">
-//The object
-var obj = {<b>somePropertyName:'someValue'</b>};
-//The view
-&lt;input type="text" <b>name="somePropertyName"</b> /&gt;
-</pre>
-        </p>
-      </dd>
+    <dt><code>objectData</code></dt>
+    <dd>
+      <p>
+        <br />
+        The <code>objectData</code> is an Object Literal (JSON) which basically is the Model object passed as a parameter and returned (merged with the settings object) after all the internal setup of the object is done.
+        <br />
+        <span class="label label-important">Important</span>
+        <br />
+        The property name in the Model should be identical to:
+        <ul>
+          <li>The <code>name</code> attribute of the <code>form</code> elements in the View</li>
+          <li>The <code>id</code> or <code>datafld</code> attribute of <code>p</code>, <code>span</code> or <code>div</code> elements in the View.</li>
+        </ul>
+        <h3>Example</h3>
+        <pre class="prettyprint lang-js">
+          //The object
+          var obj = {<b>somePropertyName:'someValue'</b>};
+          //The view
+          &lt;input type="text" <b>name="somePropertyName"</b> /&gt;
+        </pre>
+      </p>
+    </dd>
 
-      <br />
-      <br />
+    <br />
+    <br />
 
-      <dt><code>settings</code> <b>(optional)</b></dt>
-      <dd>
-        <p>
-          <br />
-          The <code>settings</code> object is optional, because by default the settings will be set to contain the <code>viewId</code> and
-          <code>isMirror</code> : <code>true</code>
-          <br />
-          Settings overview:
-          <br />
-          <ul>
-            <li><code>settings['viewId']</code></li>
-            <li><code>settings['isMirror']</code></li>
-            <li><code>settings['controller']</code></li>
-            <li><code>settings['autoSaveInterval']</code></li>
-            <li><code>settings['eventName']</code></li>
-          </ul>
-          <br />
-        </p>
-      </dd>
+    <dt><code>settings</code> <b>(optional)</b></dt>
+    <dd>
+      <p>
+        <br />
+        The <code>settings</code> object is optional, because by default the settings will be set to contain the <code>viewId</code> and
+        <code>isMirror</code> : <code>true</code>
+        <br />
+        Settings overview:
+        <br />
+        <ul>
+          <li><code>settings['viewId']</code></li>
+          <li><code>settings['isMirror']</code></li>
+          <li><code>settings['controller']</code></li>
+          <li><code>settings['autoSaveInterval']</code></li>
+          <li><code>settings['eventName']</code></li>
+        </ul>
+        <br />
+      </p>
+    </dd>
 
-      <br />
+    <br />
 
-      <dt><code>settings['viewId']</code></dt>
-      <dd>
-        <p>
-          <br />
-          The <code>viewId</code> will be set automatically if not specified.
-          <br />
-        </p>
+    <dt><code>settings['viewId']</code></dt>
+    <dd>
+      <p>
+        <br />
+        The <code>viewId</code> will be set automatically if not specified.
+        <br />
+      </p>
         <!--<h3>Example</h3>
 <pre class="prettyprint lang-js">
 ...
 </pre>-->
-      </dd>
+</dd>
 
-      <br />
+<br />
 
-      <dt><code>settings['isMirror']</code></dt>
-      <dd>
-        <p>
-          <br />
-          The <code>isMirror</code> can either be <code>true</code> or <code>false</code>. If <code>true</code>, then
-          the View is updated when the Model is changed. If not specified, it will be set to <code>true</code>.
-          <br />
-        </p>
-      </dd>
+<dt><code>settings['isMirror']</code></dt>
+<dd>
+  <p>
+    <br />
+    The <code>isMirror</code> can either be <code>true</code> or <code>false</code>. If <code>true</code>, then
+    the View is updated when the Model is changed. If not specified, it will be set to <code>true</code>.
+    <br />
+  </p>
+</dd>
 
-      <br />
+<br />
 
-      <dt><code>settings['controller']</code></dt>
-      <dd>
-        <p>
-          <br />
-          The <code>controller</code> which handles the logic.
-          <h3>Example</h3>
-<pre class="prettyprint lang-js">
-var viewId = "#someViewId",
-    ctr,
-    settings,
-    obj;
+<dt><code>settings['controller']</code></dt>
+<dd>
+  <p>
+    <br />
+    The <code>controller</code> which handles the logic.
+    <h3>Example</h3>
+    <pre class="prettyprint lang-js">
+      var viewId = "#someViewId",
+      ctr,
+      settings,
+      obj;
 
-ctr = MVC.Controller({
-  Save : function(obj, par) {
-    //do something with object 'obj'
-    //Implement necessary funcitonality here
-  },
-  Update : function(obj, par) {
+      ctr = MVC.Controller({
+      Save : function(obj, par) {
+      //do something with object 'obj'
+      //Implement necessary funcitonality here
+    },
+    Update : function(obj, par) {
     //do something with object 'obj'
     //Implement necessary funcitonality here
   },
   Delete : function(obj, par) {
-    //do something with object 'obj'
-    //Implement necessary funcitonality here
-  }
+  //do something with object 'obj'
+  //Implement necessary funcitonality here
+}
 });
 
 settings = {
-  controller : ctr, //Add the controller to the settings object
+controller : ctr, //Add the controller to the settings object
 }
 
 obj = MVC.ModelView(viewId, { foo : 'bar' }, settings);
@@ -570,206 +586,206 @@ obj.Save({foo:'bar});
 obj.Update({foo:'bar});
 obj.Delete({foo:'bar});
 </pre>
-          <br />
-        </p>
-      </dd>
+<br />
+</p>
+</dd>
 
-      <br />
+<br />
 
-      <dt><code>settings['autoSaveInterval']</code></dt>
-      <dd>
-        <p>
-          <br />
-          The <code>autoSaveInterval</code> will autosave the model's data every <code>X</code> ms (milliseconds),
-          but only if the <code>Save()</code> method in the controller is specified.
-          <br />
-          <h3>Example</h3>
-<pre class="prettyprint lang-js">
-var viewId = "#someViewId",
-  ctr,
-  settings,
-  obj;
+<dt><code>settings['autoSaveInterval']</code></dt>
+<dd>
+  <p>
+    <br />
+    The <code>autoSaveInterval</code> will autosave the model's data every <code>X</code> ms (milliseconds),
+    but only if the <code>Save()</code> method in the controller is specified.
+    <br />
+    <h3>Example</h3>
+    <pre class="prettyprint lang-js">
+      var viewId = "#someViewId",
+      ctr,
+      settings,
+      obj;
 
-ctr =  MVC.Controller({
-  Save : function(obj){
-    //do something with object 'obj'
-  }
-});
+      ctr =  MVC.Controller({
+      Save : function(obj){
+      //do something with object 'obj'
+    }
+  });
 
-settings = {
+  settings = {
   controller : ctr, //Add the controller to the settings object
   autoSaveInterval : 5000 //autosave every 5 seconds
 }
 
 obj = MVC.ModelView(viewId, { foo : 'bar' }, settings);
 </pre>
-        </p>
-      </dd>
+</p>
+</dd>
 
-      <br />
+<br />
 
-      <dt><code>settings['eventName']</code></dt>
-      <dd>
-        <p>
-          <br />
-          It's possible to set the object to 'listen' to events. Available events:<br />
-          <code>focus</code>, <code>blur</code>, <code>change</code>,
-          <code>select</code>, <code>submit</code>, <code>keyup</code>,
-          <code>keydown</code>, <code>keypress</code> and <code>focus</code>
-          <br />
-          The data returned from the event function is:
-          <br />
-          <code>event</code>: Information about the event. Such as <code>event.data</code>, <code>event.target</code>, <code>event.type</code>, etc...
-          <br />
-          <code>name</code>: The input's name - Is more convenient than calling <code>event.target.name</code> as this is a common value to use.
-          <br />
-          <code>value</code>: The input's value - Is more convenient than calling <code>event.target.value</code> as this is a common value to use.
-          <br />
-          <h3>Example</h3>
-<pre class="prettyprint lang-js">
-var viewId = "#someViewId",
-    obj,
-    settings;
+<dt><code>settings['eventName']</code></dt>
+<dd>
+  <p>
+    <br />
+    It's possible to set the object to 'listen' to events. Available events:<br />
+    <code>focus</code>, <code>blur</code>, <code>change</code>,
+    <code>select</code>, <code>submit</code>, <code>keyup</code>,
+    <code>keydown</code>, <code>keypress</code> and <code>focus</code>
+    <br />
+    The data returned from the event function is:
+    <br />
+    <code>event</code>: Information about the event. Such as <code>event.data</code>, <code>event.target</code>, <code>event.type</code>, etc...
+    <br />
+    <code>name</code>: The input's name - Is more convenient than calling <code>event.target.name</code> as this is a common value to use.
+    <br />
+    <code>value</code>: The input's value - Is more convenient than calling <code>event.target.value</code> as this is a common value to use.
+    <br />
+    <h3>Example</h3>
+    <pre class="prettyprint lang-js">
+      var viewId = "#someViewId",
+      obj,
+      settings;
 
-var settings = {
-  focus : function(event, name, value) {
-    //event.target.name === name
-    //event.target.value === value
-    //do something when the input has gained focus
-  },
-  blur : function(event, name, value) {
+      var settings = {
+      focus : function(event, name, value) {
+      //event.target.name === name
+      //event.target.value === value
+      //do something when the input has gained focus
+    },
+    blur : function(event, name, value) {
     //event.target.name === name
     //event.target.value === value
     //do something when the input has lost focus
   },
   [eventName] : function(event, name, value) {
-    //[eventName]: focus, blur, change, select, submit, keyup, keydown, keypress or focus
-    //event.target.name === name
-    //event.target.value === value
-    //handle the event
-  }
+  //[eventName]: focus, blur, change, select, submit, keyup, keydown, keypress or focus
+  //event.target.name === name
+  //event.target.value === value
+  //handle the event
+}
 }
 
 obj = MVC.ModelView(viewId, { foo : 'bar' }, settings);
 </pre>
-          <br />
-          <br />
-        </p>
-      </dd>
-    </dl>
+<br />
+<br />
+</p>
+</dd>
+</dl>
 
-  </p>
+</p>
 
-  <br />
+<br />
 
-  <h2></h2>
+<h2></h2>
+<p>
+  <h2>Adding elements in the view to the model</h2>
   <p>
-    <h2>Adding elements in the view to the model</h2>
-    <p>
-      <br />
-      Valid elements: <code>p</code>, <code>span</code>, <code>div</code> and <code>form</code> elements
-      <br />
-      Use <code>id="[someId]"</code> or <code>datafld="[someId]"</code> for <code>p</code>, <code>span</code> and <code>div</code> elements to add them to the model
-      <br />
-      Use <code>name="[someName]"</code> for <code>form</code> elements to add them to the model
-      <br />
-    </p>
-    <h3>Examples</h3>
-<pre class="prettyprint lang-js">
-&lt;p id="[someId]"&gt;someValue&lt;p&gt;
-&lt;div id="[someId]"&gt;someValue&lt;div&gt;
-&lt;span id="[someId]"&gt;someValue&lt;span&gt; or &lt;span datafld="[someId]"&gt;someValue&lt;span&gt;
-&lt;input name="[someId]" type="[type]" value="[value]" /&gt;
-</pre>
-
     <br />
-
-    <h2>Databind elements to other elements which are bound to the model</h2>
-    <p>
-      Valid elements: <code>p</code>, <code>span</code>, <code>div</code> and <code>form</code> elements
-      <br />
-      Use <code>datasrc="[#someViewId]"</code> and <code>name="[somePropertyName]"</code> to databind the element to the Model/View.
-      <br />
-      The <code>datasrc</code> should correspond to the id of a View.
-      <br />
-      The <code>name</code> should correspond to the property in the model (the name of the element in the View).
-      <br />
-      If you want to databind an element to another element in the same View, then you need to add <code>class="excludeFromModel"</code>
-      to the element or else it will be part of the Model too - if on the other hand you want the element to be part of the Model too, then
-      don't add the class to the element.
-    </p>
-    <h3>Examples</h3>
-<pre class="prettyprint lang-js">
-//Inside the view:
-&lt;span class="excludeFromModel" datasrc="[#someViewId]" name="[somePropertyName]"&gt;someValue&lt;span&gt;
-&lt;input class="excludeFromModel" datasrc="[#someViewId]" name="[somePropertyName]" type="text" /&gt;
-
-//Outside the view:
-&lt;span datasrc="[#someViewId]" name="[somePropertyName]"&gt;someValue&lt;span&gt;
-&lt;input class="excludeFromModel" datasrc="[#someViewId]" name="[somePropertyName]" type="text" /&gt;
-
-//This input element will be databound to the property 'type' in the View with the id 'testArea'.
-&lt;span name="type" datasrc="#testArea"&gt;&lt;/span&gt;
-</pre>
-
-
+    Valid elements: <code>p</code>, <code>span</code>, <code>div</code> and <code>form</code> elements
+    <br />
+    Use <code>id="[someId]"</code> or <code>datafld="[someId]"</code> for <code>p</code>, <code>span</code> and <code>div</code> elements to add them to the model
+    <br />
+    Use <code>name="[someName]"</code> for <code>form</code> elements to add them to the model
+    <br />
   </p>
+  <h3>Examples</h3>
+  <pre class="prettyprint lang-js">
+    &lt;p id="[someId]"&gt;someValue&lt;p&gt;
+    &lt;div id="[someId]"&gt;someValue&lt;div&gt;
+    &lt;span id="[someId]"&gt;someValue&lt;span&gt; or &lt;span datafld="[someId]"&gt;someValue&lt;span&gt;
+    &lt;input name="[someId]" type="[type]" value="[value]" /&gt;
+  </pre>
 
   <br />
 
-  <h2>MVC Object Methods</h2>
-  <br />
+  <h2>Databind elements to other elements which are bound to the model</h2>
   <p>
-    <i class="label label-info">Note:</i> Older IE browsers don't support accessing an Object's property using dot notation. Therefore always
-    access by association.
+    Valid elements: <code>p</code>, <code>span</code>, <code>div</code> and <code>form</code> elements
     <br />
-    Don't use <code>object.property</code>
+    Use <code>datasrc="[#someViewId]"</code> and <code>name="[somePropertyName]"</code> to databind the element to the Model/View.
     <br />
-    Do use <code>object['property']</code> or <code>object.Get('property')</code>
+    The <code>datasrc</code> should correspond to the id of a View.
     <br />
+    The <code>name</code> should correspond to the property in the model (the name of the element in the View).
+    <br />
+    If you want to databind an element to another element in the same View, then you need to add <code>class="excludeFromModel"</code>
+    to the element or else it will be part of the Model too - if on the other hand you want the element to be part of the Model too, then
+    don't add the class to the element.
+  </p>
+  <h3>Examples</h3>
+  <pre class="prettyprint lang-js">
+    //Inside the view:
+    &lt;span class="excludeFromModel" datasrc="[#someViewId]" name="[somePropertyName]"&gt;someValue&lt;span&gt;
+    &lt;input class="excludeFromModel" datasrc="[#someViewId]" name="[somePropertyName]" type="text" /&gt;
+
+    //Outside the view:
+    &lt;span datasrc="[#someViewId]" name="[somePropertyName]"&gt;someValue&lt;span&gt;
+    &lt;input class="excludeFromModel" datasrc="[#someViewId]" name="[somePropertyName]" type="text" /&gt;
+
+    //This input element will be databound to the property 'type' in the View with the id 'testArea'.
+    &lt;span name="type" datasrc="#testArea"&gt;&lt;/span&gt;
+  </pre>
+
+
+</p>
+
+<br />
+
+<h2>MVC Object Methods</h2>
+<br />
+<p>
+  <i class="label label-info">Note:</i> Older IE browsers don't support accessing an Object's property using dot notation. Therefore always
+  access by association.
+  <br />
+  Don't use <code>object.property</code>
+  <br />
+  Do use <code>object['property']</code> or <code>object.Get('property')</code>
+  <br />
+  <br />
+
+  <dl>
+    <dt><code>.Set(property, value)</code></dt>
+    <dd>
+      <p>
+        <br />
+        The <code>.Set()</code> method updates a property in the Model and is reflected in the View (including databound elements).
+        <br />
+        Notice that the .Set() method will update the View with values from the Model when called. <br />
+        This is by design, but can seem a bit confusing (maybe) to start with. <a href="../simplemvc/examples/example9.html">See this example, which demonstrates this (intended) behaviour.</a>
+        <br />
+        <br />
+        <i class="label label-info">Note:</i> The method will only work when <code>isMirror : true</code>.
+        <br />
+        <i class="label label-info">Note:</i> This is not the same as setting the property value directly: <code>object['property'] = 'value';</code>
+        <br />
+        <br />
+      </p>
+    </dd>
+    <h3>Examples</h3>
+    <pre class="prettyprint lang-js">
+      var viewId = "#someViewId",
+      obj;
+      obj = MVC.ModelView(viewId, { foo : 'bar' });
+      //Method 1: Updates the value in the Model and also the View (including databound elements)
+      obj.Set('foo', 'foo changed in Model and View');
+      //Method 2: Updates the value only in the Model
+      obj['foo'] = 'foo changed only in Model';
+      //Method 3: Update the value in the Model and call .SetViewFromModel() afterwards.
+      obj['foo'] = 'foo changed initially in the Model, but the View has been updated with values from the Model using the .SetViewFromModel() method.';
+      obj.SetViewFromModel();
+    </pre>
+
     <br />
 
-    <dl>
-      <dt><code>.Set(property, value)</code></dt>
-      <dd>
-        <p>
-          <br />
-          The <code>.Set()</code> method updates a property in the Model and is reflected in the View (including databound elements).
-          <br />
-          Notice that the .Set() method will update the View with values from the Model when called. <br />
-          This is by design, but can seem a bit confusing (maybe) to start with. <a href="../simplemvc/examples/example9.html">See this example, which demonstrates this (intended) behaviour.</a>
-          <br />
-          <br />
-          <i class="label label-info">Note:</i> The method will only work when <code>isMirror : true</code>.
-          <br />
-          <i class="label label-info">Note:</i> This is not the same as setting the property value directly: <code>object['property'] = 'value';</code>
-          <br />
-          <br />
-        </p>
-      </dd>
-      <h3>Examples</h3>
-<pre class="prettyprint lang-js">
-var viewId = "#someViewId",
-    obj;
-obj = MVC.ModelView(viewId, { foo : 'bar' });
-//Method 1: Updates the value in the Model and also the View (including databound elements)
-obj.Set('foo', 'foo changed in Model and View');
-//Method 2: Updates the value only in the Model
-obj['foo'] = 'foo changed only in Model';
-//Method 3: Update the value in the Model and call .SetViewFromModel() afterwards.
-obj['foo'] = 'foo changed initially in the Model, but the View has been updated with values from the Model using the .SetViewFromModel() method.';
-obj.SetViewFromModel();
-</pre>
-
-      <br />
-
-      <dt><code>.Get(property)</code></dt>
-      <dd>
-        <p>
-          <br />
-          The <code>.Get()</code> method returns the value for specfied object's property.
-          <br />
-          <i class="label label-info">Note:</i> The method will only work when <code>isMirror : true</code>.
+    <dt><code>.Get(property)</code></dt>
+    <dd>
+      <p>
+        <br />
+        The <code>.Get()</code> method returns the value for specfied object's property.
+        <br />
+        <i class="label label-info">Note:</i> The method will only work when <code>isMirror : true</code>.
           <!--<br />
           <i class="label label-info">Note:</i> This is not the same as getting the property value directly: <code>return object['property'];</code>-->
           <br />
@@ -777,12 +793,12 @@ obj.SetViewFromModel();
         </p>
       </dd>
       <h3>Example</h3>
-<pre class="prettyprint lang-js">
-var viewId = "#someViewId",
-    obj;
-obj = MVC.ModelView(viewId, { foo : 'bar' });
-var foo = obj.Get('foo'); //Same as obj['foo'];
-</pre>
+      <pre class="prettyprint lang-js">
+        var viewId = "#someViewId",
+        obj;
+        obj = MVC.ModelView(viewId, { foo : 'bar' });
+        var foo = obj.Get('foo'); //Same as obj['foo'];
+      </pre>
 
       <br />
 
@@ -796,161 +812,161 @@ var foo = obj.Get('foo'); //Same as obj['foo'];
         </p>
       </dd>
       <h3>Example</h3>
-<pre class="prettyprint lang-js">
-var viewId = "#someViewId",
-    ctr,
-    obj;
+      <pre class="prettyprint lang-js">
+        var viewId = "#someViewId",
+        ctr,
+        obj;
 
-ctr = MVC.Controller({
-  Save : function(obj, par) {
-    //do something with object 'obj'
-    if(par['isDebug'] === true) {
-      console.log('Extra parameter provided: ' + par);
-      console.log('The object to save: ' + JSON.stringify(obj));
-    }
-  }
-});
-
-obj = MVC.ModelView(viewId, { foo : 'bar' }, { controller : ctr });
-
-obj.Save({ 'isDebug' : true });
-</pre>
-
-      <br />
-
-      <dt><code>.Update(parameters)</code></dt>
-      <dd>
-        <p>
-          <br />
-          Call the <code>.Update()</code> method whenever you want to update the object.
-          <br />
-          See the example for the <code>.Save()</code> method.
-          <br />
-          <br />
-        </p>
-      </dd>
-
-      <br />
-
-      <dt><code>.Delete(parameters)</code></dt>
-      <dd>
-        <p>
-          <br />
-          Call the <code>.Delete()</code> method whenever you want to delete the object.
-          <br />
-          See the example for the <code>.Save()</code> method.
-          <br />
-          <br />
-        </p>
-      </dd>
-
-      <br />
-
-      <dt><code>.SetDataboundDomVal(viewId, property, value)</code></dt>
-      <dd>
-        <p>
-          <br />
-          Use <code>.SetDataboundDomVal()</code> to set the value of a databound element
-          <br />
-          The <code>viewId</code> should correspond with the <code>datasrc</code> attribute of the element to be updated.
-          <br />
-          The <code>property</code> should correspond with the <code>name</code> attribute of the element to be updated.
-          <br />
-          <h3>Example <small><i>Use this method when updating a single value. E.g. when using <code>keyup</code> event for updating an element outside the view.</i></small></h3>
-<pre class="prettyprint lang-js">
-var obj,
-    viewId = '#testArea';
-$(function() {
-  obj = MVC.ModelView(viewId, {
-    name : 'Benjamin Hammer'
-  }, {
-    keyup: function(e, n, v) {
-      //Update the input which has focus on the 'keyup'-event
-      //Note: works only with 'input' elements (not e.g. select, radio)
-      obj.SetDataboundDomVal(viewId, n, v);
+        ctr = MVC.Controller({
+        Save : function(obj, par) {
+        //do something with object 'obj'
+        if(par['isDebug'] === true) {
+        console.log('Extra parameter provided: ' + par);
+        console.log('The object to save: ' + JSON.stringify(obj));
+      }
     }
   });
+
+  obj = MVC.ModelView(viewId, { foo : 'bar' }, { controller : ctr });
+
+  obj.Save({ 'isDebug' : true });
+</pre>
+
+<br />
+
+<dt><code>.Update(parameters)</code></dt>
+<dd>
+  <p>
+    <br />
+    Call the <code>.Update()</code> method whenever you want to update the object.
+    <br />
+    See the example for the <code>.Save()</code> method.
+    <br />
+    <br />
+  </p>
+</dd>
+
+<br />
+
+<dt><code>.Delete(parameters)</code></dt>
+<dd>
+  <p>
+    <br />
+    Call the <code>.Delete()</code> method whenever you want to delete the object.
+    <br />
+    See the example for the <code>.Save()</code> method.
+    <br />
+    <br />
+  </p>
+</dd>
+
+<br />
+
+<dt><code>.SetDataboundDomVal(viewId, property, value)</code></dt>
+<dd>
+  <p>
+    <br />
+    Use <code>.SetDataboundDomVal()</code> to set the value of a databound element
+    <br />
+    The <code>viewId</code> should correspond with the <code>datasrc</code> attribute of the element to be updated.
+    <br />
+    The <code>property</code> should correspond with the <code>name</code> attribute of the element to be updated.
+    <br />
+    <h3>Example <small><i>Use this method when updating a single value. E.g. when using <code>keyup</code> event for updating an element outside the view.</i></small></h3>
+    <pre class="prettyprint lang-js">
+      var obj,
+      viewId = '#testArea';
+      $(function() {
+      obj = MVC.ModelView(viewId, {
+      name : 'Benjamin Hammer'
+    }, {
+    keyup: function(e, n, v) {
+    //Update the input which has focus on the 'keyup'-event
+    //Note: works only with 'input' elements (not e.g. select, radio)
+    obj.SetDataboundDomVal(viewId, n, v);
+  }
+});
 });
 </pre>
-          <br />
-          <br />
-        </p>
-      </dd>
+<br />
+<br />
+</p>
+</dd>
 
-      <br />
+<br />
 
-      <dt><code>.SetModelFromView()</code></dt>
-      <dd>
-        <p>
-          <br />
-          Updates the Model and databound elements with values from the View.
-          <br />
-          <br />
-        </p>
-      </dd>
-
-      <br />
-
-      <dt><code>.SetViewFromModel()</code></dt>
-      <dd>
-        <p>
-          <br />
-          Updates the elements in the View from the Model.
-          <br />
-          <br />
-        </p>
-      </dd>
-
-      <br />
-
-      <dt><code>.GetViewData()</code></dt>
-      <dd>
-        <p>
-          <br />
-          Returns the View data as an JSON object literal.
-          <br />
-          <br />
-        </p>
-      </dd>
-
-      <br />
-
-      <dt><code>.AddGetSet(property)</code></dt>
-      <dd>
-        <p>
-          <br />
-          Add getter and setter methods to the properties in the Model.
-          <br />
-          <i class="label label-info">Note:</i> Getter and setter methods only work when <code>isMirror : true</code>.
-          <br />
-          <br />
-        </p>
-      </dd>
-
-      <br />
-
-      <dt><code>.RemoveGetSet(property)</code></dt>
-      <dd>
-        <p>
-          <br />
-          Remove getter and setter methods from a property in the Model.
-          <br />
-          <i class="label label-info">Note:</i> Getter and setter methods only work when <code>isMirror : true</code>.
-          <br />
-          <br />
-        </p>
-      </dd>
-
-      <br />
-
-    </dl>
+<dt><code>.SetModelFromView()</code></dt>
+<dd>
+  <p>
+    <br />
+    Updates the Model and databound elements with values from the View.
+    <br />
+    <br />
   </p>
+</dd>
+
+<br />
+
+<dt><code>.SetViewFromModel()</code></dt>
+<dd>
+  <p>
+    <br />
+    Updates the elements in the View from the Model.
+    <br />
+    <br />
+  </p>
+</dd>
+
+<br />
+
+<dt><code>.GetViewData()</code></dt>
+<dd>
+  <p>
+    <br />
+    Returns the View data as an JSON object literal.
+    <br />
+    <br />
+  </p>
+</dd>
+
+<br />
+
+<dt><code>.AddGetSet(property)</code></dt>
+<dd>
+  <p>
+    <br />
+    Add getter and setter methods to the properties in the Model.
+    <br />
+    <i class="label label-info">Note:</i> Getter and setter methods only work when <code>isMirror : true</code>.
+    <br />
+    <br />
+  </p>
+</dd>
+
+<br />
+
+<dt><code>.RemoveGetSet(property)</code></dt>
+<dd>
+  <p>
+    <br />
+    Remove getter and setter methods from a property in the Model.
+    <br />
+    <i class="label label-info">Note:</i> Getter and setter methods only work when <code>isMirror : true</code>.
+    <br />
+    <br />
+  </p>
+</dd>
+
+<br />
+
+</dl>
+</p>
 
 </div>
 
 <p class="spacer2"></p>
 
-<div id="unittest">
+<div id="unittestBody">
   <div class="page-header">
     <h1>
       Unit Testing Results
@@ -967,7 +983,7 @@ $(function() {
 
 <p class="spacer2"></p>
 
-<div id="comments">
+<div id="commentsBody">
   <div class="page-header">
     <h1>
       Comments
@@ -982,24 +998,35 @@ $(function() {
 
 
 <script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'simplemvc'; // required: replace example with your forum shortname
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-<script>
-$(function() {
+    <script>
+    $(function() {
+
+
+  // Enable scrollTo for the menu links
+  scrollTo2('#featureOverview', '#featureOverviewBody', {duration:'2000'}, null);
+  scrollTo2('#problem', '#problemBody', {duration:'2000'}, null);
+  scrollTo2('#solution', '#solutionBody', {duration:'2000'}, null);
+  scrollTo2('#setup', '#setupBody', {duration:'2000'}, null);
+  scrollTo2('#codeExamples', '#codeExamplesBody', {duration:'5000'}, null);
+  scrollTo2('#api', '#apiBody', {duration:'2000'}, null);
+  scrollTo2('#unittest', '#unittestBody', {duration:'2000'}, null);
+  scrollTo2('#comments', '#commentsBody', {duration:'2000'}, null);
 
   $('#runUnitTests').click(function(e){
-    $('#unitTestResultsFrame').css('border',0).show().attr('src', '../simplemvc/simple.mvc.unit.test.html');
+    $('#unitTestResultsFrame').css('border',0).show().attr('src', 'simple.mvc.unit.test.html');
     e.preventDefault();
   });
 
@@ -1017,7 +1044,7 @@ function toggleExampleViewCode(target, view1, view2) {
   $(view1).show();
   $(target).click(function(e) {
     var b = 'Try it out right here',
-        a = 'Show the code!';
+    a = 'Show the code!';
     $this = $(this);
     if($this.text() === a) {
       $this.text(b);
@@ -1044,31 +1071,43 @@ function addPopover(id, title, content, source) {
     delay: { show: 250, hide: 1500 }
   });
 }
+
+
+
+function scrollTo2(fromId, toId, options, callback) {
+  $(fromId).click(function() {
+            //$('body').scrollTo(toId, options, callback);
+            $('body').scrollTo(toId, options['duration'], callback);
+          });
+}
+
 </script>
 
+</div> <!-- /container -->
+<div class="push"></div>
+</div> <!-- /wrapper -->
+<footer class="container">
+  <div class="row-fluid">
+    <div class="span6">
 
-            <!--<hr>-->
+    </div>
 
-        </div> <!-- /container -->
-        <div class="push"></div>
-    </div> <!-- /wrapper -->
-    <footer class="container">
-        <div class="row-fluid">
-            <div class="span6">
+  </div>
+  <div class="row-fluid">
 
-            </div>
+    <div class="span6">
+      &nbsp;
+    </div>
+    <div class="span6" style="text-align:right;">
 
-        </div>
-        <div class="row-fluid">
+    </div>
+  </div>
+</footer>
 
-            <div class="span6">
-                &nbsp;
-            </div>
-            <div class="span6" style="text-align:right;">
 
-            </div>
-        </div>
-    </footer>
+<!--<script type="text/javascript" src="lib/jQuery-Parallax/jquery.parallax-1.1.3.js"></script>-->
+<script type="text/javascript" src="lib/jQuery-Parallax/jquery.localscroll-1.2.7-min.js"></script>
+<script type="text/javascript" src="lib/jQuery-Parallax/jquery.scrollTo-1.4.2-min.js"></script>
 
-  </body>
+</body>
 </html>
