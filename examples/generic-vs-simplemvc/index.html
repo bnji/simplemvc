@@ -7,17 +7,20 @@
     <script type="text/javascript" src="../../lib/json2.js"></script>
     <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
     <!--//end IE fixes -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
-    <script type="text/javascript" src="http://hammerbenjamin.com/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://hammerbenjamin.com/lib/google.code.prettify/js/prettify.js"></script>
-    <script type="text/javascript" src="../../simple.mvc.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/css/bootstrap.min.css" />
+    <!--<script type="text/javascript" src="http://hammerbenjamin.com/lib/google.code.prettify/js/prettify.js"></script>
+    -->
+    <script type="text/javascript" src="//rawgit.com/bnji/simplemvc/master/simple.mvc.js"></script>
+    <script type="text/javascript" src="//rawgit.com/bnji/simplemvc/master/simple.mvc.json.js"></script>
     <!--<link type="text/css" rel="stylesheet" href="bootstrap.readable.min.css" />-->
-    <link type="text/css" rel="stylesheet" href="http://bootswatch.com/spacelab/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="http://hammerbenjamin.com/lib/google.code.prettify/css/twitter.bootstrap.css" />
+    <!--<link type="text/css" rel="stylesheet" href="http://bootswatch.com/spacelab/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="http://hammerbenjamin.com/lib/google.code.prettify/css/twitter.bootstrap.css" />-->
   </head>
   <body>
     <div class="container">
-      
+
       <!-- start: View Template -->
       <div id="template" style="display: none;">
       <form class="form-horizontal" action="#">
@@ -28,21 +31,21 @@
               <input type="text" class="input-xlarge" name="name" placeholder="enter your name..."/>
             </div>
           </div>
-          
+
           <div class="control-group">
             <label class="control-label">Info:</label>
             <div class="controls">
               <textarea class="input-xlarge" name="info" rows="3" placeholder="tell me something about yourself..."> </textarea>
             </div>
           </div>
-          
+
           <div class="control-group">
             <label class="control-label">Preview:</label>
             <div class="controls">
               <span class="previewData excludeFromModel"> <!-- text you have entered should appear here... --></span>
             </div>
           </div>
-          
+
           <div class="form-actions">
             <button name="Save" type="submit" class="btn btn-primary">Save</button>
             <button name="Clear" class="btn btn-inverse">Clear</button>
@@ -51,11 +54,11 @@
       </form>
       </div>
       <!-- :end of template -->
-      
+
       <div class="page-header"><h1>jQuery generic vs SimpleMVC</h1></div><p>An example demonstrating the difference between using pure jQuery vs SimpleMVC together with jQuery.</p>
-      
+
       <br /><br />
-      
+
       <!-- start: Challenge -->
       <div class="page-header"><h2>Challenge <small>Don't be a chicken now...</small></h2></div>
       <p>
@@ -73,17 +76,17 @@
         <p>
           <a target="_blank" href="http://jsfiddle.net/bendot/M4Jv5/">If you are fit for fight, let's get started by forking this fiddle!</a>
           <br />
-          When you're done, you can put a link to the forked fiddle in the comments below!  
+          When you're done, you can put a link to the forked fiddle in the comments below!
         </p>
-        
+
       </p>
       <!-- end: Challenge -->
-      
+
       <br /><br />
-      
+
       <!-- start: simplemvc jQuery 'ViewModel' synchronized data test -->
       <div class="page-header"><h2>SimpleMVC <small>40 lines of code... which is <b>easy</b> to read & maintain!</small></h2></div>
-      
+
       <div class="accordion" id="accordion1">
         <div class="accordion-group">
           <div class="accordion-heading">
@@ -119,12 +122,12 @@
       });
       </script>
       <!-- :end -->
-      
+
       <br /><br />
-      
+
       <!-- start: Generic jQuery 'ViewModel' synchronized data test -->
       <div class="page-header"><h2>Pure jQuery <small>62 lines of code... which  is <b>hard</b> to read & maintain. ...but yeah... does the same thing...</small></h2></div>
-      
+
       <div class="accordion" id="accordion1">
         <div class="accordion-group">
           <div class="accordion-heading">
@@ -160,13 +163,13 @@
       });
       </script>
       <!-- :end -->
-      
-      
-      
+
+
+
       <br /><br />
-      
+
       <div class="page-header"><h2>Comments <small>Say something!</small></h2></div>
-      
+
       <div id="disqus_thread"></div>
       <script type="text/javascript">
           /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -181,8 +184,8 @@
       </script>
       <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
       <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      
-      
+
+
     </div>
   </body>
 </html>
@@ -190,8 +193,8 @@
 //A workaround (otherwise very buggy). E.g. Adding onload="prettyPrint()" to the body tag won't have any effect ofcourse.
 $(function() {
   $(".collapse").collapse();
-  setTimeout(function() {
+  /*setTimeout(function() {
     prettyPrint();
-  }, 100);
+  }, 100);*/
 });
 </script>
