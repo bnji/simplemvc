@@ -1,14 +1,14 @@
 /**
  * An extension of the JSON object.
- * 
+ *
  * @module JSON
  */
 var JSON = {
   /**
    * save
-   * 
+   *
    * Saves a JSON object on a remote server.
-   * 
+   *
    * @method save
    * @param {Object} jsonData The JSON object
    * @param {Object} onSuccess
@@ -17,8 +17,8 @@ var JSON = {
   save : function(jsonData, onSuccess) {
     $.ajax({
       type : "POST",
-      url : "http://hammerbenjamin.com/simplemvc-showcase/savejson.php",
-      dataType : 'json', 
+      url : "//kt-husid-webapp.cloudapp.net/savejson.php",
+      dataType : 'json',
       data : {
           json : jsonData
       },

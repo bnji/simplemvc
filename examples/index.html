@@ -26,23 +26,24 @@
       </p>
       <br />
       <div class="row-fluid">
-        <div class="span2">
-          <ol>
-            <li id="ky2fc">Autosave</li>
-            <li id="MSDfF">Events</li>
-            <li id="HEPWk">Controller</li>
-            <li id="8LEyp">Complete Example</li>
-            <li id="skCqj">Set View / Model Data</li>
-            <li id="ULdeP">Databound elements</li>
-            <li id="k4nyM">Databound (+excludeFromModel)</li>
-            <li id="Dfh9r">Setting values</li>
-            <li id="tLNbC">All form elements test</li>
-            <li id="mfa7D">Cloning templates #1</li>
-            <li id="ejG4v">Cloning templates #2</li>
-            <li id="bZ7ZJ">Add property</li>
-          </ol>
-        </div>
-        <div class="span10">
+        <div class="span12">
+          <select>
+            <option id="ky2fc">Autosave</option>
+            <option id="MSDfF">Events</option>
+            <option id="HEPWk">Controller</option>
+            <option id="8LEyp">Complete Example</option>
+            <option id="skCqj">Set View / Model Data</option>
+            <option id="ULdeP">Databound elements</option>
+            <option id="k4nyM">Databound (+excludeFromModel)</option>
+            <option id="Dfh9r">Setting values</option>
+            <option id="tLNbC">All form elements test</option>
+            <option id="mfa7D">Cloning templates #1</option>
+            <option id="ejG4v">Cloning templates #2</option>
+            <option id="bZ7ZJ">Add property</option>
+          </select>
+
+          <br />
+
           <iframe id="exampleFrame" style="width: 100%; height: 1000px" src="http://jsfiddle.net/bendot/tLNbC/embedded/" allowfullscreen="allowfullscreen" frameborder="0"> </iframe>
         </div>
       </div>
@@ -59,9 +60,12 @@
       });
 
 
-      $('a[href="#"]').click(function(e) {
+      //$('a[href="#"]').click(function(e) {
+      $( "select" ).change(function(e) {
+        //var id = e.target.id;
+        var id = $(this).children(":selected").attr("id");
         $('#exampleFrame')
-          .attr('src', getFiddleUrl(e.target.id))
+          .attr('src', getFiddleUrl(id))
           .show();
         e.preventDefault();
       });
