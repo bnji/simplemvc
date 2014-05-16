@@ -1067,18 +1067,22 @@ var MVC = {
       if(key === undefined) {
         key = $(element).attr("id");
       }
+      if(key === undefined) {
+        key = $(element).attr("data-bind");
+      }
       return key;
       //return $(element).attr("datafld") ? undefined : $(element).attr("id");
     },
-    getDivElements : function(target) {
-      return target.find('p,span,div').filter(':not(.excludeFromModel)');
+    getBindableElements : function(target) {
+      //return target.find('p,span,div').filter(':not(.excludeFromModel)');
+      return target.find('*[data-bind], *[datafld]').filter(':not(.excludeFromModel)');
     },
     setValues : function(params) {
       //console.log('setValues called!');
-      //console.log(this.getDivElements(this));
+      //console.log(this.getBindableElements(this));
       //Set the values for  'p', 'div' and 'span' elements
       var $this = this;
-      $this.getDivElements(this).each(function() {
+      $this.getBindableElements(this).each(function() {
         var key = $this.getElementKey(this);
         if(key === undefined) {
           return;
@@ -1157,7 +1161,7 @@ var MVC = {
         }
       });
 
-      $this.getDivElements(this).each(function() {
+      $this.getBindableElements(this).each(function() {
         var elem = $(this);
         var value = elem.text();
         if(value !== undefined) {
