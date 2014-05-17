@@ -219,6 +219,8 @@ var MVC = {
       }
       else {
         $object = $.extend({}, true, $object, $methods);
+        //$.extend($object, $settings, $methods);
+        //alert(JSON.stringify($object, null, 2));
       }
 
       //Make sure that the settings always exist and with certain properties.
@@ -758,7 +760,8 @@ var MVC = {
         //$('[datasrc='+datasrc+'][name='+name+']').text(value).val(value);
         //This works though:
         //console.log(counter + " - datasrc: " + datasrc + " - name: " + name + " - value: " + value);
-        $('div[datasrc|='+datasrc+'][name|='+name+'],p[datasrc|='+datasrc+'][name|='+name+'],span[datasrc|='+datasrc+'][name|='+name+']').text(value);
+        //$('div[datasrc|='+datasrc+'][name|='+name+'],p[datasrc|='+datasrc+'][name|='+name+'],span[datasrc|='+datasrc+'][name|='+name+']').text(value);
+        $('*[datasrc|='+datasrc+'][name|='+name+']').text(value);
         $('input[datasrc|='+datasrc+'][name|='+name+']').val(value);
         //counter++;
         return $object;
@@ -810,7 +813,14 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.Start = function(method, par) {
-        var exec = $object['settings']['controller'][method];
+        var exec;
+        if($object['settings']['controller'] !== undefined) {
+          exec = $object['settings']['controller'][method];
+        }
+        if(exec === undefined) {
+          exec = $object[method];
+        }
+
         if(exec !== undefined && exec !== null) {
           exec(par);
         } else {
