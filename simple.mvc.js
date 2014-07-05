@@ -236,7 +236,12 @@ var MVC = {
         //Set the clone template to be the view id
         clone['template'] = viewId;
         //Update the view id with the new clone id
-        viewId = '' + clone['id']; //Make sure it's a string
+        if(clone['id'] === undefined) {
+          viewId = "#" + $.now();
+        }
+        else {
+          viewId = '' + clone['id']; //Make sure it's a string
+        }
 
         //If the clone view id has hashtag specified
         if(viewId.substring(0, 1) === '#') {
@@ -265,6 +270,7 @@ var MVC = {
           //.find(viewId + ' li[datasrc=""]')
           .find('[datasrc=""]')
           .attr('datasrc', datasrc);
+
         //If the template originally was hidden using 'display: none;' - make it visible to the user
         //element.show();
         //Append the copy to the target
@@ -296,17 +302,19 @@ var MVC = {
       $(viewId + ' button,' + viewId + ' a,' + viewId + ' submit,' + viewId + ' i')
         //.find('button,a,submit,i')
         .each(function(i, e) {
-          $(this)
-          //.attr('id', e.id+'_'+viewId)//NoHash)
-          .click(function(e) {
-            //$object.Start($id, par);
-            //$object.Save();
-            //console.log(e.target.name);
-            $object.Start(e.target.name, e);
-            if($settings['settings']['preventDefault']) {
-              e.preventDefault();
-            }
-          });
+          if($(this).hasClass('isEvent')) {
+            $(this)
+            //.attr('id', e.id+'_'+viewId)//NoHash)
+            .click(function(e) {
+              //$object.Start($id, par);
+              //$object.Save();
+              //console.log(e.target.name);
+              $object.Start(e.target.name, e);
+              if($settings['settings']['preventDefault']) {
+                e.preventDefault();
+              }
+            });
+          }
           //console.log(i + " " + e.id);
         });
 
