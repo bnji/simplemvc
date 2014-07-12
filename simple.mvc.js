@@ -115,6 +115,19 @@ var MVC = {
     };
 
     /**
+     * Get
+     *
+     * Get an element from the array.
+     *
+     * @method Get
+     * @param {Integer} A key.
+     * @return {Object} An object from the array.
+     */
+    array.Get = function(key) {
+      return array[key];
+    };
+
+    /**
      * Remove
      *
      * Remove an element (if found) from the array.
@@ -135,6 +148,18 @@ var MVC = {
         return true;
       }
       return false;
+    };
+
+    /**
+     * Clear
+     *
+     * Remove all the elements from the array.
+     *
+     * @method Clear
+     */
+    array.Clear = function() {
+      //array.splice(0, array.length);
+      array = [];
     };
     return array;
   },
