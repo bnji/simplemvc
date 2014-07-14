@@ -159,7 +159,7 @@ var MVC = {
      * @param {Object} An element.
      */
     array.Contains = function(element) {
-      return $.inArray(element, array);
+      return $.inArray(element, array) !== -1;
     };
 
     /**
