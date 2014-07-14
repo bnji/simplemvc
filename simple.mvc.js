@@ -151,6 +151,18 @@ var MVC = {
     };
 
     /**
+     * Contains
+     *
+     * Check if the specified element is in the list
+     *
+     * @method Contains
+     * @param {Object} An element.
+     */
+    array.Contains = function(element) {
+      return $.inArray(element, array);
+    };
+
+    /**
      * Clear
      *
      * Remove all the elements from the array.
