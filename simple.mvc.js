@@ -128,6 +128,27 @@ var MVC = {
     };
 
     /**
+     * Find
+     *
+     * Find an element in the array.
+     *
+     * @method GetById
+     * @param {Object} A key.
+     * @param {Object} A value to search for.
+     * @return {Object} An object from the array.
+     */
+    array.Find = function(_key, _value) {
+      var result;
+      $.each(array, function(k,v) {
+        if(v[_key] === _value) {
+          result = v;
+          return false;
+        }
+      });
+      return result;
+    };
+
+    /**
      * Remove
      *
      * Remove an element (if found) from the array.
