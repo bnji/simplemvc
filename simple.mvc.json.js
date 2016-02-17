@@ -17,7 +17,7 @@ var JSON = {
   save : function(jsonData, onSuccess) {
     $.ajax({
       type : "POST",
-      url : "//kt-husid-webapp.cloudapp.net/savejson.php",
+      url : "//sprotin.azurewebsites.net/simplemvc/getjson.php",
       dataType : 'json',
       data : {
           json : jsonData
