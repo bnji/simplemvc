@@ -24,7 +24,7 @@
         </div>
         <div class="span3">
           <!-- A controller button (for testing) -->
-          <a class="btn btn-primary btn-mini pull-right" href="#" name="showData">show data</a>
+          <a class="btn btn-primary btn-mini pull-right isEvent" href="#" name="showData">show data</a>
         </div>
       </div>
     </li><!-- //end Note View (template) -->
@@ -34,14 +34,14 @@
   <div id='todo-stats' class="excludeFromModel">
     <span id="notesCount" class="notesCount"> 0 </span> <span class="notesCountText"> item/s </span> done.
     <br />
-    <a href="#" name="clearAll" id="clearAll" class="btn btn-danger btn-mini">
+    <a href="#" name="clearAll" id="clearAll" class="btn btn-danger btn-mini isEvent">
       Remove all
     </a>
-    <a href="#" name="clearDone" id="clearDone" class="btn btn-danger btn-mini" style="display: none;">
+    <a href="#" name="clearDone" id="clearDone" class="btn btn-danger btn-mini isEvent" style="display: none;">
       Remove <span id="notesDone"> 0 </span> completed <span class="notesDone"> item/s </span>
     </a>
 
-    <a href="#" name="exportJSON" id="exportJSON" class="btn btn-primary btn-mini">
+    <a href="#" name="exportJSON" id="exportJSON" class="btn btn-primary btn-mini isEvent">
       Export JSON
     </a>
     <div id="jsonFileUrl" class="excludeFromModel pull-right"> </div>

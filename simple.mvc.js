@@ -165,7 +165,7 @@ var MVC = {
       var i = $.inArray(element, array);
       if(i !== -1) {
         array.splice(i, 1);
-        console.log('removed ' + element + ' from array');
+        // console.log('removed ' + element + ' from array');
         return true;
       }
       return false;
@@ -323,6 +323,7 @@ var MVC = {
         //If the datasrc isn't specified, then use the viewId as datasrc.
         datasrc = datasrc !== undefined ? datasrc : viewId;
 
+
         //Update the datasrc with the new view id
         $(element)
           //.find(viewId + ' li[datasrc=""]')
@@ -341,6 +342,7 @@ var MVC = {
         clone['append'](element); //execute the callback function.
       }
 
+      //TODO: Probably move these settings a little further up!
       if($settings['viewId'] === undefined) {
         $.extend($settings, {viewId : viewId});
       }
@@ -353,12 +355,11 @@ var MVC = {
       if($settings['preventDefault'] === undefined) {
         $.extend($settings, {preventDefault : true});
       }
-      //Maybe move these settings a little up?
 
       //Attach events to the save, update, delete (more?) buttons/submit.
       //For IE we need to specify each element with the viewId individually!
-      $(viewId + ' button,' + viewId + ' a,' + viewId + ' submit,' + viewId + ' i')
-        //.find('button,a,submit,i')
+      // $(viewId + ' button,' + viewId + ' a,' + viewId + ' submit,' + viewId + ' i')
+      $(viewId).find('*')
         .each(function(i, e) {
           if($(this).hasClass('isEvent')) {
             $(this)
@@ -366,8 +367,14 @@ var MVC = {
             .click(function(e) {
               //$object.Start($id, par);
               //$object.Save();
-              //console.log(e.target.name);
-              $object.Start(e.target.name, e);
+              // console.log("target name (jQuery): " + $(e.target).attr('name'));
+              // console.log("target name (JS): " + e.target.name);
+              // e.target.name is not working on custom elements, such as
+              // <foobar href="#" name="clearAll" class="isEvent">
+              //  Click me
+              // </foobar>
+              var targetName = $(e.target).attr('name'); // e.target.name
+              $object.Start(targetName, e);
               if($settings['settings']['preventDefault']) {
                 e.preventDefault();
               }
@@ -472,9 +479,7 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.AddGetSet = function(prop) {//, onUpdate) {
-        //console.log("AddGetSet");
         //var prop = Common.FstChrUp(prop);
-
         $($object)
           .bind('get'+prop, function(event, ret) {
             ret['value'] = $object[prop];
@@ -485,13 +490,10 @@ var MVC = {
             //Only update values if they're changed
             if(oldVal !== newVal) {
               $object[prop] = newVal;
-
-
               //alert(n + ": " + ov + "=>" + nv);
               //Update the view accordingly
               //MVC.SetViewFromModel(viewId, $object); //$(viewId).getSetHtml($object);
               $object.SetViewFromModel();
-
               //Make sure that the input will have the change event triggered,
               //so that the views bound to this element will also be updated.
               //This is important in case the model is changed using setTimeout()
@@ -550,12 +552,15 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.AddProperty = function(prop, value) {
-        $object[prop] = value; //Add the propery to the Model
+        //Add the propery to the Model
+        $object[prop] = value;
+        // console.log("Add Property....");
+        // console.log($object);
         $object
           //.AddEvents()
           .AddGetSet(prop);
           //.TriggerEvent(prop, 'keyup');
-        console.log("Added property " + prop + " to the Model.");
+        // console.log("Added property " + prop + " to the Model.");
         return $object;
       };
 
@@ -575,7 +580,7 @@ var MVC = {
         //$(viewId + ' :input[name="'+prop+'"]')
           //.not('.excludeFromModel')
           //.remove();
-        console.log("Removed property " + prop + " from the Model.");
+        // console.log("Removed property " + prop + " from the Model.");
         return $object;
       };
 
@@ -592,17 +597,23 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.Set = function(prop, value) {
-        //alert("Setting");
         //console.log("Set()");
         //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
         //$($object).triggerHandler('set'+prop, [value]); ?
+        // Add property to model if it's not there already.
+        // Scenario: User has Model & View without this property, but uses .Set()
+        // to set a value in the Model & View, then it should be added!
+        // NOTE: isMirror should be TRUE !!! IMPORTANT !!! - by design.
+        if($object['settings']['isMirror'] && !$object.Has(prop)) {
+          $object.AddProperty(prop, value);
+        }
         $($object).triggerHandler('set'+prop, [value]);
         //Update databound DOM values
         //Update databound elements with datasrc if specified, otherwise with viewId.
-        //$object.SetDataboundDomVal(viewId, prop, value);
-        $object.SetDataboundDomVal(datasrc, prop, value);
+        $object.SetDataboundDomVal(datasrc ? datasrc : viewId, prop, value);
         return $object;
       };
+
       /**
        * Get
        *
@@ -769,8 +780,10 @@ var MVC = {
         //console.log("SetModelFromView()");
         //Get the values from the View (DOM)
         var data = $object.GetViewData();
+        // alert(JSON.stringify(data));
         //Update the model using the View values
         $.each(data, function(key, newVal) {
+          // console.log("SetModelFromView() - key: " + key + ", value: " + newVal);
           var oldVal = $object[key];
           //Only update values if they're changed
           //Check the value of oldVal (not newVal)
@@ -821,7 +834,7 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.SetDataboundDomVal = function(datasrc, name, value) {
-        //console.log("SetDataboundDomVal()");
+        // console.log("SetDataboundDomVal() " + name + " - " + value);
         //The following works fine, except it breaks in IE<9!!!
         //$('[datasrc='+datasrc+'][name='+name+']').text(value).val(value);
         //This works though:
@@ -886,7 +899,9 @@ var MVC = {
         if(exec === undefined) {
           exec = $object[method];
         }
-
+        // console.log(exec);
+        // console.log($object[method]);
+        // console.log(par);
         if(exec !== undefined && exec !== null) {
           exec(par);
         } else {
@@ -1008,7 +1023,6 @@ var MVC = {
       //Initialize the View with the Model data if they aren't specified in the Model
       //MVC.SetModelFromView(viewId, $object);
       $object.SetModelFromView();
-
       //If Model property changes should be reflected/displayed in the View:
       //Loop throught the properties within the object and attach events using the
       //jQuery .bind() method. Whenever the user wants to update a value it can

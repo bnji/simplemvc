@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 10</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script type="text/javascript" src="simple.mvc.js"></script>
+    <!--optional:-->
+    <script type="text/javascript" src="../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
+    <script src="examples/debug.js"></script>
+    <!--//end optional-->
+    <script>
+      $(function() {
+        var obj,
+            viewId = '#testArea2';
+
+        obj = $(viewId).ModelView({
+          id3 : 123,
+          type2 : 'typeValFromModel'
+        }, {
+          isMirror : true
+        });
+
+        var newVal = ''+Date.now();
+        // obj.AddProperty('attachGetterSetterEvenNotSpecifiedInModel', newVal);
+        //obj.RemoveProperty($key);
+        obj.Set('attachGetterSetterEvenNotSpecifiedInModel', newVal);
+        // alert(obj.Get('id3'));
+        var domVal = obj.Get('attachGetterSetterEvenNotSpecifiedInModel');
+        // alert("OK");
+        console.log(obj);
+        console.log("new val: " + newVal);
+        console.log("dom val: " + domVal);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="testArea2" style="display: none;">
+      ID (input): <input class="isNumber" name="id3" id="id3" />
+      <br />
+      Type: <input type="text" name="type2" value="typeValFromView" />
+      <div datasrc="#testArea" name="type" id="typeDataboundInsideDivBoundToOtherView" class="excludeFromModel">&nbsp;</div>
+      <!--<br />
+      <input id="attachGetterSetterEvenNotSpecifiedInModel" name="attachGetterSetterEvenNotSpecifiedInModel" value="O2K" />-->
+    </div>
+  </body>
+</html>

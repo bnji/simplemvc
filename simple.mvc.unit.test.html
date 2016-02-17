@@ -34,13 +34,13 @@
   <div datasrc="" name="type" id="typeDataboundInsideDivNoDatasrc" class="excludeFromModel">&nbsp;</div>
   <br />
   <input type="text" name="canIjoinTheModelEvenNotSpecified" value="I'm not specified in the model, but the view wants me to join" class="" />
-  
+
   <input type="submit" name="submitButton" value="submitValue" />
   <br />
   <input type="button" name="save" id="save" value="save" />
   <input type="button" name="update" id="update" value="update" />
   <input type="button" name="delete" id="delete" value="delete" />
-  
+
 </div>
 <div id="testArea2" style="display: none;">
   ID (input): <input class="isNumber" name="id3" id="id3" />
@@ -53,7 +53,7 @@
 
 <div id="testArea3" style="display: none;">
   <h2>Testing classes</h2>
-  <span class="isNumber" id="spanIsNumber">123456</span>
+  <span class="isNumber" datafld="spanIsNumber">123456</span>
   <span id="spanIsNotNumber">123456</span>
   <input class="isNumber" name="inputIsNumber" type="text" value="123456" />
   <input name="inputIsNotNumber" type="text" value="123456" />
@@ -67,7 +67,7 @@
   <h1>Outside the View</h1>
   <p>
     This input element will be databound to the property 'type' in the MVC 'testArea'.
-    <br /> 
+    <br />
     <input datasrc="#testArea" type="text" name="type" id="typeDataboundInput" />
     <span datasrc="#testArea" name="type" id="typeDataboundSpan">&nbsp;</span>
     <p datasrc="#testArea" name="type" id="typeDataboundParagraph">&nbsp;</p>
@@ -124,9 +124,9 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
   beforeEach(function(){
     timerCallback = jasmine.createSpy('timerCallback');
     jasmine.Clock.useMock();
-    
+
     viewId = '#testArea';
-    
+
     ctr = MVC.Controller({
       Save : function(par) {
         expect(par['a']).not.toBe(undefined);
@@ -144,7 +144,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
         //expect(obj).toEqual(o);
       }
     });
-    
+
     settings = {
       controller : ctr,
       isMirror : true,
@@ -153,7 +153,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
         //return {'name':n,'value':v};
       }
     };
-    
+
     obj = $(viewId).ModelView({
     //obj = MVC.ModelView(viewId, {
       datafldSpan : '',
@@ -164,47 +164,47 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
       type : 'typeVal'
     }, settings);
   });
-  
+
   it("Intial value of 'id' to be 123 (Number) and not '123' (String), because it has the class 'isNumber'", function() {
     expect(obj['id']).not.toBe('123');
     expect(obj['id']).toBe(123);
   });
-  
+
   it("Intial value of 'id2' to be '456' (String) and not 456 (Number), because it does not have the class 'isNumber'", function() {
     expect(obj['id2']).not.toBe(456);
     expect(obj['id2']).toBe('456');
   });
-  
+
   it("Initial value of 'type' to be 'typeVal'", function() {
     expect(obj['type']).toBe('typeVal');
   });
-  
+
   it("obj should not be null", function() {
     expect(obj).not.toBe(null);
   });
-  
+
   it("obj should not be undefined", function() {
     expect(obj).not.toBe(undefined);
   });
-  
+
   it(".Has() should return true when it has a given property", function() {
     expect(obj.Has('id')).toBe(true);
   });
-  
+
   it(".Has() should return false when it does NOT have a given property", function() {
     expect(obj.Has('doesntexistinmodel')).toBe(false);
   });
-  
+
   it("Calling MVC.Save() method should work", function() {
     //MVC.Save(obj, 'saveExtraParameter');
     obj.Save({a:'saveExtraParameter'});
   });
-  
+
   it("Calling MVC.Update() method should work", function() {
     //MVC.Update(obj, 'updateExtraParameter');
     obj.Update({b:'updateExtraParameter'});
   });
-  
+
   it("Calling MVC.Delete() method should work", function() {
     //MVC.Delete(obj, 'deleteExtraParameter');
     obj.Delete({c:'deleteExtraParameter'});
@@ -259,23 +259,23 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     expect(obj.Get('type')).toEqual(newVal);
     expect($('#typeDataboundInsideDivBoundToOtherView').text()).toEqual(obj.Get('type')); //Div Inside other View area
   });
-  
-  
+
+
   it("using datafld and id should work", function() {
     var newVal = ''+Date.now();
-    
+
     obj.Set('datafldSpan', newVal);
     expect(obj.Get('datafldSpan')).toBe(newVal);
-    
+
     obj.Set('datafldTestElement', newVal);
     var domVal = $('#datafldTestElementDatabound').text();// obj.Get('datafldTestElement');
     expect(domVal).toBe(newVal);
-    
+
     obj.Set('idTestElement', newVal);
     domVal = $('#idTestElementDatabound').text();// obj.Get('idTestElement');
     expect(domVal).toBe(newVal);
   });
-  
+
   it("elements which have the class 'excludeFromModel' should not be included in the Model (even when inside the (DOM) View)", function() {
     expect(obj['imNotInTheModel']).toBe(undefined);
     expect(obj['imNotInTheModelInput']).toBe(undefined);
@@ -289,7 +289,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     //alert(obj['type'] + " - " + MVC.Get(obj, 'type') + " - " + MVC.GetViewData(viewId)['type']);
     expect(domVal).toBe(newVal);
   });
-  
+
   it("changing Model property by reference should not update the DOM value", function() {
     //alert(MVC.GetViewData(viewId)['type']);
     var newVal = ''+Date.now();// MVC.Set(obj, 'type', ''+Date.now());
@@ -298,7 +298,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     //alert(MVC.GetViewData(viewId)['type']);
     expect(domVal).not.toBe(obj['type']);
   });
-  
+
   it("change event should work", function() {
     var newVal = ''+Date.now();
     //$('#testArea #id').val(newVal).trigger('change');
@@ -311,18 +311,18 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     expect(onChangeResultData['name']).toBe('type');
     expect(onChangeResultData['value']).toBe(newVal);
   });
-  
+
   it("obj settings should contain the viewId", function(){
     expect(obj['settings']['viewId']).toEqual(viewId);
     //obj['settings']['onChange']();
   });
-  
+
   it("Testing if getter method is working", function() {
     //obj.type = "hello";
     var getVal = obj.Get('type');// MVC.Get(obj, 'type');
     expect(obj.type).toBe(getVal);
   });
-  
+
   it("Elements in the view should be threated as property of the model and therefore added to the model even not specified in the model", function() {
     var domVal = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     expect(domVal['canIjoinTheModelEvenNotSpecified']).not.toBe(null);
@@ -331,7 +331,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     expect(obj['canIjoinTheModelEvenNotSpecified']).not.toBe(undefined);
     expect(domVal['canIjoinTheModelEvenNotSpecified']).toBe(obj.canIjoinTheModelEvenNotSpecified);
   });
-    
+
   it("Changing Model property directly should not update the dom value", function() {
     var newVal = ''+Date.now();
     obj.id = newVal;
@@ -339,7 +339,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     var dom = obj.GetViewData();// MVC.GetViewData('#testArea', obj);
     expect(dom['id']).not.toBe(newVal);
   });
-  
+
   it("Updating an input element should update the model accordingly", function() {
     var newVal = Date.now();
     $('#testArea #id').val(newVal).trigger('change');
@@ -347,7 +347,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     var dom = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     expect(dom['id']).toBe(newVal);
   });
-  
+
   it("Updating an input element which has another element databound to it should be updated with same information", function() {
     var newVal = Date.now();
     $('#id').val(newVal).trigger('change');
@@ -360,7 +360,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     //alert(JSON.stringify(databoundValue, null, 2));
     expect(databoundValue).toBe(newVal);
   });
-  
+
   it("Updating a property in the model using MVC.Set() will also update the DOM value.", function() {
     var newVal = Date.now();
     //MVC.Set(obj, 'id', newVal);
@@ -369,7 +369,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     var dom = obj.GetViewData(); //MVC.GetViewData('#testArea', obj);
     expect(dom['id']).toBe(newVal);
   });
-  
+
   it("View object should be equal to model object (JSON)", function() {
     var domObj = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     settings = { settings : settings };
@@ -378,7 +378,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     var modObj = JSON.stringify(obj);
     expect(modObj).toEqual(domObj);
   });
-  
+
   it("View object should be equal to model object (JSON) after the model has been updated", function() {
     //MVC.Set(obj, 'id', 'foo');
     obj.Set('id', 'foo');
@@ -391,11 +391,11 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     var modObj = JSON.stringify(obj);
     expect(modObj).toEqual(domObj);
   });
-  
+
   it("Should not work to get the value from a submit button", function() {
     expect(obj['submitButton']).toBe(undefined);
   });
-  
+
   it("Should work updating the value of a property using setTimeout() (simulating input change from user)", function() {
     setTimeout(function() {
       timerCallback();
@@ -406,12 +406,12 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     expect(domVal).toBe(obj.type);
     //alert(domVal + " =?= " + obj.type);
   });
-  
+
   it("Should work converting the object Model to an array using .toArray() method", function() {
     expect($.isArray(obj)).toBe(false);
     expect($.isArray(obj.toArray())).toBe(true);
   });
-  
+
   it("Should work adding & removing a property in the Model with event's using .AddGetSet()", function() {
     var newPropName = 'aNewProperty1',
         newVal = Date.now();
@@ -472,13 +472,13 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
 
   it("Should work clearing properties in the Model and the View", function() {
     var domVal = '';
-    
+
     domVal = $('[name="type"]').val();
     expect(obj.Get('type')).not.toEqual('');
     expect(domVal).not.toEqual('');
-    
+
     obj.Clear('type');
-    
+
     domVal = $('[name="type"]').val();
     expect(obj.Get('type')).toEqual('');
     expect(domVal).toEqual('');
@@ -490,7 +490,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
 describe("MVC Object which does NOT reflect model changes in the DOM", function() {
   var obj,
       viewId;
-  
+
   beforeEach(function(){
     viewId = '#testArea';
     obj = $(viewId).ModelView({
@@ -516,7 +516,7 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     expect(obj['id']).toBe(123);
     expect(obj['type']).toBe('');
   });
-  
+
   it("Changing Model property using the .Set() method should not set the property or the DOM value when 'isMirror' : false", function() {
     var newVal = ''+Date.now();
     //MVC.Set(obj, 'type', newVal);
@@ -526,12 +526,12 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     var propVal = obj['type'];
     expect(propVal).not.toBe(newVal);
   });
-  
+
   it("Getting a Model property value using the MVC.Get() method should be undefined when 'isMirror' : false", function() {
     var objVal = obj.Get('type'); //MVC.Get(obj, 'type');
     expect(objVal).toBe(undefined);
   });
-  
+
   it("Updating Model properties (and therefore also DOM values) using .Set() should not work", function() {
     var newVal = Date.now();
     //MVC.Set(obj, 'id', newVal);
@@ -540,13 +540,13 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
     var dom = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
     expect(dom['id']).not.toBe(newVal);
   });
-  
+
 });
 
 describe("MVC Object without settings", function() {
   var obj,
       viewId;
-  
+
   beforeEach(function(){
     viewId = '#testArea';
     obj = $(viewId).ModelView({
@@ -554,21 +554,21 @@ describe("MVC Object without settings", function() {
       id : 123,
       type : 'typeVal'
     });
-  }); 
-  
+  });
+
   it("obj settings should never be undefined or null, even when not specified", function(){
     expect(obj['settings']).not.toBe(undefined);
     expect(obj['settings']).not.toBe(null);
   });
-  
+
   it("obj settings should contain the viewId property and to equal viewId", function(){
     expect(obj['settings']['viewId']).toEqual(viewId);
   });
-  
+
   it("obj settings should contain the isMirror property and be set to true", function(){
     expect(obj['settings']['isMirror']).toEqual(true);
   });
-  
+
 });
 
 describe("MVC Object with autosave", function() {
@@ -578,21 +578,21 @@ describe("MVC Object with autosave", function() {
       ctr,
       viewId,
       counter = 0;
-      
+
   ctr = MVC.Controller({
     Save : function(o, currentTimePar) {
       //alert(counter);
       /*timerCallback();
-        
+
       setTimeout(function() {
         expect(counter).toBeGreaterThan(2);
       }, 1000);*/
-     
+
       setTimeout(function() {
         timerCallback();
         counter++;
       }, 100);
-  
+
       expect(timerCallback).not.toHaveBeenCalled();
       alert(counter);
       jasmine.Clock.tick(101);
@@ -602,11 +602,11 @@ describe("MVC Object with autosave", function() {
       expect(timerCallback).toHaveBeenCalled();
     }
   });
-  
+
   beforeEach(function(){
     timerCallback = jasmine.createSpy('timerCallback');
     jasmine.Clock.useMock();
-    
+
     viewId = '#testArea';
     obj = $(viewId).ModelView({
     //obj = MVC.ModelView(viewId, {
@@ -617,12 +617,12 @@ describe("MVC Object with autosave", function() {
       autoSaveInterval : 5000
     });
   });
-  
+
   xit("autoSaveInterval = 5000 should call the Save() method every 5 seconds", function() {
     //MVC.Save(obj, Date.now());
     obj.Save(Date.now());
   });
-  
+
   xit("should support async execution of test preparation and exepectations", function() {
     runs(function() {
       flag = false;
@@ -632,24 +632,24 @@ describe("MVC Object with autosave", function() {
         flag = true;
       }, 500);
     });
-    
+
     waitsFor(function() {
       value++;
       return flag;
     }, "The Value should be incremented", 750);
-    
+
     runs(function() {
       expect(value).toBeGreaterThan(0);
-      
+
     });
   });
-  
+
 });
 
 describe("MVC Object Getter & Setter", function() {
   var obj,
       viewId;
-  
+
   beforeEach(function(){
     viewId = '#testArea2';
     obj = $(viewId).ModelView({
@@ -660,15 +660,14 @@ describe("MVC Object Getter & Setter", function() {
       isMirror : true
     });
   });
-  
+
   it("Getter & Setter methods should be attached to properties which are specified by the DOM but not in Model (when 'isMirror' : true)", function() {
     var newVal = ''+Date.now();
-    //MVC.Set(obj, 'attachGetterSetterEvenNotSpecifiedInModel', newVal);
     obj.Set('attachGetterSetterEvenNotSpecifiedInModel', newVal);
-    var domVal = obj.Get('attachGetterSetterEvenNotSpecifiedInModel');// MVC.Get(obj, 'attachGetterSetterEvenNotSpecifiedInModel'); //MVC.GetViewData(viewId)['attachGetterSetterEvenNotSpecifiedInModel'];
+    var domVal = obj.Get('attachGetterSetterEvenNotSpecifiedInModel');
     expect(domVal).toBe(newVal);
   });
-  
+
   it("Should work removing getters & setters and add them again to a property in the Model", function() {
     var newVal = '', lastTypeValBeforeRemovedGetterSetter = '';
     expect(obj.Get('type2')).toEqual('typeValFromModel'); //alert('Original value from View: ' + obj.Get('type2'));
@@ -684,49 +683,49 @@ describe("MVC Object Getter & Setter", function() {
     obj.AddGetSet('type2');
     expect(obj.Get('type2')).toEqual(lastTypeValBeforeRemovedGetterSetter); //alert('Added Getter & Setter (should NOT be "undefined"): ' + obj.Get('type2'));
   });
-  
+
 });
 
 describe("MVC Object: testing classes.", function() {
   var obj,
       viewId;
-  
+
   beforeEach(function(){
     viewId = '#testArea3';
     obj = $(viewId).ModelView({});
     //obj = MVC.ModelView(viewId, {});
   });
-  
+
   it("spanIsNumber should be a number", function() {
     expect(obj['spanIsNumber']).toEqual(123456);
   });
-  
+
   it("spanIsNotNumber should not be a number", function() {
     expect(obj['spanIsNotNumber']).not.toEqual(123456);
   });
-  
-  
+
+
 });
 
 describe("MVC Object without object data", function() {
   var obj,
       viewId;
-  
+
   beforeEach(function(){
     viewId = '#testAreaEmpty';
     obj = $(viewId).ModelView();
     //obj = MVC.ModelView(viewId);
   });
-  
+
   it("Object should be empty, but not null or undefined, even if not provided!", function() {
     expect(obj).not.toBe(undefined);
     expect(obj).not.toBe(null);
   });
-  
+
   it("Model should have property added, even when not object data intially where passed (only viewId)", function() {
     expect(obj['inModel']).toEqual('foobar');
   });
-  
+
 });
 
 
@@ -735,7 +734,7 @@ describe(".GetModelData()", function() {
   var obj,
       data,
       methods;
-  
+
   //Some data specified by the Model (the model's data)
   data = {
     id : '#'+Date.now(),
@@ -746,30 +745,30 @@ describe(".GetModelData()", function() {
     },
     anArray : ['hello','world']
   };
-  
+
   methods = {
     aMethod : function() {
       return true;
     }
   }
-  
+
   var objectData = $.extend({}, true, data, methods);
-  
+
   beforeEach(function(){
     obj = $('#doesntExistInDom').ModelView(objectData);
     //obj = MVC.ModelView('#doesntExistInDom', objectData);
   });
-  
+
   it("The data specified by the Model NOT to be same as the object 'obj'", function() {
     //console.log(data);
     expect(data).not.toEqual(obj);
   });
-  
+
   it("The data specified by the Model to be same as the obj.GetModelData()", function() {
     console.log(data);
     expect(data).toEqual(obj.GetModelData());
   });
-  
+
 });
 
 
@@ -777,7 +776,7 @@ describe(".GetModelData()", function() {
 
 describe("Cloning an object", function() {
   var clones;
-  
+
   beforeEach(function(){
     clones = MVC.List();
   });
@@ -809,11 +808,11 @@ describe("Cloning an object", function() {
 
   function createCloneWithDataAndEvents(_id) {
     return $('#template-1').ModelView({
-    //return MVC.ModelView('#template-1', { 
+    //return MVC.ModelView('#template-1', {
       //Data
       id : 123,
       foo : 'bar'
-    }, { 
+    }, {
       //Settings
       clone: {
         id: _id,
@@ -828,11 +827,11 @@ describe("Cloning an object", function() {
 
   function createCloneWithoutDataAndEvents(_id) {
     return $('#template-1').ModelView({
-    //return MVC.ModelView('#template-1', { 
+    //return MVC.ModelView('#template-1', {
       //Data
       id : 123,
       foo : 'bar'
-    }, { 
+    }, {
       //Settings
       clone: {
         id: _id,
@@ -843,14 +842,14 @@ describe("Cloning an object", function() {
       }
     });
   }
-  
+
 });
 
 
 
 describe("MVC.List()", function() {
   var o;
-  
+
   beforeEach(function(){
     o = {
       id : Date.now(),
@@ -908,9 +907,9 @@ describe("MVC.List()", function() {
         a = MVC.List(o);
         console.log($.isArray(o));
         console.log($.isArray(a));*/
-  
+
 });
 
 
-  
+
 </script>
