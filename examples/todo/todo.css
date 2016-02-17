@@ -1,5 +1,5 @@
 #todos {
-  margin: 0 auto 40px auto;
+  margin: 40px auto 40px auto;
   padding: 20px;
   width: 480px;
 }
@@ -17,6 +17,7 @@
 .todo {
 	list-style: none;
 	border-bottom: solid 1px #CCCCCC;
-  padding: 5px 1px; 
+  padding: 5px 1px;
 	font-size: 1.4em;
+  display: none;
 }

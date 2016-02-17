@@ -780,6 +780,7 @@ var MVC = {
         //console.log("SetModelFromView()");
         //Get the values from the View (DOM)
         var data = $object.GetViewData();
+
         // alert(JSON.stringify(data));
         //Update the model using the View values
         $.each(data, function(key, newVal) {
@@ -959,7 +960,7 @@ var MVC = {
       $object.AddEvents = function() {
         //Update the model view, whenever a change occurs
         $(viewId + ' :input')
-          .not('.excludeFromModel')
+          // .not('.excludeFromModel')
           .focus(function(e){
             //http://jsfiddle.net/PKVVP/
             $object.RunEvent(e);
@@ -1150,7 +1151,7 @@ var MVC = {
       }
     },
     getInputElements : function(target) {
-      return target.find('input,select,textarea').filter(':not(.excludeFromModel)');
+      return target.find('input,select,textarea').not('.excludeFromModel');
     },
     getElementKey : function(element) {
       var key = $(element).attr("datafld");

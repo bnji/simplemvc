@@ -24,38 +24,33 @@
     <title>todo</title>
   </head>
   <body>
-    <!--
-      Note: This template is part of the 'index.html'-file in the same directory.
-      It depends on jQuery, jStorage and simple.mvc.js (+todo.css).
-      This template is for readability and easier maintenance placed here.
-    -->
+    <!-- Note View (template) -->
+    <li class="todo" id="list-template">
+      <div class="row-fluid">
+        <div class="span9">
+          <!-- isComplete and note are members of the Notes' Model -->
+          <input type="checkbox" name="isComplete" />
+          <span rel="tooltip" datasrc="" name="note" class="note" id="note"> a note </span>
+          <input type="text" name="note" style="display: none;" />
+        </div>
+        <div class="span3">
+          <!-- A controller button (for testing) -->
+          <a class="btn btn-primary btn-mini pull-right isEvent" href="#" name="showData">show data</a>
+        </div>
+      </div>
+    </li>
+    <!-- //end Note View (template) -->
+
     <!-- Todo View -->
     <div id='todos' class="well">
       <div class="page-header">
         <h1>Todos</h1>
       </div>
       <!-- Input -->
-      <input type='text' class='create' name='create' class="excludeFromModel" placeholder="Enter a todo item..." />
-
+      <input type='text' class='create excludeFromModel' name='create' placeholder="Enter a todo item..." />
       <!-- List of notes -->
       <ul id='note-list'>
-        <!-- Note View (template) -->
-        <li class="todo" id="list-template" style="display: none;">
-          <div class="row-fluid">
-            <div class="span9">
-              <!-- isComplete and note are members of the Notes' Model -->
-              <input type="checkbox" name="isComplete" />
-              <span rel="tooltip" datasrc="" name="note" class="note" id="note"> a note </span>
-              <input type="text" name="note" style="display: none;" />
-            </div>
-            <div class="span3">
-              <!-- A controller button (for testing) -->
-              <a class="btn btn-primary btn-mini pull-right isEvent" href="#" name="showData">show data</a>
-            </div>
-          </div>
-        </li><!-- //end Note View (template) -->
       </ul>
-
       <!-- "Databound" elements: Information about the Model & View data -->
       <div id='todo-stats' class="excludeFromModel">
         <span id="notesCount" class="notesCount"> 0 </span> <span class="notesCountText"> item/s </span> done.
@@ -70,13 +65,16 @@
         <a href="#" name="exportJSON" id="exportJSON" class="btn btn-primary btn-mini isEvent">
           Export JSON
         </a>
-        <div id="jsonFileUrl" class="excludeFromModel pull-right"> </div>
+        <div id="jsonFileUrl" class="pull-right"> </div>
       </div>
+    </div>
+    <!-- //end Todo View -->
 
-    </div><!-- //end Todo View -->
-    <!-- Include the todo core script here -->
+    <!-- Todo Scripts -->
     <script src="todoItem.js"></script>
     <script src="todoList.js"></script>
+    <!-- //end Todo Scripts -->
+
     <!-- Include the store script -->
     <script src="store.js"></script>
     <!-- Extra functionality: -->

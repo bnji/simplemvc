@@ -30,7 +30,6 @@ var Note = function Note(notebook, value, isComplete, id) {
     }
   };
 
-
   var noteSettings = {
     change: function(e, n, v) {
       note.save(); //save the note
