@@ -3,7 +3,10 @@
 <script type="text/javascript"> if (!window.console) console = {log: function() {}}; </script>
 <!--//end IE fixes -->
 <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
-<script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
+<!--<script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>-->
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="simple.mvc.js"></script>
 <link rel="stylesheet" type="text/css" href="lib/jasmine/jasmine.css" />
 <script type="text/javascript" src="lib/jasmine/jasmine.js"></script>
@@ -84,6 +87,8 @@
 
 <script>
 $(function() {
+
+// alert(navigator.appVersion);
   //Unit testing setup
   (function() {
     var jasmineEnv = jasmine.getEnv();
@@ -112,7 +117,6 @@ $(function() {
 
   })();
 });
-
 
 describe("MVC Object which reflects model changes in the DOM ---- ", function() {
   var timerCallback,
@@ -166,6 +170,9 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
   });
 
   it("Intial value of 'id' to be 123 (Number) and not '123' (String), because it has the class 'isNumber'", function() {
+    console.log(obj.id);
+    console.log(obj.Get('id'));
+    console.log(obj['id']);
     expect(obj['id']).not.toBe('123');
     expect(obj['id']).toBe(123);
   });

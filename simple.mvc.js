@@ -840,9 +840,15 @@ var MVC = {
         //$('[datasrc='+datasrc+'][name='+name+']').text(value).val(value);
         //This works though:
         //console.log(counter + " - datasrc: " + datasrc + " - name: " + name + " - value: " + value);
-        //$('div[datasrc|='+datasrc+'][name|='+name+'],p[datasrc|='+datasrc+'][name|='+name+'],span[datasrc|='+datasrc+'][name|='+name+']').text(value);
-        $('*[datasrc|='+datasrc+'][name|='+name+']').text(value);
-        $('input[datasrc|='+datasrc+'][name|='+name+']').val(value);
+        var browserVersion = navigator.appVersion;
+        // IE 7 & 8
+        if(browserVersion.indexOf("MSIE 7.") !== -1 || browserVersion.indexOf("MSIE 8.") !== -1) {
+          $('div[datasrc|="'+datasrc+'"][name|="'+name+'"],p[datasrc|="'+datasrc+'"][name|="'+name+'"],span[datasrc|="'+datasrc+'"][name|="'+name+'"]').text(value);
+        }
+        else {
+          $('*[datasrc|="'+datasrc+'"][name|="'+name+'"]').text(value);
+        }
+        $('input[datasrc|="'+datasrc+'"][name|="'+name+'"]').val(value);
         //counter++;
         return $object;
       };
@@ -870,7 +876,7 @@ var MVC = {
           if($settings['settings'][type] !== undefined && $settings['settings'][type] !== null) {
             $settings['settings']['eventUsed'] = type;
             //console.log(type);
-            $settings['settings'][type](event, event.target.name, event.target.value);
+            $settings['settings'][type](event, event.target.name, event.target.value, $object);
           }
         } else {
           console.log("source element has no name attribute assigned (required!)");
@@ -904,7 +910,7 @@ var MVC = {
         // console.log($object[method]);
         // console.log(par);
         if(exec !== undefined && exec !== null) {
-          exec(par);
+          exec(par, $object);
         } else {
           console.log('Missing ' + method + '() method!');
         }
@@ -1106,7 +1112,7 @@ var MVC = {
       //Do not run the .init() method if it is undefined or null!
       if(init !== undefined && init !== null) {
         setTimeout(function() {
-          init();
+          init($object);
         }, 1);
       }
       return $object;

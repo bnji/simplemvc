@@ -1,13 +1,27 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
   <head>
-    <!--<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>-->
-    <script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>SimpleMVC Todo App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>-->
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!-- Simple MVC -->
     <script src="../../simple.mvc.js"></script>
     <script src="../../simple.mvc.json.js"></script>
-    <!--<script src="//rawgit.com/bnji/simplemvc/master/simple.mvc.js"></script>
-    <script src="//rawgit.com/bnji/simplemvc/master/simple.mvc.json.js"></script>-->
+    <!-- Todo App -->
     <link rel="stylesheet" type='text/css' href='todo.css' />
+    <!-- Bootstrap -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/2.3.1/css/bootstrap.min.css" />
     <!--IE fixes -->
@@ -17,14 +31,13 @@
     //$ = {}
     </script>
     <!--//end IE fixes -->
+    <!-- Local storage -->
     <script src="../../lib/jstorage.min.js"></script>
-    <!--<script src="//rawgit.com/bnji/simplemvc/master/lib/jstorage.min.js"></script>-->
-    <script src="../debug.js"></script>
-    <!--<script src="//rawgit.com/bnji/simplemvc/master/examples/debug.js"></script>-->
-    <title>todo</title>
+    <script src="store.js"></script>
   </head>
   <body>
-    <!-- Note View (template) -->
+
+    <!-- Todo Note Template -->
     <li class="todo" id="list-template">
       <div class="row-fluid">
         <div class="span9">
@@ -41,14 +54,14 @@
     </li>
     <!-- //end Note View (template) -->
 
-    <!-- Todo View -->
+    <!-- Todo Main View -->
     <div id='todos' class="well">
       <div class="page-header">
         <h1>Todos</h1>
       </div>
-      <!-- Input -->
+      <!-- Input Field -->
       <input type='text' class='create excludeFromModel' name='create' placeholder="Enter a todo item..." />
-      <!-- List of notes -->
+      <!-- List of todo notes -->
       <ul id='note-list'>
       </ul>
       <!-- "Databound" elements: Information about the Model & View data -->
@@ -61,11 +74,9 @@
         <a href="#" name="clearDone" id="clearDone" class="btn btn-danger btn-mini isEvent" style="display: none;">
           Remove <span id="notesDone"> 0 </span> completed <span class="notesDone"> item/s </span>
         </a>
-
         <a href="#" name="exportJSON" id="exportJSON" class="btn btn-primary btn-mini isEvent">
           Export JSON
         </a>
-        <div id="jsonFileUrl" class="pull-right"> </div>
       </div>
     </div>
     <!-- //end Todo View -->
@@ -75,8 +86,6 @@
     <script src="todoList.js"></script>
     <!-- //end Todo Scripts -->
 
-    <!-- Include the store script -->
-    <script src="store.js"></script>
     <!-- Extra functionality: -->
     <script>
       $('.note').tooltip({
@@ -87,6 +96,5 @@
         delay: { show: 100, hide: 250 }
       });
     </script>
-    <div id="debug"></div>
   </body>
 </html>

@@ -29,11 +29,10 @@ var Note = function Note(notebook, value, isComplete, id) {
       alert(JSON.stringify(note.GetModelData(), null, 2));
     }
   };
-
   var noteSettings = {
     change: function(e, n, v) {
       note.save(); //save the note
-      notebook.onCheckNote(note);
+      notebook.setIsDone(note);
     },
     keyup: function(e, n, v) {
       if(notebook.isValidInput(v)) {
@@ -62,7 +61,6 @@ var Note = function Note(notebook, value, isComplete, id) {
         }
     }
   };
-
   //Create a new note using the MVC ModelView
   var note = $('#list-template').ModelView({
       id: (id === undefined || id === null ? Date.now() : id),
@@ -71,6 +69,5 @@ var Note = function Note(notebook, value, isComplete, id) {
     },
     noteSettings,
     noteMethods);
-
   return note;
 }
