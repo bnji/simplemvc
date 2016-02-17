@@ -161,7 +161,9 @@ var todoListSettings = {
       });
       JSON.save(JSON.stringify(data, null, 2),
         function(data) {
-          $('#jsonFileUrl').html('<a href="'+data['url']+'">Open the JSON file.</a>');
+          // alert(JSON.stringify(data));
+          window.location = '//sprotin.azurewebsites.net/simplemvc/downloadfile.php?filename=' + data['name'];
+          // $('#jsonFileUrl').html('<a href="'+data['url']+'">Open the JSON file.</a>');
         }
       );
     }

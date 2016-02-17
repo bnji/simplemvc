@@ -17,13 +17,20 @@ var JSON = {
   save : function(jsonData, onSuccess) {
     $.ajax({
       type : "POST",
-      url : "//sprotin.azurewebsites.net/simplemvc/getjson.php",
+      url : "//sprotin.azurewebsites.net/simplemvc/savejson.php",
+      crossDomain: true,
       dataType : 'json',
       data : {
           json : jsonData
       },
       success : function(result) {
         onSuccess(result);
+      },
+      error: function (r, t, e) {
+        console.log(r);
+        console.log(t);
+        console.log(e);
+        alert('ERROR! See console...');
       }
     });
     return jsonData;
