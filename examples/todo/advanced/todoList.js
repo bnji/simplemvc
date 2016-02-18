@@ -1,24 +1,27 @@
+var TodoHelper = {
+  isValidInput : function(data) {
+    return $.trim(data).length > 0; // Is the input data entered valid?
+  }
+}
 $(function() {
   // Todo List Model
-  var model = {
-    name: "Simple MVC Todo List",
+  var todoListModel = {
+    name: "Simple MVC - Advanced Todo List",
     notes: MVC.List() //Provides helper methods
   };
   // Todo List Implementation (methods)
-  var methods = {
-    isValidInput : function(data) {
-      return $.trim(data).length > 0; // Is the input data entered valid?
-    },
+  var todoListMethods = {
     add : function(value, isComplete, id) { // Create (add) a new note
       var self = this;
-      if(self.isValidInput(value)) {
+      if(TodoHelper.isValidInput(value)) {
         var note = new Note(self, value, isComplete, id);
+        note.setIsDone();
         self
             .getNotes() //Retrieve the list of notes
             .Add(note); //Add the note to the todoList
         self
-            .updateUI(note) //Update databound elements
-            .setIsDone(note); //Update databound elements
+            .updateUI(note); //Update databound elements
+            // .setIsDone(note); //Update databound elements
         store
           .save(note.Get('id'), note.GetModelData()); //Save to localstorage
         return self;
@@ -30,12 +33,12 @@ $(function() {
                         .getNotes() //Get the list of notes (Array)
                         .Remove(note); //Remove the note (from the Array)
       if(isRemoved) {
-        self
-          .updateUI(note) //Update databound elements
-          .setIsDone(note) //Update databound elements
-          .focusInput();
+        note.setIsDone(); //Update databound elements
         store
           .remove(note.Get('id')); //Remove the note (from the storage)
+        self
+          .updateUI(note) //Update databound elements
+          .focusInput();
         $(self).remove(); //Remove the note from the View
       }
       return self;
@@ -87,6 +90,7 @@ $(function() {
       $.each(notesFromStore, function(k,v) {
         self.add(v['note'], v['isComplete'], k);
       });
+      return self;
     },
     clear : function() {
       store.clear();
@@ -94,38 +98,24 @@ $(function() {
     },
     updateUI : function(note) {
       var self = this;
-      $('.notesCountText').html(self.getNotesCount() === 1 ? 'item' : 'items');
-      $('#notesCount').html(self.getNotesDoneCount() + ' / ' + self.getNotesCount());
-      return self;
-    },
-    setIsDone : function(note) {
-      var self = this;
-      var noteElem = note.Find('#note');
       var notesDone = self.getNotesDoneCount();
-      if(note.Get('isComplete')) {
-        noteElem.addClass('isComplete');
-      } else {
-        noteElem.removeClass('isComplete');
-      }
-      if(notesDone > 0) {
-        $('#clearDone').fadeIn(500);
-      }
-      else {
-        $('#clearDone').fadeOut(500);
-      }
+      var notesCount = self.getNotesCount();
+      notesDone > 0 ? $('#clearDone').fadeIn(500) : $('#clearDone').fadeOut(500);
+      notesCount > 0 ? $('#clearAll').fadeIn(500) : $('#clearAll').fadeOut(500);
       $('.notesDone').html(notesDone === 1 ? 'item' : 'items');
       $('#notesDone').html(notesDone);
-      $('#notesCount').html(notesDone + ' / ' + self.getNotesCount());
+      $('.notesCountText').html(notesCount === 1 ? 'item' : 'items');
+      $('#notesCount').html(notesDone + ' / ' + notesCount);
       return self;
     },
-    // Simple MVC built-in method which runs after 1 ms
+    // Simple MVC built-in initalize method which runs after 1 ms
     init : function(object) {
       object
         .focusInput()
         .load();
     }
   };
-  var settings = {
+  var todoListSettings = {
     // Controller (UI button/input handler) - bind automatically to UI/View
     controller: MVC.Controller({
       //Event handler for clear done notes button
@@ -160,7 +150,7 @@ $(function() {
     }
   };
   //Run the Todo List App (object) which manages the todo notes
-  var todoList = $('#todos').ModelView(model, settings, methods);
+  var todoList = $('#todos').ModelView(todoListModel, todoListSettings, todoListMethods);
   // Allow todolist to initialize first (workaround using 1 ms timeout).
   // setTimeout(function() {
   //   console.log(todoList.GetModelData());
