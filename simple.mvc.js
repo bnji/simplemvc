@@ -777,11 +777,8 @@ var MVC = {
        * @return {Object} The object (itself)
        */
        $object.SetModelFromView = function() {
-        //console.log("SetModelFromView()");
         //Get the values from the View (DOM)
         var data = $object.GetViewData();
-
-        // alert(JSON.stringify(data));
         //Update the model using the View values
         $.each(data, function(key, newVal) {
           // console.log("SetModelFromView() - key: " + key + ", value: " + newVal);
@@ -798,23 +795,20 @@ var MVC = {
             //the value will be undefined and therefore also the type.
             //In some cases this should be handled differently!
             //if(valType === 'string' || valType === 'number' || valType === 'boolean' || valType === 'object' || valType === 'undefined') {
-
               //alert(key + ": " + oldVal + " changed to " + newVal);
-
               //Update the model with the value from DOM
               $object[key] = newVal;
               //$object.Set(key, newVal);
               //if(updateDataboundValues === undefined || updateDataboundValues === true) {
                 //alert("OK");
               //}
-
             //}
             //else {
             //  alert("Missing implementation of primitive types in SetModelFromView() method for type: " + valType);
             //}
           }
           //Update databound DOM values even
-          //When setting the values on .init() the databound items should ofcourse
+          //when setting the values on .init() the databound items should ofcourse
           //get updated even if the model data is same as in the view.
           $object.SetDataboundDomVal(viewId, key, newVal);
         });
@@ -843,12 +837,18 @@ var MVC = {
         var browserVersion = navigator.appVersion;
         // IE 7 & 8
         if(browserVersion.indexOf("MSIE 7.") !== -1 || browserVersion.indexOf("MSIE 8.") !== -1) {
-          $('div[datasrc|="'+datasrc+'"][name|="'+name+'"],p[datasrc|="'+datasrc+'"][name|="'+name+'"],span[datasrc|="'+datasrc+'"][name|="'+name+'"]').text(value);
+          // case: <span datasrc="#viewId" name="somename"></span>
+          $('div[datasrc*="'+datasrc+'"][name*="'+name+'"],p[datasrc*="'+datasrc+'"][name*="'+name+'"],span[datasrc*="'+datasrc+'"][name*="'+name+'"]').text(value);
+          // case: <div datasrc="#viewId"><span name="somename"></span></div>
+          $('div[datasrc*="'+datasrc+'"],p[datasrc*="'+datasrc+'"],span[datasrc*="'+datasrc+'"]').parent().find('[name*="'+name+'"]').text(value);
         }
         else {
-          $('*[datasrc|="'+datasrc+'"][name|="'+name+'"]').text(value);
+          // case: <span datasrc="#viewId" name="somename"></span>
+          $('*[datasrc*="'+datasrc+'"][name*="'+name+'"]').text(value);
+          // case: <div datasrc="#viewId"><span name="somename"></span></div>
+          $('*[datasrc*="'+datasrc+'"]').parent().find('[name*="'+name+'"]').text(value);
         }
-        $('input[datasrc|="'+datasrc+'"][name|="'+name+'"]').val(value);
+        $('input[datasrc*="'+datasrc+'"][name*="'+name+'"]').val(value);
         //counter++;
         return $object;
       };

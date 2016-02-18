@@ -1,25 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
   <head>
     <meta charset="utf-8">
-    <title>Examples overview</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>SimpleMVC Examples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <!--IE fixes -->
     <script type="text/javascript" src="//rawgit.com/douglascrockford/JSON-js/master/json2.js"></script>
     <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.7.2.min.js"></script>
     <!--//end IE fixes -->
     <!--optional:-->
     <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/css/bootstrap.min.css" />
     <!--<script type="text/javascript" src="../../simplemvc-showcase/lib/google.code.prettify/js/prettify.js"></script>-->
-
     <!--//end optional-->
   </head>
   <body>
     <div class="container-fluid">
       <h1>
         Examples overview
-        <small>Click on an example below to load it</small>
       </h1>
       <p>
         To create a new example: <a href="http://jsfiddle.net/bendot/RPqMr/" target="_blank">fork this template on fiddle</a>
@@ -41,9 +46,6 @@
             <option id="ejG4v">Cloning templates #2</option>
             <option id="bZ7ZJ">Add property</option>
           </select>
-
-          <br />
-
           <iframe id="exampleFrame" style="width: 100%; height: 1000px" src="http://jsfiddle.net/bendot/tLNbC/embedded/" allowfullscreen="allowfullscreen" frameborder="0"> </iframe>
         </div>
       </div>
@@ -58,18 +60,13 @@
             .text($(this).text())
           );
       });
-
-
-      //$('a[href="#"]').click(function(e) {
       $( "select" ).change(function(e) {
-        //var id = e.target.id;
         var id = $(this).children(":selected").attr("id");
         $('#exampleFrame')
           .attr('src', getFiddleUrl(id))
           .show();
         e.preventDefault();
       });
-
       $('a[id="tLNbC"]').click();
     });
     </script>
