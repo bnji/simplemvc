@@ -2,47 +2,72 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Example 10</title>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <title>Temp</title>
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!-- Simple MVC -->
     <script type="text/javascript" src="simple.mvc.js"></script>
-    <!--optional:-->
-    <script type="text/javascript" src="../simplemvc-showcase/lib/bootstrap/js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="../simplemvc-showcase/lib/bootstrap/css/bootstrap.css" />
-    <script src="examples/debug.js"></script>
-    <!--//end optional-->
     <script>
+      var simplemvcObject;
+
       $(function() {
-        var obj,
-            viewId = '#testArea2';
+        simplemvcObject = $('#viewId').ModelView(
+          // Person Object / Model
+          {
+            fullname: 'John Doe',
+            // City is in View, and has been automatically been added to the model.
+            //address: 'Address name' // Address is in Model, but not in View.
+          },
+          // Settings & Methods (implementation)
+          {
+            isMirror: true,
+            controller: MVC.Controller({
+            })
+          });
 
-        obj = $(viewId).ModelView({
-          id3 : 123,
-          type2 : 'typeValFromModel'
-        }, {
-          isMirror : true
-        });
+      // var datasrc = "#viewId",
+      //     name = "foo",
+      //     name2 = "bar";
+      //   $('*[datasrc*="' + datasrc + '"][name*="' + name + '"]').text("foo");
+      //    $('*[datasrc*="' + datasrc + '"][name*="' + name2 + '"]').append("bar");
 
-        var newVal = ''+Date.now();
-        // obj.AddProperty('attachGetterSetterEvenNotSpecifiedInModel', newVal);
-        //obj.RemoveProperty($key);
-        obj.Set('attachGetterSetterEvenNotSpecifiedInModel', newVal);
-        // alert(obj.Get('id3'));
-        var domVal = obj.Get('attachGetterSetterEvenNotSpecifiedInModel');
-        // alert("OK");
-        console.log(obj);
-        console.log("new val: " + newVal);
-        console.log("dom val: " + domVal);
+        // setTimeout(function() {
+        //   var el4 = $('input[datasrc*="viewId"][name*="fullname"]').hasClass('append');
+        //   console.log(el4);
+
+        //   var el5 = $(document).find('input[datasrc*="viewId"][name*="fullname"]').hasClass('append');
+        //   console.log(el5);
+
+        //   var el6 = simplemvcObject.Find('input[name*="fullname"]').hasClass('append');
+        //   console.log(el6);
+        // },100);
+        console.log($(document).find('span'));
       });
+
     </script>
   </head>
   <body>
-    <div id="testArea2" style="display: none;">
-      ID (input): <input class="isNumber" name="id3" id="id3" />
+    <div id="viewId">
+      <!--<label>Full name:</label>-->
+      <input datasrc="viewId" type="text" name="fullname" />
       <br />
-      Type: <input type="text" name="type2" value="typeValFromView" />
-      <div datasrc="#testArea" name="type" id="typeDataboundInsideDivBoundToOtherView" class="excludeFromModel">&nbsp;</div>
-      <!--<br />
-      <input id="attachGetterSetterEvenNotSpecifiedInModel" name="attachGetterSetterEvenNotSpecifiedInModel" value="O2K" />-->
+      <label>City:</label>
+      <input type="text" name="city" value="City Name" />
+      <label>Street:</label>
+      <input type="text" name="street" value="Street" />
     </div>
+    <br />
+    <span datasrc="#viewId" name="fullname"></span>
+    <br />
+    <div datasrc="#viewId">
+      <span name="fullname"></span>
+      <br />
+      <span name="city"></span>
+      <br />
+      <span name="street"></span>
+    </div>
+    <!--<span datasrc="#viewId" name="foo bar" class="append"> </span>-->
+
   </body>
 </html>
