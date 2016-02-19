@@ -596,7 +596,7 @@ var MVC = {
        * @param {String} value The new value to set for the property
        * @return {Object} The object (itself)
        */
-      $object.Set = function(prop, value) {
+      $object.Set = function(prop, value, canTriggerHandler) {
         //console.log("Set()");
         //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
         //$($object).triggerHandler('set'+prop, [value]); ?
@@ -607,7 +607,9 @@ var MVC = {
         if($object['settings']['isMirror'] && !$object.Has(prop)) {
           $object.AddProperty(prop, value);
         }
-        $($object).triggerHandler('set'+prop, [value]);
+        if(canTriggerHandler === undefined) {
+          $($object).triggerHandler('set'+prop, [value]);
+        }
         //Update databound DOM values
         //Update databound elements with datasrc if specified, otherwise with viewId.
         $object.SetDataboundDomVal(datasrc ? datasrc : viewId, prop, value);
@@ -790,7 +792,7 @@ var MVC = {
           //Check the value of oldVal (not newVal)
           var valType = typeof oldVal;
           // newVal should not be null or undefined!
-          if(oldVal !== newVal && newVal) {
+          if(oldVal !== newVal && (newVal !== undefined || newVal !== null)) { // && typeof oldVal === typeof newVal) {
             // console.log('oldVal');
             // console.log(oldVal);
             // console.log('newVal');
@@ -885,7 +887,9 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.RunEvent = function(event) {
-        //alert(event.target.name);
+        var targetName = event.target.name;
+        var targetValue = event.target.value;
+        //alert(targetName);
         var type = event.type;
         if(type === undefined) {
           type = event;
@@ -894,11 +898,19 @@ var MVC = {
           //console.log('event "e" is undefined!');
           return;
         }
-        if($.trim(event.target.name).length > 0) {
+        if($.trim(targetName).length > 0) {
           if($settings['settings'][type] !== undefined && $settings['settings'][type] !== null) {
+            // alert($settings['settings'][type]);
             $settings['settings']['eventUsed'] = type;
-            //console.log(type);
-            $settings['settings'][type](event, event.target.name, event.target.value, $object);
+            var modelData = $object[targetName];
+            var selectedModelData = modelData;
+            // select element (list)
+            if(event.target.type.indexOf('select') !== -1) {
+              var selectedIndex = event.target.selectedIndex;
+              targetValue = event.target.options[selectedIndex].value;
+              selectedModelData = modelData[selectedIndex];
+            }
+            $settings['settings'][type](event, targetName, targetValue, $object, modelData, selectedModelData);
           }
         } else {
           console.log("source element has no name attribute assigned (required!)");
@@ -1000,6 +1012,7 @@ var MVC = {
             //Update the model and also the databound elements
             //MVC.SetModelFromView(viewId, $object); //Always do this (core concept!)
             $object.SetModelFromView(); //Always do this (core concept!)
+            // console.log($object.GetModelData());
             $object.RunEvent(e);
           })
           .select(function(e) {

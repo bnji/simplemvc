@@ -23,7 +23,11 @@
           {
             isMirror: true,
             controller: MVC.Controller({
-            })
+            }),
+            change: function(e, n, v, o, t, s) { // event, name, value, object
+              console.log(t);
+              console.log(s);
+            }
           });
 
       // var datasrc = "#viewId",
