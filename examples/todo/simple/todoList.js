@@ -7,7 +7,8 @@ $(function() {
     add : function(value, isComplete, id) { // Create (add) a new note
       var self = this;
       var note = new Note(self, value, isComplete, id);
-      self.getNotes().updateUI(note).Add(note);
+      self.getNotes().Add(note);
+      self.updateUI(note);
       return self;
     },
     remove : function(note) { // Remove an existing note

@@ -8,48 +8,36 @@
 <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-
     <!-- Use the .htaccess and remove these lines to avoid edge case issues.
     More info: h5bp.com/i/378 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-    <title>Simple MVC / MVVM</title>
+    <title>Simple MVC</title>
     <!-- Mobile viewport optimized: h5bp.com/viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
-<!--<link type="text/css" rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" />
-    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <script type="text/javascript" src="lib/google.code.prettify/js/prettify.js"></script>
-    <link type="text/css" rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" />-->
     <!--IE fixes -->
     <script type="text/javascript" src="//rawgit.com/douglascrockford/JSON-js/master/json2.js"></script>
     <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
     <!--//end IE fixes -->
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.7.2.min.js"></script>
-    <!--<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/2.3.1/css/bootstrap.min.css" />-->
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!--<script type="text/javascript" src="//code.jquery.com/jquery-1.7.2.min.js"></script>-->
     <script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>
     <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
     <!--<link type="text/css" rel="stylesheet" href="http://bootswatch.com/united/bootstrap.min.css" />-->
     <script type="text/javascript" src="lib/google.code.prettify/js/prettify.js"></script>
-    <!--<link type="text/css" rel="stylesheet" href="lib/google.code.prettify/css/custom2.css" />-->
     <link type="text/css" rel="stylesheet" href="lib/google.code.prettify/css/twitter.bootstrap.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js">
       /*All JavaScript at the bottom, except this Modernizr build.
        Modernizr enables HTML5 elements & feature detects for optimal performance.
        Create your own custom Modernizr build: www.modernizr.com/download/*/
-       </script>
-       <script type="text/javascript" src="//rawgit.com/bnji/simplemvc/master/simple.mvc.js"></script>
-       <script type="text/javascript" src="//rawgit.com/bnji/simplemvc/master/simple.mvc.json.js"></script>
+    </script>
+    <script type="text/javascript" src="simple.mvc.js"></script>
+    <script type="text/javascript" src="simple.mvc.json.js"></script>
 
-       <style>
+    <style>
        .center {
         text-align: center;
       }
@@ -67,11 +55,6 @@
         padding:75px;
       }
       </style>
-
-      <script>
-      var isMobile = jQuery.browser.mobile;
-      </script>
-
       <!-- Le fav and touch icons -->
       <link rel="shortcut icon" href="">
     <!--
@@ -79,18 +62,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
   -->
-
-  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-  <!--<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
-    <!--[if lt IE 9]>
-    <script src="<?php echo $GLOBALS['urlLibs']; ?>/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- http://www.quirksmode.org/css/condcom.html -->
-    <!--<script>alert("You are using a very old internet browser: Internet Explorer 6. We would recommend you to update to a newer browser. Here is a list of the most popular browsers at the moment:")</script>-->
-
-    <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
-  </head>
+</head>
 
   <body data-spy="scroll" onload="prettyPrint()">
     <div class="header">
@@ -100,7 +72,7 @@
           <div class="container">
 
             <div class="pull-left">
-              <a class="brand" href="#"><i class="icon icon-heart"></i> Simple MVC / MVVM</a>
+              <a class="brand" href="#"><i class="icon icon-heart"></i> Simple MVC</a>
             </div>
 
             <ul class="nav pull-right">
@@ -146,15 +118,13 @@
         chromium.org/developers/how-tos/chrome-frame-getting-started -->
         <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
-
-
         <div class="hero-unit center">
-          <h1 class="header" id="download">Simple MVC / MVVM</h1>
+          <h1 class="header" id="download">Simple MVC <i class="icon icon-heart-empty"></i></h1>
           <p>
-            <h2>using jQuery <i class="icon icon-heart-empty"></i> HTML</h2>
+            <h2>JavaScript, jQuery, HTML5 & CSS3</h2>
             <br />
             <p>
-              A simple - yet solving a complex task while being lightweight - MVC / MVVM solution to your jQuery + HTML.
+              A lightweight MVC (Model-View-Controller) library for UI binding.
             </p>
             <br />
 
@@ -181,15 +151,15 @@
           <div class="row">
             <div class="span4">
               <h2><i class="icon icon-cloud"></i> Light weight</h2>
-              <p>The simple.mvc.js library is ~4KB minified, which means it's very light weight.</p>
+              <p>The library is ~8KB minified, which means it's very light weight! However jQuery 1.12 is ~98KB</p>
             </div>
             <div class="span4">
-              <h2><i class="icon icon-heart"></i> jQuery + HTML</h2>
-              <p>All you need to know is a little jQuery & HTML. Don't hesitate continue reading even if you don't.</p>
+              <h2><i class="icon icon-heart"></i> Standards</h2>
+              <p>The problem with standards is that there are so many, right?! By design, Simple MVC uses jQuery at it's core, but the <b>benefit</b> is that this library, unlike so many other popular libraries such as knockoutjs and angularjs which require alot of time to learn.</p>
             </div>
             <div class="span4">
               <h2><i class="icon icon-ok"></i> Cross-browser</h2>
-              <p>Works wherever jQuery does, which means it's cross-browser (back to IE6!) - All thanks to jQuery! :)<br /><br /></p>
+              <p>Should works back to IE7, but definetely works with >IE8 and all modern web browsers (desktop/mobile).</p>
             </div>
           </div><!--/row-->
           <div class="row">
@@ -198,7 +168,7 @@
               <p>No need for learning a new templating system, as HTML attributes are used, which means there's no need for learning or creating new HTML attributes or using HTML elements with jQuery functionality "wrapped inside them".<br /><br /></p>
             </div>
             <div class="span4">
-              <h2><i class="icon icon-fullscreen"></i> MVC / MVVM design pattern</h2>
+              <h2><i class="icon icon-fullscreen"></i> MVC design pattern</h2>
               <p>The design pattern (kept in mind?) while developing the library was to <b>A) Separating concerns</b> (<a id="modelViewControllerWiki" href="#">Model View Controller</a>) & <b>B) Keeping the view and model synchronized</b> (<a id="modelViewViewModelWiki" href="#" rel="tooltip">Model View MVC</a>).</p>
             </div>
             <div class="span4">
@@ -212,12 +182,31 @@
               <p>Keeping things simple while solving a complex task without any clutter or unnecessary extravagance functionality which would increase the codebase.</p>
             </div>
             <div class="span4">
-              <h2><i class="icon icon-plus-sign"></i> Requirements</h2>
+              <h2><i class="icon icon-plus-sign"></i> Free & Open Source</h2>
+              <p>
+                Free, open source (MIT licence)
+              </p>
+            </div>
+            <div class="span4">
+              <h2><i class="icon icon-random"></i> Dependencies</h2>
               <p>
                 <ul>
-                  <li>jQuery 1.5.1 or newer</li>
-                  <li>simplemvc.js</li>
+                  <li>jQuery 1.5.1 or newer (note: jQuery 2.x supports IE>8)</li>
                 </ul>
+              </p>
+            </div>
+          </div><!--/row-->
+          <div class="row">
+            <div class="span4">
+              <h2><i class="icon icon-refresh"></i> Chaining</h2>
+              <p>
+                Chaining: Run multiple methods (on the same element) within a single statement.
+              </p>
+            </div>
+            <div class="span4">
+              <h2><i class="icon icon-book"></i> Docs + Examples</h2>
+              <p>
+                Well documented and has many real-world examples.
               </p>
             </div>
             <div class="span4">
