@@ -504,14 +504,7 @@ var MVC = {
               $object[prop] = newVal;
               //alert(n + ": " + ov + "=>" + nv);
               //Update the view accordingly
-              //MVC.SetViewFromModel(viewId, $object); //$(viewId).getSetHtml($object);
-
-              // TODO: FIX THIS!!!
-              // It currently doesn't work with select (lists)!
-              // Disabled temporarily
-              // $object.SetViewFromModel();
-
-
+              $object.SetViewFromModel();
               //Make sure that the input will have the change event triggered,
               //so that the views bound to this element will also be updated.
               //This is important in case the model is changed using setTimeout()
@@ -864,9 +857,9 @@ var MVC = {
         // IE 7 & 8
         if(browserVersion.indexOf("MSIE 7.") !== -1 || browserVersion.indexOf("MSIE 8.") !== -1) {
           // case: <span datasrc="#viewId" name="somename"></span>
-          $('div[datasrc*="'+datasrc+'"][name*="'+name+'"],p[datasrc*="'+datasrc+'"][name*="'+name+'"],span[datasrc*="'+datasrc+'"][name*="'+name+'"]').text(value);
+          $('div[datasrc="'+datasrc+'"][name="'+name+'"],p[datasrc="'+datasrc+'"][name="'+name+'"],span[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
           // case: <div datasrc="#viewId"><span name="somename"></span></div>
-          $('div[datasrc*="'+datasrc+'"],p[datasrc*="'+datasrc+'"],span[datasrc*="'+datasrc+'"]').parent().find('[name*="'+name+'"]').text(value);
+          $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('[name="'+name+'"]').text(value);
         }
         else {
           // var el2 = $('[datasrc*="'+datasrc+'"][name*="'+name+'"]');
@@ -884,12 +877,40 @@ var MVC = {
           //   el2.text(value);
           // }
           // case: <span datasrc="#viewId" name="somename"></span>
-          $('*[datasrc*="'+datasrc+'"][name*="'+name+'"]').text(value);
-          // case: <div datasrc="#viewId"><span name="somename"></span></div>
-          $('*[datasrc*="'+datasrc+'"]').parent().find('[name*="'+name+'"]').text(value);
+          if(value) {
+            // console.log("datasrc: " + datasrc + " - name: " + name + " - value: " + value + " - " + $('*[datasrc*="'+datasrc+'"]').find('[name*="'+name+'"]').text());
+            $('*[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
+            // case: <div datasrc="#viewId"><span name="somename"></span></div>
+            $('*[datasrc="'+datasrc+'"]').find('[name="'+name+'"]').text(value);
+          }
         }
-        $('input[datasrc*="'+datasrc+'"][name*="'+name+'"]').val(value);
-        //counter++;
+        $('input[datasrc="'+datasrc+'"][name="'+name+'"]').val(value);
+        return $object;
+      };
+
+      /**
+       * FillSelect
+       *
+       * Fill select element with one or more option elements.
+       *
+       * @method FillSelect
+       * @param {Array} prop The property name which holds an array of values
+       * @param {String} text The text to be displayed in the option element
+       * @param {String} value The value of the option element
+       * @return {Object} The object (itself)
+       */
+      $object.FillSelect = function(prop, text, value) {
+        var textIsFunction = text.substring(text.length-2, text.length) === "()";
+        var valueIsFunction = value.substring(value.length-2, value.length) === "()";
+        var select = $object.Find('select[name*="'+prop+'"]');
+        select.empty();
+        $.each($object.Get(prop), function(k, v) {
+          var txt = textIsFunction ? v[text.substring(0, text.length-2)]() : v[text];
+          var val = valueIsFunction ? v[value.substring(0, value.length-2)]() : v[value];
+          // console.log(txt);
+          // console.log(val);
+          select.append($('<option />').attr({'value': val}).text(txt));
+        });
         return $object;
       };
 

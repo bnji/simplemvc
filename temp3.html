@@ -16,9 +16,11 @@
           return "Room # " + this.number + " costs $" + this.price;
         }
       }
+      // Simple MVC Room Manager
       var roomManager = $('#roomManager').ModelView(
       // MVC Model
       {
+        foo: "bar",
         selectedRoom: null,
         // Todo: Retrieve from an external datasource (database / webservice)
         rooms: MVC.List([new Room(101, 500), new Room(102, 600)])
@@ -29,42 +31,49 @@
           if(n === 'rooms') { // Only update selected room when rooms change!
             o.Set('selectedRoom', s);
           }
-          o.updateUI();
         }
       },
       // Methods
       {
-        addRoom: function(e, o) {
-          var roomNumber = o.Find('[name*="roomNumber"]').val();
-          var roomPrice = o.Find('[name*="roomPrice"]').val();
-          // Todo: Add input validation.
-          var room = new Room(roomNumber, roomPrice);
-          o.getRooms().Add(room);
-          o.addRoomsToList();
-          o.updateUI();
-        },
-        removeRoom: function(e, o) {
-          var room = o.Get('selectedRoom');
-          o.getRooms().Remove(room);
-          o.addRoomsToList();
-          o.updateUI();
-        },
-        getRooms: function() {
-          return this.Get('rooms');
-        },
-        addRoomsToList: function(e, o) {
-          var select = this.Find('select[name*="rooms"]').empty();
-          $.each(this.getRooms(), function(k, v) {
-            select.append($('<option />').attr({'value': v.toString()}).text(v['number']));
-          });
-        },
-        updateUI: function() {
-          this.Set('roomCount', this.getRooms().Size()); // Update room count
-        },
         init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
-          o.addRoomsToList();
-          o.Set('selectedRoom', o.getRooms().Get(0));
-          o.updateUI();
+          // var select = o.Find('select[name*="rooms"]').empty();
+          // $.each(o.Get('rooms'), function(k, v) {
+          //   select.append($('<option />').attr({'value': v.toString()}).text(v['number']));
+          // });
+          o.FillSelect('rooms', 'number', 'toString()');
+          o.Set('selectedRoom', o.Get('rooms').Get(0));
+          setTimeout(function() {
+            o.Set('foo', 'hello');
+          },2000);
+        }
+      });
+
+
+      var roomManager2 = $('#roomManager2').ModelView(
+      // MVC Model
+      {
+        foo: "bla",
+        selectedRoom: null,
+        // Todo: Retrieve from an external datasource (database / webservice)
+        rooms: MVC.List([new Room(300, 500), new Room(500, 600)])
+      },
+      // Settings & Events
+      {
+        change: function(e, n, v, o, t, s) { // event, name, value, object, targetValue, selectedValue
+          if(n === 'rooms') { // Only update selected room when rooms change!
+            o.Set('selectedRoom', s);
+          }
+          // console.log(o.GetModelData());
+        }
+      },
+      // Methods
+      {
+        init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
+          o.FillSelect('rooms', 'number', 'toString()');
+          o.Set('selectedRoom', o.Get('rooms').Get(0));
+          setTimeout(function() {
+            o.Set('foo', 'world');
+          },2000);
         }
       });
     });
@@ -73,23 +82,37 @@
   <body>
     <!-- Plain HTML code! -->
     <div id="roomManager">
-      <!-- Add Room -->
-      <label>Add a room:</label>
-      <input type="text" name="roomNumber" />
-      <input type="text" name="roomPrice" />
-      <button name="addRoom" class="isEvent">Add room</button>
-      <br />
+      <input name="foo" />
       <!-- Select Room -->
       <label>Choose a room:</label>
       <select name="rooms" class="excludeFromModel"></select>
-      <!-- Remove Room -->
-      <button name="removeRoom" class="isEvent">Remove room</button>
     </div>
     <!-- Room information -->
+    <span datasrc="#roomManager" name="selectedRoom"></span>
+    <br />
     <div datasrc="#roomManager">
-      Selected room: <span name="selectedRoom"></span>
-      <br />
-      Rooms: <span name="roomCount"></span>
+      <div>
+        Selected room: <span name="selectedRoom"></span>
+      </div>
+    </div>
+
+    <hr />
+
+
+    <!-- Plain HTML code! -->
+    <div id="roomManager2">
+      <input name="foo" />
+      <!-- Select Room -->
+      <label>Choose a room:</label>
+      <select name="rooms" class="excludeFromModel"></select>
+    </div>
+    <!-- Room information -->
+    <span datasrc="#roomManager2" name="selectedRoom"></span>
+    <br />
+    <div datasrc="#roomManager2">
+      <div>
+        Selected room: <span name="selectedRoom"></span>
+      </div>
     </div>
   </body>
 </html>
