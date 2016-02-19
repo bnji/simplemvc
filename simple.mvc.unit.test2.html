@@ -1,0 +1,927 @@
+<!--IE fixes -->
+<script type="text/javascript" src="lib/json2.js"></script>
+<script type="text/javascript"> if (!window.console) console = {log: function() {}}; </script>
+<!--//end IE fixes -->
+<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+<script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="simple.mvc.js"></script>
+<link rel="stylesheet" type="text/css" href="lib/jasmine-2.4.1/jasmine.css" />
+<script type="text/javascript" src="lib/jasmine-2.4.1/jasmine.js"></script>
+<script type="text/javascript" src="lib/jasmine-2.4.1/jasmine-html.js"></script>
+<script src="lib/jasmine-2.4.1/boot.js"></script>
+
+<span id="datafldTestElementDatabound" name="datafldTestElement" datasrc="#testArea">datafldTestElementValue</span>
+<span id="idTestElementDatabound" name="idTestElement" datasrc="#testArea">idTestElementValue</span>
+
+<div id="testArea" style="display: none;">
+  <span datafld="datafldSpan"> </span>
+  <br />
+  <input name="datafldTestElement" type="text" />
+  <br />
+  <input name="idTestElement" type="text" />
+  ID (input): <input class="isNumber" name="id" id="id" />
+  <br />
+  <input name="id2" id="id2" />
+  <br />
+  ID (span - updating when input ID changes): <span class="excludeFromModel" datasrc="#testArea" name="id" id="idDatabound"> </span>
+  <input class="excludeFromModel isNumber" datasrc="#testArea" name="id" />
+  <span class="excludeFromModel" id="imNotInTheModel">imNotInTheModelValue</span>
+  <input class="excludeFromModel" id="imNotInTheModelInput" value="imNotInTheModelInputValue" />
+  <br />
+  Type: <input type="text" name="type" />
+  <br />
+  <div datasrc="#testArea" name="type" id="typeDataboundInsideDiv" class="excludeFromModel">&nbsp;</div>
+  <br />
+  <div datasrc="" name="type" id="typeDataboundInsideDivNoDatasrc" class="excludeFromModel">&nbsp;</div>
+  <br />
+  <input type="text" name="canIjoinTheModelEvenNotSpecified" value="I'm not specified in the model, but the view wants me to join" class="" />
+
+  <input type="submit" name="submitButton" value="submitValue" />
+  <br />
+  <input type="button" name="save" id="save" value="save" />
+  <input type="button" name="update" id="update" value="update" />
+  <input type="button" name="delete" id="delete" value="delete" />
+
+</div>
+<div id="testArea2" style="display: none;">
+  ID (input): <input class="isNumber" name="id3" id="id3" />
+  <br />
+  Type: <input type="text" name="type2" value="typeValFromView" />
+  <div datasrc="#testArea" name="type" id="typeDataboundInsideDivBoundToOtherView" class="excludeFromModel">&nbsp;</div>
+  <br />
+  <span id="attachGetterSetterEvenNotSpecifiedInModel"> </span>
+</div>
+
+<div id="testArea3" style="display: none;">
+  <h2>Testing classes</h2>
+  <span class="isNumber" datafld="spanIsNumber">123456</span>
+  <span id="spanIsNotNumber">123456</span>
+  <input class="isNumber" name="inputIsNumber" type="text" value="123456" />
+  <input name="inputIsNotNumber" type="text" value="123456" />
+</div>
+
+<div id="testAreaEmpty" style="display: none;">
+  <input type="text" name="inModel" value="foobar" />
+</div>
+
+<div style="display:none;">
+  <h1>Outside the View</h1>
+  <p>
+    This input element will be databound to the property 'type' in the MVC 'testArea'.
+    <br />
+    <input datasrc="#testArea" type="text" name="type" id="typeDataboundInput" />
+    <span datasrc="#testArea" name="type" id="typeDataboundSpan">&nbsp;</span>
+    <p datasrc="#testArea" name="type" id="typeDataboundParagraph">&nbsp;</p>
+    <div datasrc="#testArea" name="type" id="typeDataboundDiv">&nbsp;</div>
+  </p>
+</div>
+
+
+<div style="display:none;" id="template-1">
+  <input type="text" name="id" />
+  <input type="text" name="foo" />
+</div>
+<div id="copies"></div>
+
+<script>
+// $(function() {
+//   //Unit testing setup
+//   (function() {
+//     var jasmineEnv = jasmine.getEnv();
+//     jasmineEnv.updateInterval = 1000;
+
+//     var htmlReporter = new jasmine.HtmlReporter();
+
+//     jasmineEnv.addReporter(htmlReporter);
+
+//     jasmineEnv.specFilter = function(spec) {
+//       return htmlReporter.specFilter(spec);
+//     };
+
+//     var currentWindowOnload = window.onload;
+
+//     window.onload = function() {
+//       if (currentWindowOnload) {
+//         currentWindowOnload();
+//       }
+//       execJasmine();
+//     };
+
+//     function execJasmine() {
+//       jasmineEnv.execute();
+//     }
+
+//   })();
+// });
+
+describe("A suite", function() {
+  it("contains spec with an expectation", function() {
+    expect(true).toBe(true);
+  });
+});
+
+describe("MVC Object which reflects model changes in the DOM ---- ", function() {
+
+  // var obj = $("#testArea").ModelView();
+
+  var timerCallback,
+      viewId,
+      obj,
+      ctr,
+      settings,
+      onChangeResultData = {};
+  // beforeEach(function(){
+    // timerCallback = jasmine.createSpy('timerCallback');
+    // jasmine.Clock.useMock();
+
+    viewId = '#testArea';
+
+  //   ctr = MVC.Controller({
+  //     Save : function(par) {
+  //       expect(par['a']).not.toBe(undefined);
+  //       expect(par['a']).toBe('saveExtraParameter');
+  //       //expect(obj).toEqual(o);
+  //     },
+  //     Update : function(par) {
+  //       expect(par['b']).not.toBe(undefined);
+  //       expect(par['b']).toBe('updateExtraParameter');
+  //       //expect(obj).toEqual(o);
+  //     },
+  //     Delete : function(par) {
+  //       expect(par['c']).not.toBe(undefined);
+  //       expect(par['c']).toBe('deleteExtraParameter');
+  //       //expect(obj).toEqual(o);
+  //     }
+  //   });
+
+    settings = {
+      controller : ctr,
+      isMirror : true,
+      change : function(e, n, v) {
+        onChangeResultData = {'name':n,'value':v};
+        //return {'name':n,'value':v};
+      }
+    };
+
+    obj = $(viewId).ModelView({
+    //obj = MVC.ModelView(viewId, {
+      datafldSpan : '',
+      datafldTestElement : '',
+      idTestElement : '',
+      id : 123,
+      id2 : 456,
+      type : 'typeVal'
+    }, settings);
+  // });
+
+  it("Intial value of 'id' to be 123 (Number) and not '123' (String), because it has the class 'isNumber'", function() {
+    console.log(obj.id);
+    console.log(obj.Get('id'));
+    console.log(obj['id']);
+    expect(obj['id']).not.toBe('123');
+    expect(obj['id']).toBe(123);
+  });
+
+  it("Intial value of 'id2' to be '456' (String) and not 456 (Number), because it does not have the class 'isNumber'", function() {
+    expect(obj['id2']).not.toBe(456);
+    expect(obj['id2']).toBe('456');
+  });
+
+  it("Initial value of 'type' to be 'typeVal'", function() {
+    expect(obj['type']).toBe('typeVal');
+  });
+
+  it("obj should not be null", function() {
+    expect(obj).not.toBe(null);
+  });
+
+  it("obj should not be undefined", function() {
+    expect(obj).not.toBe(undefined);
+  });
+
+  it(".Has() should return true when it has a given property", function() {
+    expect(obj.Has('id')).toBe(true);
+  });
+
+  it(".Has() should return false when it does NOT have a given property", function() {
+    expect(obj.Has('doesntexistinmodel')).toBe(false);
+  });
+
+  it("Calling MVC.Save() method should work", function() {
+    //MVC.Save(obj, 'saveExtraParameter');
+    obj.Save({a:'saveExtraParameter'});
+  });
+
+  // it("Calling MVC.Update() method should work", function() {
+  //   //MVC.Update(obj, 'updateExtraParameter');
+  //   obj.Update({b:'updateExtraParameter'});
+  // });
+
+  // it("Calling MVC.Delete() method should work", function() {
+  //   //MVC.Delete(obj, 'deleteExtraParameter');
+  //   obj.Delete({c:'deleteExtraParameter'});
+  // });
+
+  // it("Should work updating databound Input elements which are outside the View", function() {
+  //   var newVal = ''+Date.now();
+  //   obj.Set('type', newVal);
+  //   expect(obj.Get('type')).toEqual(newVal);
+  //   expect($('#typeDataboundInput').val()).toEqual(obj.Get('type')); //Input
+  // });
+
+  // it("Should work updating databound Span elements which are outside the View", function() {
+  //   var newVal = ''+Date.now();
+  //   obj.Set('type', newVal);
+  //   expect(obj.Get('type')).toEqual(newVal);
+  //   expect($('#typeDataboundSpan').text()).toEqual(obj.Get('type')); //Span
+  // });
+
+  // it("Should work updating databound Paragraph elements which are outside the View", function() {
+  //   var newVal = ''+Date.now();
+  //   obj.Set('type', newVal);
+  //   expect(obj.Get('type')).toEqual(newVal);
+  //   expect($('#typeDataboundParagraph').text()).toEqual(obj.Get('type')); //Paragraph
+  // });
+
+  // it("Should work updating databound Div elements which are outside the View", function() {
+  //   var newVal = ''+Date.now();
+  //   obj.Set('type', newVal);
+  //   expect(obj.Get('type')).toEqual(newVal);
+  //   expect($('#typeDataboundDiv').text()).toEqual(obj.Get('type')); //Div
+  // });
+
+  // it("Should work updating databound Div elements which are inside the View", function() {
+  //   var newVal = ''+Date.now();
+  //   obj.Set('type', newVal);
+  //   expect(obj.Get('type')).toEqual(newVal);
+  //   expect($('#typeDataboundInsideDiv').text()).toEqual(obj.Get('type')); //Div Inside
+  // });
+
+  // //Actually it should be possible. Only when cloning the datasrc should be empty!
+  // xit("Should work updating databound Div elements which are inside the View, but doesn't have the datasrc attribute set(specified)", function() {
+  //   var newVal = ''+Date.now();
+  //   obj.Set('type', newVal);
+  //   expect(obj.Get('type')).toEqual(newVal);
+  //   expect($('#typeDataboundInsideDivNoDatasrc').text()).toEqual(obj.Get('type')); //Div without datasrc specified
+  // });
+
+  // it("Should work updating databound Div elements which are inside a different View", function() {
+  //   var newVal = ''+Date.now();
+  //   obj.Set('type', newVal);
+  //   expect(obj.Get('type')).toEqual(newVal);
+  //   expect($('#typeDataboundInsideDivBoundToOtherView').text()).toEqual(obj.Get('type')); //Div Inside other View area
+  // });
+
+
+  // it("using datafld and id should work", function() {
+  //   var newVal = ''+Date.now();
+
+  //   obj.Set('datafldSpan', newVal);
+  //   expect(obj.Get('datafldSpan')).toBe(newVal);
+
+  //   obj.Set('datafldTestElement', newVal);
+  //   var domVal = $('#datafldTestElementDatabound').text();// obj.Get('datafldTestElement');
+  //   expect(domVal).toBe(newVal);
+
+  //   obj.Set('idTestElement', newVal);
+  //   domVal = $('#idTestElementDatabound').text();// obj.Get('idTestElement');
+  //   expect(domVal).toBe(newVal);
+  // });
+
+  // it("elements which have the class 'excludeFromModel' should not be included in the Model (even when inside the (DOM) View)", function() {
+  //   expect(obj['imNotInTheModel']).toBe(undefined);
+  //   expect(obj['imNotInTheModelInput']).toBe(undefined);
+  // });
+
+  // it("changing Model property using the MVC.Set() method should update the DOM value when 'isMirror' : true", function() {
+  //   var newVal = ''+Date.now();
+  //   //MVC.Set(obj, 'type', newVal);
+  //   obj.Set('type', newVal);
+  //   var domVal = obj.GetViewData()['type'];// MVC.GetViewData(viewId)['type'];
+  //   //alert(obj['type'] + " - " + MVC.Get(obj, 'type') + " - " + MVC.GetViewData(viewId)['type']);
+  //   expect(domVal).toBe(newVal);
+  // });
+
+  // it("changing Model property by reference should not update the DOM value", function() {
+  //   //alert(MVC.GetViewData(viewId)['type']);
+  //   var newVal = ''+Date.now();// MVC.Set(obj, 'type', ''+Date.now());
+  //   obj['type'] = newVal;
+  //   var domVal = obj.GetViewData()['type'];//MVC.GetViewData(viewId)['type'];
+  //   //alert(MVC.GetViewData(viewId)['type']);
+  //   expect(domVal).not.toBe(obj['type']);
+  // });
+
+  // it("change event should work", function() {
+  //   var newVal = ''+Date.now();
+  //   //$('#testArea #id').val(newVal).trigger('change');
+  //   //var ret = obj['settings']['change']('key', 'val');
+  //   //MVC.Set(obj, 'type', newVal);
+  //   obj.Set('type', newVal);
+  //   $('#testArea #type').val(newVal).trigger('change');
+  //   //onChangeResultData = obj obj['settings']['change'](null, 'key', 'val');
+  //   //alert(JSON.stringify(onChangeResultData));
+  //   expect(onChangeResultData['name']).toBe('type');
+  //   expect(onChangeResultData['value']).toBe(newVal);
+  // });
+
+  // it("obj settings should contain the viewId", function(){
+  //   expect(obj['settings']['viewId']).toEqual(viewId);
+  //   //obj['settings']['onChange']();
+  // });
+
+  // it("Testing if getter method is working", function() {
+  //   //obj.type = "hello";
+  //   var getVal = obj.Get('type');// MVC.Get(obj, 'type');
+  //   expect(obj.type).toBe(getVal);
+  // });
+
+  // it("Elements in the view should be threated as property of the model and therefore added to the model even not specified in the model", function() {
+  //   var domVal = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
+  //   expect(domVal['canIjoinTheModelEvenNotSpecified']).not.toBe(null);
+  //   expect(domVal['canIjoinTheModelEvenNotSpecified']).not.toBe(undefined);
+  //   expect(obj['canIjoinTheModelEvenNotSpecified']).not.toBe(null);
+  //   expect(obj['canIjoinTheModelEvenNotSpecified']).not.toBe(undefined);
+  //   expect(domVal['canIjoinTheModelEvenNotSpecified']).toBe(obj.canIjoinTheModelEvenNotSpecified);
+  // });
+
+  // it("Changing Model property directly should not update the dom value", function() {
+  //   var newVal = ''+Date.now();
+  //   obj.id = newVal;
+  //   expect(obj['id']).toBe(newVal);
+  //   var dom = obj.GetViewData();// MVC.GetViewData('#testArea', obj);
+  //   expect(dom['id']).not.toBe(newVal);
+  // });
+
+  // it("Updating an input element should update the model accordingly", function() {
+  //   var newVal = Date.now();
+  //   $('#testArea #id').val(newVal).trigger('change');
+  //   expect(obj['id']).toBe(newVal);
+  //   var dom = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
+  //   expect(dom['id']).toBe(newVal);
+  // });
+
+  // it("Updating an input element which has another element databound to it should be updated with same information", function() {
+  //   var newVal = Date.now();
+  //   $('#id').val(newVal).trigger('change');
+  //   //alert(obj.id);
+  //   expect(obj['id']).toBe(newVal);
+  //   var dom = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
+  //   expect(dom['id']).toBe(newVal);
+  //   //var databoundValue = $('#testArea').getSetHtml();
+  //   var databoundValue = parseInt($('#testArea #idDatabound').text());
+  //   //alert(JSON.stringify(databoundValue, null, 2));
+  //   expect(databoundValue).toBe(newVal);
+  // });
+
+  // it("Updating a property in the model using MVC.Set() will also update the DOM value.", function() {
+  //   var newVal = Date.now();
+  //   //MVC.Set(obj, 'id', newVal);
+  //   obj.Set('id', newVal);
+  //   expect(obj['id']).toBe(newVal);
+  //   var dom = obj.GetViewData(); //MVC.GetViewData('#testArea', obj);
+  //   expect(dom['id']).toBe(newVal);
+  // });
+
+  // it("View object should be equal to model object (JSON)", function() {
+  //   var domObj = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
+  //   settings = { settings : settings };
+  //   $.extend(domObj, settings);
+  //   domObj = JSON.stringify(domObj);
+  //   var modObj = JSON.stringify(obj);
+  //   expect(modObj).toEqual(domObj);
+  // });
+
+  // it("View object should be equal to model object (JSON) after the model has been updated", function() {
+  //   //MVC.Set(obj, 'id', 'foo');
+  //   obj.Set('id', 'foo');
+  //   //MVC.Set(obj, 'type', 'bar');
+  //   obj.Set('type', 'bar');
+  //   var domObj = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
+  //   settings = { settings : settings };
+  //   $.extend(domObj, settings);
+  //   domObj = JSON.stringify(domObj);
+  //   var modObj = JSON.stringify(obj);
+  //   expect(modObj).toEqual(domObj);
+  // });
+
+  // it("Should not work to get the value from a submit button", function() {
+  //   expect(obj['submitButton']).toBe(undefined);
+  // });
+
+  // it("Should work updating the value of a property using setTimeout() (simulating input change from user)", function() {
+  //   setTimeout(function() {
+  //     timerCallback();
+  //   }, 3000);
+  //   //MVC.Set(obj, 'type', 'delay change!');
+  //   obj.Set('type', 'delay change!');
+  //   var domVal = $('#typeDataboundSpan').html();
+  //   expect(domVal).toBe(obj.type);
+  //   //alert(domVal + " =?= " + obj.type);
+  // });
+
+  // it("Should work converting the object Model to an array using .toArray() method", function() {
+  //   expect($.isArray(obj)).toBe(false);
+  //   expect($.isArray(obj.toArray())).toBe(true);
+  // });
+
+  // it("Should work adding & removing a property in the Model with event's using .AddGetSet()", function() {
+  //   var newPropName = 'aNewProperty1',
+  //       newVal = Date.now();
+
+  //   obj.AddProperty(newPropName, newVal);
+  //   expect(obj[newPropName]).toEqual(newVal);
+
+  //   newVal = 'changed value!';
+  //   obj.Set(newPropName, newVal); //Changing the value with .Set();
+  //   expect(obj.Get(newPropName)).toEqual(newVal); //Access value with .Get();
+
+  //   obj.RemoveProperty(newPropName);
+  //   expect(obj[newPropName]).toEqual(undefined);
+  //   expect(obj.Get(newPropName)).toEqual(undefined);
+  // });
+
+  // it("Should work determine whether or not the Model has a property using .Has() method", function() {
+  //   expect(obj.Has('id')).toBe(true);
+  //   obj.RemoveProperty('id');
+  //   expect(obj.Has('id')).toBe(false);
+  // });
+
+  // xit("Should be possible to set the Model from the View using .SetModelFromView()", function() {
+
+  // });
+
+  // it("Should be possible to set the View from the Model using .SetViewFromModel() which also should update databound values!", function() {
+  //   obj['id'] = 'Name was changed in Model! - Now you see it after updating the View from the Model.';
+  //   obj['type'] = 'Name was changed in Model! - Now you see it after updating the View from the Model.';
+  //   expect($('#id').val()).not.toEqual(obj.Get('id'));
+  //   expect($('#idDatabound').text()).not.toEqual(obj.Get('id'));
+  //   obj.SetViewFromModel();
+  //   expect($('#id').val()).toEqual(obj.Get('id'));
+  //   expect($('#idDatabound').text()).toEqual(obj.Get('id'));
+  // });
+
+  // //Should not set the value in the View when updating only in the model using Bracket notation
+  // it("Should be possible to update the Model without changing the View (until .SetViewFromModel() has been called or on page refresh)", function() {
+  //   var newVal = '' + Date.now();
+  //   obj['type'] = newVal;
+  //   expect($(viewId + ' [name="type"]').val()).not.toEqual(newVal);
+  //   obj.SetViewFromModel();
+  //   expect($(viewId + ' [name="type"]').val()).toEqual(newVal);
+  //   expect(obj.Get('type')).toEqual(newVal);
+  // });
+
+  // it("Should up update both Model and View, when using .Set()", function() {
+  //   var newVal = '' + Date.now();
+  //   obj.Set('type', newVal);
+  //   expect($(viewId + ' [name="type"]').val()).toEqual(newVal);
+  //   expect(obj.Get('type')).toEqual(newVal);
+  // });
+
+  // it("Should be possible to find elements inside the View using the .Find() method", function() {
+  //   expect($(viewId + ' [name="type"]').val()).toBe(obj.Find('[name="type"]').val());
+  //   expect($(viewId + ' #id').text()).toBe(obj.Find('#id').text());
+  // });
+
+  // it("Should work clearing properties in the Model and the View", function() {
+  //   var domVal = '';
+
+  //   domVal = $('[name="type"]').val();
+  //   expect(obj.Get('type')).not.toEqual('');
+  //   expect(domVal).not.toEqual('');
+
+  //   obj.Clear('type');
+
+  //   domVal = $('[name="type"]').val();
+  //   expect(obj.Get('type')).toEqual('');
+  //   expect(domVal).toEqual('');
+  // });
+
+});
+
+
+// describe("MVC Object which does NOT reflect model changes in the DOM", function() {
+//   var obj,
+//       viewId;
+
+//   beforeEach(function(){
+//     viewId = '#testArea';
+//     obj = $(viewId).ModelView({
+//     //obj = MVC.ModelView(viewId, {
+//       id : 123,
+//       type : 'typeVal'
+//     }, {
+//       isMirror:false,
+//       change: function(e, n, v) {
+//         alert("ok");
+//       }
+//     });
+//   });
+
+//   it("Should clear all values in the model even when isMirror = false", function() {
+//     obj.ClearAll();
+//     expect(obj['id']).toBe('');
+//     expect(obj['type']).toBe('');
+//   });
+
+//   it("Should clear a single value even when isMirror = false", function() {
+//     obj.Clear('type');
+//     expect(obj['id']).toBe(123);
+//     expect(obj['type']).toBe('');
+//   });
+
+//   it("Changing Model property using the .Set() method should not set the property or the DOM value when 'isMirror' : false", function() {
+//     var newVal = ''+Date.now();
+//     //MVC.Set(obj, 'type', newVal);
+//     obj.Set('type', newVal);
+//     var domVal = obj.GetViewData()['type'];//MVC.GetViewData(viewId)['type'];
+//     expect(domVal).not.toBe(newVal);
+//     var propVal = obj['type'];
+//     expect(propVal).not.toBe(newVal);
+//   });
+
+//   it("Getting a Model property value using the MVC.Get() method should be undefined when 'isMirror' : false", function() {
+//     var objVal = obj.Get('type'); //MVC.Get(obj, 'type');
+//     expect(objVal).toBe(undefined);
+//   });
+
+//   it("Updating Model properties (and therefore also DOM values) using .Set() should not work", function() {
+//     var newVal = Date.now();
+//     //MVC.Set(obj, 'id', newVal);
+//     obj.Set('id', newVal);
+//     expect(obj['id']).not.toBe(newVal);
+//     var dom = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
+//     expect(dom['id']).not.toBe(newVal);
+//   });
+
+// });
+
+// describe("MVC Object without settings", function() {
+//   var obj,
+//       viewId;
+
+//   beforeEach(function(){
+//     viewId = '#testArea';
+//     obj = $(viewId).ModelView({
+//     //obj = MVC.ModelView(viewId, {
+//       id : 123,
+//       type : 'typeVal'
+//     });
+//   });
+
+//   it("obj settings should never be undefined or null, even when not specified", function(){
+//     expect(obj['settings']).not.toBe(undefined);
+//     expect(obj['settings']).not.toBe(null);
+//   });
+
+//   it("obj settings should contain the viewId property and to equal viewId", function(){
+//     expect(obj['settings']['viewId']).toEqual(viewId);
+//   });
+
+//   it("obj settings should contain the isMirror property and be set to true", function(){
+//     expect(obj['settings']['isMirror']).toEqual(true);
+//   });
+
+// });
+
+// describe("MVC Object with autosave", function() {
+//   var value, flag;
+//   var timerCallback,
+//       obj,
+//       ctr,
+//       viewId,
+//       counter = 0;
+
+//   ctr = MVC.Controller({
+//     Save : function(o, currentTimePar) {
+//       //alert(counter);
+//       /*timerCallback();
+
+//       setTimeout(function() {
+//         expect(counter).toBeGreaterThan(2);
+//       }, 1000);*/
+
+//       setTimeout(function() {
+//         timerCallback();
+//         counter++;
+//       }, 100);
+
+//       expect(timerCallback).not.toHaveBeenCalled();
+//       alert(counter);
+//       jasmine.Clock.tick(101);
+//       alert(counter);
+//       jasmine.Clock.tick(1001);
+//       alert(counter);
+//       expect(timerCallback).toHaveBeenCalled();
+//     }
+//   });
+
+//   beforeEach(function(){
+//     timerCallback = jasmine.createSpy('timerCallback');
+//     jasmine.Clock.useMock();
+
+//     viewId = '#testArea';
+//     obj = $(viewId).ModelView({
+//     //obj = MVC.ModelView(viewId, {
+//       id : 123,
+//       type : 'typeVal'
+//     }, {
+//       controller : ctr,
+//       autoSaveInterval : 5000
+//     });
+//   });
+
+//   xit("autoSaveInterval = 5000 should call the Save() method every 5 seconds", function() {
+//     //MVC.Save(obj, Date.now());
+//     obj.Save(Date.now());
+//   });
+
+//   xit("should support async execution of test preparation and exepectations", function() {
+//     runs(function() {
+//       flag = false;
+//       value = 0;
+
+//       setTimeout(function() {
+//         flag = true;
+//       }, 500);
+//     });
+
+//     waitsFor(function() {
+//       value++;
+//       return flag;
+//     }, "The Value should be incremented", 750);
+
+//     runs(function() {
+//       expect(value).toBeGreaterThan(0);
+
+//     });
+//   });
+
+// });
+
+// describe("MVC Object Getter & Setter", function() {
+//   var obj,
+//       viewId;
+
+//   beforeEach(function(){
+//     viewId = '#testArea2';
+//     obj = $(viewId).ModelView({
+//     //obj = MVC.ModelView(viewId, {
+//       id3 : 123,
+//       type2 : 'typeValFromModel'
+//     }, {
+//       isMirror : true
+//     });
+//   });
+
+//   it("Getter & Setter methods should be attached to properties which are specified by the DOM but not in Model (when 'isMirror' : true)", function() {
+//     var newVal = ''+Date.now();
+//     obj.Set('attachGetterSetterEvenNotSpecifiedInModel', newVal);
+//     var domVal = obj.Get('attachGetterSetterEvenNotSpecifiedInModel');
+//     expect(domVal).toBe(newVal);
+//   });
+
+//   it("Should work removing getters & setters and add them again to a property in the Model", function() {
+//     var newVal = '', lastTypeValBeforeRemovedGetterSetter = '';
+//     expect(obj.Get('type2')).toEqual('typeValFromModel'); //alert('Original value from View: ' + obj.Get('type2'));
+//     newVal = 'type2 - Changed In Model & View';
+//     obj.Set('type2', newVal);
+//     lastTypeValBeforeRemovedGetterSetter = newVal;
+//     expect(obj.Get('type2')).toEqual(newVal); //alert('Changed value in Model & View: '  + obj.Get('type2'));
+//     obj.RemoveGetSet('type2');
+//     expect(obj.Get('type2')).toEqual(undefined); //alert('Removed Getter & Setter (should be "undefined"): ' + obj.Get('type2'));
+//     newVal = Date.now();
+//     obj.Set('id3', newVal);
+//     expect(obj.Get('id3')).toEqual(newVal); //alert('.Get() & .Set() should still work on the property "id3": ' + obj.Get('id3'));
+//     obj.AddGetSet('type2');
+//     expect(obj.Get('type2')).toEqual(lastTypeValBeforeRemovedGetterSetter); //alert('Added Getter & Setter (should NOT be "undefined"): ' + obj.Get('type2'));
+//   });
+
+// });
+
+// describe("MVC Object: testing classes.", function() {
+//   var obj,
+//       viewId;
+
+//   beforeEach(function(){
+//     viewId = '#testArea3';
+//     obj = $(viewId).ModelView({});
+//     //obj = MVC.ModelView(viewId, {});
+//   });
+
+//   it("spanIsNumber should be a number", function() {
+//     expect(obj['spanIsNumber']).toEqual(123456);
+//   });
+
+//   it("spanIsNotNumber should not be a number", function() {
+//     expect(obj['spanIsNotNumber']).not.toEqual(123456);
+//   });
+
+
+// });
+
+// describe("MVC Object without object data", function() {
+//   var obj,
+//       viewId;
+
+//   beforeEach(function(){
+//     viewId = '#testAreaEmpty';
+//     obj = $(viewId).ModelView();
+//     //obj = MVC.ModelView(viewId);
+//   });
+
+//   it("Object should be empty, but not null or undefined, even if not provided!", function() {
+//     expect(obj).not.toBe(undefined);
+//     expect(obj).not.toBe(null);
+//   });
+
+//   it("Model should have property added, even when not object data intially where passed (only viewId)", function() {
+//     expect(obj['inModel']).toEqual('foobar');
+//   });
+
+// });
+
+
+
+// describe(".GetModelData()", function() {
+//   var obj,
+//       data,
+//       methods;
+
+//   //Some data specified by the Model (the model's data)
+//   data = {
+//     id : '#'+Date.now(),
+//     aValue : 'I am a string value',
+//     anObject : {
+//       apple: 'I love apple pie',
+//       pie: 'Pie loves apples'
+//     },
+//     anArray : ['hello','world']
+//   };
+
+//   methods = {
+//     aMethod : function() {
+//       return true;
+//     }
+//   }
+
+//   var objectData = $.extend({}, true, data, methods);
+
+//   beforeEach(function(){
+//     obj = $('#doesntExistInDom').ModelView(objectData);
+//     //obj = MVC.ModelView('#doesntExistInDom', objectData);
+//   });
+
+//   it("The data specified by the Model NOT to be same as the object 'obj'", function() {
+//     //console.log(data);
+//     expect(data).not.toEqual(obj);
+//   });
+
+//   it("The data specified by the Model to be same as the obj.GetModelData()", function() {
+//     console.log(data);
+//     expect(data).toEqual(obj.GetModelData());
+//   });
+
+// });
+
+
+
+
+// describe("Cloning an object", function() {
+//   var clones;
+
+//   beforeEach(function(){
+//     clones = MVC.List();
+//   });
+
+//   it("Should work creating a clone from a template", function() {
+//     var obj = createCloneWithDataAndEvents('#'+Date.now());
+//     expect(clones.Size()).toEqual(0);
+//     clones.Add(obj);
+//     expect(clones.Size()).toEqual(1);
+//   });
+
+//   it("Should work creating a clone using the hashtag", function() {
+//     var newId = '#' + Date.now();
+//     var obj = createCloneWithDataAndEvents(newId);
+//     expect(obj.GetViewId()).toEqual(newId);
+//   });
+
+//   it("Should work creating a clone without using the hashtag (and the viewId is now a string)", function() {
+//     var newId = Date.now(); //a number
+//     var obj = createCloneWithDataAndEvents(newId);
+//     expect(obj.GetViewId()).toEqual(''+newId); //make sure we test for a string!
+//   });
+
+//   it("If 'withDataAndEvents' has not been specified, it should become 'false'", function() {
+//     var newId = Date.now();
+//     var obj = createCloneWithoutDataAndEvents(newId);
+//     expect(obj['settings']['clone']['withDataAndEvents']).toBe(false);
+//   });
+
+//   function createCloneWithDataAndEvents(_id) {
+//     return $('#template-1').ModelView({
+//     //return MVC.ModelView('#template-1', {
+//       //Data
+//       id : 123,
+//       foo : 'bar'
+//     }, {
+//       //Settings
+//       clone: {
+//         id: _id,
+//         withDataAndEvents: true,
+//         append: function(elem) {
+//           $('#copies').append(elem);
+//           //$(elem).show(); //don't make the clones visible when testing
+//         }
+//       }
+//     });
+//   }
+
+//   function createCloneWithoutDataAndEvents(_id) {
+//     return $('#template-1').ModelView({
+//     //return MVC.ModelView('#template-1', {
+//       //Data
+//       id : 123,
+//       foo : 'bar'
+//     }, {
+//       //Settings
+//       clone: {
+//         id: _id,
+//         append: function(elem) {
+//           $('#copies').append(elem);
+//           //$(elem).show(); //don't make the clones visible when testing
+//         }
+//       }
+//     });
+//   }
+
+// });
+
+
+
+// describe("MVC.List()", function() {
+//   var o;
+
+//   beforeEach(function(){
+//     o = {
+//       id : Date.now(),
+//       foo : 'bar',
+//       aFunc : function() {
+//         return true;
+//       },
+//       arrayInside : ['a', 'b']
+//     };
+//   });
+
+//   it("Object should not be an array ", function() {
+//     expect($.isArray(o)).toBe(false);
+//   });
+
+//   it("MVC.List pass object should convert into array and not empty", function() {
+//     a = MVC.List(o);
+//     expect($.isArray(a)).toBe(true);
+//     expect(a.Size()).toEqual(3);
+//   });
+
+//   it("MVC.List pass object should convert into array, but be empty (set to undefined)", function() {
+//     o = undefined;
+//     a = MVC.List(o);
+//     expect($.isArray(a)).toBe(true);
+//     expect(a.Size()).toEqual(0);
+//   });
+
+//   it("MVC.List pass object should convert into array, but be empty (set to null)", function() {
+//     o = null;
+//     a = MVC.List(o);
+//     expect($.isArray(a)).toBe(true);
+//     expect(a.Size()).toEqual(0);
+//   });
+
+//   it(".Add() should add a value to the array", function() {
+//     a = MVC.List(o);
+//     expect(a.Size()).toEqual(3);
+//     a.Add('I am new');
+//     expect(a.Size()).toEqual(4);
+//   });
+
+//   it(".Remove() should remove a value from the array", function() {
+//     a = MVC.List(o);
+//     expect(a.Size()).toEqual(3);
+//     a.Remove('bar');
+//     expect(a.Size()).toEqual(2);
+//   });
+
+//     /*
+//         o['im_new'] = 'hello there';
+//         //o = ['a', 'b'];
+//         //o = 'bar';
+//         console.log(o);
+//         a = MVC.List(o);
+//         console.log($.isArray(o));
+//         console.log($.isArray(a));*/
+
+// });
+
+
+
+</script>

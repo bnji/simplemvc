@@ -172,6 +172,18 @@ var MVC = {
     };
 
     /**
+     * RemoveAt
+     *
+     * Remove an element at index (if found) from the array.
+     *
+     * @method RemoveAt
+     * @param {Integer} Index.
+     */
+    array.RemoveAt = function(index) {
+      return this.Remove(this.Get(index));
+    };
+
+    /**
      * Contains
      *
      * Check if the specified element is in the list
@@ -493,7 +505,13 @@ var MVC = {
               //alert(n + ": " + ov + "=>" + nv);
               //Update the view accordingly
               //MVC.SetViewFromModel(viewId, $object); //$(viewId).getSetHtml($object);
-              $object.SetViewFromModel();
+
+              // TODO: FIX THIS!!!
+              // It currently doesn't work with select (lists)!
+              // Disabled temporarily
+              // $object.SetViewFromModel();
+
+
               //Make sure that the input will have the change event triggered,
               //so that the views bound to this element will also be updated.
               //This is important in case the model is changed using setTimeout()
@@ -596,7 +614,7 @@ var MVC = {
        * @param {String} value The new value to set for the property
        * @return {Object} The object (itself)
        */
-      $object.Set = function(prop, value, canTriggerHandler) {
+      $object.Set = function(prop, value){
         //console.log("Set()");
         //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
         //$($object).triggerHandler('set'+prop, [value]); ?
@@ -607,9 +625,7 @@ var MVC = {
         if($object['settings']['isMirror'] && !$object.Has(prop)) {
           $object.AddProperty(prop, value);
         }
-        if(canTriggerHandler === undefined) {
-          $($object).triggerHandler('set'+prop, [value]);
-        }
+        $($object).triggerHandler('set'+prop, [value]);
         //Update databound DOM values
         //Update databound elements with datasrc if specified, otherwise with viewId.
         $object.SetDataboundDomVal(datasrc ? datasrc : viewId, prop, value);
