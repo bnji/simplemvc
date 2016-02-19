@@ -748,8 +748,10 @@ var MVC = {
       $object.SetViewFromModel = function() {
         //console.log("SetViewFromModel()");
         $object.SetViewData();
+        var data = $object.GetModelData();
+        // alert(JSON.stringify(data));
         //Update the databound values!!!
-        $.each($object.GetModelData(), function(key, newVal) {
+        $.each(data, function(key, newVal) {
           $object.SetDataboundDomVal(viewId, key, newVal);
         });
         return $object;
@@ -779,6 +781,7 @@ var MVC = {
        $object.SetModelFromView = function() {
         //Get the values from the View (DOM)
         var data = $object.GetViewData();
+        // alert(JSON.stringify(data));
         //Update the model using the View values
         $.each(data, function(key, newVal) {
           // console.log("SetModelFromView() - key: " + key + ", value: " + newVal);
@@ -786,8 +789,13 @@ var MVC = {
           //Only update values if they're changed
           //Check the value of oldVal (not newVal)
           var valType = typeof oldVal;
-          if(oldVal !== newVal) {
-            //alert("Key: " + key + "\nOld value: " + oldVal + " (" + typeof oldVal + ")\nNew value: " + newVal + " (" + typeof newVal + ")");
+          // newVal should not be null or undefined!
+          if(oldVal !== newVal && newVal) {
+            // console.log('oldVal');
+            // console.log(oldVal);
+            // console.log('newVal');
+            // console.log(newVal);
+            // alert("Key: " + key + "\nOld value: " + oldVal + " (" + typeof oldVal + ")\nNew value: " + newVal + " (" + typeof newVal + ")");
             //A problem arises when comparing object literals!!!
             //should valType (string, number, boolean, object, undefined, function)
             //be used for anything?
@@ -843,6 +851,20 @@ var MVC = {
           $('div[datasrc*="'+datasrc+'"],p[datasrc*="'+datasrc+'"],span[datasrc*="'+datasrc+'"]').parent().find('[name*="'+name+'"]').text(value);
         }
         else {
+          // var el2 = $('[datasrc*="'+datasrc+'"][name*="'+name+'"]');
+          // var el2 = $(datasrc).find('[name*="'+name+'"]');
+          // console.log($(el2));
+          // // var targetElement = $(datasrc).find('input[name*="'+name+'"]');
+          // // console.log("name: " + name + ", value: " + value + ", class: " + el2.hasClass ('append'));
+          // if(el2.hasClass('append')) {
+          //   el2.append(value);
+          // }
+          // else if(el2.hasClass('prepend')) {
+          //   el2.prepend(value);
+          // }
+          // else {
+          //   el2.text(value);
+          // }
           // case: <span datasrc="#viewId" name="somename"></span>
           $('*[datasrc*="'+datasrc+'"][name*="'+name+'"]').text(value);
           // case: <div datasrc="#viewId"><span name="somename"></span></div>
