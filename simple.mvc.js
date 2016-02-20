@@ -601,9 +601,7 @@ var MVC = {
         if(typeof value === 'function') {
           computedProperties.push({ 'name': prop, 'func': value });
           value = value($object);
-          //Update databound DOM values
-          //Update databound elements with datasrc if specified, otherwise with viewId.
-          $object.SetDataboundDomVal(datasrc ? datasrc : viewId, prop, value);
+          $object.Set(prop, value);
         }
         return $object;
       };
