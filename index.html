@@ -173,7 +173,7 @@
             </div>
             <div class="span4">
               <h2><i class="icon icon-star"></i> Code quality</h2>
-              <p>High code quality using test driven development with unit testing. A behavior-driven development framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a> has been used for testing.<br /><br /></p>
+              <p>High code quality using test driven development with unit testing. A behavior-driven development framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a> has been used for testing.<br /><a href="simple.mvc.unit.test.html">Run Unit Tests</a></p>
             </div>
           </div><!--/row-->
           <div class="row">
@@ -218,13 +218,34 @@
 
         <p class="spacer2"></p>
 
+        <div id="codeExamplesBody">
+          <div class="page-header">
+            <h1>
+              Examples
+              <small>
+                <i>Code examples which show how to use the library.
+                  <br />
+                  For more examples <a href="../simplemvc/examples/index.html">click here</a>
+                  <br />
+                  <a href="../simplemvc/examples/todo">Todo App Demo</a>
+                  <br />
+                  <a href="../simplemvc/examples/generic-vs-simplemvc">Generic JavaScript vs jQuery + SimpleMVC Demo</a>
+                </i>
+              </small>
+            </h1>
+          </div>
+          <br />
+          <script async src="http://jsfiddle.net/bendot/5451zxyf/embed/js,html,result/"></script>
+
+        <p class="spacer2"></p>
+
         <div>
           <div class="page-header">
             <h1 id="problemBody">
-              The problem
+              About Simple MVC
               <small>
                 <i>
-                 How to keep the DOM/HTML(view) synchronized with the JavaScript(model)?
+                 How to keep the View synchronized with the Model?
                </i>
              </small>
            </h1>
@@ -232,62 +253,34 @@
 
          <p>
           The view should always be synchronized with the model and optionally the other way around.
-          To solve this problem I've researched a little on how other libraries solve this problem
-          and found Ember.js (42KB min.) & Angular.js(78KB min.) to be one of the people's favorites - mine included.
-          Although these libraries solve the problem at hand - quite well - I still found myself
-          left with a few questions:
-          <ul>
-            <li>Do I need all this extra code which is more than 42KB?</li>
-            <li>Can I achieve this with my current libraries (e.g. jQuery)?</li>
-            <li>Do I really need to learn a new templating system (e.g. handlebars)?</li>
-            <li>Is it possible to use the existing HTML attributes instead of creating new ones for gluing things together?</li>
-            <li>How can I combine the best from both of these mentioned libraries, but only solving the task of keeping the view and model synchronized without too much extra functionality added?</li>
-          </ul>
+          Many other libraries already solve this problem, but you still need too learn new stuff.
+          Either new ways of structuring your code, usage of a templating system (why!), library is
+          way too large (>40KB minified), no support for older browsers, say they support a browser,
+          but when I've tried it, it breaks (IE). My favorite (beside Simple MVC) is KnockoutJS,
+          which solves the problem by keeping the library focused on handling the problem of binding
+          the View with the Model and not adding extravagance functionality, it has no dependencies,
+          has cross-browser support (back to IE6!), etc. - BUT - I still didn't find myself quite
+          happy using it, as I don't like the way they bind the Model to the DOM/HTML (View). Therefor
+          I've created this library, which should solve all the same tasks as KnockoutJS.
           <br />
-          <b>Note:</b>
-          <i>
-            With all these questions in mind, it should be worth noting that these
-            libraries are of great value and probably are of higher standards
-            developed by more clever people than me.
-
-          </i>
+          Using jQuery, it ensures cross-browser support (depending on jQuery version).
+          The solution to these questions could not be implemented (for cross-browser functionality) without jQuery, as there is a problem with
+          event driven design using getters and setters in browsers like IE. Therefore the problem was solved using jQuery's
+          <code><a href="http://api.jquery.com/bind/">.bind()</a></code> and <code><a href="http://api.jquery.com/trigger/">.trigger()</a></code> methods bound to the object's properties.
+          <br />
+          <h2>Philosophy</h2>
+          <ul>
+            <li>Keep the code as light weight as possible.</li>
+            <li>Use jQuery as only dependency to ensure cross-browser compatability (tradeoff: newer versions support only modern browsers and jQuery is ... well... necessary)</li>
+            <li><b>No templating system!</b> - Use existing HTML elements and attributes instead of a templating system.</li>
+            <li>Cross-browser (& Mobile/Desktop)! (depends on jQuery version)</li>
+            <li>Always update the Model when the View changes. Optionally update the View, if <code>isMirror: true</code>, when the Model is changed.</li>
+            <li>Code quality using Test Driven Development.</li>
+            <li>Never add extravagance functionality!</li>
+          </ul>
         </p>
 
-
       </div>
-
-      <p class="spacer2"></p>
-
-      <div id="solutionBody">
-        <div class="page-header">
-          <h1>
-            The solution
-            <small>
-              <i>
-               MVC / MVVM design pattern solution using jQuery + HTML.
-             </i>
-           </small>
-         </h1>
-       </div>
-
-       <p>
-        The solution to these questions could not be implemented (for cross-browser functionality) without jQuery, as there is a problem with
-        event driven design using getters and setters in browsers like IE. Therefore the problem was solved using jQuery's
-        <code><a href="http://api.jquery.com/bind/">.bind()</a></code> and <code><a href="http://api.jquery.com/trigger/">.trigger()</a></code> methods bound to the object's properties.
-      </p>
-      <h2>Philosophy behind</h2>
-      <p>
-        <ul>
-          <li>Keep the code as light weight as possible.</li>
-          <li>Use existing HTML elements and attributes instead of a templating system.</li>
-          <li>Cross-browser back to IE6!</li>
-          <li>Always update the Model when the View changes.</li>
-          <li>Optionally update the View, if <code>isMirror</code> is set to be <code>true</code>, when the Model is changed.</li>
-          <li>Code quality and testing!</li>
-          <li>Never add extravagance functionality!</li>
-        </ul>
-      </p>
-    </div>
 
     <p class="spacer2"></p>
 
@@ -311,41 +304,6 @@
       </p>
     </div>
 
-    <p class="spacer2"></p>
-
-    <div id="codeExamplesBody">
-      <div class="page-header">
-        <h1>
-          Examples
-          <small>
-            <i>Code examples which show how to use the library.
-              <br />
-              For more examples <a href="../simplemvc/examples/index.html">click here</a>
-              <br />
-              <a href="../simplemvc/examples/todo">Todo App Demo</a>
-              <br />
-              <a href="../simplemvc/examples/generic-vs-simplemvc">Generic JavaScript vs jQuery + SimpleMVC Demo</a>
-            </i>
-          </small>
-        </h1>
-      </div>
-      <br />
-      <iframe style="width: 100%; height: 600px" src="http://jsfiddle.net/bendot/tLNbC/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
-  <!--
-  <p>
-    <i><a id="example4Toggle" href="#">Try it out right here</a> <b>or</b> <a target="_blank" href="../simplemvc/examples/example4.html">Open in new tab!</a></i>
-    <br />
-<pre id="example4Code" class="prettyprint pre-scrollable linenums">
-<?php
-echo htmlspecialchars(file_get_contents('../simplemvc/examples/example4.html'));
-?>
-</pre>
-  <div id="example4Run" style="display:none;">
-    <iframe style="border:0; width: 100%;" scrolling="no" width="100%" height="600px" src="../simplemvc/examples/example4.html"></iframe>
-  </div>
-  </p>
-  <br />-->
-
 
 </div>
 
@@ -356,7 +314,7 @@ echo htmlspecialchars(file_get_contents('../simplemvc/examples/example4.html'));
     <h1>
       API
       <small>
-        <i>This API documentation is more like a mixture of a Guide and API documentation. To see the 'real' API documentation - which also is more fresh(updated) - <a href="../simplemvc/doc">click here</a></i>
+        Read the API documentation <a href="../simplemvc/doc">here</a>
       </small>
     </h1>
   </div>
@@ -962,23 +920,6 @@ obj = MVC.ModelView(viewId, { foo : 'bar' }, settings);
 
 <p class="spacer2"></p>
 
-<div id="unittestBody">
-  <div class="page-header">
-    <h1>
-      Unit Testing Results
-      <small>
-        <i>Click on 'Run tests' to execute!</i>
-      </small>
-    </h1>
-  </div>
-  <br />
-  <a href="#" id="runUnitTests">Run tests</a>
-  <br />
-  <iframe style="display: none;" id="unitTestResultsFrame" style="border:0; width: 100%;" scrolling="no" width="100%" height="1000px"></iframe>
-</div>
-
-<p class="spacer2"></p>
-
 <div id="commentsBody">
   <div class="page-header">
     <h1>
@@ -1018,13 +959,7 @@ obj = MVC.ModelView(viewId, { foo : 'bar' }, settings);
   scrollTo2('#setup', '#setupBody', {duration:'2000'}, null);
   scrollTo2('.codeExamples', '#codeExamplesBody', {duration:'5000'}, null);
   scrollTo2('#api', '#apiBody', {duration:'2000'}, null);
-  scrollTo2('#unittest', '#unittestBody', {duration:'2000'}, null);
   scrollTo2('#comments', '#commentsBody', {duration:'2000'}, null);
-
-  $('#runUnitTests').click(function(e){
-    $('#unitTestResultsFrame').css('border',0).show().attr('src', 'simple.mvc.unit.test.html');
-    e.preventDefault();
-  });
 
   $('#navbar').scrollspy();
   addPopover("#modelViewControllerWiki", "Model View Controller", "[...Model-View-Controller (MVC) is a type of computer user interface that separates the representation of information from the user's interaction with it.[1][2] The model consists of application data and business rules, and the controller mediates input, converting it to commands for the model or view.[3] A view can be any output representation of data, such as a chart or a diagram....]", "http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller");
