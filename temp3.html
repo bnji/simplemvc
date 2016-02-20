@@ -20,6 +20,7 @@
       var roomManager = $('#roomManager').ModelView(
       // MVC Model
       {
+        type : 'hello',
         foo: "bar",
         selectedRoom: null,
         // Todo: Retrieve from an external datasource (database / webservice)
@@ -85,15 +86,18 @@
       <input name="foo" />
       <!-- Select Room -->
       <label>Choose a room:</label>
-      <select name="rooms" class="excludeFromModel"></select>
+      <select name="rooms" class="excludeFromModel"></select><br />
+      Type: <input type="text" name="type" />
     </div>
     <!-- Room information -->
-    <span datasrc="#roomManager" name="selectedRoom"></span>
-    <br />
+    <!-- <span datasrc="#roomManager" name="selectedRoom"></span> -->
+    <!-- <br /> -->
+    <input datasrc="#roomManager" type="text" name="type" id="type" />
     <div datasrc="#roomManager">
-      <div>
         Selected room: <span name="selectedRoom"></span>
-      </div>
+        <br />
+        Type: <span name="type"></span><br />
+        Type: <input type="text" name="type" />
     </div>
 
     <hr />

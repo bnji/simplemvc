@@ -859,29 +859,17 @@ var MVC = {
           // case: <span datasrc="#viewId" name="somename"></span>
           $('div[datasrc="'+datasrc+'"][name="'+name+'"],p[datasrc="'+datasrc+'"][name="'+name+'"],span[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
           // case: <div datasrc="#viewId"><span name="somename"></span></div>
-          $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('[name="'+name+'"]').text(value);
+          $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('div[name="'+name+'"],p[name="'+name+'"],span[name="'+name+'"]').text(value);
+          $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('input[name="'+name+'"]').val(value);
         }
         else {
-          // var el2 = $('[datasrc*="'+datasrc+'"][name*="'+name+'"]');
-          // var el2 = $(datasrc).find('[name*="'+name+'"]');
-          // console.log($(el2));
-          // // var targetElement = $(datasrc).find('input[name*="'+name+'"]');
-          // // console.log("name: " + name + ", value: " + value + ", class: " + el2.hasClass ('append'));
-          // if(el2.hasClass('append')) {
-          //   el2.append(value);
-          // }
-          // else if(el2.hasClass('prepend')) {
-          //   el2.prepend(value);
-          // }
-          // else {
-          //   el2.text(value);
-          // }
           // case: <span datasrc="#viewId" name="somename"></span>
           if(value) {
             // console.log("datasrc: " + datasrc + " - name: " + name + " - value: " + value + " - " + $('*[datasrc*="'+datasrc+'"]').find('[name*="'+name+'"]').text());
             $('*[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
             // case: <div datasrc="#viewId"><span name="somename"></span></div>
-            $('*[datasrc="'+datasrc+'"]').find('[name="'+name+'"]').text(value);
+            $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').text(value);
+            $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').val(value);
           }
         }
         $('input[datasrc="'+datasrc+'"][name="'+name+'"]').val(value);
