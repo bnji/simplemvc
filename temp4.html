@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 10</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="simple.mvc.js"></script>
+    <script>
+    $(function() {
+      $('#helloWorld').ModelView({
+        firstName: 'John',
+        lastName: 'Doe'
+      })
+      .AddComputedProperty('fullName', function(o) {
+        return ("{0} {1}").format(o.firstName, o.lastName);
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <div id="helloWorld">
+      <label>First name:</label>
+      <input type="text" name="firstName" />
+      <br />
+      <label>Last name:</label>
+      <input type="text" name="lastName" />
+    </div>
+    <div datasrc="#helloWorld">
+      Hello, <span name="fullName"></span>
+    </div>
+  </body>
+</html>

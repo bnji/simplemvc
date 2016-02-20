@@ -595,6 +595,19 @@ var MVC = {
         return $object;
       };
 
+      var computedProperties = [];
+
+      $object.AddComputedProperty = function(prop, value){
+        if(typeof value === 'function') {
+          computedProperties.push({ 'name': prop, 'func': value });
+          value = value($object);
+          //Update databound DOM values
+          //Update databound elements with datasrc if specified, otherwise with viewId.
+          $object.SetDataboundDomVal(datasrc ? datasrc : viewId, prop, value);
+        }
+        return $object;
+      };
+
       /**
        * Set
        *
@@ -806,7 +819,7 @@ var MVC = {
             // console.log(oldVal);
             // console.log('newVal');
             // console.log(newVal);
-            // alert("Key: " + key + "\nOld value: " + oldVal + " (" + typeof oldVal + ")\nNew value: " + newVal + " (" + typeof newVal + ")");
+            // console.log("Key: " + key + "\nOld value: " + oldVal + " (" + typeof oldVal + ")\nNew value: " + newVal + " (" + typeof newVal + ")");
             //A problem arises when comparing object literals!!!
             //should valType (string, number, boolean, object, undefined, function)
             //be used for anything?
@@ -830,6 +843,10 @@ var MVC = {
           //when setting the values on .init() the databound items should ofcourse
           //get updated even if the model data is same as in the view.
           $object.SetDataboundDomVal(viewId, key, newVal);
+        });
+        // Update computed properties
+        $.each(computedProperties, function(k,v) {
+          $object.Set(v['name'], v['func']($object));
         });
         //Return the values in JSON format
         //return data;
@@ -1099,13 +1116,14 @@ var MVC = {
       if($settings['isMirror']) {
         //alert("reflect on");
         //Loop throught the object's properties
-        $.each($object, function(k,v) {
-          //alert(k + " : " + v);
+        $.each($object.GetModelData(), function(k,v) {
+          console.log(k + " : " + v);
           //var pars = MVC.GetViewData(viewId);
           //Add the Getter and Setter methods
           //n: name, ov: old value, nv: new value
           //MVC.AddGetSet($object, k, function(n, ov, nv) {
-          $object.AddGetSet(k);/*, function(n, ov, nv) {
+          $object.AddGetSet(k);
+          /*, function(n, ov, nv) {
             //alert(n + ": " + ov + "=>" + nv);
             //Update the view accordingly
             //MVC.SetViewFromModel(viewId, $object); //$(viewId).getSetHtml($object);
@@ -1339,3 +1357,13 @@ var MVC = {
     }
   });
 })(jQuery);
+
+// http://stackoverflow.com/questions/1038746/equivalent-of-string-format-in-jquery/2648463#2648463
+String.prototype.format = String.prototype.f = function() {
+  var s = this,
+      i = arguments.length;
+  while (i--) {
+      s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+  }
+  return s;
+};
