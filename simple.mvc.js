@@ -597,15 +597,6 @@ var MVC = {
 
       var computedProperties = [];
 
-      $object.AddComputedProperty = function(prop, value){
-        if(typeof value === 'function') {
-          computedProperties.push({ 'name': prop, 'func': value });
-          value = value($object);
-          $object.Set(prop, value);
-        }
-        return $object;
-      };
-
       /**
        * Set
        *
@@ -619,6 +610,11 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.Set = function(prop, value){
+        if(typeof value === 'function') {
+          computedProperties.push({ 'name': prop, 'func': value });
+          value = value($object);
+        }
+
         //console.log("Set()");
         //$(obj).trigger('set'+Common.FstChrUp(key), [val]);
         //$($object).triggerHandler('set'+prop, [value]); ?
@@ -1115,7 +1111,7 @@ var MVC = {
         //alert("reflect on");
         //Loop throught the object's properties
         $.each($object.GetModelData(), function(k,v) {
-          console.log(k + " : " + v);
+          // console.log(k + " : " + v);
           //var pars = MVC.GetViewData(viewId);
           //Add the Getter and Setter methods
           //n: name, ov: old value, nv: new value

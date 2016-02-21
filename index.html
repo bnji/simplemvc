@@ -26,6 +26,7 @@
     <!--<script type="text/javascript" src="//code.jquery.com/jquery-1.7.2.min.js"></script>-->
     <script type="text/javascript" src="lib/bootstrap/js/bootstrap.js"></script>
     <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="//bootswatch.com/simplex/bootstrap.min.css" rel="stylesheet">
     <!--<link type="text/css" rel="stylesheet" href="http://bootswatch.com/united/bootstrap.min.css" />-->
     <script type="text/javascript" src="lib/google.code.prettify/js/prettify.js"></script>
     <link type="text/css" rel="stylesheet" href="lib/google.code.prettify/css/twitter.bootstrap.css" />
@@ -33,11 +34,11 @@
       /*All JavaScript at the bottom, except this Modernizr build.
        Modernizr enables HTML5 elements & feature detects for optimal performance.
        Create your own custom Modernizr build: www.modernizr.com/download/*/
-    </script>
-    <script type="text/javascript" src="simple.mvc.js"></script>
-    <script type="text/javascript" src="simple.mvc.json.js"></script>
+       </script>
+       <script type="text/javascript" src="simple.mvc.js"></script>
+       <script type="text/javascript" src="simple.mvc.json.js"></script>
 
-    <style>
+       <style>
        .center {
         text-align: center;
       }
@@ -64,56 +65,27 @@
   -->
 </head>
 
-  <body data-spy="scroll" onload="prettyPrint()">
-    <div class="header">
-      <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
+<body data-spy="scroll" onload="prettyPrint()">
+  <div class="header">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
 
-          <div class="container">
+        <div class="container">
 
-            <div class="pull-left">
-              <a class="brand" href="#"><i class="icon icon-heart"></i> Simple MVC</a>
-            </div>
-
-            <ul class="nav pull-right">
-              <li class=""><a href="#download">Download / Learn</a></li>
-
-              <ul class="nav">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    More...
-                    <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li class=""><a id="featureOverview" href="#">Features</a></li>
-                    <li class=""><a id="problem" href="#">Problem</a></li>
-                    <li class=""><a id="solution" href="#">Solution</a></li>
-                    <li class=""><a id="setup" href="#">Setup</a></li>
-                    <li class=""><a id="codeExamples" href="#">Examples</a></li>
-                    <li class=""><a id="api" href="#">API</a></li>
-                    <li class=""><a id="unittest" href="#">Unit tests</a></li>
-                    <li class=""><a id="comments" href="#">Comments</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </ul>
-
-            <div class="nav-collapse">
-              <ul class="nav pull-right">
-                <li class="divider-vertical"></li>
-              </ul>
-            </div>
-
+          <div class="pull-left">
+            <a class="brand" href="#"><i class="icon icon-heart"></i> Simple MVC</a>
           </div>
 
         </div>
+
       </div>
     </div>
-    <div id="top-content" style="padding-top:75px;"></div>
-    <!-- wrapper is used for footer -->
-    <div class="wrapper">
-      <!-- container for bootstrap content -->
-      <div class="container">
+  </div>
+  <div id="top-content" style="padding-top:75px;"></div>
+  <!-- wrapper is used for footer -->
+  <div class="wrapper">
+    <!-- container for bootstrap content -->
+    <div class="container">
         <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
         chromium.org/developers/how-tos/chrome-frame-getting-started -->
         <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
@@ -125,292 +97,252 @@
             <br />
             <p>
               A lightweight MVC (Model-View-Controller) library for UI binding.
+              <br />
+
+              <div class="btn-toolbar">
+                <div class="btn-group">
+                  <a class="btn btn-large btn-primary"><i class="icon icon-download icon-large"></i> &nbsp; Download</a>
+                  <button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown"><span style="height: 10px;" class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><a href="https://github.com/bnji/simplemvc/zipball/master">w/ Documentation</a></li>
+                    <li><a href="https://raw.github.com/bnji/simplemvc/master/simple.mvc.min.js">Minified</a></li>
+                    <li><a href="https://raw.github.com/bnji/simplemvc/master/simple.mvc.js">Normal</a></li>
+                  </ul>
+                </div>
+                <div class="btn-group">
+                  <a href="#codeExamplesBody" class="btn btn-large btn-inverse"><i class="icon icon-book icon-large"></i> &nbsp; Learn</a>
+                </div>
+              </div>
             </p>
-            <br />
+          </div>
 
-            <div class="btn-toolbar">
-              <div class="btn-group">
-                <a class="btn btn-large btn-primary"><i class="icon icon-download icon-large"></i> &nbsp; Download</a>
-                <button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown"><span style="height: 10px;" class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="https://github.com/bnji/simplemvc/zipball/master">w/ Documentation</a></li>
-                  <li><a href="https://raw.github.com/bnji/simplemvc/master/simple.mvc.min.js">Minified</a></li>
-                  <li><a href="https://raw.github.com/bnji/simplemvc/master/simple.mvc.js">Normal</a></li>
-                </ul>
+          <br />
+
+          <script async src="http://jsfiddle.net/bendot/5451zxyf/embed/js,html,result/"></script>
+
+          <p class="spacer2"></p>
+
+          <div id="featureOverviewBody">
+            <div class="row">
+              <div class="span4">
+                <h2><i class="icon icon-cloud"></i> Light weight</h2>
+                <p>The library is ~8KB minified, which means it's very light weight!</p>
               </div>
-              <div class="btn-group">
-                <a href="#codeExamplesBody" class="btn btn-large btn-inverse"><i class="icon icon-book icon-large"></i> &nbsp; Learn</a>
+              <div class="span4">
+                <h2><i class="icon icon-heart"></i> Standards</h2>
+                <p>The problem with standards is that there are so many, right?! By design, Simple MVC uses jQuery at it's core, but the <b>benefit</b> is that this library, unlike so many other popular libraries such as knockoutjs and angularjs which require alot of time to learn.</p>
               </div>
-            </div>
-          </p>
-        </div>
-
-        <br />
-
-        <div id="featureOverviewBody">
-          <div class="row">
-            <div class="span4">
-              <h2><i class="icon icon-cloud"></i> Light weight</h2>
-              <p>The library is ~8KB minified, which means it's very light weight! However jQuery 1.12 is ~98KB.</p>
-            </div>
-            <div class="span4">
-              <h2><i class="icon icon-heart"></i> Standards</h2>
-              <p>The problem with standards is that there are so many, right?! By design, Simple MVC uses jQuery at it's core, but the <b>benefit</b> is that this library, unlike so many other popular libraries such as knockoutjs and angularjs which require alot of time to learn.</p>
-            </div>
-            <div class="span4">
-              <h2><i class="icon icon-ok"></i> Cross-browser</h2>
-              <p>Should works back to IE7, but definetely works with >IE8 and all modern web browsers (desktop/mobile).</p>
-            </div>
-          </div><!--/row-->
-          <div class="row">
-            <div class="span4">
-              <h2><i class="icon icon-file"></i> Easy</h2>
-              <p>No need for learning a new templating system, as HTML attributes are used, which means there's no need for learning or creating new HTML attributes or using HTML elements with jQuery functionality "wrapped inside them".<br /><br /></p>
-            </div>
-            <div class="span4">
-              <h2><i class="icon icon-fullscreen"></i> MVC design pattern</h2>
-              <p>The design pattern (kept in mind?) while developing the library was to <b>A) Separating concerns</b> (<a id="modelViewControllerWiki" href="#">Model View Controller</a>) & <b>B) Keeping the view and model synchronized</b> (<a id="modelViewViewModelWiki" href="#" rel="tooltip">Model View MVC</a>).</p>
-            </div>
-            <div class="span4">
-              <h2><i class="icon icon-star"></i> Code quality</h2>
-              <p>High code quality using test driven development with unit testing. A behavior-driven development framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a> has been used for testing.<br /><a href="simple.mvc.unit.test.html">Run Unit Tests</a></p>
-            </div>
-          </div><!--/row-->
-          <div class="row">
-            <div class="span4">
-              <h2><i class="icon icon-sign-blank"></i> Simplicity</h2>
-              <p>Keeping things simple while solving a complex task without any clutter or unnecessary extravagance functionality which would increase the codebase. Simple MVC <b>only</b> goal is to bind the backend (Model) with the frontend (View). Hence, Simple MVC can be considered as the <b>C</b> in MVC - the controller - which binds/glues things together and keeps things in sync.</p>
-            </div>
-            <div class="span4">
-              <h2><i class="icon icon-plus-sign"></i> Free & Open Source</h2>
-              <p>
-                Free, open source (MIT licence).
-              </p>
-            </div>
-            <div class="span4">
-              <h2><i class="icon icon-random"></i> Dependencies</h2>
-              <p>
-                <ul>
-                  <li>jQuery 1.4.3 or newer (note: jQuery 2.x supports IE>8)</li>
-                </ul>
-              </p>
-            </div>
-          </div><!--/row-->
-          <div class="row">
-            <div class="span4">
-              <h2><i class="icon icon-refresh"></i> Chaining</h2>
-              <p>
-                Chaining: Run multiple methods (on the same element) within a single statement.
-              </p>
-            </div>
-            <div class="span4">
-              <h2><i class="icon icon-book"></i> Docs + Examples</h2>
-              <p>
-                Well documented and has many real-world examples.
-              </p>
-            </div>
-            <div class="span4">
-              <h2><i class="icon"></i> </h2>
-              <p></p>
-            </div>
-          </div><!--/row-->
-        </div>
-
-        <p class="spacer2"></p>
-
-        <div id="codeExamplesBody">
-          <div class="page-header">
-            <h1>
-              Examples
-              <small>
-                <i>Code examples which show how to use the library.
-                  <br />
-                  For more examples <a href="../simplemvc/examples/index.html">click here</a>
+              <div class="span4">
+                <h2><i class="icon icon-ok"></i> Cross-browser</h2>
+                <p>Should works back to IE7, but definetely works with >IE8 and all modern web browsers (desktop/mobile).</p>
+              </div>
+            </div><!--/row-->
+            <div class="row">
+              <div class="span4">
+                <h2><i class="icon icon-file"></i> Easy</h2>
+                <p>No need for learning a new templating system, as HTML attributes are used, which means there's no need for learning or creating new HTML attributes or using HTML elements with jQuery functionality "wrapped inside them".<br /><br /></p>
+              </div>
+              <div class="span4">
+                <h2><i class="icon icon-fullscreen"></i> MVC design pattern</h2>
+                <p>The design pattern (kept in mind?) while developing the library was to <b>A) Separating concerns</b> (<a id="modelViewControllerWiki" href="#">Model View Controller</a>) & <b>B) Keeping the view and model synchronized</b> (<a id="modelViewViewModelWiki" href="#" rel="tooltip">Model View MVC</a>).</p>
+              </div>
+              <div class="span4">
+                <h2><i class="icon icon-star"></i> Code quality</h2>
+                <p>High code quality using test driven development with unit testing. A behavior-driven development framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a> has been used for testing.<br /><a href="simple.mvc.unit.test.html">Run Unit Tests</a></p>
+              </div>
+            </div><!--/row-->
+            <div class="row">
+              <div class="span4">
+                <h2><i class="icon icon-sign-blank"></i> Simplicity</h2>
+                <p>Keeping things simple while solving a complex task without any clutter or unnecessary extravagance functionality which would increase the codebase. Simple MVC <b>only</b> goal is to bind the backend (Model) with the frontend (View). Hence, Simple MVC can be considered as the <b>C</b> in MVC - the controller - which binds/glues things together and keeps things in sync.</p>
+              </div>
+              <div class="span4">
+                <h2><i class="icon icon-plus-sign"></i> Free & Open Source</h2>
+                <p>
+                  Free, open source (MIT licence).
+                </p>
+              </div>
+              <div class="span4">
+                <h2><i class="icon icon-random"></i> Dependencies</h2>
+                <p>
+                  <ul>
+                    <li>jQuery 1.4.3 or newer (note: jQuery 2.x supports IE>8)</li>
+                  </ul>
+                </p>
+              </div>
+            </div><!--/row-->
+            <div class="row">
+              <div class="span4">
+                <h2><i class="icon icon-refresh"></i> Chaining</h2>
+                <p>
+                  Chaining: Run multiple methods (on the same element) within a single statement.
+                </p>
+              </div>
+              <div class="span4">
+                <h2><i class="icon icon-book"></i> Docs + Examples</h2>
+                <p>
+                  Well documented and has many real-world <a href="../simplemvc/examples/index.html">examples</a>.
                   <br />
                   <a href="../simplemvc/examples/todo">Todo App Demo</a>
                   <br />
                   <a href="../simplemvc/examples/generic-vs-simplemvc">Generic JavaScript vs jQuery + SimpleMVC Demo</a>
-                </i>
-              </small>
-            </h1>
+                  <br />
+                  <a href="../simplemvc/doc">API documentation</a>
+                </p>
+              </div>
+              <div class="span4">
+                <h2><i class="icon"></i> </h2>
+                <p></p>
+              </div>
+            </div><!--/row-->
           </div>
-          <br />
-          <script async src="http://jsfiddle.net/bendot/5451zxyf/embed/js,html,result/"></script>
+
+          <p class="spacer2"></p>
+
+          <div id="codeExamplesBody">
+
+            <div>
+              <div class="page-header">
+                <h1 id="problemBody">
+                  About Simple MVC
+                  <small>
+                    <i>
+                     How to keep the View synchronized with the Model?
+                   </i>
+                 </small>
+               </h1>
+             </div>
+
+             <p>
+              The view should always be synchronized with the model and optionally the other way around.
+              Many other libraries already solve this problem, but you still need too learn new stuff.
+              Either new ways of structuring your code, usage of a templating system (why!), library is
+              way too large (>40KB minified), no support for older browsers, say they support a browser,
+              but when I've tried it, it breaks (IE). My favorite (beside Simple MVC) is KnockoutJS,
+              which solves the problem by keeping the library focused on handling the problem of binding
+              the View with the Model and not adding extravagance functionality, it has no dependencies,
+              has cross-browser support (back to IE6!), etc. - BUT - I still didn't find myself quite
+              happy using it, as I don't like the way they bind the Model to the DOM/HTML (View). Therefor
+              I've created this library, which should solve all the same tasks as KnockoutJS.
+              <br />
+              Using jQuery, it ensures cross-browser support (depending on jQuery version).
+              The solution to these questions could not be implemented (for cross-browser functionality) without jQuery, as there is a problem with
+              event driven design using getters and setters in browsers like IE. Therefore the problem was solved using jQuery's
+              <code><a href="http://api.jquery.com/bind/">.bind()</a></code> and <code><a href="http://api.jquery.com/trigger/">.trigger()</a></code> methods bound to the object's properties.
+              <br />
+              <h2>Philosophy</h2>
+              <ul>
+                <li>Keep the code as light weight as possible.</li>
+                <li>Use jQuery as only dependency to ensure cross-browser compatability (tradeoff: newer versions support only modern browsers and jQuery is ... well... necessary)</li>
+                <li><b>No templating system!</b> - Use existing HTML elements and attributes instead of a templating system.</li>
+                <li>Cross-browser (& Mobile/Desktop)! (depends on jQuery version)</li>
+                <li>Always update the Model when the View changes. Optionally update the View, if <code>isMirror: true</code>, when the Model is changed.</li>
+                <li>Code quality using Test Driven Development.</li>
+                <li>Never add extravagance functionality!</li>
+                <li>Easy to get started (less than 5 minutes)</li>
+              </ul>
+            </p>
+
+          </div>
+
+
+        </div>
 
         <p class="spacer2"></p>
 
-        <div>
+        <div id="apiBody">
           <div class="page-header">
-            <h1 id="problemBody">
-              About Simple MVC
-              <small>
-                <i>
-                 How to keep the View synchronized with the Model?
-               </i>
-             </small>
-           </h1>
-         </div>
+            <h1>
+              API
+            </h1>
+          </div>
 
-         <p>
-          The view should always be synchronized with the model and optionally the other way around.
-          Many other libraries already solve this problem, but you still need too learn new stuff.
-          Either new ways of structuring your code, usage of a templating system (why!), library is
-          way too large (>40KB minified), no support for older browsers, say they support a browser,
-          but when I've tried it, it breaks (IE). My favorite (beside Simple MVC) is KnockoutJS,
-          which solves the problem by keeping the library focused on handling the problem of binding
-          the View with the Model and not adding extravagance functionality, it has no dependencies,
-          has cross-browser support (back to IE6!), etc. - BUT - I still didn't find myself quite
-          happy using it, as I don't like the way they bind the Model to the DOM/HTML (View). Therefor
-          I've created this library, which should solve all the same tasks as KnockoutJS.
+          <h2>Creating a MVC Object</h2>
+          <p>
+            Here is an overview for creating a MVC Object. Every part of it is described in detail below (starting with 'MVC Object Parameters').
+          </p>
           <br />
-          Using jQuery, it ensures cross-browser support (depending on jQuery version).
-          The solution to these questions could not be implemented (for cross-browser functionality) without jQuery, as there is a problem with
-          event driven design using getters and setters in browsers like IE. Therefore the problem was solved using jQuery's
-          <code><a href="http://api.jquery.com/bind/">.bind()</a></code> and <code><a href="http://api.jquery.com/trigger/">.trigger()</a></code> methods bound to the object's properties.
-          <br />
-          <h2>Philosophy</h2>
-          <ul>
-            <li>Keep the code as light weight as possible.</li>
-            <li>Use jQuery as only dependency to ensure cross-browser compatability (tradeoff: newer versions support only modern browsers and jQuery is ... well... necessary)</li>
-            <li><b>No templating system!</b> - Use existing HTML elements and attributes instead of a templating system.</li>
-            <li>Cross-browser (& Mobile/Desktop)! (depends on jQuery version)</li>
-            <li>Always update the Model when the View changes. Optionally update the View, if <code>isMirror: true</code>, when the Model is changed.</li>
-            <li>Code quality using Test Driven Development.</li>
-            <li>Never add extravagance functionality!</li>
-          </ul>
-        </p>
+          <pre class="prettyprint linenums lang-js">
+$(function() {
+  // The view ID should be a selector of the element containing all the data relevant to the model.
+  // Note: The data can still be used and updated outside the View.
+  // The model and settings object literals are merged and returned
+  // obj contains all the information about the object, which keeps the view synchronized with the model and vice versa.
+  var obj = $("#testArea").ModelView({
+    // Model
+    id: 'foo',
+    firstName : 'John',
+    lastName : 'Doe',
+    type: 'bar'
+  }, { // Settings
+    controller: MVC.Controller({
+      save: function(event, object) {
+        // console.log(event);
+        console.log(object.GetModelData());
+        // handle event
+      }
+    }),
+    // Should changes in the model be reflected in the view?
+    // Changes in the view will always be reflected in the model, but the other way is optional.
+    isMirror: true, // false
+    // Set the model to autosave every X ms. Remember to implement the Save() method in the controller!
+    // autoSaveInterval: 1000, //15 seconds (15000ms)
+    // Callback function - When input elements change (not div, span or p elements).
+    // change: function(e, n, v, o, t, s) { // event, name, value, object, targetValue, selectedValue
+        //do something when input changes
+    //}
+    // Other event types: focus, blur, change, select, submit, keyup, keydown and keypress
+  }, { // Methods
+    init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
 
-      </div>
+    }
+  });
+  // Add a computed property
+  obj.Set('fullName', function(o) {
+    return ("{0} {1}").format(o.firstName, o.lastName);
+  });
 
-    <p class="spacer2"></p>
+  //Manipulate the object 'obj' here...
+  //Set a new value for a property in the model and update the view:
+  obj.Set('type', 'type value has changed both in the Model and View!');
+  //Set a new value for a property in the model (but not in the view):
+  obj['type'] = 'type value has changed in the Model!';
 
-    <div id="setupBody">
-      <div class="page-header">
-        <h1>
-          Setup
-          <small>
-            <i>How to get started using the library.</i>
-          </small>
-        </h1>
-      </div>
+  //foo and bar should be same if 'isMirror' : true
+  var foo = obj.Get('type'); //Access DOM value
+  var bar = obj['type']; //Access Object's value
 
-      <p>
-        <ol>
-          <li><a href="https://github.com/bnji/simplemvc/zipball/master">Download</a> the <code>simple.mvc.js</code> library.</li>
-          <li>Include jQuery: <code>https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js</code> *Only if it's not included with your project already!</li>
-          <li>Include the <code>simple.mvc.js</code> library in your project.</li>
-          <li>Check out the examples: You can copy & paste them into your project and test them out or try the online demo below.</li>
-        </ol>
-      </p>
-    </div>
+  $('#saveObj').click(function() {
+    var extraPar = $('#someId').text();
+    obj.Save(extraPar);
+  });
 
+  $('#updateObj').click(function() {
+    var extraPar = $('#someId').text();
+    obj.Update(extraPar);
+  });
 
-</div>
+  $('#deleteObj').click(function() {
+    var extraPar = $('#someId').text();
+    obj.Delete(extraPar);
+  });
 
-<p class="spacer2"></p>
-
-<div id="apiBody">
-  <div class="page-header">
-    <h1>
-      API
-      <small>
-        Read the API documentation <a href="../simplemvc/doc">here</a>
-      </small>
-    </h1>
-  </div>
-
-  <h2>Creating a MVC Object</h2>
-  <p>
-    Here is an overview for creating a MVC Object. Every part of it is described in detail below (starting with 'MVC Object Parameters').
-  </p>
-  <br />
-  <pre class="prettyprint linenums lang-js">
-    var viewId,
-    ctr,
-    settings,
-    objectData,
-    obj;
-
-    //The view ID should be a selector of the element containing all the data relevant to the model.
-    //*** Note: The data can still be used and updated outside the View ***
-    viewId = '#testArea';
-
-    //The data which are specified by the model (object literal)
-    //Treat this as an instance of a Class
-    objectData = {
-    id : 'foo',
-    type : 'bar'
-  }
-
-  //The Controller
-  ctr = MVC.Controller({
-  Save : function(obj, par) {
-  //do something with object 'obj'
-},
-Update : function(obj, par) {
-//do something with object 'obj'
-},
-Delete : function(obj, par) {
-//do something with object 'obj'
-}
-});
-
-//Settings (object literal)
-settings = {
-//Add the controller
-controller : ctr,
-//Should changes in the model be reflected in the view?
-//*** Changes in the view will always be reflected in the model, but the other way is optional. ***
-isMirror : true|false,
-//Set the model to autosave every X ms. Remember to implement the Save() method in the controller!
-autoSaveInterval : 15000, //15 seconds (15000ms)
-//Callback function - When input elements change (not <b>div</b>, <b>span</b> or <b>p</b> elements).
-change : function() {
-//do something when input changes
-}
-//other event types: focus, blur, change, select, submit, keyup, keydown and keypress
-}
-
-//The objectData and settings object literals are merged and returned
-//obj contains all the information about the object, which keeps the view synchronized with the model and vice versa.
-obj = MVC.ModelView(viewId, objectData, settings);
-
-//Manipulate the object 'obj' here...
-//Set a new value for a property in the model and update the view:
-obj.Set(type, 'type value has changed both in the Model and View!');
-//Set a new value for a property in the model (but not in the view):
-obj['type'] = 'type value has changed in the Model!';
-
-//foo and bar should be same if 'isMirror' : true
-var foo = obj.Get('type'); //Access DOM value
-var bar = obj['type']; //Access Object's value
-
-$('#saveObj').click(function() {
-var extraPar = $('#someId').text();
-obj.Save(extraPar);
-});
-
-$('#updateObj').click(function() {
-var extraPar = $('#someId').text();
-obj.Update(extraPar);
-});
-
-$('#deleteObj').click(function() {
-var extraPar = $('#someId').text();
-obj.Delete(extraPar);
 });
 </pre>
 
 <br />
 
-<h2>MVC Object Parameters</h2>
+<h2>Simple MVC Parameters</h2>
 <p>
   <p>
-    The <code>ModelView()</code> takes 3 parameters: <code>viewId</code> <b>(required)</b>, <code>objectData</code> (optional) and <code>settings</code> (optional).
+    The Simple MVC <code>ModelView()</code> takes 4 parameters: <code>viewId</code> <b>(required)</b>, <code>model</code> (optional), <code>settings</code> (optional) and <code>methods</code> (optional).
     <br />
   </p>
   <pre class="prettyprint lang-js">
-    var obj = MVC.ModelView(viewId, objectData, settings);
+    // Simple MVC with model, settings and model
+    var obj = $("#viewId").ModelView(model, settings, methods);
+    // Simple MVC without any optional parameters
+    var obj = $("#viewId").ModelView();
   </pre>
   <br />
   <dl>
@@ -428,11 +360,11 @@ obj.Delete(extraPar);
     <br />
     <br />
 
-    <dt><code>objectData</code></dt>
+    <dt><code>model</code></dt>
     <dd>
       <p>
         <br />
-        The <code>objectData</code> is an Object Literal (JSON) which basically is the Model object passed as a parameter and returned (merged with the settings object) after all the internal setup of the object is done.
+        The <code>model</code> is an Object Literal (JSON) which basically is the Model object passed as a parameter and returned (merged with the settings object) after all the internal setup of the object is done.
         <br />
         <span class="label label-important">Important</span>
         <br />
@@ -953,13 +885,7 @@ obj = MVC.ModelView(viewId, { foo : 'bar' }, settings);
 
 
   // Enable scrollTo for the menu links
-  scrollTo2('#featureOverview', '#featureOverviewBody', {duration:'2000'}, null);
-  scrollTo2('#problem', '#problemBody', {duration:'2000'}, null);
-  scrollTo2('#solution', '#solutionBody', {duration:'2000'}, null);
-  scrollTo2('#setup', '#setupBody', {duration:'2000'}, null);
-  scrollTo2('.codeExamples', '#codeExamplesBody', {duration:'5000'}, null);
-  scrollTo2('#api', '#apiBody', {duration:'2000'}, null);
-  scrollTo2('#comments', '#commentsBody', {duration:'2000'}, null);
+  // scrollTo2('#featureOverview', '#featureOverviewBody', {duration:'2000'}, null);
 
   $('#navbar').scrollspy();
   addPopover("#modelViewControllerWiki", "Model View Controller", "[...Model-View-Controller (MVC) is a type of computer user interface that separates the representation of information from the user's interaction with it.[1][2] The model consists of application data and business rules, and the controller mediates input, converting it to commands for the model or view.[3] A view can be any output representation of data, such as a chart or a diagram....]", "http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller");

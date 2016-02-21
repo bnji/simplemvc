@@ -171,9 +171,6 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
   });
 
   it("Intial value of 'id' to be 123 (Number) and not '123' (String), because it has the class 'isNumber'", function() {
-    console.log(obj.id);
-    console.log(obj.Get('id'));
-    console.log(obj['id']);
     expect(obj['id']).not.toBe('123');
     expect(obj['id']).toBe(123);
   });
@@ -773,7 +770,6 @@ describe(".GetModelData()", function() {
   });
 
   it("The data specified by the Model to be same as the obj.GetModelData()", function() {
-    console.log(data);
     expect(data).toEqual(obj.GetModelData());
   });
 

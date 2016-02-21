@@ -11,12 +11,18 @@
           firstName: 'John',
           lastName: 'Doe'
         }, {
+          controller: MVC.Controller({
+            update: function(event, object) {
+              console.log(event);
+              console.log(object);
+            }
+          })
         }, {
           capitalizeLastName: function(e, o) {
             o.Set('lastName', o.Get('lastName').toUpperCase())
           }
         })
-        .AddComputedProperty('fullName', function(o) {
+        .Set('fullName', function(o) {
           return ("{0} {1}").format(o.firstName, o.lastName);
         });
     });
@@ -31,6 +37,9 @@
       <input type="text" name="lastName" />
       <button name="capitalizeLastName" class="isEvent">
       Capitalize last name
+      </button>
+      <button name="update">
+        update
       </button>
     </div>
     <div datasrc="#helloWorld">

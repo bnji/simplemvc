@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 10</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="simple.mvc.js"></script>
+    <script>
+    $(function() {
+      // The view ID should be a selector of the element containing all the data relevant to the model.
+      // Note: The data can still be used and updated outside the View.
+      // The model and settings object literals are merged and returned
+      // obj contains all the information about the object, which keeps the view synchronized with the model and vice versa.
+      var obj = $("#testArea").ModelView({
+        // Model
+        id: 'foo',
+        firstName : 'John',
+        lastName : 'Doe',
+        type: 'bar'
+      }, { // Settings
+        controller: MVC.Controller({
+          save: function(event, object) {
+            // console.log(event);
+            console.log(object.GetModelData());
+            // handle event
+          }
+        }),
+        // Should changes in the model be reflected in the view?
+        // Changes in the view will always be reflected in the model, but the other way is optional.
+        isMirror: true, // false
+        // Set the model to autosave every X ms. Remember to implement the Save() method in the controller!
+        // autoSaveInterval: 1000, //15 seconds (15000ms)
+        // Callback function - When input elements change (not div, span or p elements).
+        // change: function(e, n, v, o, t, s) { // event, name, value, object, targetValue, selectedValue
+            //do something when input changes
+        //}
+        // Other event types: focus, blur, change, select, submit, keyup, keydown and keypress
+      }, { // Methods
+        init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
+
+        }
+      });
+
+      obj.Set('fullName', function(o) {
+        return ("{0} {1}").format(o.firstName, o.lastName);
+      });
+
+      //Manipulate the object 'obj' here...
+      //Set a new value for a property in the model and update the view:
+      obj.Set('type', 'type value has changed both in the Model and View!');
+      //Set a new value for a property in the model (but not in the view):
+      obj['type'] = 'type value has changed in the Model!';
+
+      //foo and bar should be same if 'isMirror' : true
+      var foo = obj.Get('type'); //Access DOM value
+      var bar = obj['type']; //Access Object's value
+
+      $('#saveObj').click(function() {
+        var extraPar = $('#someId').text();
+        obj.Save(extraPar);
+      });
+
+      $('#updateObj').click(function() {
+        var extraPar = $('#someId').text();
+        obj.Update(extraPar);
+      });
+
+      $('#deleteObj').click(function() {
+        var extraPar = $('#someId').text();
+        obj.Delete(extraPar);
+      });
+
+    });
+    </script>
+  </head>
+  <body>
+    <div id="testArea">
+      <!-- put html code here which you want in the model -->
+      <label>ID:</label>
+      <input type="text" name="id" />
+      <br />
+      <label>First Name:</label>
+      <input type="text" name="firstName" />
+      <br />
+      <label>Last Name:</label>
+      <input type="text" name="lastName" />
+      <br />
+      <label>Type:</label>
+      <input type="text" name="type" />
+      <br />
+      <button name="save" class="isEvent">Save</button>
+    </div>
+    <span style="font-weight: bold;" datasrc="#viewId" name="fullName"></span>
+    <br />
+    <div datasrc="#testArea">
+      Full name: <span name="fullName"></span>
+      <br /> Email: <span name="email"></span>
+      <br /> City: <span name="city"></span>
+      <br /> Address: <span name="address"></span>
+    </div>
+  </body>
+</html>
