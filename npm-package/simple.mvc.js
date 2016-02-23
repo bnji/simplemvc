@@ -1322,7 +1322,7 @@ var MVC = {
           formData[name] = value;
         }
         else if(elm.is(':radio')) {
-          if(elm.attr('checked')) {
+          if(elm.attr('checked') || elm.prop('checked')) {
             formData[name] = value;
           }
         }
