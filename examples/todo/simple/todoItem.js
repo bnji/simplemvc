@@ -1,6 +1,6 @@
 var Note = function Note(notebook, value, isComplete, id) {
   var model = { // Todo Note Model
-    id: id,
+    id: (id === undefined || id === null ? Date.now() : id),
     isComplete: isComplete,
     note: value
   };

@@ -4,17 +4,18 @@ $(function() {
     notes: MVC.List() //Provides helper methods
   };
   var methods = { // Todo List Implementation (methods)
-    add : function(value, isComplete, id) { // Create (add) a new note
+    add : function(value, isComplete) { // Create (add) a new note
       var self = this;
-      var note = new Note(self, value, isComplete, id);
+      var note = new Note(self, value, isComplete);
       self.getNotes().Add(note);
-      self.updateUI(note);
+      self.updateUI(); //Update databound elements
       return self;
     },
     remove : function(note) { // Remove an existing note
       var self = this;
       if(self.getNotes().Remove(note)) {
-        self.updateUI(note).focusInput();
+        self.updateUI().focusInput();
+        $(self).remove();
       }
       return self;
     },
@@ -52,12 +53,17 @@ $(function() {
       return this.clearDone(true);
     },
     focusInput : function() {
-      this.Find('.create').val('').focus();
+      var self = this;
+      self
+        .Find('.create')
+        .val('')
+        .focus();
+      return self;
     },
     clear : function() {
       return this.clearAll();
     },
-    updateUI : function(note) {
+    updateUI : function() {
       var self = this;
       var notesDone = self.getNotesDoneCount();
       var notesCount = self.getNotesCount();
@@ -69,8 +75,10 @@ $(function() {
       $('#notesCount').html(notesDone + ' / ' + notesCount);
       return self;
     },
-    init : function(object) { // Simple MVC built-in initalize method which runs after 1 ms
-      object.focusInput();
+    // Simple MVC built-in initalize method which runs after 1 ms
+    init : function(object) {
+      object
+        .focusInput();
     }
   };
   var settings = {
@@ -97,4 +105,6 @@ $(function() {
   };
   //Run the Todo List App (object) which manages the todo notes
   var todoList = $('#todos').ModelView(model, settings, methods);
+
+  console.log($.fn);
 });

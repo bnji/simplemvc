@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 10</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="simple.mvc.js"></script>
+    <script>
+
+
+    var Meal = function Meal(name, price) {
+      var model = { // Model
+        name: name,
+        price: price
+      };
+      var methods = { // Implementation (methods)
+        // getIsDone : function() { return this.Get('isComplete'); },
+        // setIsDone : function() {
+        //   var self = this;
+        //   var noteElem = self.Find('#meal');
+        //   if(self.getIsDone()) {
+        //     noteElem.addClass('isComplete');
+        //   } else {
+        //     noteElem.removeClass('isComplete');
+        //   }
+        //   return self;
+        // },
+        // toggleMode : function() {
+        //   var self = this;
+        //   self.Find('#meal').toggle(500);
+        //   self.Find(':input[name="meal"]').toggle(500, function(){
+        //     $(this).focus();
+        //   });
+        // },
+        showData : function(e, o) {
+          alert(JSON.stringify(o.GetModelData()));
+        },
+        init : function(object) { // Simple MVC built-in initalize method which runs after 1 ms
+          var self = object;
+          // self.Find('#meal').click(function() {
+          //   self.toggleMode();
+          // });
+        }
+      };
+      var settings = {
+        controller: MVC.Controller({
+          showData : function(e, o) {
+            alert(JSON.stringify(o.GetModelData(), null, 2));
+          }
+        }),
+        // change: function(event, name, value, object) {
+        //   // object.setIsDone();
+        //   notebook.updateUI(); // refactor
+        // },
+        // keyup: function(event, name, value, object) {
+        //   if(MVC.KeyCheck(event, 'enter')) {
+        //     object.toggleMode(); //Toggle to view mode again
+        //   }
+        // },
+        // blur: function(event, name, value, object) {
+        //   object.Find(':input[name="meal"]').hide();
+        //   object.Find('#meal').show();
+        // },
+        clone: {
+            id: '#trMeal' + Math.random(),
+            withDataAndEvents: false,
+            append: function(elem) {
+              $(elem.find('tr')).appendTo('#meal-list');
+            }
+        }
+      };
+      var obj = $('#meal-template').ModelView(model, settings, methods);
+      obj.Set('toString', function(o) {
+        return ("Meal {0} costs ${1}").format(o.name, price);
+      });
+    }
+
+    // var Meal = function(name, price, meals) {
+    //     this.mealName = name;
+    //     this.price = price;
+    //     this.meals = '<select name="meals"></select>';
+    //     this.toString = function() {
+    //       return "Meal " + this.mealName + " costs $" + this.price;
+    //     }
+    //   }
+
+    $(function() {
+      $('#helloWorld').ModelView({
+        availableMeals: MVC.List([
+          new Meal("Standard (sandwich)", 0.0),
+          new Meal("Premium (lobster)", 34.95),
+          new Meal("Ultimate (whole zebra)", 290)
+        ])
+      }, {
+        controller: MVC.Controller({
+          addRow: function(e, o) {
+            o.add(new Meal("New Meal", 89))
+          }
+        })
+      }, {
+        add : function(meal) {
+          var self = this;
+          self.getAvailableMeals().Add(meal);
+          // self.updateUI(meal);
+          return self;
+        },
+        remove : function(meal) {
+          var self = this;
+          if(self.getAvailableMeals().Remove(meal)) {
+            // self.updateUI(meal);
+          }
+          return self;
+        },
+        getAvailableMeals : function() {
+          return this.Get('availableMeals');
+        },
+        init: function(o) {
+          // o.FillTable('availableMeals', false);
+          // setTimeout(function() {
+          //   o.FillSelect('availableMeals', 'mealName', 'toString()');
+          // });
+          // o.add(new Meal("foo", 123));
+        }
+        // capitalizeLastName: function(e, o) {
+        //   o.Set('lastName', o.Get('lastName').toUpperCase())
+        // }
+      });
+
+      // var a = [];
+      // a.push({'row 1 col 1', 'row 1 col 2'});
+      // a.push({'row 2 col 1', 'row 2 col 2'});
+      // console.log(JSON.stringify(a));
+      // .Set('fullName', function(o) {
+      //   return ("{0} {1}").format(o.firstName, o.lastName);
+      // });
+    });
+    </script>
+    <style>
+      table, th, td {
+         border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div id="meal-template">
+      <input name="name">
+      <span name="price"></span>
+    </div> -->
+    <!-- Meal Template -->
+    <table id="meal-template" class="meal" style="display: none;">
+      <tr>
+        <td>
+          <input datasrc="" type="text" name="name" id="name" />
+        </td>
+        <td>
+          <input datasrc="" type="text" name="price" id="price" />
+          <span datasrc="" name="price"></span>
+        </td>
+        <td>
+          <span datasrc="" name="toString"></span>
+        </td>
+        <td>
+          <!-- <select name="meals"></select> -->
+          <button name="showData" class="isEvent">show data</button>
+        </td>
+      </tr>
+    </table>
+   <!--  <li class="meal" id="meal-template">
+      <input type="checkbox" name="isComplete" />
+      <span datasrc="" name="note" class="note" id="note"> a note </span>
+      <input type="text" name="note" style="display: none;" />
+      <a class="isEvent" href="#" name="showData">show data</a>
+    </li> -->
+    <!-- //end Note View (template) -->
+
+    <div id="helloWorld">
+      <table>
+        <thead>
+          <tr>
+            <td>
+              Meal name
+            </td>
+            <td>
+              Price
+            </td>
+            <td>
+              Action
+            </td>
+          </tr>
+        </thead>
+        <tbody id='meal-list'>
+        </tbody>
+      </table>
+      <button class="isEvent" name="addRow">Add row</button>
+    </div>
+    <div id="tables"></div>
+
+    <!--<div id="helloWorld">
+      <label>First name:</label>
+      <input type="text" name="firstName" />
+      <br />
+      <label>Last name:</label>
+      <input type="text" name="lastName" />
+      <button name="capitalizeLastName" class="isEvent">
+      Capitalize last name
+      </button>
+      <button name="update">
+        update
+      </button>
+    </div>
+    <div datasrc="#helloWorld">
+      Hello, <span name="fullName"></span>
+    </div>-->
+  </body>
+</html>

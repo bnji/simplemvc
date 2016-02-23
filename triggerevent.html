@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<title>Demo</title>
+<body>
+<button id="btn">Button</button>
+<script>
+
+  // use addEvent cross-browser shim: https://gist.github.com/dciccale/5394590/
+  var addEvent = function(a,b,c){try{a.addEventListener(b,c,!1)}catch(d){a.attachEvent('on'+b,c)}};
+
+  // triggerEvent
+  var triggerEvent = function(c,d,b,a){b=document;b.createEvent?(a=new Event(d),c.dispatchEvent(a)):(a=b.createEventObject(),c.fireEvent("on"+d,a))};
+
+  // DOM element
+  var element = document.getElementById('btn');
+
+  // callback function
+  var callback = function () { alert('Button clicked!'); };
+
+  addEvent(element, 'click', callback);
+
+  // alert 'Button clicked!' when trigger click event
+  triggerEvent('click', element, callback);
+</script>
+</body>
+</html>

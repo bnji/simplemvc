@@ -20,7 +20,7 @@ $(function() {
             .getNotes() //Retrieve the list of notes
             .Add(note); //Add the note to the todoList
         self
-            .updateUI(note); //Update databound elements
+            .updateUI(); //Update databound elements
             // .setIsDone(note); //Update databound elements
         store
           .save(note.Get('id'), note.GetModelData()); //Save to localstorage
@@ -37,7 +37,7 @@ $(function() {
         store
           .remove(note.Get('id')); //Remove the note (from the storage)
         self
-          .updateUI(note) //Update databound elements
+          .updateUI() //Update databound elements
           .focusInput();
         $(self).remove(); //Remove the note from the View
       }
@@ -96,7 +96,7 @@ $(function() {
       store.clear();
       return this.clearAll();
     },
-    updateUI : function(note) {
+    updateUI : function() {
       var self = this;
       var notesDone = self.getNotesDoneCount();
       var notesCount = self.getNotesCount();
