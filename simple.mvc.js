@@ -1316,13 +1316,13 @@ var MVC = {
 
         if(elm.is(':checkbox')) {
           value = false;
-          if(elm.attr('checked') || elm.prop('checked')) {
+          if(elm.attr('checked') | elm.prop('checked')) {
             value = true;
           }
           formData[name] = value;
         }
         else if(elm.is(':radio')) {
-          if(elm.attr('checked') || elm.prop('checked')) {
+          if(elm.attr('checked') | elm.prop('checked')) {
             formData[name] = value;
           }
         }
