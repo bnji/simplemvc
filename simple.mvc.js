@@ -592,7 +592,8 @@ var MVC = {
        */
       $object.Add = function(listName, item) {
           var list = $object.Get(listName);
-          list.Add(item);
+          var propValue = $object.Get(item);
+          list.Add(propValue ? propValue : item);
           $object.FillSelect(listName);
       };
 

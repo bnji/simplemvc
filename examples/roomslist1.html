@@ -16,27 +16,22 @@
           return "Room # " + this.number + " costs $" + this.price;
         }
       }
-      // Room Manager
       $('#roomManager').ModelView(
-      // MVC Model
       {
         selectedRoom: null,
-        // Todo: Retrieve from an external datasource (database / webservice)
         rooms: MVC.List(['Choose...', new Room(101, 500), new Room(102, 600)])
       },
-      // Settings & Events
       {
         controller: MVC.Controller({
           addRoom: function(e, o) {
             o.Add('rooms', new Room(o.Get('newRoomNumber'), o.Get('newRoomPrice')));
-            // o.Set('rooms', new Room(o.Get('newRoomNumber'), o.Get('newRoomPrice')));
           },
           removeRoom: function(e, o) {
             o.Remove('rooms', 'selectedRoom');
           }
         }),
         change: function(event, name, value, object, targetValue, selectedValue) {
-          // Only update selected room when rooms change!
+          // Only update selected room when rooms change
           if(name === 'rooms') {
             object.Set('selectedRoom', selectedValue);
           }
