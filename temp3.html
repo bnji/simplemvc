@@ -28,24 +28,59 @@
       },
       // Settings & Events
       {
+        controller: MVC.Controller({
+          addRoom: function(e, o) {
+            var list = o.Get('rooms');
+            var item = new Room(o.Get('newRoomNumber'), o.Get('newRoomPrice'));
+            list.Add(item);
+            o.Set('rooms', list);
+            o.FillSelect('rooms');
+            // alert(JSON.stringify(o.GetModelData(), null, 2));
+          }
+        }),
         change: function(e, n, v, o, t, s) { // event, name, value, object, targetValue, selectedValue
           if(n === 'rooms') { // Only update selected room when rooms change!
             o.Set('selectedRoom', s);
           }
+        },
+        click: function(event, name, value, object) {
+          event.preventDefault();
+          if (name === 'addItem') {
+            object.addItem();
+          }
+          else if (name === 'removeItem') {
+            object.removeItem();
+          }
+          return false;
         }
       },
       // Methods
       {
+        addItem: function() { // event, object
+          var item = this.Get('itemToAdd');
+          var list = this.Get('rooms');
+          list.Add(item);
+          this.Set('rooms', list);
+          this.FillSelect('rooms');
+        },
+        removeItem: function() {
+          var item = this.Get('itemToAdd');
+          var list = this.Get('rooms');
+          list.Remove(item);
+          this.FillSelect('rooms');
+        },
         init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
+          // console.log(o.Get('rooms'));
+          o.Set('rooms', o.Get('rooms'))
           // var select = o.Find('select[name*="rooms"]').empty();
           // $.each(o.Get('rooms'), function(k, v) {
           //   select.append($('<option />').attr({'value': v.toString()}).text(v['number']));
           // });
-          o.FillSelect('rooms', 'number', 'toString()');
-          o.Set('selectedRoom', o.Get('rooms').Get(0));
-          setTimeout(function() {
-            o.Set('foo', 'hello');
-          },2000);
+          // o.FillSelect('rooms', 'number', 'toString()');
+          // o.Set('selectedRoom', o.Get('rooms').Get(0));
+          // setTimeout(function() {
+          //   o.Set('foo', 'hello');
+          // },2000);
         }
       });
 
@@ -70,11 +105,11 @@
       // Methods
       {
         init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
-          o.FillSelect('rooms', 'number', 'toString()');
-          o.Set('selectedRoom', o.Get('rooms').Get(0));
-          setTimeout(function() {
-            o.Set('foo', 'world');
-          },2000);
+          // o.FillSelect('rooms', 'number', 'toString()');
+          // o.Set('selectedRoom', o.Get('rooms').Get(0));
+          // setTimeout(function() {
+          //   o.Set('foo', 'world');
+          // },2000);
         }
       });
     });
@@ -83,10 +118,28 @@
   <body>
     <!-- Plain HTML code! -->
     <div id="roomManager">
+      <label>Add new item:</label>
+      <br />
+      Item: <input name="itemToAdd" />
+      <button type="submit" name="addItem">Add</button>
+      <br />
+      or new Room
+      <br />
+      Room #: <input name="newRoomNumber" />
+      Price: <input name="newRoomPrice" />
+      <button type="submit" name="addRoom" class="isEvent">Add Room</button>
+      <button type="submit" name="removeItem">Remove</button>
+      <br />
+      <br />
       <input name="foo" />
       <!-- Select Room -->
       <label>Choose a room:</label>
-      <select name="rooms" class="excludeFromModel"></select><br />
+      <select name="rooms" class="">
+        <!-- <option value="test">test</option> -->
+      </select>
+      <br />
+      <select multiple="multiple" width="100" style="width:100px;" name="rooms"></select>
+      <br />
       Type: <input type="text" name="type" />
     </div>
     <!-- Room information -->
@@ -96,8 +149,13 @@
     <div datasrc="#roomManager">
         Selected room: <span name="selectedRoom"></span>
         <br />
-        Type: <span name="type"></span><br />
+        Type: <span name="type"></span>
+        <br />
         Type: <input type="text" name="type" />
+        <br />
+        Rooms:
+        <br />
+        <select multiple="multiple" width="50" style="width:100px;" name="rooms"></select>
     </div>
 
     <hr />
@@ -108,7 +166,7 @@
       <input name="foo" />
       <!-- Select Room -->
       <label>Choose a room:</label>
-      <select name="rooms" class="excludeFromModel"></select>
+      <select name="rooms" class=""></select>
     </div>
     <!-- Room information -->
     <span datasrc="#roomManager2" name="selectedRoom"></span>

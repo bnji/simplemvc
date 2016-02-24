@@ -40,15 +40,24 @@
               return false;
             }
           },*/
+          change: function(event, name, value, object) {
+            if(name === 'items') {
+              object.Set('itemToAdd', value);
+            }
+            // console.log(name + " - " + value);
+          },
           submit: function(event, name, value, object) {
             event.preventDefault();
             return false;
           },
           click: function(event, name, value, object) {
+            event.preventDefault();
             if (name === 'addItem') {
               object.addItem();
             }
-            event.preventDefault();
+            else if (name === 'removeItem') {
+              object.removeItem();
+            }
             return false;
           }
         },
@@ -56,19 +65,30 @@
         {
           addItem: function() { // event, object
             var item = this.Get('itemToAdd');
+            // this.Add('items', item);
+            // this.Set('items', item);
+            // // this.Add('item', item);
             var list = this.Get('items');
             list.Add(item);
-            this.Set('items', MVC.List([]));
-            console.log(list);
-            list.Add(item);
+            this.Set('items', list);
+            this.FillSelect('items');
+            console.log(this.Get('items'))
+          },
+          removeItem: function() {
+            var item = this.Get('itemToAdd');
+            var list = this.Get('items');
+            list.Remove(item);
+            this.FillSelect('items');
           },
           init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
             // console.log(o);
             // o.Set('items', MVC.List([]));
-            o.Set('itemToAdd', 'foobar');
+            // o.Set('itemToAdd', 'foobar');
             // alert(o.Get('itemToAdd'));
           }
         });
+
+
     });
 
     </script>
@@ -83,11 +103,15 @@
     New item:
     <input name="itemToAdd" />
     <button type="submit" name="addItem">Add</button>
+    <button type="submit" name="removeItem">Remove</button>
     <p>Your items:</p>
     <select multiple="multiple" width="50" style="width:100px;" name="items"> </select>
   </form>
   <span datasrc="#viewId" name="itemToAdd">...</span>
+  <br />
   <span datasrc="#viewId" name="items">...</span>
+  <br />
+  <select datasrc="#viewId" multiple="multiple" width="50" style="width:100px;" name="items"></select>
 
   </body>
 </html>

@@ -16,13 +16,13 @@
     <!--//end optional-->
   </head>
   <body style="background-color:#fcfcfc; border:1px solid #ccc; padding: 5px;">
-    
+
     <h2>Outside the View</h2>
     <span datasrc="#phone-1" name="country"> country value </span>
     <input type="text" name="notInModel" value="notInModel" />
-    
+
     <br />
-    
+
     <h2>View</h2><br />
     <div class="well" id="phone-1">
       <div class="row-fluid">
@@ -92,7 +92,7 @@
           <input type="radio" name="color" value="green" id="green" />Green
         </div>
       </div>
-      
+
       <div class="row-fluid">
         <div class="span6">
           Image:
@@ -101,7 +101,7 @@
           <input class="input-file" name="image" type="file">
         </div>
       </div>
-      
+
       <div class="row-fluid">
         <div class="span6">
           Password:
@@ -110,7 +110,7 @@
           <input type="password" name="password" />
         </div>
       </div>
-      
+
       <div class="row-fluid">
         <div class="span12">
           <br />
@@ -136,7 +136,7 @@
           <select class="excludeFromModel" name="props" id="modelProperties"> </select>
         </div>
       </div>
-      
+
       <div class="row-fluid">
         <div class="span6">
           Value:
@@ -153,23 +153,23 @@
         viewId2 = "#phone-2",
         obj,
         objCopy;
-    
+
     $(function() {
       $('#checkValues').live('click', function() {
         DebugObj('#debug', { o1 : { object : obj, readDom : true } });
       });
-  
+
       $('#changeModel').click(function() {
         obj['type'] = 'Type changed in Model, but not in View!';
         DebugObj('#debug', { o1 : { object : obj, readDom : true } });
       });
-      
+
       $('#changeModelView').click(function() {
         var newValue = 'Type changed in Model and in View!';
         obj.Set('type', newValue);
         DebugObj('#debug', { o1 : { object : obj, readDom : true } });
       });
-      
+
       $('#manualUpdate').click(function() {
         var property = $("#modelProperties option:selected").text();
         var newValue = $('#newManVal').val();
@@ -177,7 +177,7 @@
         obj.Set(property, newValue);
         DebugObj('#debug', { o1 : { object : obj, readDom : true } });
       });
-      
+
       $.ajax({
         url: 'http://hammerbenjamin.com/simplemvc-showcase/getjson.php',
         //crossDomain: true,
@@ -192,7 +192,7 @@
       }).success(function(data) {
         //alert("success: " + JSON.stringify(data, null, 2));
         appendDataToSelect(':input[name=country]', data);
-        
+
         //New phone instance
         $(viewId).ModelView({
         //obj = MVC.ModelView(viewId, {
@@ -216,14 +216,13 @@
           },
           keyup: function(e, n, v) {
             //$this = e.currentTarget;
-            //obj.SetDataboundDomVal(viewId, n, v);
             obj.SetModelFromView();
             DebugObj('#debug', { o1 : { object : obj, readDom : true } });
           }
         });
-        
+
         appendDataToSelect(':input[name=props]', obj);
-        
+
         objCopy = $(viewId2).ModelView({
         //objCopy = MVC.ModelView(viewId2, {
           foo : 123,
@@ -231,9 +230,9 @@
           toString : '<input type="text" name="phone_id" id="phone_id" value="'+obj.phone_id+'" /> & type of phone: <input type="text" name="type" value="' + obj.type + '" /> and has the color: ' + obj.color
         });
       });
-      
-      
-      
+
+
+
       $('#toggleReflectModelChangeInView').click(function(){
         var ref = obj['settings']['reflectModelChangeInView'];
         if(ref === true) {
@@ -241,14 +240,14 @@
           //alert(obj.settings.reflectModelChangeInView);
           //obj.Set('settings', 'reflectModelChangeInView = false');
           //obj.RemoveGetSet('type');
-          
+
         } else if(ref === false) {
           obj['settings']['reflectModelChangeInView'] = true;
           //alert(obj.settings.reflectModelChangeInView);
           //obj.AddGetSet('type');
           //obj.Set('settings', 'reflectModelChangeInView = true');
           //obj.AddGetSet('type');
-          
+
         }
         DebugObj('#debug', { o1 : { object : obj, readDom : true } });
       });

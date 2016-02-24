@@ -1,0 +1,3859 @@
+{
+    "project": {},
+    "files": {
+        "examples/debug.js": {
+            "name": "examples/debug.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "examples/store.js": {
+            "name": "examples/store.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/bootstrap/docs/assets/js/bootstrap.min.js": {
+            "name": "lib/bootstrap/docs/assets/js/bootstrap.min.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/bootstrap/docs/assets/js/jquery.js": {
+            "name": "lib/bootstrap/docs/assets/js/jquery.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/bootstrap/js/tests/vendor/jquery.js": {
+            "name": "lib/bootstrap/js/tests/vendor/jquery.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/bootstrap/js/tests/vendor/qunit.js": {
+            "name": "lib/bootstrap/js/tests/vendor/qunit.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/bootstrap/js/bootstrap.min.js": {
+            "name": "lib/bootstrap/js/bootstrap.min.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/jQuery-Parallax/jquery.localscroll-1.2.7-min.js": {
+            "name": "lib/jQuery-Parallax/jquery.localscroll-1.2.7-min.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/jQuery-Parallax/jquery.scrollTo-1.4.2-min.js": {
+            "name": "lib/jQuery-Parallax/jquery.scrollTo-1.4.2-min.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/jasmine/jasmine.js": {
+            "name": "lib/jasmine/jasmine.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/jasmine-2.4.1/boot.js": {
+            "name": "lib/jasmine-2.4.1/boot.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "npm-package/simple.mvc.js": {
+            "name": "npm-package/simple.mvc.js",
+            "modules": {
+                "MVC": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "simple.mvc.js": {
+            "name": "simple.mvc.js",
+            "modules": {},
+            "classes": {
+                "List": 1,
+                "Controller": 1,
+                "ModelView": 1,
+                "getSetHtml": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "simple.mvc.json.js": {
+            "name": "simple.mvc.json.js",
+            "modules": {
+                "JSON": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "MVC": {
+            "name": "MVC",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "List": 1,
+                "Controller": 1,
+                "ModelView": 1,
+                "getSetHtml": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "main",
+            "file": "simple.mvc.js",
+            "line": 1143,
+            "description": "Design rules:\n1) Capitalization\n   Internal methods (except .toArray()) should have the\n   first letter capitalized, so it's possible to\n   distinguish between internal JavaScript methods and\n   Simple.mvc ModelView object. methods.\n\n2) Bracket vs Dot notation\n   Older versions of IE don't accept the use of\n   accessing a an object's property using dot-\n   notation (obj.propertyName). However,\n   accessing the property using bracket notation\n   will work (obj['propertyName']).",
+            "itemtype": "main"
+        },
+        "JSON": {
+            "name": "JSON",
+            "submodules": {},
+            "elements": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "simple.mvc.json.js",
+            "line": 1,
+            "description": "An extension of the JSON object."
+        }
+    },
+    "classes": {
+        "List": {
+            "name": "List",
+            "shortname": "List",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "MVC",
+            "namespace": "",
+            "file": "simple.mvc.js",
+            "line": 48,
+            "description": "List\n\nA more human way of handling array's in JavaScript. It provides some extra\nmethods for manipulating an array, which makes it more easy and semantic\nsuch as when e.g. adding and removing elements using .Add() and .Remove().",
+            "params": [
+                {
+                    "name": "An",
+                    "description": "array (is optional)",
+                    "type": "Object"
+                }
+            ]
+        },
+        "Controller": {
+            "name": "Controller",
+            "shortname": "Controller",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "MVC",
+            "namespace": "",
+            "file": "simple.mvc.js",
+            "line": 193,
+            "description": "Controller which handles the logic, such as saving, updating or deleting\nthe object.\n\nDefintion\nController: The controller interprets the mouse and keyboard inputs from the user,\ninforming the model and/or the view to change as appropriate.\nSource: http://bit.ly/fQnaJI\n\nFor the time being the Controller class doesn't do much more than returning\nthe same data as entered (JSON) object literal. Still this is by design, as\nthere is a possibility for the 'controller' to do more than this 'stuff'\n(handling more than returning data) in the future.",
+            "is_constructor": 1
+        },
+        "ModelView": {
+            "name": "ModelView",
+            "shortname": "ModelView",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "MVC",
+            "namespace": "",
+            "file": "simple.mvc.js",
+            "line": 230,
+            "description": "ModelView\n\nDefinition:\nModel: The model manages the behavior and data of the application domain,\nresponds to requests for information about its state (usually from the view),\nand responds to instructions to change state (usually from the controller).\nView: The view manages the display of information.\nSource: http://bit.ly/fQnaJI\n\nModelView creates the glue which binds the UI(View) with the Backend code\nfunctionality of the program. It keeps the View synchronized with the 'Model'.\n\nModelView creates a new object with data and settings. The data and\nsettings are (JSON) object literals and merged and returned after all the\ninternal setup is done.\nThe ModelView contains all the information about the object, which keeps\nthe View synchronized with the Model and vice versa.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "$object",
+                    "description": "Model data",
+                    "type": "Object"
+                },
+                {
+                    "name": "$settings",
+                    "description": "Config & view input events",
+                    "type": "Object"
+                },
+                {
+                    "name": "$methods",
+                    "description": "Custom user defined methods/functions",
+                    "type": "Object"
+                }
+            ]
+        },
+        "getSetHtml": {
+            "name": "getSetHtml",
+            "shortname": "getSetHtml",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "MVC",
+            "namespace": "",
+            "file": "simple.mvc.js",
+            "line": 1143,
+            "description": "Get or set HTML (DOM) values\n\nInspired by formParams: http://jquerypp.com/#formparams",
+            "params": [
+                {
+                    "name": "jQuery",
+                    "description": "",
+                    "type": "Object"
+                }
+            ]
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "examples/debug.js",
+            "line": 41,
+            "description": "Only test for a name, dot(.) and 2-5 letters after the dot...",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "examples/store.js",
+            "line": 1,
+            "description": "An implementation using jStorage (localstorage) which saves/loads the notes.\nhttp://www.jstorage.info/",
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/docs/assets/js/bootstrap.min.js",
+            "line": 1,
+            "description": "Bootstrap.js by @fat & @mdo\nCopyright 2012 Twitter, Inc.\nhttp://www.apache.org/licenses/LICENSE-2.0.txt",
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/docs/assets/js/jquery.js",
+            "line": 4168,
+            "description": "Utility function for retreiving the text value of an array of DOM nodes",
+            "params": [
+                {
+                    "name": "elem",
+                    "description": "",
+                    "type": "Array|Element"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/js/tests/vendor/jquery.js",
+            "line": 4168,
+            "description": "Utility function for retreiving the text value of an array of DOM nodes",
+            "params": [
+                {
+                    "name": "elem",
+                    "description": "",
+                    "type": "Array|Element"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/js/tests/vendor/qunit.js",
+            "line": 1,
+            "description": "QUnit - A JavaScript Unit Testing Framework\n\nhttp://docs.jquery.com/QUnit\n\nCopyright (c) 2012 John Resig, Jörn Zaefferer\nDual licensed under the MIT (MIT-LICENSE.txt)\nor GPL (GPL-LICENSE.txt) licenses.",
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/js/tests/vendor/qunit.js",
+            "line": 296,
+            "description": "Specify the number of expected assertions to gurantee that failed test (no assertions are run at all) don't slip through.",
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/js/tests/vendor/qunit.js",
+            "line": 303,
+            "description": "Asserts true.",
+            "example": [
+                " ok( \"asdfasdf\".length > 5, \"There must be at least 5 chars\" );"
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/js/tests/vendor/qunit.js",
+            "line": 321,
+            "description": "Checks that the first two arguments are equal, with an optional message.\nPrints out both actual and expected values.\n\nPrefered to ok( actual == expected, message )",
+            "example": [
+                " equal( format(\"Received {0} bytes.\", 2), \"Received 2 bytes.\" );"
+            ],
+            "params": [
+                {
+                    "name": "Object",
+                    "description": "actual"
+                },
+                {
+                    "name": "Object",
+                    "description": "expected"
+                },
+                {
+                    "name": "String",
+                    "description": "message (optional)"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/js/tests/vendor/qunit.js",
+            "line": 538,
+            "description": "Resets the test setup. Useful for tests that modify the DOM.\n\nIf jQuery is available, uses jQuery's html(), otherwise just innerHTML.",
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/js/tests/vendor/qunit.js",
+            "line": 554,
+            "description": "Trigger an event on an element.",
+            "example": [
+                " triggerEvent( document.body, \"click\" );"
+            ],
+            "params": [
+                {
+                    "name": "DOMElement",
+                    "description": "elem"
+                },
+                {
+                    "name": "String",
+                    "description": "type"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/js/tests/vendor/qunit.js",
+            "line": 1154,
+            "description": "jsDump Copyright (c) 2008 Ariel Flesler - aflesler(at)gmail(dot)com |\nhttp://flesler.blogspot.com Licensed under BSD\n(http://www.opensource.org/licenses/bsd-license.php) Date: 5/15/2008",
+            "projectdescription": "Advanced and extensible data dumping for Javascript.",
+            "version": "1.0.0",
+            "author": "Ariel Flesler",
+            "link": "{http://flesler.blogspot.com/2008/05/jsdump-pretty-dump-of-any-javascript.html}",
+            "class": "List"
+        },
+        {
+            "file": "lib/bootstrap/js/bootstrap.min.js",
+            "line": 1,
+            "description": "Bootstrap.js by @fat & @mdo\nplugins: bootstrap-transition.js, bootstrap-modal.js, bootstrap-dropdown.js, bootstrap-scrollspy.js, bootstrap-tab.js, bootstrap-tooltip.js, bootstrap-popover.js, bootstrap-alert.js, bootstrap-button.js, bootstrap-collapse.js, bootstrap-carousel.js, bootstrap-typeahead.js\nCopyright 2012 Twitter, Inc.\nhttp://www.apache.org/licenses/LICENSE-2.0.txt",
+            "class": "List"
+        },
+        {
+            "file": "lib/jQuery-Parallax/jquery.localscroll-1.2.7-min.js",
+            "line": 1,
+            "description": "jQuery.LocalScroll - Animated scrolling navigation, using anchors.\nCopyright (c) 2007-2009 Ariel Flesler - aflesler(at)gmail(dot)com | http://flesler.blogspot.com\nDual licensed under MIT and GPL.\nDate: 3/11/2009",
+            "author": "Ariel Flesler",
+            "version": "1.2.7",
+            "class": "List"
+        },
+        {
+            "file": "lib/jQuery-Parallax/jquery.scrollTo-1.4.2-min.js",
+            "line": 1,
+            "description": "jQuery.ScrollTo - Easy element scrolling using jQuery.\nCopyright (c) 2007-2009 Ariel Flesler - aflesler(at)gmail(dot)com | http://flesler.blogspot.com\nDual licensed under MIT and GPL.\nDate: 5/25/2009",
+            "author": "Ariel Flesler",
+            "version": "1.4.2\n\nhttp://flesler.blogspot.com/2007/10/jqueryscrollto.html",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 3,
+            "description": "Top level namespace for Jasmine, a lightweight JavaScript BDD/spec/testing framework.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 10,
+            "access": "private",
+            "tagname": "",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 17,
+            "description": "Use <code>jasmine.undefined</code> instead of <code>undefined</code>, since <code>undefined</code> is just\na plain old variable and may be redefined by somebody else.",
+            "access": "private",
+            "tagname": "",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 25,
+            "description": "Show diagnostic messages in the console if set to true",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 31,
+            "description": "Default interval in milliseconds for event loop yields (e.g. to allow network activity or to refresh the screen with the HTML-based runner). Small values here may result in slow test running. Zero means no updates until all tests have completed.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 37,
+            "description": "Default timeout interval in milliseconds for waitsFor() blocks.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 50,
+            "description": "Allows for bound functions to be compared.  Internal use only.",
+            "ignore": "",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "base",
+                    "description": "bound 'this' for the function",
+                    "type": "Object"
+                },
+                {
+                    "name": "name",
+                    "description": "function to find",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 114,
+            "description": "Getter for the Jasmine environment. Ensures one gets created",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 122,
+            "ignore": "",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "value",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 132,
+            "ignore": "",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "value",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 142,
+            "ignore": "",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "value",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 152,
+            "ignore": "",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "typeName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 163,
+            "description": "Pretty printer for expecations.  Takes any object and turns it into a human-readable string.",
+            "params": [
+                {
+                    "name": "value",
+                    "description": "an object to be outputted",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 175,
+            "description": "Returns true if the object is a DOM Node.",
+            "params": [
+                {
+                    "name": "obj",
+                    "description": "object to check",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 185,
+            "description": "Returns a matchable 'generic' object of the class type.  For use in expecations of type when values don't matter.",
+            "example": [
+                "\n// don't care about which function is passed in, as long as it's a function\nexpect(mySpy).toHaveBeenCalledWith(jasmine.any(Function));"
+            ],
+            "params": [
+                {
+                    "name": "clazz",
+                    "description": "",
+                    "type": "Class"
+                }
+            ],
+            "return": {
+                "description": "matchable object of the type clazz"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 199,
+            "description": "Returns a matchable subset of a JSON object. For use in expectations when you don't care about all of the\nattributes on the object.",
+            "example": [
+                "\n// don't care about any other attributes than foo.\nexpect(mySpy).toHaveBeenCalledWith(jasmine.objectContaining({foo: \"bar\"});"
+            ],
+            "params": [
+                {
+                    "name": "sample",
+                    "description": "sample",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "matchable object for the sample"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 214,
+            "description": "Jasmine Spies are test doubles that can act as stubs, spies, fakes or when used in an expecation, mocks.\n\nSpies should be created in test setup, before expectations.  They can then be checked, using the standard Jasmine\nexpectation syntax. Spies can be checked if they were called or not and what the calling params were.\n\nA Spy has the following fields: wasCalled, callCount, mostRecentCall, and argsForCall (see docs).\n\nSpies are torn down at the end of every spec.\n\nNote: Do <b>not</b> call new jasmine.Spy() directly - a spy must be created using spyOn, jasmine.createSpy or jasmine.createSpyObj.",
+            "example": [
+                "\n// a stub\nvar myStub = jasmine.createSpy('myStub');  // can be used anywhere\n\n// spy example\nvar foo = {\n  not: function(bool) { return !bool; }\n}\n\n// actual foo.not will not be called, execution stops\nspyOn(foo, 'not');\n\n// foo.not spied upon, execution will continue to implementation\nspyOn(foo, 'not').andCallThrough();\n\n// fake example\nvar foo = {\n  not: function(bool) { return !bool; }\n}\n\n// foo.not(val) will return val\nspyOn(foo, 'not').andCallFake(function(value) {return value;});\n\n// mock example\nfoo.not(7 == 7);\nexpect(foo.not).toHaveBeenCalled();\nexpect(foo.not).toHaveBeenCalledWith(true);"
+            ],
+            "is_constructor": 1,
+            "see": [
+                "spyOn",
+                "jasmine.createSpy",
+                "jasmine.createSpyObj"
+            ],
+            "params": [
+                {
+                    "name": "name",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 259,
+            "description": "The name of the spy, if provided.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 263,
+            "description": "Is this Object a spy?",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 267,
+            "description": "The actual function this spy stubs.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 272,
+            "description": "Tracking of the most recent call to the spy.",
+            "example": [
+                "\nvar mySpy = jasmine.createSpy('foo');\nmySpy(1, 2);\nmySpy.mostRecentCall.args = [1, 2];"
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 281,
+            "description": "Holds arguments for each call to the spy, indexed by call count",
+            "example": [
+                "\nvar mySpy = jasmine.createSpy('foo');\nmySpy(1, 2);\nmySpy(7, 8);\nmySpy.mostRecentCall.args = [7, 8];\nmySpy.argsForCall[0] = [1, 2];\nmySpy.argsForCall[1] = [7, 8];"
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 295,
+            "description": "Tells a spy to call through to the actual implemenatation.",
+            "example": [
+                "\nvar foo = {\n  bar: function() { // do some stuff }\n}\n\n// defining a spy on an existing property: foo.bar\nspyOn(foo, 'bar').andCallThrough();"
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 311,
+            "description": "For setting the return value of a spy.",
+            "example": [
+                "\n// defining a spy from scratch: foo() returns 'baz'\nvar foo = jasmine.createSpy('spy on foo').andReturn('baz');\n\n// defining a spy on an existing property: foo.bar() returns 'baz'\nspyOn(foo, 'bar').andReturn('baz');"
+            ],
+            "params": [
+                {
+                    "name": "value",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 330,
+            "description": "For throwing an exception when a spy is called.",
+            "example": [
+                "\n// defining a spy from scratch: foo() throws an exception w/ message 'ouch'\nvar foo = jasmine.createSpy('spy on foo').andThrow('baz');\n\n// defining a spy on an existing property: foo.bar() throws an exception w/ message 'ouch'\nspyOn(foo, 'bar').andThrow('baz');"
+            ],
+            "params": [
+                {
+                    "name": "exceptionMsg",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 349,
+            "description": "Calls an alternate implementation when a spy is called.",
+            "example": [
+                "\nvar baz = function() {\n  // do some stuff, return something\n}\n// defining a spy from scratch: foo() calls the function baz\nvar foo = jasmine.createSpy('spy on foo').andCall(baz);\n\n// defining a spy on an existing property: foo.bar() calls an anonymnous function\nspyOn(foo, 'bar').andCall(function() { return 'baz';} );"
+            ],
+            "params": [
+                {
+                    "name": "fakeFunc",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 369,
+            "description": "Resets all of a spy's the tracking variables so that it can be used again.",
+            "example": [
+                "\nspyOn(foo, 'bar');\n\nfoo.bar();\n\nexpect(foo.bar.callCount).toEqual(1);\n\nfoo.bar.reset();\n\nexpect(foo.bar.callCount).toEqual(0);"
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 415,
+            "description": "Determines whether an object is a spy.",
+            "params": [
+                {
+                    "name": "putativeSpy",
+                    "description": "",
+                    "type": "jasmine.Spy|Object"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 425,
+            "description": "Creates a more complicated spy: an Object that has every property a function that is a spy.  Used for stubbing something\nlarge in one call.",
+            "params": [
+                {
+                    "name": "baseName",
+                    "description": "name of spy class",
+                    "type": "String"
+                },
+                {
+                    "name": "methodNames",
+                    "description": "array of names of methods to make spies",
+                    "type": "Array"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 443,
+            "description": "All parameters are pretty-printed and concatenated together, then written to the current spec's output.\n\nBe careful not to leave calls to <code>jasmine.log</code> in production code.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 453,
+            "description": "Function that installs a spy on an existing object's method name.  Used within a Spec to create a spy.",
+            "example": [
+                "\n// spy example\nvar foo = {\n  not: function(bool) { return !bool; }\n}\nspyOn(foo, 'not'); // actual foo.not will not be called, execution stops"
+            ],
+            "see": [
+                "jasmine.createSpy"
+            ],
+            "params": [
+                {
+                    "name": "obj",
+                    "description": ""
+                },
+                {
+                    "name": "methodName",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "a Jasmine spy that can be chained with all spy methods"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 473,
+            "description": "Creates a Jasmine spec that will be added to the current suite.\n\n// TODO: pending tests",
+            "example": [
+                "\nit('should be true', function() {\n  expect(true).toEqual(true);\n});"
+            ],
+            "params": [
+                {
+                    "name": "desc",
+                    "description": "description of this specification",
+                    "type": "String"
+                },
+                {
+                    "name": "func",
+                    "description": "defines the preconditions and expectations of the spec",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 491,
+            "description": "Creates a <em>disabled</em> Jasmine spec.\n\nA convenience method that allows existing specs to be disabled temporarily during development.",
+            "params": [
+                {
+                    "name": "desc",
+                    "description": "description of this specification",
+                    "type": "String"
+                },
+                {
+                    "name": "func",
+                    "description": "defines the preconditions and expectations of the spec",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 504,
+            "description": "Starts a chain for a Jasmine expectation.\n\nIt is passed an Object that is the actual value and should chain to one of the many\njasmine.Matchers functions.",
+            "params": [
+                {
+                    "name": "actual",
+                    "description": "Actual value to test against and expected value",
+                    "type": "Object"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 517,
+            "description": "Defines part of a jasmine spec.  Used in cominbination with waits or waitsFor in asynchrnous specs.",
+            "params": [
+                {
+                    "name": "func",
+                    "description": "Function that defines part of a jasmine spec.",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 527,
+            "description": "Waits a fixed time period before moving to the next block.",
+            "deprecated": true,
+            "deprecationMessage": "Use waitsFor() instead",
+            "params": [
+                {
+                    "name": "timeout",
+                    "description": "milliseconds to wait",
+                    "type": "Number"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 538,
+            "description": "Waits for the latchFunction to return true before proceeding to the next block.",
+            "params": [
+                {
+                    "name": "latchFunction",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "optional_timeoutMessage",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "optional_timeout",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 550,
+            "description": "A function that is called before each spec in a suite.\n\nUsed for spec setup, including validating assumptions.",
+            "params": [
+                {
+                    "name": "beforeEachFunction",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 562,
+            "description": "A function that is called after each spec in a suite.\n\nUsed for restoring any state that is hijacked during spec execution.",
+            "params": [
+                {
+                    "name": "afterEachFunction",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 574,
+            "description": "Defines a suite of specifications.\n\nStores the description and all defined specs in the Jasmine environment as one suite of specs. Variables declared\nare accessible by calls to beforeEach, it, and afterEach. Describe blocks can be nested, allowing for specialization\nof setup in some tests.",
+            "example": [
+                "\n// TODO: a simple suite\n\n// TODO: a simple suite with a nested describe block"
+            ],
+            "params": [
+                {
+                    "name": "description",
+                    "description": "A string, usually the class under test.",
+                    "type": "String"
+                },
+                {
+                    "name": "specDefinitions",
+                    "description": "function that defines several specs.",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 594,
+            "description": "Disables a suite of specifications.  Used to disable some suites in a file, or files, temporarily during development.",
+            "params": [
+                {
+                    "name": "description",
+                    "description": "A string, usually the class under test.",
+                    "type": "String"
+                },
+                {
+                    "name": "specDefinitions",
+                    "description": "function that defines several specs.",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 633,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 638,
+            "description": "Declare that a child class inherit it's prototype from the parent class.",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "childClass",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "parentClass",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 646,
+            "access": "private",
+            "tagname": "",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 700,
+            "description": "Environment for Jasmine",
+            "is_constructor": 1,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 738,
+            "return": {
+                "description": "an object containing jasmine version build info, if set."
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 749,
+            "return": {
+                "description": "string containing jasmine version build info, if set."
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 766,
+            "return": {
+                "description": "a sequential integer starting at 0"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 773,
+            "return": {
+                "description": "a sequential integer starting at 0"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 780,
+            "description": "Register a reporter to receive status updates from Jasmine.",
+            "params": [
+                {
+                    "name": "reporter",
+                    "description": "An object which will receive status updates.",
+                    "type": "jasmine.Reporter"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 977,
+            "is_constructor": 1,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1008,
+            "description": "Blocks are functions with executable code that make up a spec.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "env",
+                    "description": "",
+                    "type": "jasmine.Env"
+                },
+                {
+                    "name": "func",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "spec",
+                    "description": "",
+                    "type": "jasmine.Spec"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1030,
+            "is_constructor": 1,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1132,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "env",
+                    "description": "",
+                    "type": "jasmine.Env"
+                },
+                {
+                    "name": "actual",
+                    "description": ""
+                },
+                {
+                    "name": "spec",
+                    "description": "",
+                    "type": "jasmine.Spec"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1209,
+            "description": "toBe: compares the actual to the expected using ===",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": ""
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1217,
+            "description": "toNotBe: compares the actual to the expected using !==",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": ""
+                }
+            ],
+            "deprecated": true,
+            "deprecationMessage": "as of 1.0. Use not.toBe() instead.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1226,
+            "description": "toEqual: compares the actual to the expected using common sense equality. Handles Objects, Arrays, etc.",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": ""
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1235,
+            "description": "toNotEqual: compares the actual to the expected using the ! of jasmine.Matchers.toEqual",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": ""
+                }
+            ],
+            "deprecated": true,
+            "deprecationMessage": "as of 1.0. Use not.toEqual() instead.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1244,
+            "description": "Matcher that compares the actual to the expected using a regular expression.  Constructs a RegExp, so takes\na pattern or a String.",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": ""
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1254,
+            "description": "Matcher that compares the actual to the expected using the boolean inverse of jasmine.Matchers.toMatch",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": ""
+                }
+            ],
+            "deprecated": true,
+            "deprecationMessage": "as of 1.0. Use not.toMatch() instead.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1263,
+            "description": "Matcher that compares the actual to jasmine.undefined.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1270,
+            "description": "Matcher that compares the actual to jasmine.undefined.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1277,
+            "description": "Matcher that compares the actual to null.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1284,
+            "description": "Matcher that boolean not-nots the actual.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1292,
+            "description": "Matcher that boolean nots the actual.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1300,
+            "description": "Matcher that checks to see if the actual, a Jasmine spy, was called.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1322,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1325,
+            "description": "Matcher that checks to see if the actual, a Jasmine spy, was not called.",
+            "deprecated": true,
+            "deprecationMessage": "Use expect(xxx).not.toHaveBeenCalled() instead",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1349,
+            "description": "Matcher that checks to see if the actual, a Jasmine spy, was called with a set of parameters.",
+            "example": [
+                "\n"
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1378,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1381,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1398,
+            "description": "Matcher that checks that the expected item is an element in the actual Array.",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1407,
+            "description": "Matcher that checks that the expected item is NOT an element in the actual Array.",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "deprecated": true,
+            "deprecationMessage": "as of 1.0. Use not.toContain() instead.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1425,
+            "description": "Matcher that checks that the expected item is equal to the actual item\nup to a given level of decimal precision (default 2).",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "precision",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1442,
+            "description": "Matcher that checks that the expected exception was thrown by the actual.",
+            "params": [
+                {
+                    "name": "expected",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1619,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1715,
+            "is_constructor": 1,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1750,
+            "description": "Holds results for a set of Jasmine spec. Allows for the results array to hold another jasmine.NestedResults",
+            "is_constructor": 1,
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1756,
+            "description": "The total count of results",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1760,
+            "description": "Number of passed results",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1764,
+            "description": "Number of failed results",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1768,
+            "description": "Was this suite/spec skipped?",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1772,
+            "ignore": "",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1778,
+            "description": "Roll up the result counts.",
+            "params": [
+                {
+                    "name": "result",
+                    "description": ""
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1789,
+            "description": "Adds a log message.",
+            "params": [
+                {
+                    "name": "values",
+                    "description": "Array of message parts which will be concatenated later."
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1797,
+            "description": "Getter for the results: message & results.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1804,
+            "description": "Adds a result, tracking counts (total, passed, & failed)",
+            "params": [
+                {
+                    "name": "result",
+                    "description": "",
+                    "type": "jasmine.ExpectationResult|jasmine.NestedResults"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1824,
+            "return": {
+                "description": "True if <b>everything</b> below passed",
+                "type": "Boolean"
+            },
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1830,
+            "description": "Base class for pretty printing for expectation results.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 1837,
+            "description": "Formats a value in a nice, human-readable string.",
+            "params": [
+                {
+                    "name": "value",
+                    "description": ""
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 2052,
+            "description": "Runner",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "env",
+                    "description": "",
+                    "type": "jasmine.Env"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 2129,
+            "description": "Internal representation of a Jasmine specification, or test.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "env",
+                    "description": "",
+                    "type": "jasmine.Env"
+                },
+                {
+                    "name": "suite",
+                    "description": "",
+                    "type": "jasmine.Suite"
+                },
+                {
+                    "name": "description",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 2168,
+            "description": "All parameters are pretty-printed and concatenated together, then written to the spec's output.\n\nBe careful not to leave calls to <code>jasmine.log</code> in production code.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 2191,
+            "params": [
+                {
+                    "name": "result",
+                    "description": "",
+                    "type": "jasmine.ExpectationResult"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 2204,
+            "description": "Waits a fixed time period before moving to the next block.",
+            "deprecated": true,
+            "deprecationMessage": "Use waitsFor() instead",
+            "params": [
+                {
+                    "name": "timeout",
+                    "description": "milliseconds to wait",
+                    "type": "Number"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 2216,
+            "description": "Waits for the latchFunction to return true before proceeding to the next block.",
+            "params": [
+                {
+                    "name": "latchFunction",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "optional_timeoutMessage",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "optional_timeout",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 2372,
+            "description": "Internal representation of a Jasmine suite.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "env",
+                    "description": "",
+                    "type": "jasmine.Env"
+                },
+                {
+                    "name": "description",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "specDefinitions",
+                    "description": "",
+                    "type": "Function"
+                },
+                {
+                    "name": "parentSuite",
+                    "description": "",
+                    "type": "jasmine.Suite"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine/jasmine.js",
+            "line": 2469,
+            "description": "A block which waits for some condition to become true, with timeout.",
+            "is_constructor": 1,
+            "extends": "jasmine.Block",
+            "params": [
+                {
+                    "name": "env",
+                    "description": "The Jasmine environment.",
+                    "type": "jasmine.Env"
+                },
+                {
+                    "name": "timeout",
+                    "description": "The maximum time in milliseconds to wait for the condition to become true.",
+                    "type": "Number"
+                },
+                {
+                    "name": "latchFunction",
+                    "description": "A function which returns true when the desired condition has been met.",
+                    "type": "Function"
+                },
+                {
+                    "name": "message",
+                    "description": "The message to display if the desired condition hasn't been met within the given time period.",
+                    "type": "String"
+                },
+                {
+                    "name": "spec",
+                    "description": "The Jasmine spec.",
+                    "type": "jasmine.Spec"
+                }
+            ],
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 1,
+            "description": "Starting with version 2.0, this file \"boots\" Jasmine, performing all of the necessary initialization before executing the loaded environment and all of a project's specs. This file should be loaded after `jasmine.js` and `jasmine_html.js`, but before any project source files or spec files are loaded. Thus this file can also be used to customize Jasmine for a project.\n\nIf a project is using Jasmine via the standalone distribution, this file can be customized directly. If a project is using Jasmine via the [Ruby gem][jasmine-gem], this file can be copied into the support directory via `jasmine copy_boot_js`. Other environments (e.g., Python) will have different mechanisms.\n\nThe location of `boot.js` can be specified and/or overridden in `jasmine.yml`.\n\n[jasmine-gem]: http://github.com/pivotal/jasmine-gem",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 13,
+            "description": "## Require &amp; Instantiate\n\nRequire Jasmine's core files. Specifically, this requires and attaches all of Jasmine's code to the `jasmine` reference.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 20,
+            "description": "Since this is being run in a browser and the results should populate to an HTML page, require the HTML-specific Jasmine code, injecting the same reference.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 25,
+            "description": "Create the Jasmine environment. This is used to run all specs in a project.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 30,
+            "description": "## The Global Interface\n\nBuild up the functions that will be exposed as the Jasmine public interface. A project can customize, rename or alias any of these functions as desired, provided the implementation remains unchanged.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 37,
+            "description": "Add all of the Jasmine global/public interface to the global scope, so a project can use the public interface directly. For example, calling `describe` in specs instead of `jasmine.getEnv().describe`.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 42,
+            "description": "## Runner Parameters\n\nMore browser specific code - wrap the query string in an object and to allow for getting/setting parameters from the runner user interface.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 66,
+            "description": "## Reporters\nThe `HtmlReporter` builds all of the HTML UI for the runner page. This reporter paints the dots, stars, and x's for specs, as well as all spec names and all failures (if any).",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 82,
+            "description": "The `jsApiReporter` also receives spec results, and is used by any environment that needs to extract the results  from JavaScript.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 88,
+            "description": "Filter which specs will be run by matching the start of the full name against the `spec` query param.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 99,
+            "description": "Setting up timing functions to be able to be overridden. Certain browsers (Safari, IE 8, phantomjs) require this hack.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 107,
+            "description": "## Execution\n\nReplace the browser window's `onload`, ensure it's called, and then run all of the loaded specs. This includes initializing the `HtmlReporter` instance and then executing the loaded Jasmine environment. All of this will happen after all of the specs are loaded.",
+            "class": "List"
+        },
+        {
+            "file": "lib/jasmine-2.4.1/boot.js",
+            "line": 122,
+            "description": "Helper function for readability above.",
+            "class": "List"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 31,
+            "description": "KeyCheck\n\nA friendly way to check which key was used.",
+            "itemtype": "method",
+            "name": "KeyCheck",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Event",
+                    "type": "Object"
+                },
+                {
+                    "name": "n",
+                    "description": "Name of the key to check against (e.g. 'enter', 'escape')",
+                    "type": "String"
+                }
+            ],
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 76,
+            "description": "Size\n\nReturn the length of the array (same as array.length);",
+            "return": {
+                "description": "The length of the array.",
+                "type": "Number"
+            },
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 86,
+            "description": "Add\n\nAdd a new element - It's more semantic to use .Add() instead of .push().",
+            "itemtype": "method",
+            "name": "Add",
+            "params": [
+                {
+                    "name": "An",
+                    "description": "element.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The array.",
+                "type": "Array"
+            },
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 100,
+            "description": "Get\n\nGet an element from the array.",
+            "itemtype": "method",
+            "name": "Get",
+            "params": [
+                {
+                    "name": "A",
+                    "description": "key.",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "An object from the array.",
+                "type": "Object"
+            },
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 113,
+            "description": "Find\n\nFind an element in the array. Returns null, if nothing is found.",
+            "itemtype": "method",
+            "name": "GetById",
+            "params": [
+                {
+                    "name": "A",
+                    "description": "key.",
+                    "type": "Object"
+                },
+                {
+                    "name": "A",
+                    "description": "value to search for.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "An object from the array.",
+                "type": "Object"
+            },
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 134,
+            "description": "Remove\n\nRemove an element (if found) from the array.",
+            "itemtype": "method",
+            "name": "Remove",
+            "params": [
+                {
+                    "name": "An",
+                    "description": "element.",
+                    "type": "Object"
+                }
+            ],
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 156,
+            "description": "RemoveAt\n\nRemove an element at index (if found) from the array.",
+            "itemtype": "method",
+            "name": "RemoveAt",
+            "params": [
+                {
+                    "name": "Index.",
+                    "description": "",
+                    "type": "Integer"
+                }
+            ],
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 168,
+            "description": "Contains\n\nCheck if the specified element is in the list",
+            "itemtype": "method",
+            "name": "Contains",
+            "params": [
+                {
+                    "name": "An",
+                    "description": "element.",
+                    "type": "Object"
+                }
+            ],
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 180,
+            "description": "Clear\n\nRemove all the elements from the array.",
+            "itemtype": "method",
+            "name": "Clear",
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 217,
+            "description": "ModelView written as a jQuery plugin (most basic form of plugin authoring).\n\nReasons for this:\n Several... but mainly just trying to make it easier for anyone who already\n knows jQuery gettings started using Simple.mvc.\n\nFor more information on different jQuery plugin design patterns:\nhttps://github.com/addyosmani/jquery-plugin-patterns/tree/master/patterns",
+            "class": "Controller",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 364,
+            "description": "Call the .Save() method whenever you want to save the object.\nNotice: This is intended behaviour, but the implementation of the\nmethod is up to the individual how and what is done when this method\nis called/executed.",
+            "itemtype": "method",
+            "name": "Save",
+            "params": [
+                {
+                    "name": "par",
+                    "description": "Provide extra parameters if needed.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 378,
+            "description": "Call the .Update() method whenever you want to update the object.\nNotice: This is intended behaviour, but the implementation of the\nmethod is up to the individual how and what is done when this method\nis called/executed.",
+            "itemtype": "method",
+            "name": "Update",
+            "params": [
+                {
+                    "name": "par",
+                    "description": "Provide extra parameters if needed.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 392,
+            "description": "Call the .Delete() method whenever you want to delete the object.\nNotice: This is intended behaviour, but the implementation of the\nmethod is up to the individual how and what is done when this method\nis called/executed.",
+            "itemtype": "method",
+            "name": "Delete",
+            "params": [
+                {
+                    "name": "par",
+                    "description": "Provide extra parameters if needed.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 406,
+            "description": "Clear\n\nClears a property's value in the Model and optionally in the View if 'isMirror' = true.",
+            "itemtype": "method",
+            "name": "Clear",
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 421,
+            "description": "Clear All\n\nClears all the data in the Model and the View.",
+            "itemtype": "method",
+            "name": "ClearAll",
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 436,
+            "description": "AddGetSet\n\nAdd getter and setter methods for a property\n\nGetters and Setters in JavaScript/JScript (ECMAScript) are not an option\nas it is hard to make it work cross-browser/platform!\nThere is a solution here, but only down to IE9:\nSource: http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/\n\nIf changes in the model properties should be reflected in the view\nthen setter and getter methods will be attached using jQuery.\n\nNote: Will only be used(exec.) if 'isMirror' is TRUE.\n\nWorks in IE 7+: http://jsfiddle.net/cTJZN/",
+            "itemtype": "method",
+            "name": "AddGetSet",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name",
+                    "type": "String"
+                },
+                {
+                    "name": "onUpdate",
+                    "description": "callBack function will execute, whenever\nthe get/set event handlers bound with .bind() method are triggered.",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 485,
+            "description": "RemoveGetSet\n\nRemove getter and setter methods for a property",
+            "itemtype": "method",
+            "name": "RemoveGetSet",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 502,
+            "description": "Trigger Event\n\nTrigger an event on an input element inside the view",
+            "itemtype": "method",
+            "name": "TriggerEvent",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "Property name",
+                    "type": "String"
+                },
+                {
+                    "name": "evt",
+                    "description": "Event type/name (e.g. 'keyup')",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 520,
+            "description": "AddProperty\n\nAdd a property to the Model",
+            "itemtype": "method",
+            "name": "AddProperty",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The property name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 542,
+            "description": "RemoveProperty\n\nRemove a property from the Model",
+            "itemtype": "method",
+            "name": "RemoveProperty",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The property name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 562,
+            "description": "Remove\n\nNOTE: Must only be used if 'isMirror' is TRUE.\n\nRemoves an item from a list object in the model and updates the View.",
+            "itemtype": "method",
+            "name": "Add",
+            "params": [
+                {
+                    "name": "listName",
+                    "description": "The object's property name",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "The new value to add to the property list",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 581,
+            "description": "Add\n\nNOTE: Must only be used if 'isMirror' is TRUE.\n\nAdds an item to a list object in the model and updates the View.",
+            "itemtype": "method",
+            "name": "Add",
+            "params": [
+                {
+                    "name": "listName",
+                    "description": "The object's property name",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "The new value to add to the property list",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 599,
+            "description": "Set\n\nNOTE: Must only be used if 'isMirror' is TRUE.\n\nWhen you need to update a value in the Model and reflect in the View.",
+            "itemtype": "method",
+            "name": "Set",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "The new value to set for the property",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 635,
+            "description": "Get\n\nNOTE: Must only be used if 'isMirror' is TRUE.",
+            "itemtype": "method",
+            "name": "Get",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "value The value from the object's property.",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 651,
+            "description": "Has\n\nChecks if the Model has a given property (true) or not (false).",
+            "itemtype": "method",
+            "name": "Has",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "TRUE if the property exists. Otherwise FALSE.",
+                "type": "Boolean"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 667,
+            "description": "GetDatasrcId\n\nReturn the (view) ID of the datasource.",
+            "itemtype": "method",
+            "name": "GetDatasrcId",
+            "return": {
+                "description": "The (View) ID of the datasource.",
+                "type": "Number"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 679,
+            "description": "GetModelData\n\nReturn's a copy of the Model's data without it's functions.\nUseful when storing the data.\n\nNote: As this object has all of it's functions/methods removed, then\nit's not possible to use the .toArray() (if needed for any reason) anymore.\nInstead use $.makeArray(theObject); which is what .toArray() uses.",
+            "itemtype": "method",
+            "name": "GetModelData",
+            "params": [
+                {
+                    "name": "withSettings",
+                    "description": "If TRUE, then append the settings object.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "A copy of the Model's data (as JSON object literal).",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 717,
+            "description": "GetViewHtml\n\nReturns the jQuery object.",
+            "itemtype": "method",
+            "name": "GetViewHtml",
+            "return": {
+                "description": "jQuery object.",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 728,
+            "description": "GetViewData\n\nReturn the View data as an JSON object literal.",
+            "itemtype": "method",
+            "name": "GetViewData",
+            "return": {
+                "description": "The View data as JSON object",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 742,
+            "description": "SetViewData\n\nSet the View data from the Model (does not update databound elments)",
+            "itemtype": "method",
+            "name": "SetViewData",
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 755,
+            "description": "SetViewFromModel\n\nUpdates the elements in the View from the Model (including databound elements).",
+            "itemtype": "method",
+            "name": "SetViewFromModel",
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 774,
+            "description": "SetModelFromView\n\nUpdate the model and databound elements.\n\nThis method is internally every time a 'change' and 'keyup' event occur\nin form elements. This is part of the concept to always update the Model,\nso it is synchronized with the View.\n\nIt is possible to override the call to this method for the 'keyup' event\nif it is implemented manually in the settings. Therefore it's important\nto know that if overriding this event, but still want 'live' updating\nof the Model to occur, then this method must be called from the custom\nimplementation of the 'keyup' event!",
+            "itemtype": "method",
+            "name": "SetModelFromView",
+            "params": [
+                {
+                    "name": "updateDataboundValues",
+                    "description": "TRUE | FALSE - If undefined or\ntrue, databound elements inside and/or outside the the View will also\nget updated. If false, then they won't.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 823,
+            "description": "Update the databound elements inside or outside the View.",
+            "itemtype": "method",
+            "name": "_SetDataboundDomVal",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "datasrc",
+                    "description": "A viewId.",
+                    "type": "String"
+                },
+                {
+                    "name": "name",
+                    "description": "An element's name.",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "A new value.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 876,
+            "description": "FillSelect\n\nFill select element with one or more option elements.",
+            "itemtype": "method",
+            "name": "FillSelect",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The property name which holds an array of values",
+                    "type": "Array"
+                },
+                {
+                    "name": "text",
+                    "description": "The text to be displayed in the option element",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "The value of the option element",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 903,
+            "description": "RunEvent\n\nTrigger an event if specified in the settings.",
+            "itemtype": "method",
+            "name": "RunEvent",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The eventName to trigger/execute.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 948,
+            "description": "Start\n\nExecute a method in the controller.",
+            "itemtype": "method",
+            "name": "Start",
+            "params": [
+                {
+                    "name": "method",
+                    "description": "The methods name specified in the controller.",
+                    "type": "String"
+                },
+                {
+                    "name": "par",
+                    "description": "If needed you can provide optional parameters.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 977,
+            "description": "toArray\n\nConvert the object to a real Array.",
+            "itemtype": "method",
+            "name": "toArray",
+            "return": {
+                "description": "The object converted into a real Array.",
+                "type": "Array"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 989,
+            "description": "GetViewId\n\nGet the ID of the View",
+            "itemtype": "method",
+            "name": "GetViewId",
+            "return": {
+                "description": "The View ID",
+                "type": "String"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 1001,
+            "description": "Find\n\nFind and return one or many element/s within the View using a (id or class) selector.\n\nIf the elemenet is not found an empty array is returned.",
+            "itemtype": "method",
+            "name": "Find",
+            "return": {
+                "description": "An element from the View.",
+                "type": "Array"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 1015,
+            "description": "AddEvents\n\nAdd events to the object's input fields",
+            "itemtype": "method",
+            "name": "AddEvents",
+            "return": {
+                "description": "The object",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 1050,
+            "description": "keyup event\n\nIt's important to know that when overriding this event,\nbut still want 'live' updating of the Model to occur,\nthen this method must be called from the custom implementation\nof the 'keyup' event!",
+            "itemtype": "event",
+            "name": "keyup ...",
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 1128,
+            "description": "To keep the code which belongs to the object, but normally would be\nplaced after object instantiation, we instead want to place it inside\nthe .init() method, which gets executed right after the object has been\ncreated.",
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "npm-package/simple.mvc.js",
+            "line": 1153,
+            "description": "getSetHtml\n\n\nGet or set HTML (DOM) values.\nIf you pass this method any parameters it will try to set the HTML.\nOtherwise it will try get the HTML values from the view.",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "Object literal with keys that correspond with\neither an ID or NAME attribute of an element in the View (DOM).",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Object literal with data from the View (DOM).",
+                "type": "Object"
+            },
+            "itemtype": "method",
+            "name": "getSetHtml",
+            "class": "getSetHtml",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 31,
+            "description": "KeyCheck\n\nA friendly way to check which key was used.",
+            "itemtype": "method",
+            "name": "KeyCheck",
+            "params": [
+                {
+                    "name": "e",
+                    "description": "Event",
+                    "type": "Object"
+                },
+                {
+                    "name": "n",
+                    "description": "Name of the key to check against (e.g. 'enter', 'escape')",
+                    "type": "String"
+                }
+            ],
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 76,
+            "description": "Size\n\nReturn the length of the array (same as array.length);",
+            "return": {
+                "description": "The length of the array.",
+                "type": "Number"
+            },
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 86,
+            "description": "Add\n\nAdd a new element - It's more semantic to use .Add() instead of .push().",
+            "itemtype": "method",
+            "name": "Add",
+            "params": [
+                {
+                    "name": "An",
+                    "description": "element.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The array.",
+                "type": "Array"
+            },
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 100,
+            "description": "Get\n\nGet an element from the array.",
+            "itemtype": "method",
+            "name": "Get",
+            "params": [
+                {
+                    "name": "A",
+                    "description": "key.",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "An object from the array.",
+                "type": "Object"
+            },
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 113,
+            "description": "Find\n\nFind an element in the array. Returns null, if nothing is found.",
+            "itemtype": "method",
+            "name": "GetById",
+            "params": [
+                {
+                    "name": "A",
+                    "description": "key.",
+                    "type": "Object"
+                },
+                {
+                    "name": "A",
+                    "description": "value to search for.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "An object from the array.",
+                "type": "Object"
+            },
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 134,
+            "description": "Remove\n\nRemove an element (if found) from the array.",
+            "itemtype": "method",
+            "name": "Remove",
+            "params": [
+                {
+                    "name": "An",
+                    "description": "element.",
+                    "type": "Object"
+                }
+            ],
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 156,
+            "description": "RemoveAt\n\nRemove an element at index (if found) from the array.",
+            "itemtype": "method",
+            "name": "RemoveAt",
+            "params": [
+                {
+                    "name": "Index.",
+                    "description": "",
+                    "type": "Integer"
+                }
+            ],
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 168,
+            "description": "Contains\n\nCheck if the specified element is in the list",
+            "itemtype": "method",
+            "name": "Contains",
+            "params": [
+                {
+                    "name": "An",
+                    "description": "element.",
+                    "type": "Object"
+                }
+            ],
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 180,
+            "description": "Clear\n\nRemove all the elements from the array.",
+            "itemtype": "method",
+            "name": "Clear",
+            "class": "List",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 217,
+            "description": "ModelView written as a jQuery plugin (most basic form of plugin authoring).\n\nReasons for this:\n Several... but mainly just trying to make it easier for anyone who already\n knows jQuery gettings started using Simple.mvc.\n\nFor more information on different jQuery plugin design patterns:\nhttps://github.com/addyosmani/jquery-plugin-patterns/tree/master/patterns",
+            "class": "Controller",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 364,
+            "description": "Call the .Save() method whenever you want to save the object.\nNotice: This is intended behaviour, but the implementation of the\nmethod is up to the individual how and what is done when this method\nis called/executed.",
+            "itemtype": "method",
+            "name": "Save",
+            "params": [
+                {
+                    "name": "par",
+                    "description": "Provide extra parameters if needed.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 378,
+            "description": "Call the .Update() method whenever you want to update the object.\nNotice: This is intended behaviour, but the implementation of the\nmethod is up to the individual how and what is done when this method\nis called/executed.",
+            "itemtype": "method",
+            "name": "Update",
+            "params": [
+                {
+                    "name": "par",
+                    "description": "Provide extra parameters if needed.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 392,
+            "description": "Call the .Delete() method whenever you want to delete the object.\nNotice: This is intended behaviour, but the implementation of the\nmethod is up to the individual how and what is done when this method\nis called/executed.",
+            "itemtype": "method",
+            "name": "Delete",
+            "params": [
+                {
+                    "name": "par",
+                    "description": "Provide extra parameters if needed.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 406,
+            "description": "Clear\n\nClears a property's value in the Model and optionally in the View if 'isMirror' = true.",
+            "itemtype": "method",
+            "name": "Clear",
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 421,
+            "description": "Clear All\n\nClears all the data in the Model and the View.",
+            "itemtype": "method",
+            "name": "ClearAll",
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 436,
+            "description": "AddGetSet\n\nAdd getter and setter methods for a property\n\nGetters and Setters in JavaScript/JScript (ECMAScript) are not an option\nas it is hard to make it work cross-browser/platform!\nThere is a solution here, but only down to IE9:\nSource: http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/\n\nIf changes in the model properties should be reflected in the view\nthen setter and getter methods will be attached using jQuery.\n\nNote: Will only be used(exec.) if 'isMirror' is TRUE.\n\nWorks in IE 7+: http://jsfiddle.net/cTJZN/",
+            "itemtype": "method",
+            "name": "AddGetSet",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name",
+                    "type": "String"
+                },
+                {
+                    "name": "onUpdate",
+                    "description": "callBack function will execute, whenever\nthe get/set event handlers bound with .bind() method are triggered.",
+                    "type": "Function"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 485,
+            "description": "RemoveGetSet\n\nRemove getter and setter methods for a property",
+            "itemtype": "method",
+            "name": "RemoveGetSet",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 502,
+            "description": "Trigger Event\n\nTrigger an event on an input element inside the view",
+            "itemtype": "method",
+            "name": "TriggerEvent",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "Property name",
+                    "type": "String"
+                },
+                {
+                    "name": "evt",
+                    "description": "Event type/name (e.g. 'keyup')",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 520,
+            "description": "AddProperty\n\nAdd a property to the Model",
+            "itemtype": "method",
+            "name": "AddProperty",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The property name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 542,
+            "description": "RemoveProperty\n\nRemove a property from the Model",
+            "itemtype": "method",
+            "name": "RemoveProperty",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The property name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 562,
+            "description": "Remove\n\nNOTE: Must only be used if 'isMirror' is TRUE.\n\nRemoves an item from a list object in the model and updates the View.",
+            "itemtype": "method",
+            "name": "Add",
+            "params": [
+                {
+                    "name": "listName",
+                    "description": "The object's property name",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "The new value to add to the property list",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 581,
+            "description": "Add\n\nNOTE: Must only be used if 'isMirror' is TRUE.\n\nAdds an item to a list object in the model and updates the View.",
+            "itemtype": "method",
+            "name": "Add",
+            "params": [
+                {
+                    "name": "listName",
+                    "description": "The object's property name",
+                    "type": "String"
+                },
+                {
+                    "name": "item",
+                    "description": "The new value to add to the property list",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 599,
+            "description": "Set\n\nNOTE: Must only be used if 'isMirror' is TRUE.\n\nWhen you need to update a value in the Model and reflect in the View.",
+            "itemtype": "method",
+            "name": "Set",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "The new value to set for the property",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 635,
+            "description": "Get\n\nNOTE: Must only be used if 'isMirror' is TRUE.",
+            "itemtype": "method",
+            "name": "Get",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "value The value from the object's property.",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 651,
+            "description": "Has\n\nChecks if the Model has a given property (true) or not (false).",
+            "itemtype": "method",
+            "name": "Has",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The object's property name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "TRUE if the property exists. Otherwise FALSE.",
+                "type": "Boolean"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 667,
+            "description": "GetDatasrcId\n\nReturn the (view) ID of the datasource.",
+            "itemtype": "method",
+            "name": "GetDatasrcId",
+            "return": {
+                "description": "The (View) ID of the datasource.",
+                "type": "Number"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 679,
+            "description": "GetModelData\n\nReturn's a copy of the Model's data without it's functions.\nUseful when storing the data.\n\nNote: As this object has all of it's functions/methods removed, then\nit's not possible to use the .toArray() (if needed for any reason) anymore.\nInstead use $.makeArray(theObject); which is what .toArray() uses.",
+            "itemtype": "method",
+            "name": "GetModelData",
+            "params": [
+                {
+                    "name": "withSettings",
+                    "description": "If TRUE, then append the settings object.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "A copy of the Model's data (as JSON object literal).",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 717,
+            "description": "GetViewHtml\n\nReturns the jQuery object.",
+            "itemtype": "method",
+            "name": "GetViewHtml",
+            "return": {
+                "description": "jQuery object.",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 728,
+            "description": "GetViewData\n\nReturn the View data as an JSON object literal.",
+            "itemtype": "method",
+            "name": "GetViewData",
+            "return": {
+                "description": "The View data as JSON object",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 742,
+            "description": "SetViewData\n\nSet the View data from the Model (does not update databound elments)",
+            "itemtype": "method",
+            "name": "SetViewData",
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 755,
+            "description": "SetViewFromModel\n\nUpdates the elements in the View from the Model (including databound elements).",
+            "itemtype": "method",
+            "name": "SetViewFromModel",
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 774,
+            "description": "SetModelFromView\n\nUpdate the model and databound elements.\n\nThis method is internally every time a 'change' and 'keyup' event occur\nin form elements. This is part of the concept to always update the Model,\nso it is synchronized with the View.\n\nIt is possible to override the call to this method for the 'keyup' event\nif it is implemented manually in the settings. Therefore it's important\nto know that if overriding this event, but still want 'live' updating\nof the Model to occur, then this method must be called from the custom\nimplementation of the 'keyup' event!",
+            "itemtype": "method",
+            "name": "SetModelFromView",
+            "params": [
+                {
+                    "name": "updateDataboundValues",
+                    "description": "TRUE | FALSE - If undefined or\ntrue, databound elements inside and/or outside the the View will also\nget updated. If false, then they won't.",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 823,
+            "description": "Update the databound elements inside or outside the View.",
+            "itemtype": "method",
+            "name": "_SetDataboundDomVal",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "datasrc",
+                    "description": "A viewId.",
+                    "type": "String"
+                },
+                {
+                    "name": "name",
+                    "description": "An element's name.",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "A new value.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 876,
+            "description": "FillSelect\n\nFill select element with one or more option elements.",
+            "itemtype": "method",
+            "name": "FillSelect",
+            "params": [
+                {
+                    "name": "prop",
+                    "description": "The property name which holds an array of values",
+                    "type": "Array"
+                },
+                {
+                    "name": "text",
+                    "description": "The text to be displayed in the option element",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "The value of the option element",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 903,
+            "description": "RunEvent\n\nTrigger an event if specified in the settings.",
+            "itemtype": "method",
+            "name": "RunEvent",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The eventName to trigger/execute.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 948,
+            "description": "Start\n\nExecute a method in the controller.",
+            "itemtype": "method",
+            "name": "Start",
+            "params": [
+                {
+                    "name": "method",
+                    "description": "The methods name specified in the controller.",
+                    "type": "String"
+                },
+                {
+                    "name": "par",
+                    "description": "If needed you can provide optional parameters.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The object (itself)",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 977,
+            "description": "toArray\n\nConvert the object to a real Array.",
+            "itemtype": "method",
+            "name": "toArray",
+            "return": {
+                "description": "The object converted into a real Array.",
+                "type": "Array"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 989,
+            "description": "GetViewId\n\nGet the ID of the View",
+            "itemtype": "method",
+            "name": "GetViewId",
+            "return": {
+                "description": "The View ID",
+                "type": "String"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 1001,
+            "description": "Find\n\nFind and return one or many element/s within the View using a (id or class) selector.\n\nIf the elemenet is not found an empty array is returned.",
+            "itemtype": "method",
+            "name": "Find",
+            "return": {
+                "description": "An element from the View.",
+                "type": "Array"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 1015,
+            "description": "AddEvents\n\nAdd events to the object's input fields",
+            "itemtype": "method",
+            "name": "AddEvents",
+            "return": {
+                "description": "The object",
+                "type": "Object"
+            },
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 1050,
+            "description": "keyup event\n\nIt's important to know that when overriding this event,\nbut still want 'live' updating of the Model to occur,\nthen this method must be called from the custom implementation\nof the 'keyup' event!",
+            "itemtype": "event",
+            "name": "keyup ...",
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 1128,
+            "description": "To keep the code which belongs to the object, but normally would be\nplaced after object instantiation, we instead want to place it inside\nthe .init() method, which gets executed right after the object has been\ncreated.",
+            "class": "ModelView",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.js",
+            "line": 1153,
+            "description": "getSetHtml\n\n\nGet or set HTML (DOM) values.\nIf you pass this method any parameters it will try to set the HTML.\nOtherwise it will try get the HTML values from the view.",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "Object literal with keys that correspond with\neither an ID or NAME attribute of an element in the View (DOM).",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "Object literal with data from the View (DOM).",
+                "type": "Object"
+            },
+            "itemtype": "method",
+            "name": "getSetHtml",
+            "class": "getSetHtml",
+            "module": "MVC"
+        },
+        {
+            "file": "simple.mvc.json.js",
+            "line": 7,
+            "description": "save\n\nSaves a JSON object on a remote server.",
+            "itemtype": "method",
+            "name": "save",
+            "params": [
+                {
+                    "name": "jsonData",
+                    "description": "The JSON object",
+                    "type": "Object"
+                },
+                {
+                    "name": "onSuccess",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "jsonData The JSON object",
+                "type": "Object"
+            },
+            "class": "",
+            "module": "JSON"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: projectdescription",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:1154"
+        },
+        {
+            "message": "unknown tag: version",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:1154"
+        },
+        {
+            "message": "unknown tag: link",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:1154"
+        },
+        {
+            "message": "unknown tag: version",
+            "line": " lib/jQuery-Parallax/jquery.localscroll-1.2.7-min.js:1"
+        },
+        {
+            "message": "unknown tag: version",
+            "line": " lib/jQuery-Parallax/jquery.scrollTo-1.4.2-min.js:1"
+        },
+        {
+            "message": "unknown tag: ignore",
+            "line": " lib/jasmine/jasmine.js:50"
+        },
+        {
+            "message": "unknown tag: ignore",
+            "line": " lib/jasmine/jasmine.js:122"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:122"
+        },
+        {
+            "message": "unknown tag: ignore",
+            "line": " lib/jasmine/jasmine.js:132"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:132"
+        },
+        {
+            "message": "unknown tag: ignore",
+            "line": " lib/jasmine/jasmine.js:142"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:142"
+        },
+        {
+            "message": "unknown tag: ignore",
+            "line": " lib/jasmine/jasmine.js:152"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:152"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:163"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:175"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:185"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:199"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:415"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:453"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:738"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:749"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:766"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:773"
+        },
+        {
+            "message": "unknown tag: ignore",
+            "line": " lib/jasmine/jasmine.js:1772"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " lib/jasmine/jasmine.js:1824"
+        },
+        {
+            "message": "Missing item type\nOnly test for a name, dot(.) and 2-5 letters after the dot...",
+            "line": " examples/debug.js:41"
+        },
+        {
+            "message": "Missing item type\nAn implementation using jStorage (localstorage) which saves/loads the notes.\nhttp://www.jstorage.info/",
+            "line": " examples/store.js:1"
+        },
+        {
+            "message": "Missing item type\nBootstrap.js by @fat & @mdo\nCopyright 2012 Twitter, Inc.\nhttp://www.apache.org/licenses/LICENSE-2.0.txt",
+            "line": " lib/bootstrap/docs/assets/js/bootstrap.min.js:1"
+        },
+        {
+            "message": "Missing item type\nUtility function for retreiving the text value of an array of DOM nodes",
+            "line": " lib/bootstrap/docs/assets/js/jquery.js:4168"
+        },
+        {
+            "message": "Missing item type\nUtility function for retreiving the text value of an array of DOM nodes",
+            "line": " lib/bootstrap/js/tests/vendor/jquery.js:4168"
+        },
+        {
+            "message": "Missing item type\nQUnit - A JavaScript Unit Testing Framework\n\nhttp://docs.jquery.com/QUnit\n\nCopyright (c) 2012 John Resig, Jörn Zaefferer\nDual licensed under the MIT (MIT-LICENSE.txt)\nor GPL (GPL-LICENSE.txt) licenses.",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:1"
+        },
+        {
+            "message": "Missing item type\nSpecify the number of expected assertions to gurantee that failed test (no assertions are run at all) don't slip through.",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:296"
+        },
+        {
+            "message": "Missing item type\nAsserts true.",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:303"
+        },
+        {
+            "message": "Missing item type\nChecks that the first two arguments are equal, with an optional message.\nPrints out both actual and expected values.\n\nPrefered to ok( actual == expected, message )",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:321"
+        },
+        {
+            "message": "Missing item type\nResets the test setup. Useful for tests that modify the DOM.\n\nIf jQuery is available, uses jQuery's html(), otherwise just innerHTML.",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:538"
+        },
+        {
+            "message": "Missing item type\nTrigger an event on an element.",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:554"
+        },
+        {
+            "message": "Missing item type\njsDump Copyright (c) 2008 Ariel Flesler - aflesler(at)gmail(dot)com |\nhttp://flesler.blogspot.com Licensed under BSD\n(http://www.opensource.org/licenses/bsd-license.php) Date: 5/15/2008",
+            "line": " lib/bootstrap/js/tests/vendor/qunit.js:1154"
+        },
+        {
+            "message": "Missing item type\nBootstrap.js by @fat & @mdo\nplugins: bootstrap-transition.js, bootstrap-modal.js, bootstrap-dropdown.js, bootstrap-scrollspy.js, bootstrap-tab.js, bootstrap-tooltip.js, bootstrap-popover.js, bootstrap-alert.js, bootstrap-button.js, bootstrap-collapse.js, bootstrap-carousel.js, bootstrap-typeahead.js\nCopyright 2012 Twitter, Inc.\nhttp://www.apache.org/licenses/LICENSE-2.0.txt",
+            "line": " lib/bootstrap/js/bootstrap.min.js:1"
+        },
+        {
+            "message": "Missing item type\njQuery.LocalScroll - Animated scrolling navigation, using anchors.\nCopyright (c) 2007-2009 Ariel Flesler - aflesler(at)gmail(dot)com | http://flesler.blogspot.com\nDual licensed under MIT and GPL.\nDate: 3/11/2009",
+            "line": " lib/jQuery-Parallax/jquery.localscroll-1.2.7-min.js:1"
+        },
+        {
+            "message": "Missing item type\njQuery.ScrollTo - Easy element scrolling using jQuery.\nCopyright (c) 2007-2009 Ariel Flesler - aflesler(at)gmail(dot)com | http://flesler.blogspot.com\nDual licensed under MIT and GPL.\nDate: 5/25/2009",
+            "line": " lib/jQuery-Parallax/jquery.scrollTo-1.4.2-min.js:1"
+        },
+        {
+            "message": "Missing item type\nTop level namespace for Jasmine, a lightweight JavaScript BDD/spec/testing framework.",
+            "line": " lib/jasmine/jasmine.js:3"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:10"
+        },
+        {
+            "message": "Missing item type\nUse <code>jasmine.undefined</code> instead of <code>undefined</code>, since <code>undefined</code> is just\na plain old variable and may be redefined by somebody else.",
+            "line": " lib/jasmine/jasmine.js:17"
+        },
+        {
+            "message": "Missing item type\nShow diagnostic messages in the console if set to true",
+            "line": " lib/jasmine/jasmine.js:25"
+        },
+        {
+            "message": "Missing item type\nDefault interval in milliseconds for event loop yields (e.g. to allow network activity or to refresh the screen with the HTML-based runner). Small values here may result in slow test running. Zero means no updates until all tests have completed.",
+            "line": " lib/jasmine/jasmine.js:31"
+        },
+        {
+            "message": "Missing item type\nDefault timeout interval in milliseconds for waitsFor() blocks.",
+            "line": " lib/jasmine/jasmine.js:37"
+        },
+        {
+            "message": "Missing item type\nAllows for bound functions to be compared.  Internal use only.",
+            "line": " lib/jasmine/jasmine.js:50"
+        },
+        {
+            "message": "Missing item type\nGetter for the Jasmine environment. Ensures one gets created",
+            "line": " lib/jasmine/jasmine.js:114"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:122"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:132"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:142"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:152"
+        },
+        {
+            "message": "Missing item type\nPretty printer for expecations.  Takes any object and turns it into a human-readable string.",
+            "line": " lib/jasmine/jasmine.js:163"
+        },
+        {
+            "message": "Missing item type\nReturns true if the object is a DOM Node.",
+            "line": " lib/jasmine/jasmine.js:175"
+        },
+        {
+            "message": "Missing item type\nReturns a matchable 'generic' object of the class type.  For use in expecations of type when values don't matter.",
+            "line": " lib/jasmine/jasmine.js:185"
+        },
+        {
+            "message": "Missing item type\nReturns a matchable subset of a JSON object. For use in expectations when you don't care about all of the\nattributes on the object.",
+            "line": " lib/jasmine/jasmine.js:199"
+        },
+        {
+            "message": "Missing item type\nJasmine Spies are test doubles that can act as stubs, spies, fakes or when used in an expecation, mocks.\n\nSpies should be created in test setup, before expectations.  They can then be checked, using the standard Jasmine\nexpectation syntax. Spies can be checked if they were called or not and what the calling params were.\n\nA Spy has the following fields: wasCalled, callCount, mostRecentCall, and argsForCall (see docs).\n\nSpies are torn down at the end of every spec.\n\nNote: Do <b>not</b> call new jasmine.Spy() directly - a spy must be created using spyOn, jasmine.createSpy or jasmine.createSpyObj.",
+            "line": " lib/jasmine/jasmine.js:214"
+        },
+        {
+            "message": "Missing item type\nThe name of the spy, if provided.",
+            "line": " lib/jasmine/jasmine.js:259"
+        },
+        {
+            "message": "Missing item type\nIs this Object a spy?",
+            "line": " lib/jasmine/jasmine.js:263"
+        },
+        {
+            "message": "Missing item type\nThe actual function this spy stubs.",
+            "line": " lib/jasmine/jasmine.js:267"
+        },
+        {
+            "message": "Missing item type\nTracking of the most recent call to the spy.",
+            "line": " lib/jasmine/jasmine.js:272"
+        },
+        {
+            "message": "Missing item type\nHolds arguments for each call to the spy, indexed by call count",
+            "line": " lib/jasmine/jasmine.js:281"
+        },
+        {
+            "message": "Missing item type\nTells a spy to call through to the actual implemenatation.",
+            "line": " lib/jasmine/jasmine.js:295"
+        },
+        {
+            "message": "Missing item type\nFor setting the return value of a spy.",
+            "line": " lib/jasmine/jasmine.js:311"
+        },
+        {
+            "message": "Missing item type\nFor throwing an exception when a spy is called.",
+            "line": " lib/jasmine/jasmine.js:330"
+        },
+        {
+            "message": "Missing item type\nCalls an alternate implementation when a spy is called.",
+            "line": " lib/jasmine/jasmine.js:349"
+        },
+        {
+            "message": "Missing item type\nResets all of a spy's the tracking variables so that it can be used again.",
+            "line": " lib/jasmine/jasmine.js:369"
+        },
+        {
+            "message": "Missing item type\nDetermines whether an object is a spy.",
+            "line": " lib/jasmine/jasmine.js:415"
+        },
+        {
+            "message": "Missing item type\nCreates a more complicated spy: an Object that has every property a function that is a spy.  Used for stubbing something\nlarge in one call.",
+            "line": " lib/jasmine/jasmine.js:425"
+        },
+        {
+            "message": "Missing item type\nAll parameters are pretty-printed and concatenated together, then written to the current spec's output.\n\nBe careful not to leave calls to <code>jasmine.log</code> in production code.",
+            "line": " lib/jasmine/jasmine.js:443"
+        },
+        {
+            "message": "Missing item type\nFunction that installs a spy on an existing object's method name.  Used within a Spec to create a spy.",
+            "line": " lib/jasmine/jasmine.js:453"
+        },
+        {
+            "message": "Missing item type\nCreates a Jasmine spec that will be added to the current suite.\n\n// TODO: pending tests",
+            "line": " lib/jasmine/jasmine.js:473"
+        },
+        {
+            "message": "Missing item type\nCreates a <em>disabled</em> Jasmine spec.\n\nA convenience method that allows existing specs to be disabled temporarily during development.",
+            "line": " lib/jasmine/jasmine.js:491"
+        },
+        {
+            "message": "Missing item type\nStarts a chain for a Jasmine expectation.\n\nIt is passed an Object that is the actual value and should chain to one of the many\njasmine.Matchers functions.",
+            "line": " lib/jasmine/jasmine.js:504"
+        },
+        {
+            "message": "Missing item type\nDefines part of a jasmine spec.  Used in cominbination with waits or waitsFor in asynchrnous specs.",
+            "line": " lib/jasmine/jasmine.js:517"
+        },
+        {
+            "message": "Missing item type\nWaits a fixed time period before moving to the next block.",
+            "line": " lib/jasmine/jasmine.js:527"
+        },
+        {
+            "message": "Missing item type\nWaits for the latchFunction to return true before proceeding to the next block.",
+            "line": " lib/jasmine/jasmine.js:538"
+        },
+        {
+            "message": "Missing item type\nA function that is called before each spec in a suite.\n\nUsed for spec setup, including validating assumptions.",
+            "line": " lib/jasmine/jasmine.js:550"
+        },
+        {
+            "message": "Missing item type\nA function that is called after each spec in a suite.\n\nUsed for restoring any state that is hijacked during spec execution.",
+            "line": " lib/jasmine/jasmine.js:562"
+        },
+        {
+            "message": "Missing item type\nDefines a suite of specifications.\n\nStores the description and all defined specs in the Jasmine environment as one suite of specs. Variables declared\nare accessible by calls to beforeEach, it, and afterEach. Describe blocks can be nested, allowing for specialization\nof setup in some tests.",
+            "line": " lib/jasmine/jasmine.js:574"
+        },
+        {
+            "message": "Missing item type\nDisables a suite of specifications.  Used to disable some suites in a file, or files, temporarily during development.",
+            "line": " lib/jasmine/jasmine.js:594"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:633"
+        },
+        {
+            "message": "Missing item type\nDeclare that a child class inherit it's prototype from the parent class.",
+            "line": " lib/jasmine/jasmine.js:638"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:646"
+        },
+        {
+            "message": "Missing item type\nEnvironment for Jasmine",
+            "line": " lib/jasmine/jasmine.js:700"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:738"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:749"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:766"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:773"
+        },
+        {
+            "message": "Missing item type\nRegister a reporter to receive status updates from Jasmine.",
+            "line": " lib/jasmine/jasmine.js:780"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:977"
+        },
+        {
+            "message": "Missing item type\nBlocks are functions with executable code that make up a spec.",
+            "line": " lib/jasmine/jasmine.js:1008"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:1030"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:1132"
+        },
+        {
+            "message": "Missing item type\ntoBe: compares the actual to the expected using ===",
+            "line": " lib/jasmine/jasmine.js:1209"
+        },
+        {
+            "message": "Missing item type\ntoNotBe: compares the actual to the expected using !==",
+            "line": " lib/jasmine/jasmine.js:1217"
+        },
+        {
+            "message": "Missing item type\ntoEqual: compares the actual to the expected using common sense equality. Handles Objects, Arrays, etc.",
+            "line": " lib/jasmine/jasmine.js:1226"
+        },
+        {
+            "message": "Missing item type\ntoNotEqual: compares the actual to the expected using the ! of jasmine.Matchers.toEqual",
+            "line": " lib/jasmine/jasmine.js:1235"
+        },
+        {
+            "message": "Missing item type\nMatcher that compares the actual to the expected using a regular expression.  Constructs a RegExp, so takes\na pattern or a String.",
+            "line": " lib/jasmine/jasmine.js:1244"
+        },
+        {
+            "message": "Missing item type\nMatcher that compares the actual to the expected using the boolean inverse of jasmine.Matchers.toMatch",
+            "line": " lib/jasmine/jasmine.js:1254"
+        },
+        {
+            "message": "Missing item type\nMatcher that compares the actual to jasmine.undefined.",
+            "line": " lib/jasmine/jasmine.js:1263"
+        },
+        {
+            "message": "Missing item type\nMatcher that compares the actual to jasmine.undefined.",
+            "line": " lib/jasmine/jasmine.js:1270"
+        },
+        {
+            "message": "Missing item type\nMatcher that compares the actual to null.",
+            "line": " lib/jasmine/jasmine.js:1277"
+        },
+        {
+            "message": "Missing item type\nMatcher that boolean not-nots the actual.",
+            "line": " lib/jasmine/jasmine.js:1284"
+        },
+        {
+            "message": "Missing item type\nMatcher that boolean nots the actual.",
+            "line": " lib/jasmine/jasmine.js:1292"
+        },
+        {
+            "message": "Missing item type\nMatcher that checks to see if the actual, a Jasmine spy, was called.",
+            "line": " lib/jasmine/jasmine.js:1300"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:1322"
+        },
+        {
+            "message": "Missing item type\nMatcher that checks to see if the actual, a Jasmine spy, was not called.",
+            "line": " lib/jasmine/jasmine.js:1325"
+        },
+        {
+            "message": "Missing item type\nMatcher that checks to see if the actual, a Jasmine spy, was called with a set of parameters.",
+            "line": " lib/jasmine/jasmine.js:1349"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:1378"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:1381"
+        },
+        {
+            "message": "Missing item type\nMatcher that checks that the expected item is an element in the actual Array.",
+            "line": " lib/jasmine/jasmine.js:1398"
+        },
+        {
+            "message": "Missing item type\nMatcher that checks that the expected item is NOT an element in the actual Array.",
+            "line": " lib/jasmine/jasmine.js:1407"
+        },
+        {
+            "message": "Missing item type\nMatcher that checks that the expected item is equal to the actual item\nup to a given level of decimal precision (default 2).",
+            "line": " lib/jasmine/jasmine.js:1425"
+        },
+        {
+            "message": "Missing item type\nMatcher that checks that the expected exception was thrown by the actual.",
+            "line": " lib/jasmine/jasmine.js:1442"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:1619"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:1715"
+        },
+        {
+            "message": "Missing item type\nHolds results for a set of Jasmine spec. Allows for the results array to hold another jasmine.NestedResults",
+            "line": " lib/jasmine/jasmine.js:1750"
+        },
+        {
+            "message": "Missing item type\nThe total count of results",
+            "line": " lib/jasmine/jasmine.js:1756"
+        },
+        {
+            "message": "Missing item type\nNumber of passed results",
+            "line": " lib/jasmine/jasmine.js:1760"
+        },
+        {
+            "message": "Missing item type\nNumber of failed results",
+            "line": " lib/jasmine/jasmine.js:1764"
+        },
+        {
+            "message": "Missing item type\nWas this suite/spec skipped?",
+            "line": " lib/jasmine/jasmine.js:1768"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:1772"
+        },
+        {
+            "message": "Missing item type\nRoll up the result counts.",
+            "line": " lib/jasmine/jasmine.js:1778"
+        },
+        {
+            "message": "Missing item type\nAdds a log message.",
+            "line": " lib/jasmine/jasmine.js:1789"
+        },
+        {
+            "message": "Missing item type\nGetter for the results: message & results.",
+            "line": " lib/jasmine/jasmine.js:1797"
+        },
+        {
+            "message": "Missing item type\nAdds a result, tracking counts (total, passed, & failed)",
+            "line": " lib/jasmine/jasmine.js:1804"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:1824"
+        },
+        {
+            "message": "Missing item type\nBase class for pretty printing for expectation results.",
+            "line": " lib/jasmine/jasmine.js:1830"
+        },
+        {
+            "message": "Missing item type\nFormats a value in a nice, human-readable string.",
+            "line": " lib/jasmine/jasmine.js:1837"
+        },
+        {
+            "message": "Missing item type\nRunner",
+            "line": " lib/jasmine/jasmine.js:2052"
+        },
+        {
+            "message": "Missing item type\nInternal representation of a Jasmine specification, or test.",
+            "line": " lib/jasmine/jasmine.js:2129"
+        },
+        {
+            "message": "Missing item type\nAll parameters are pretty-printed and concatenated together, then written to the spec's output.\n\nBe careful not to leave calls to <code>jasmine.log</code> in production code.",
+            "line": " lib/jasmine/jasmine.js:2168"
+        },
+        {
+            "message": "Missing item type",
+            "line": " lib/jasmine/jasmine.js:2191"
+        },
+        {
+            "message": "Missing item type\nWaits a fixed time period before moving to the next block.",
+            "line": " lib/jasmine/jasmine.js:2204"
+        },
+        {
+            "message": "Missing item type\nWaits for the latchFunction to return true before proceeding to the next block.",
+            "line": " lib/jasmine/jasmine.js:2216"
+        },
+        {
+            "message": "Missing item type\nInternal representation of a Jasmine suite.",
+            "line": " lib/jasmine/jasmine.js:2372"
+        },
+        {
+            "message": "Missing item type\nA block which waits for some condition to become true, with timeout.",
+            "line": " lib/jasmine/jasmine.js:2469"
+        },
+        {
+            "message": "Missing item type\nStarting with version 2.0, this file \"boots\" Jasmine, performing all of the necessary initialization before executing the loaded environment and all of a project's specs. This file should be loaded after `jasmine.js` and `jasmine_html.js`, but before any project source files or spec files are loaded. Thus this file can also be used to customize Jasmine for a project.\n\nIf a project is using Jasmine via the standalone distribution, this file can be customized directly. If a project is using Jasmine via the [Ruby gem][jasmine-gem], this file can be copied into the support directory via `jasmine copy_boot_js`. Other environments (e.g., Python) will have different mechanisms.\n\nThe location of `boot.js` can be specified and/or overridden in `jasmine.yml`.\n\n[jasmine-gem]: http://github.com/pivotal/jasmine-gem",
+            "line": " lib/jasmine-2.4.1/boot.js:1"
+        },
+        {
+            "message": "Missing item type\n## Require &amp; Instantiate\n\nRequire Jasmine's core files. Specifically, this requires and attaches all of Jasmine's code to the `jasmine` reference.",
+            "line": " lib/jasmine-2.4.1/boot.js:13"
+        },
+        {
+            "message": "Missing item type\nSince this is being run in a browser and the results should populate to an HTML page, require the HTML-specific Jasmine code, injecting the same reference.",
+            "line": " lib/jasmine-2.4.1/boot.js:20"
+        },
+        {
+            "message": "Missing item type\nCreate the Jasmine environment. This is used to run all specs in a project.",
+            "line": " lib/jasmine-2.4.1/boot.js:25"
+        },
+        {
+            "message": "Missing item type\n## The Global Interface\n\nBuild up the functions that will be exposed as the Jasmine public interface. A project can customize, rename or alias any of these functions as desired, provided the implementation remains unchanged.",
+            "line": " lib/jasmine-2.4.1/boot.js:30"
+        },
+        {
+            "message": "Missing item type\nAdd all of the Jasmine global/public interface to the global scope, so a project can use the public interface directly. For example, calling `describe` in specs instead of `jasmine.getEnv().describe`.",
+            "line": " lib/jasmine-2.4.1/boot.js:37"
+        },
+        {
+            "message": "Missing item type\n## Runner Parameters\n\nMore browser specific code - wrap the query string in an object and to allow for getting/setting parameters from the runner user interface.",
+            "line": " lib/jasmine-2.4.1/boot.js:42"
+        },
+        {
+            "message": "Missing item type\n## Reporters\nThe `HtmlReporter` builds all of the HTML UI for the runner page. This reporter paints the dots, stars, and x's for specs, as well as all spec names and all failures (if any).",
+            "line": " lib/jasmine-2.4.1/boot.js:66"
+        },
+        {
+            "message": "Missing item type\nThe `jsApiReporter` also receives spec results, and is used by any environment that needs to extract the results  from JavaScript.",
+            "line": " lib/jasmine-2.4.1/boot.js:82"
+        },
+        {
+            "message": "Missing item type\nFilter which specs will be run by matching the start of the full name against the `spec` query param.",
+            "line": " lib/jasmine-2.4.1/boot.js:88"
+        },
+        {
+            "message": "Missing item type\nSetting up timing functions to be able to be overridden. Certain browsers (Safari, IE 8, phantomjs) require this hack.",
+            "line": " lib/jasmine-2.4.1/boot.js:99"
+        },
+        {
+            "message": "Missing item type\n## Execution\n\nReplace the browser window's `onload`, ensure it's called, and then run all of the loaded specs. This includes initializing the `HtmlReporter` instance and then executing the loaded Jasmine environment. All of this will happen after all of the specs are loaded.",
+            "line": " lib/jasmine-2.4.1/boot.js:107"
+        },
+        {
+            "message": "Missing item type\nHelper function for readability above.",
+            "line": " lib/jasmine-2.4.1/boot.js:122"
+        },
+        {
+            "message": "Missing item type\nSize\n\nReturn the length of the array (same as array.length);",
+            "line": " npm-package/simple.mvc.js:76"
+        },
+        {
+            "message": "Missing item type\nModelView written as a jQuery plugin (most basic form of plugin authoring).\n\nReasons for this:\n Several... but mainly just trying to make it easier for anyone who already\n knows jQuery gettings started using Simple.mvc.\n\nFor more information on different jQuery plugin design patterns:\nhttps://github.com/addyosmani/jquery-plugin-patterns/tree/master/patterns",
+            "line": " npm-package/simple.mvc.js:217"
+        },
+        {
+            "message": "Missing item type\nTo keep the code which belongs to the object, but normally would be\nplaced after object instantiation, we instead want to place it inside\nthe .init() method, which gets executed right after the object has been\ncreated.",
+            "line": " npm-package/simple.mvc.js:1128"
+        },
+        {
+            "message": "Missing item type\nSize\n\nReturn the length of the array (same as array.length);",
+            "line": " simple.mvc.js:76"
+        },
+        {
+            "message": "Missing item type\nModelView written as a jQuery plugin (most basic form of plugin authoring).\n\nReasons for this:\n Several... but mainly just trying to make it easier for anyone who already\n knows jQuery gettings started using Simple.mvc.\n\nFor more information on different jQuery plugin design patterns:\nhttps://github.com/addyosmani/jquery-plugin-patterns/tree/master/patterns",
+            "line": " simple.mvc.js:217"
+        },
+        {
+            "message": "Missing item type\nTo keep the code which belongs to the object, but normally would be\nplaced after object instantiation, we instead want to place it inside\nthe .init() method, which gets executed right after the object has been\ncreated.",
+            "line": " simple.mvc.js:1128"
+        }
+    ]
+}

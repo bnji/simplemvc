@@ -745,11 +745,11 @@ obj = MVC.ModelView(viewId, { foo : 'bar' }, settings);
 
 <br />
 
-<dt><code>.SetDataboundDomVal(viewId, property, value)</code></dt>
+<dt><code>._SetDataboundDomVal(viewId, property, value)</code></dt>
 <dd>
   <p>
     <br />
-    Use <code>.SetDataboundDomVal()</code> to set the value of a databound element
+    Use <code>._SetDataboundDomVal()</code> to set the value of a databound element
     <br />
     The <code>viewId</code> should correspond with the <code>datasrc</code> attribute of the element to be updated.
     <br />
@@ -766,7 +766,7 @@ obj = MVC.ModelView(viewId, { foo : 'bar' }, settings);
     keyup: function(e, n, v) {
     //Update the input which has focus on the 'keyup'-event
     //Note: works only with 'input' elements (not e.g. select, radio)
-    obj.SetDataboundDomVal(viewId, n, v);
+    obj._SetDataboundDomVal(viewId, n, v);
   }
 });
 });

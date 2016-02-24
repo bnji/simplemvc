@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 10</title>
+    <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <script>
+    $(function() {
+      // Room Model
+      var Room = function(number, price) {
+        this.number = number;
+        this.price = price;
+        this.toString = function() {
+          return "Room # " + this.number + " costs $" + this.price;
+        }
+      }
+      // Room Manager
+      $('#roomManager').ModelView(
+      // MVC Model
+      {
+        selectedRoom: null,
+        // Todo: Retrieve from an external datasource (database / webservice)
+        rooms: MVC.List(['Choose...', new Room(101, 500), new Room(102, 600)])
+      },
+      // Settings & Events
+      {
+        controller: MVC.Controller({
+          addRoom: function(e, o) {
+            o.Add('rooms', new Room(o.Get('newRoomNumber'), o.Get('newRoomPrice')));
+            // o.Set('rooms', new Room(o.Get('newRoomNumber'), o.Get('newRoomPrice')));
+          },
+          removeRoom: function(e, o) {
+            o.Remove('rooms', 'selectedRoom');
+          }
+        }),
+        change: function(event, name, value, object, targetValue, selectedValue) {
+          // Only update selected room when rooms change!
+          if(name === 'rooms') {
+            object.Set('selectedRoom', selectedValue);
+          }
+        }
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <div id="roomManager">
+      <!-- Add or remove a Room! -->
+      <h1>Add or remove room</h1>
+      Room #: <input name="newRoomNumber" />
+      Price: <input name="newRoomPrice" />
+      <button type="submit" name="addRoom" class="isEvent">Add</button>
+      <button type="submit" name="removeRoom" class="isEvent">Remove</button>
+      <hr />
+      <!-- Select a Room -->
+      <h1>Select a room</h1>
+      <select name="rooms"></select>
+    </div>
+    <hr />
+    <!-- Room information -->
+    <h1>Room information</h1>
+    <div datasrc="#roomManager">
+        Selected room: <span name="selectedRoom"></span>
+        <br />
+        Rooms:
+        <br />
+        <select multiple="multiple" width="50" style="width:100px;" name="rooms"></select>
+    </div>
+  </body>
+</html>

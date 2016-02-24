@@ -1,3 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>simple.mvc.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Controller.html">Controller</a></li>
+                                <li><a href="../classes/getSetHtml.html">getSetHtml</a></li>
+                                <li><a href="../classes/List.html">List</a></li>
+                                <li><a href="../classes/ModelView.html">ModelView</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/JSON.html">JSON</a></li>
+                                <li><a href="../modules/MVC.html">MVC</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: simple.mvc.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
 // ==========================================================================
 // Project:     Simple.mvc.js - A lightweight MVC library for UI binding.
 // Copyright:   (c)2012-2016 Benjamin Hammer (hammerbenjamin@gmail.com)
@@ -12,16 +99,16 @@
  *     Design rules:
  *     1) Capitalization
  *        Internal methods (except .toArray()) should have the
- *        first letter capitalized, so it's possible to
+ *        first letter capitalized, so it&#x27;s possible to
  *        distinguish between internal JavaScript methods and
  *        Simple.mvc ModelView object. methods.
  *
  *     2) Bracket vs Dot notation
- *        Older versions of IE don't accept the use of
- *        accessing a an object's property using dot-
+ *        Older versions of IE don&#x27;t accept the use of
+ *        accessing a an object&#x27;s property using dot-
  *        notation (obj.propertyName). However,
  *        accessing the property using bracket notation
- *        will work (obj['propertyName']).
+ *        will work (obj[&#x27;propertyName&#x27;]).
  *
  *
  * @module MVC
@@ -35,12 +122,12 @@ var MVC = {
    *
    * @method KeyCheck
    * @param {Object} e Event
-   * @param {String} n Name of the key to check against (e.g. 'enter', 'escape')
+   * @param {String} n Name of the key to check against (e.g. &#x27;enter&#x27;, &#x27;escape&#x27;)
    */
   KeyCheck : function(e, n) {
-    if(e.keyCode === 13 && (n === 'enter' || n === 'return')) {
+    if(e.keyCode === 13 &amp;&amp; (n === &#x27;enter&#x27; || n === &#x27;return&#x27;)) {
       return true;
-    } else if(e.keyCode === 27 && (n === 'escape' || n === 'esc')) {
+    } else if(e.keyCode === 27 &amp;&amp; (n === &#x27;escape&#x27; || n === &#x27;esc&#x27;)) {
       return true;
     }
     return false;
@@ -48,7 +135,7 @@ var MVC = {
   /**
    * List
    *
-   * A more human way of handling array's in JavaScript. It provides some extra
+   * A more human way of handling array&#x27;s in JavaScript. It provides some extra
    * methods for manipulating an array, which makes it more easy and semantic
    * such as when e.g. adding and removing elements using .Add() and .Remove().
    *
@@ -56,16 +143,16 @@ var MVC = {
    * @param {Object} An array (is optional)
    */
   List : function(array) {
-    //If 'array' hasn't been specified, then create an empty Array.
+    //If &#x27;array&#x27; hasn&#x27;t been specified, then create an empty Array.
     if(array === null || array === undefined) {
       array = [];
     }
     //If the input array is an object literal, then convert it to an array
-    else if(!$.isArray(array) && typeof(array) === 'object') {
+    else if(!$.isArray(array) &amp;&amp; typeof(array) === &#x27;object&#x27;) {
       //array = $.makeArray(array);
       var newArray = [], i = 0;
       $.each(array, function(k, v) {
-        if(typeof v !== 'function') {
+        if(typeof v !== &#x27;function&#x27;) {
           newArray[i] = v;
           i++;
         }
@@ -86,7 +173,7 @@ var MVC = {
     /**
      * Add
      *
-     * Add a new element - It's more semantic to use .Add() instead of .push().
+     * Add a new element - It&#x27;s more semantic to use .Add() instead of .push().
      *
      * @method Add
      * @param {Object} An element.
@@ -142,7 +229,7 @@ var MVC = {
     array.Remove = function(element) {
       // More about deleting elements from an array in JavaScript:
       // http://stackoverflow.com/questions/500606/javascript-array-delete-elements
-      // indexOf breaks in IE < 9!
+      // indexOf breaks in IE &lt; 9!
       // var i = array.indexOf(element);
       // Solution:
       var i = $.inArray(element, array);
@@ -199,9 +286,9 @@ var MVC = {
    * informing the model and/or the view to change as appropriate.
    * Source: http://bit.ly/fQnaJI
    *
-   * For the time being the Controller class doesn't do much more than returning
+   * For the time being the Controller class doesn&#x27;t do much more than returning
    * the same data as entered (JSON) object literal. Still this is by design, as
-   * there is a possibility for the 'controller' to do more than this 'stuff'
+   * there is a possibility for the &#x27;controller&#x27; to do more than this &#x27;stuff&#x27;
    * (handling more than returning data) in the future.
    *
    *
@@ -238,7 +325,7 @@ var MVC = {
      * Source: http://bit.ly/fQnaJI
      *
      * ModelView creates the glue which binds the UI(View) with the Backend code
-     * functionality of the program. It keeps the View synchronized with the 'Model'.
+     * functionality of the program. It keeps the View synchronized with the &#x27;Model&#x27;.
      *
      * ModelView creates a new object with data and settings. The data and
      * settings are (JSON) object literals and merged and returned after all the
@@ -250,21 +337,21 @@ var MVC = {
      * @constructor
      *
      * @param {Object} $object   Model data
-     * @param {Object} $settings Config & view input events
+     * @param {Object} $settings Config &amp; view input events
      * @param {Object} $methods  Custom user defined methods/functions
     */
     ModelView: function( $object, $settings, $methods ) {
       var computedProperties = [];
       $this = $(this);
-      var viewId = '#'+$this.attr('id');
-      // Make sure that the object data always exists. Only require 'viewId'
+      var viewId = &#x27;#&#x27;+$this.attr(&#x27;id&#x27;);
+      // Make sure that the object data always exists. Only require &#x27;viewId&#x27;
       if(!$object) {
         $object = {};
       }
       else {
         $object = $.extend({}, true, $object);
       }
-      // Make sure that the object methods always exists. Only require 'viewId'
+      // Make sure that the object methods always exists. Only require &#x27;viewId&#x27;
       if(!$methods) {
         $methods = {};
       }
@@ -275,88 +362,88 @@ var MVC = {
       if(!$settings) {
         $settings = {};
       }
-      var datasrc = $settings['datasrc'];
-      var clone = $settings['clone'];
-      // If cloning-'functionality' is implemented:
+      var datasrc = $settings[&#x27;datasrc&#x27;];
+      var clone = $settings[&#x27;clone&#x27;];
+      // If cloning-&#x27;functionality&#x27; is implemented:
       if(clone !== undefined) {
         // Set the clone template to be the view id
-        clone['template'] = viewId;
+        clone[&#x27;template&#x27;] = viewId;
         // Update the view id with the new clone id
-        if(clone['id'] === undefined) {
-          viewId = "#" + $.now();
+        if(clone[&#x27;id&#x27;] === undefined) {
+          viewId = &quot;#&quot; + $.now();
         }
         else {
-          // Make sure it's a string
-          viewId = '' + clone['id'];
+          // Make sure it&#x27;s a string
+          viewId = &#x27;&#x27; + clone[&#x27;id&#x27;];
         }
         // If the clone view id has hashtag specified
-        if(viewId.substring(0, 1) === '#') {
+        if(viewId.substring(0, 1) === &#x27;#&#x27;) {
           viewIdNoHash = viewId.substring(1, viewId.length);
         }
-        // If there's no hashtag
+        // If there&#x27;s no hashtag
         else {
           viewIdNoHash = viewId;
         }
         // Clone the source and update the viewId
-        var withDataAndEvents = $settings['clone']['withDataAndEvents'];
+        var withDataAndEvents = $settings[&#x27;clone&#x27;][&#x27;withDataAndEvents&#x27;];
         withDataAndEvents = withDataAndEvents !== undefined ? withDataAndEvents : false;
-        $settings['clone']['withDataAndEvents'] = withDataAndEvents;
-        var element = $($(clone['template']).clone(withDataAndEvents)).attr('id', viewIdNoHash);
+        $settings[&#x27;clone&#x27;][&#x27;withDataAndEvents&#x27;] = withDataAndEvents;
+        var element = $($(clone[&#x27;template&#x27;]).clone(withDataAndEvents)).attr(&#x27;id&#x27;, viewIdNoHash);
         // datasrc property to the settings, as it should be possible to create a
         // ModelView without any data, but solely relies on receiving updated
         // values from another view!
-        // If the datasrc isn't specified, then use the viewId as datasrc.
+        // If the datasrc isn&#x27;t specified, then use the viewId as datasrc.
         datasrc = datasrc !== undefined ? datasrc : viewId;
         // Update the datasrc with the new view id
-        $(element).find('[datasrc=""]').attr('datasrc', datasrc);
-        // If the template originally was hidden using 'display: none;' - make it visible
+        $(element).find(&#x27;[datasrc=&quot;&quot;]&#x27;).attr(&#x27;datasrc&#x27;, datasrc);
+        // If the template originally was hidden using &#x27;display: none;&#x27; - make it visible
         // Append the copy to the target
         // Execute the append callback function which normally would involve
-        // appending and making it visible (If the template originally was hidden using 'display: none;' - make it visible to the user)
+        // appending and making it visible (If the template originally was hidden using &#x27;display: none;&#x27; - make it visible to the user)
         // e.g.
-        //  Suppose we(you) in the callback function name the element 'elem':
-        //  $('#someElementId').append(elem); //append it
+        //  Suppose we(you) in the callback function name the element &#x27;elem&#x27;:
+        //  $(&#x27;#someElementId&#x27;).append(elem); //append it
         //  $(elem).show();                   //make it visible
         // Execute the callback function:
-        clone['append'](element);
+        clone[&#x27;append&#x27;](element);
       }
-      if($settings['viewId'] === undefined) {
+      if($settings[&#x27;viewId&#x27;] === undefined) {
         $.extend($settings, {viewId : viewId});
       }
-      if($settings['isMirror'] === undefined) {
+      if($settings[&#x27;isMirror&#x27;] === undefined) {
         $.extend($settings, {isMirror : true});
       }
-      if($settings['eventUsed'] === undefined) {
-        $.extend($settings, {eventUsed : ''});
+      if($settings[&#x27;eventUsed&#x27;] === undefined) {
+        $.extend($settings, {eventUsed : &#x27;&#x27;});
       }
-      if($settings['preventDefault'] === undefined) {
+      if($settings[&#x27;preventDefault&#x27;] === undefined) {
         $.extend($settings, {preventDefault : true});
       }
       // Attach events to the save, update, delete (more?) buttons/submit.
       // For IE we need to specify each element with the viewId individually!
-      // $(viewId + ' button,' + viewId + ' a,' + viewId + ' submit,' + viewId + ' i')
-      $(viewId).find('*')
+      // $(viewId + &#x27; button,&#x27; + viewId + &#x27; a,&#x27; + viewId + &#x27; submit,&#x27; + viewId + &#x27; i&#x27;)
+      $(viewId).find(&#x27;*&#x27;)
         .each(function(i, e) {
-          if($(this).hasClass('isEvent')) {
+          if($(this).hasClass(&#x27;isEvent&#x27;)) {
             $(this)
-            //.attr('id', e.id+'_'+viewId)//NoHash)
+            //.attr(&#x27;id&#x27;, e.id+&#x27;_&#x27;+viewId)//NoHash)
             .click(function(e) {
               // $object.Start($id, par);
               // $object.Save();
-              // console.log("target name (jQuery): " + $(e.target).attr('name'));
-              // console.log("target name (JS): " + e.target.name);
+              // console.log(&quot;target name (jQuery): &quot; + $(e.target).attr(&#x27;name&#x27;));
+              // console.log(&quot;target name (JS): &quot; + e.target.name);
               // e.target.name is not working on custom elements, such as
-              // <foobar href="#" name="clearAll" class="isEvent">
+              // &lt;foobar href=&quot;#&quot; name=&quot;clearAll&quot; class=&quot;isEvent&quot;&gt;
               //  Click me
-              // </foobar>
-              var targetName = $(e.target).attr('name'); // e.target.name
+              // &lt;/foobar&gt;
+              var targetName = $(e.target).attr(&#x27;name&#x27;); // e.target.name
               $object.Start(targetName, e);
-              if($settings['settings']['preventDefault']) {
+              if($settings[&#x27;settings&#x27;][&#x27;preventDefault&#x27;]) {
                 e.preventDefault();
               }
             });
           }
-          //console.log(i + " " + e.id);
+          //console.log(i + &quot; &quot; + e.id);
         });
 
       // Start: Methods
@@ -372,7 +459,7 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.Save = function(par) {
-        return $object.Start('Save', par);
+        return $object.Start(&#x27;Save&#x27;, par);
       };
 
       /**
@@ -386,7 +473,7 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.Update = function(par) {
-        return $object.Start('Update', par);
+        return $object.Start(&#x27;Update&#x27;, par);
       };
 
       /**
@@ -400,21 +487,21 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.Delete = function(par) {
-        return $object.Start('Delete', par);
+        return $object.Start(&#x27;Delete&#x27;, par);
       };
 
       /**
        * Clear
        *
-       * Clears a property's value in the Model and optionally in the View if 'isMirror' = true.
+       * Clears a property&#x27;s value in the Model and optionally in the View if &#x27;isMirror&#x27; = true.
        *
        *
        * @method Clear
        * @return {Object} The object (itself)
        */
       $object.Clear = function(prop) {
-        $object.Set(prop, '');
-        $object[prop] = '';
+        $object.Set(prop, &#x27;&#x27;);
+        $object[prop] = &#x27;&#x27;;
         return $object;
       };
 
@@ -446,25 +533,25 @@ var MVC = {
        * If changes in the model properties should be reflected in the view
        * then setter and getter methods will be attached using jQuery.
        *
-       * Note: Will only be used(exec.) if 'isMirror' is TRUE.
+       * Note: Will only be used(exec.) if &#x27;isMirror&#x27; is TRUE.
        *
        * Works in IE 7+: http://jsfiddle.net/cTJZN/
        *
        * @method AddGetSet
-       * @param {String} prop The object's property name
+       * @param {String} prop The object&#x27;s property name
        * @param {Function} onUpdate callBack function will execute, whenever
        * the get/set event handlers bound with .bind() method are triggered.
        * @return {Object} The object (itself)
        */
       $object.AddGetSet = function(prop) {//, onUpdate) {
         $($object)
-          .bind('get'+prop, function(event, ret) {
-            ret['value'] = $object[prop];
+          .bind(&#x27;get&#x27;+prop, function(event, ret) {
+            ret[&#x27;value&#x27;] = $object[prop];
           })
-          .bind('set'+prop, function (event, newVal) {
+          .bind(&#x27;set&#x27;+prop, function (event, newVal) {
             //Replace the old value with the new value in the model
             var oldVal = $object[prop];
-            //Only update values if they're changed
+            //Only update values if they&#x27;re changed
             if(oldVal !== newVal) {
               $object[prop] = newVal;
               //Update the view accordingly
@@ -474,8 +561,8 @@ var MVC = {
               //This is important in case the model is changed using setTimeout()
               //which will update the model, then this change must simulate
               //a user setting the value of the input.
-              $object.TriggerEvent(prop, 'change');//.TriggerEvent(prop, 'keyup');
-              //alert("OK");
+              $object.TriggerEvent(prop, &#x27;change&#x27;);//.TriggerEvent(prop, &#x27;keyup&#x27;);
+              //alert(&quot;OK&quot;);
               //onUpdate(prop, oldVal, newVal);
             }
           });
@@ -488,13 +575,13 @@ var MVC = {
        * Remove getter and setter methods for a property
        *
        * @method RemoveGetSet
-       * @param {String} prop The object's property name
+       * @param {String} prop The object&#x27;s property name
        * @return {Object} The object (itself)
        */
       $object.RemoveGetSet = function(prop) {
         $($object)
-          .unbind('get'+prop)
-          .unbind('set'+prop);
+          .unbind(&#x27;get&#x27;+prop)
+          .unbind(&#x27;set&#x27;+prop);
 
         return $object;
       };
@@ -506,12 +593,12 @@ var MVC = {
        *
        * @method TriggerEvent
        * @param {String} prop Property name
-       * @param {String} evt Event type/name (e.g. 'keyup')
+       * @param {String} evt Event type/name (e.g. &#x27;keyup&#x27;)
        * @return {Object} The object (itself)
        */
       $object.TriggerEvent = function(prop, evt) {
-        $(viewId + ' :input[name="'+prop+'"]')
-          .not('.excludeFromModel')
+        $(viewId + &#x27; :input[name=&quot;&#x27;+prop+&#x27;&quot;]&#x27;)
+          .not(&#x27;.excludeFromModel&#x27;)
           .trigger(evt);
 
         return $object;
@@ -529,13 +616,13 @@ var MVC = {
       $object.AddProperty = function(prop, value) {
         //Add the propery to the Model
         $object[prop] = value;
-        // console.log("Add Property....");
+        // console.log(&quot;Add Property....&quot;);
         // console.log($object);
         $object
           //.AddEvents()
           .AddGetSet(prop);
-          //.TriggerEvent(prop, 'keyup');
-        // console.log("Added property " + prop + " to the Model.");
+          //.TriggerEvent(prop, &#x27;keyup&#x27;);
+        // console.log(&quot;Added property &quot; + prop + &quot; to the Model.&quot;);
         return $object;
       };
 
@@ -551,23 +638,23 @@ var MVC = {
       $object.RemoveProperty = function(prop) {
         $object.RemoveGetSet(prop);
         delete $object[prop];
-        //$object.Find('[name="'+prop+'"]')
-        //$(viewId + ' :input[name="'+prop+'"]')
-          //.not('.excludeFromModel')
+        //$object.Find(&#x27;[name=&quot;&#x27;+prop+&#x27;&quot;]&#x27;)
+        //$(viewId + &#x27; :input[name=&quot;&#x27;+prop+&#x27;&quot;]&#x27;)
+          //.not(&#x27;.excludeFromModel&#x27;)
           //.remove();
-        // console.log("Removed property " + prop + " from the Model.");
+        // console.log(&quot;Removed property &quot; + prop + &quot; from the Model.&quot;);
         return $object;
       };
 
       /**
        * Remove
        *
-       * NOTE: Must only be used if 'isMirror' is TRUE.
+       * NOTE: Must only be used if &#x27;isMirror&#x27; is TRUE.
        *
        * Removes an item from a list object in the model and updates the View.
        *
        * @method Add
-       * @param {String} listName The object's property name
+       * @param {String} listName The object&#x27;s property name
        * @param {String} item The new value to add to the property list
        * @return {Object} The object (itself)
        */
@@ -581,12 +668,12 @@ var MVC = {
       /**
        * Add
        *
-       * NOTE: Must only be used if 'isMirror' is TRUE.
+       * NOTE: Must only be used if &#x27;isMirror&#x27; is TRUE.
        *
        * Adds an item to a list object in the model and updates the View.
        *
        * @method Add
-       * @param {String} listName The object's property name
+       * @param {String} listName The object&#x27;s property name
        * @param {String} item The new value to add to the property list
        * @return {Object} The object (itself)
        */
@@ -599,33 +686,33 @@ var MVC = {
       /**
        * Set
        *
-       * NOTE: Must only be used if 'isMirror' is TRUE.
+       * NOTE: Must only be used if &#x27;isMirror&#x27; is TRUE.
        *
        * When you need to update a value in the Model and reflect in the View.
        *
        * @method Set
-       * @param {String} prop The object's property name
+       * @param {String} prop The object&#x27;s property name
        * @param {String} value The new value to set for the property
        * @return {Object} The object (itself)
        */
       $object.Set = function(prop, value){
-        if(typeof value === 'function') {
-          computedProperties.push({ 'name': prop, 'func': value });
+        if(typeof value === &#x27;function&#x27;) {
+          computedProperties.push({ &#x27;name&#x27;: prop, &#x27;func&#x27;: value });
           value = value($object);
         }
-        // Add property to model if it's not there already.
-        // Scenario: User has Model & View without this property, but uses .Set()
-        // to set a value in the Model & View, then it should be added!
+        // Add property to model if it&#x27;s not there already.
+        // Scenario: User has Model &amp; View without this property, but uses .Set()
+        // to set a value in the Model &amp; View, then it should be added!
         // NOTE: isMirror should be TRUE !!! IMPORTANT !!! - by design.
-        if($object['settings']['isMirror'] && !$object.Has(prop)) {
+        if($object[&#x27;settings&#x27;][&#x27;isMirror&#x27;] &amp;&amp; !$object.Has(prop)) {
           $object.AddProperty(prop, value);
         }
         // var value2 = [value];
-        // if(typeof $object.Get(prop) === 'object') {
+        // if(typeof $object.Get(prop) === &#x27;object&#x27;) {
         //   value2 = [value2];
         // }
-        // console.log(prop + " - " + [value]);
-        $($object).triggerHandler('set'+prop, [value]);
+        // console.log(prop + &quot; - &quot; + [value]);
+        $($object).triggerHandler(&#x27;set&#x27;+prop, [value]);
         //Update databound DOM values
         //Update databound elements with datasrc if specified, otherwise with viewId.
         $object._SetDataboundDomVal(datasrc ? datasrc : viewId, prop, value);
@@ -635,17 +722,17 @@ var MVC = {
       /**
        * Get
        *
-       * NOTE: Must only be used if 'isMirror' is TRUE.
+       * NOTE: Must only be used if &#x27;isMirror&#x27; is TRUE.
        *
        * @method Get
-       * @param {String} prop The object's property name.
-       * @return {Object} value The value from the object's property.
+       * @param {String} prop The object&#x27;s property name.
+       * @return {Object} value The value from the object&#x27;s property.
        */
       $object.Get = function(prop) {
         //http://stackoverflow.com/questions/9145347/jquery-returning-value-from-trigger
         var result = { value : undefined };
-        $($object).triggerHandler('get'+prop, [result]);
-        return result['value'];
+        $($object).triggerHandler(&#x27;get&#x27;+prop, [result]);
+        return result[&#x27;value&#x27;];
       };
 
       /**
@@ -654,7 +741,7 @@ var MVC = {
        * Checks if the Model has a given property (true) or not (false).
        *
        * @method Has
-       * @param {String} prop The object's property name
+       * @param {String} prop The object&#x27;s property name
        * @return {Boolean} TRUE if the property exists. Otherwise FALSE.
        */
       $object.Has = function(prop) {
@@ -679,36 +766,36 @@ var MVC = {
       /**
        * GetModelData
        *
-       * Return's a copy of the Model's data without it's functions.
+       * Return&#x27;s a copy of the Model&#x27;s data without it&#x27;s functions.
        * Useful when storing the data.
        *
-       * Note: As this object has all of it's functions/methods removed, then
-       * it's not possible to use the .toArray() (if needed for any reason) anymore.
+       * Note: As this object has all of it&#x27;s functions/methods removed, then
+       * it&#x27;s not possible to use the .toArray() (if needed for any reason) anymore.
        * Instead use $.makeArray(theObject); which is what .toArray() uses.
        *
        * @method GetModelData
        * @param {Boolean} withSettings If TRUE, then append the settings object.
-       * @return {Object} A copy of the Model's data (as JSON object literal).
+       * @return {Object} A copy of the Model&#x27;s data (as JSON object literal).
        */
       $object.GetModelData = function(withSettings) {
         var modelObjectData = {};
         $.each($object, function(k, v) {
-          // Only add types which aren't functions
-          if((typeof v).toString() !== 'function') {
-            //Don't add the jQuery object which is used for .Set() & .Get()
+          // Only add types which aren&#x27;t functions
+          if((typeof v).toString() !== &#x27;function&#x27;) {
+            //Don&#x27;t add the jQuery object which is used for .Set() &amp; .Get()
             //Regex test on Rubular: http://www.rubular.com/r/KZQH0gdHyy
             if((/jQuery\d*/).test(k)) {
               return true;
             }
             //Only add the settings object if withSettings is TRUE.
-            else if(!withSettings && k === 'settings') {
+            else if(!withSettings &amp;&amp; k === &#x27;settings&#x27;) {
               return true;
             }
             //Add strings and objects (JSON literals and Arrays)
             else {
               modelObjectData[k] = v;
             }
-            //console.log(k + " is a " + typeof v);
+            //console.log(k + &quot; is a &quot; + typeof v);
           }
         });
         return modelObjectData;
@@ -734,7 +821,7 @@ var MVC = {
        * @return {Object} The View data as JSON object
        */
       $object.GetViewData = function() {
-        //console.log("GetViewData()");
+        //console.log(&quot;GetViewData()&quot;);
         //Get the values from the View (DOM)
         return $(viewId).getSetHtml();
       };
@@ -760,7 +847,7 @@ var MVC = {
        * @method SetViewFromModel
        */
       $object.SetViewFromModel = function() {
-        //console.log("SetViewFromModel()");
+        //console.log(&quot;SetViewFromModel()&quot;);
         $object.SetViewData();
         var data = $object.GetModelData();
         // console.log(JSON.stringify(data));
@@ -776,20 +863,20 @@ var MVC = {
        *
        * Update the model and databound elements.
        *
-       * This method is internally every time a 'change' and 'keyup' event occur
+       * This method is internally every time a &#x27;change&#x27; and &#x27;keyup&#x27; event occur
        * in form elements. This is part of the concept to always update the Model,
        * so it is synchronized with the View.
        *
-       * It is possible to override the call to this method for the 'keyup' event
-       * if it is implemented manually in the settings. Therefore it's important
-       * to know that if overriding this event, but still want 'live' updating
+       * It is possible to override the call to this method for the &#x27;keyup&#x27; event
+       * if it is implemented manually in the settings. Therefore it&#x27;s important
+       * to know that if overriding this event, but still want &#x27;live&#x27; updating
        * of the Model to occur, then this method must be called from the custom
-       * implementation of the 'keyup' event!
+       * implementation of the &#x27;keyup&#x27; event!
        *
        * @method SetModelFromView
        * @param {Boolean} updateDataboundValues TRUE | FALSE - If undefined or
        * true, databound elements inside and/or outside the the View will also
-       * get updated. If false, then they won't.
+       * get updated. If false, then they won&#x27;t.
        * @return {Object} The object (itself)
        */
        $object.SetModelFromView = function() {
@@ -799,12 +886,12 @@ var MVC = {
         // Update the model using the View values
         $.each(data, function(key, newVal) {
           var oldVal = $object[key];
-          // console.log("SetModelFromView() - key: " + key + ", new value: " + newVal + ", old value: " + oldVal);
-          // Only update values if they're changed
+          // console.log(&quot;SetModelFromView() - key: &quot; + key + &quot;, new value: &quot; + newVal + &quot;, old value: &quot; + oldVal);
+          // Only update values if they&#x27;re changed
           // Check the value of oldVal (not newVal)
           // newVal should not be null or undefined!
-          if(oldVal !== newVal && (newVal !== undefined && newVal !== null)) { // && typeof oldVal === typeof newVal) {
-            // console.log("Key: " + key + "\nOld value: " + oldVal + " (" + typeof oldVal + ")\nNew value: " + newVal + " (" + typeof newVal + ")");
+          if(oldVal !== newVal &amp;&amp; (newVal !== undefined &amp;&amp; newVal !== null)) { // &amp;&amp; typeof oldVal === typeof newVal) {
+            // console.log(&quot;Key: &quot; + key + &quot;\nOld value: &quot; + oldVal + &quot; (&quot; + typeof oldVal + &quot;)\nNew value: &quot; + newVal + &quot; (&quot; + typeof newVal + &quot;)&quot;);
             // Update the model with the value from DOM
             $object[key] = newVal;
           }
@@ -815,7 +902,7 @@ var MVC = {
         });
         // Update computed properties
         $.each(computedProperties, function(k,v) {
-          $object.Set(v['name'], v['func']($object));
+          $object.Set(v[&#x27;name&#x27;], v[&#x27;func&#x27;]($object));
         });
         return $object;
       };
@@ -826,36 +913,36 @@ var MVC = {
        * @method _SetDataboundDomVal
        * @private
        * @param {String} datasrc A viewId.
-       * @param {String} name An element's name.
+       * @param {String} name An element&#x27;s name.
        * @param {String} value A new value.
        *
        * @return {Object} The object (itself)
        */
       $object._SetDataboundDomVal = function(datasrc, name, value) {
         if(value) {
-          //console.log(counter + " - datasrc: " + datasrc + " - name: " + name + " - value: " + value);
+          //console.log(counter + &quot; - datasrc: &quot; + datasrc + &quot; - name: &quot; + name + &quot; - value: &quot; + value);
           var browserVersion = navigator.appVersion;
-          // IE 7 & 8
-          if(browserVersion.indexOf("MSIE 7.") !== -1 || browserVersion.indexOf("MSIE 8.") !== -1) {
-            // case: <span datasrc="#viewId" name="somename"></span>
-            $('div[datasrc="'+datasrc+'"][name="'+name+'"],p[datasrc="'+datasrc+'"][name="'+name+'"],span[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
-            // case: <div datasrc="#viewId"><span name="somename"></span></div>
-            $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('div[name="'+name+'"],p[name="'+name+'"],span[name="'+name+'"]').text(value);
-            $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('input[name="'+name+'"]').val(value);
+          // IE 7 &amp; 8
+          if(browserVersion.indexOf(&quot;MSIE 7.&quot;) !== -1 || browserVersion.indexOf(&quot;MSIE 8.&quot;) !== -1) {
+            // case: &lt;span datasrc=&quot;#viewId&quot; name=&quot;somename&quot;&gt;&lt;/span&gt;
+            $(&#x27;div[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;][name=&quot;&#x27;+name+&#x27;&quot;],p[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;][name=&quot;&#x27;+name+&#x27;&quot;],span[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;][name=&quot;&#x27;+name+&#x27;&quot;]&#x27;).text(value);
+            // case: &lt;div datasrc=&quot;#viewId&quot;&gt;&lt;span name=&quot;somename&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+            $(&#x27;div[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;],p[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;],span[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;]&#x27;).find(&#x27;div[name=&quot;&#x27;+name+&#x27;&quot;],p[name=&quot;&#x27;+name+&#x27;&quot;],span[name=&quot;&#x27;+name+&#x27;&quot;]&#x27;).text(value);
+            $(&#x27;div[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;],p[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;],span[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;]&#x27;).find(&#x27;input[name=&quot;&#x27;+name+&#x27;&quot;]&#x27;).val(value);
           }
           else {
-            // console.log("datasrc: " + datasrc + " - name: " + name + " - value: " + value + " - " + $('*[datasrc*="'+datasrc+'"]').find('[name*="'+name+'"]').text());
-            // case: <span datasrc="#viewId" name="somename"></span>
-            $('*[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
-            // case: <div datasrc="#viewId"><span name="somename"></span></div>
-            $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').text(value);
-            $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').val(value);
+            // console.log(&quot;datasrc: &quot; + datasrc + &quot; - name: &quot; + name + &quot; - value: &quot; + value + &quot; - &quot; + $(&#x27;*[datasrc*=&quot;&#x27;+datasrc+&#x27;&quot;]&#x27;).find(&#x27;[name*=&quot;&#x27;+name+&#x27;&quot;]&#x27;).text());
+            // case: &lt;span datasrc=&quot;#viewId&quot; name=&quot;somename&quot;&gt;&lt;/span&gt;
+            $(&#x27;*[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;][name=&quot;&#x27;+name+&#x27;&quot;]&#x27;).text(value);
+            // case: &lt;div datasrc=&quot;#viewId&quot;&gt;&lt;span name=&quot;somename&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+            $(&#x27;*[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;]&#x27;).find(&#x27;*[name=&quot;&#x27;+name+&#x27;&quot;]&#x27;).text(value);
+            $(&#x27;*[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;]&#x27;).find(&#x27;*[name=&quot;&#x27;+name+&#x27;&quot;]&#x27;).val(value);
           }
-          $('input[datasrc="'+datasrc+'"][name="'+name+'"]').val(value);
+          $(&#x27;input[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;][name=&quot;&#x27;+name+&#x27;&quot;]&#x27;).val(value);
 
-          var select = $('select[datasrc="'+datasrc+'"][name="'+name+'"]');
+          var select = $(&#x27;select[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;][name=&quot;&#x27;+name+&#x27;&quot;]&#x27;);
           $object._FillSelect(select, name, value);
-          select = $('*[datasrc="'+datasrc+'"]').find('select[name="'+name+'"]');
+          select = $(&#x27;*[datasrc=&quot;&#x27;+datasrc+&#x27;&quot;]&#x27;).find(&#x27;select[name=&quot;&#x27;+name+&#x27;&quot;]&#x27;);
           $object._FillSelect(select, name, value);
         }
         return $object;
@@ -863,12 +950,12 @@ var MVC = {
 
       $object._FillSelect = function(select, name, value) {
         var propValue = $object.Get(name);
-        if(typeof propValue === 'object' && select.size() > 0) {
+        if(typeof propValue === &#x27;object&#x27; &amp;&amp; select.size() &gt; 0) {
           select.empty();
           $.each(value, function(k, v) {
             // var txt = textIsFunction ? v[name.substring(0, name.length-2)]() : v[name];
             // var val = valueIsFunction ? v[value.substring(0, value.length-2)]() : v[value];
-            select.append($('<option />').attr({'value': v}).text(v));
+            select.append($(&#x27;&lt;option /&gt;&#x27;).attr({&#x27;value&#x27;: v}).text(v));
           });
         }
       };
@@ -885,16 +972,16 @@ var MVC = {
        * @return {Object} The object (itself)
        */
       $object.FillSelect = function(prop, text, value) {
-        var textIsFunction = !text ? false : text.substring(text.length-2, text.length) === "()";
-        var valueIsFunction = !value ? false : value.substring(value.length-2, value.length) === "()";
+        var textIsFunction = !text ? false : text.substring(text.length-2, text.length) === &quot;()&quot;;
+        var valueIsFunction = !value ? false : value.substring(value.length-2, value.length) === &quot;()&quot;;
         var items = $object.Get(prop);
-        $.each($object.Find('select[name*="'+prop+'"]'), function(k2,select) {
+        $.each($object.Find(&#x27;select[name*=&quot;&#x27;+prop+&#x27;&quot;]&#x27;), function(k2,select) {
           select = $(select);
           select.empty();
           $.each(items, function(k, v) {
             var txt = !text ? v : textIsFunction ? v[text.substring(0, text.length-2)]() : v[text];
             var val = !value ? v : valueIsFunction ? v[value.substring(0, value.length-2)]() : v[value];
-            select.append($('<option />').attr({'value': val}).text(txt));
+            select.append($(&#x27;&lt;option /&gt;&#x27;).attr({&#x27;value&#x27;: val}).text(txt));
           });
         });
         return $object;
@@ -918,17 +1005,17 @@ var MVC = {
           type = event;
         }
         if(event === undefined) {
-          //console.log('event "e" is undefined!');
+          //console.log(&#x27;event &quot;e&quot; is undefined!&#x27;);
           return;
         }
-        if($.trim(targetName).length > 0) {
-          if($settings['settings'][type] !== undefined && $settings['settings'][type] !== null) {
-            // alert($settings['settings'][type]);
-            $settings['settings']['eventUsed'] = type;
+        if($.trim(targetName).length &gt; 0) {
+          if($settings[&#x27;settings&#x27;][type] !== undefined &amp;&amp; $settings[&#x27;settings&#x27;][type] !== null) {
+            // alert($settings[&#x27;settings&#x27;][type]);
+            $settings[&#x27;settings&#x27;][&#x27;eventUsed&#x27;] = type;
             var modelData = $object[targetName];
             var selectedModelData = modelData;
             // select element (list)
-            if(event.target.type.indexOf('select') !== -1) {
+            if(event.target.type.indexOf(&#x27;select&#x27;) !== -1) {
               var selectedIndex = event.target.selectedIndex;
               var selectedOption = event.target.options[selectedIndex];
               if(selectedOption) {
@@ -936,11 +1023,11 @@ var MVC = {
                 selectedModelData = modelData[selectedIndex];
               }
             }
-            $settings['settings'][type](event, targetName, targetValue, $object, modelData, selectedModelData);
+            $settings[&#x27;settings&#x27;][type](event, targetName, targetValue, $object, modelData, selectedModelData);
           }
         }
         // else {
-        //   console.log("source element has no name attribute assigned (required!)");
+        //   console.log(&quot;source element has no name attribute assigned (required!)&quot;);
         // }
         return $object;
       };
@@ -957,8 +1044,8 @@ var MVC = {
        */
       $object.Start = function(method, par) {
         var exec;
-        if($object['settings']['controller'] !== undefined) {
-          exec = $object['settings']['controller'][method];
+        if($object[&#x27;settings&#x27;][&#x27;controller&#x27;] !== undefined) {
+          exec = $object[&#x27;settings&#x27;][&#x27;controller&#x27;][method];
         }
         if(exec === undefined) {
           exec = $object[method];
@@ -966,10 +1053,10 @@ var MVC = {
         // console.log(exec);
         // console.log($object[method]);
         // console.log(par);
-        if(exec !== undefined && exec !== null) {
+        if(exec !== undefined &amp;&amp; exec !== null) {
           exec(par, $object);
         } else {
-          console.log('Missing ' + method + '() method!');
+          console.log(&#x27;Missing &#x27; + method + &#x27;() method!&#x27;);
         }
         return $object;
       };
@@ -995,7 +1082,7 @@ var MVC = {
        * @return {String} The View ID
        */
       $object.GetViewId = function() {
-        return $object['settings']['viewId'];
+        return $object[&#x27;settings&#x27;][&#x27;viewId&#x27;];
       };
 
       /**
@@ -1009,21 +1096,21 @@ var MVC = {
        * @return {Array} An element from the View.
        */
       $object.Find = function(selector) {
-        return $($object.GetViewId() + ' ' + selector);
+        return $($object.GetViewId() + &#x27; &#x27; + selector);
       };
 
       /**
        * AddEvents
        *
-       * Add events to the object's input fields
+       * Add events to the object&#x27;s input fields
        *
        * @method AddEvents
        * @return {Object} The object
        */
       $object.AddEvents = function() {
         // Update the model view, whenever a change occurs
-        $(viewId + ' :input')
-          // .not('.excludeFromModel')
+        $(viewId + &#x27; :input&#x27;)
+          // .not(&#x27;.excludeFromModel&#x27;)
           .focus(function(e){
             // http://jsfiddle.net/PKVVP
             $object.RunEvent(e);
@@ -1050,23 +1137,23 @@ var MVC = {
           /**
            * keyup event
            *
-           * It's important to know that when overriding this event,
-           * but still want 'live' updating of the Model to occur,
+           * It&#x27;s important to know that when overriding this event,
+           * but still want &#x27;live&#x27; updating of the Model to occur,
            * then this method must be called from the custom implementation
-           * of the 'keyup' event!
+           * of the &#x27;keyup&#x27; event!
            *
            * @event keyup ...
            *
            */
           .keyup(function(e){
-            // If the 'keyup' event hasn't been specified in the settings, then
+            // If the &#x27;keyup&#x27; event hasn&#x27;t been specified in the settings, then
             // by default update the Model and databound values using the
             // SetModelFromView() method
-            if($settings['settings']['keyup'] === undefined) {
+            if($settings[&#x27;settings&#x27;][&#x27;keyup&#x27;] === undefined) {
               // Update the model and also the databound elements
               $object.SetModelFromView();
             }
-            // e should euqal 'change'
+            // e should euqal &#x27;change&#x27;
             $object.RunEvent(e);
           })
           .keypress(function(e) {
@@ -1083,24 +1170,24 @@ var MVC = {
 
       // Set the DOM values from the Model
       $object.SetViewFromModel();
-      // Initialize the View with the Model data if they aren't specified in the Model
+      // Initialize the View with the Model data if they aren&#x27;t specified in the Model
       $object.SetModelFromView();
       // If Model property changes should be reflected/displayed in the View:
       // Loop throught the properties within the object and attach events using the
       // jQuery .bind() method. Whenever the user wants to update a value it can
       // be achieved using the .trigger() method, which is implemented in the
       // MVC.Set() and MVC.Get() methods.
-      // Note: Changing the Model's properties directly won't update the view.
-      if($settings['isMirror']) {
-        // Loop throught the object's properties
+      // Note: Changing the Model&#x27;s properties directly won&#x27;t update the view.
+      if($settings[&#x27;isMirror&#x27;]) {
+        // Loop throught the object&#x27;s properties
         $.each($object.GetModelData(), function(k,v) {
-          // console.log(k + " : " + v);
+          // console.log(k + &quot; : &quot; + v);
           // var pars = MVC.GetViewData(viewId);
           // Add the Getter and Setter methods
           // n: name, ov: old value, nv: new value
           $object.AddGetSet(k);
           /*, function(n, ov, nv) {
-            //alert(n + ": " + ov + "=>" + nv);
+            //alert(n + &quot;: &quot; + ov + &quot;=&gt;&quot; + nv);
             //Update the view accordingly
             //MVC.SetViewFromModel(viewId, $object); //$(viewId).getSetHtml($object);
             $object.SetViewFromModel();
@@ -1110,15 +1197,15 @@ var MVC = {
             //This is important in case the model is changed using setTimeout()
             //which will update the model, then this change must simulate
             //a user setting the value of the input.
-            $(':input[name='+n+']').not('.excludeFromModel').trigger('change');
+            $(&#x27;:input[name=&#x27;+n+&#x27;]&#x27;).not(&#x27;.excludeFromModel&#x27;).trigger(&#x27;change&#x27;);
           });*/
         });
       }
-      if($settings['autoSaveInterval'] > 0) {
-        $settings['eventUsed'] = '"autoSave"';
+      if($settings[&#x27;autoSaveInterval&#x27;] &gt; 0) {
+        $settings[&#x27;eventUsed&#x27;] = &#x27;&quot;autoSave&quot;&#x27;;
         setInterval(function() {
           $object.Save();
-        }, $settings['autoSaveInterval']);
+        }, $settings[&#x27;autoSaveInterval&#x27;]);
       }
       $object.AddEvents();
       // Add the settings to the Model object
@@ -1131,9 +1218,9 @@ var MVC = {
        * the .init() method, which gets executed right after the object has been
        * created.
        */
-      var init = $object['init'];
+      var init = $object[&#x27;init&#x27;];
       //Do not run the .init() method if it is undefined or null
-      if(init !== undefined && init !== null) {
+      if(init !== undefined &amp;&amp; init !== null) {
         init($object);
       }
       return $object;
@@ -1174,27 +1261,27 @@ var MVC = {
       }
     },
     getInputElements : function(target) {
-      return target.find('input,select,textarea').not('.excludeFromModel');
+      return target.find(&#x27;input,select,textarea&#x27;).not(&#x27;.excludeFromModel&#x27;);
     },
     getElementKey : function(element) {
-      var key = $(element).attr("datafld");
+      var key = $(element).attr(&quot;datafld&quot;);
       if(key === undefined) {
-        key = $(element).attr("id");
+        key = $(element).attr(&quot;id&quot;);
       }
       if(key === undefined) {
-        key = $(element).attr("data-bind");
+        key = $(element).attr(&quot;data-bind&quot;);
       }
       return key;
-      //return $(element).attr("datafld") ? undefined : $(element).attr("id");
+      //return $(element).attr(&quot;datafld&quot;) ? undefined : $(element).attr(&quot;id&quot;);
     },
     getBindableElements : function(target) {
-      //return target.find('p,span,div').filter(':not(.excludeFromModel)');
-      return target.find('*[data-bind], *[datafld]').filter(':not(.excludeFromModel)');
+      //return target.find(&#x27;p,span,div&#x27;).filter(&#x27;:not(.excludeFromModel)&#x27;);
+      return target.find(&#x27;*[data-bind], *[datafld]&#x27;).filter(&#x27;:not(.excludeFromModel)&#x27;);
     },
     setValues : function(params) {
-      //console.log('setValues called!');
+      //console.log(&#x27;setValues called!&#x27;);
       //console.log(this.getBindableElements(this));
-      //Set the values for  'p', 'div' and 'span' elements
+      //Set the values for  &#x27;p&#x27;, &#x27;div&#x27; and &#x27;span&#x27; elements
       var $this = this;
       $this.getBindableElements(this).each(function() {
         var key = $this.getElementKey(this);
@@ -1203,7 +1290,7 @@ var MVC = {
         }
         //alert(key);
         var value = params[key];
-        // console.log(key + " = " + value);
+        // console.log(key + &quot; = &quot; + value);
         //console.log(value);
         $(this).html(value);
         //var toReplace = $.trim($(this).text());
@@ -1211,13 +1298,13 @@ var MVC = {
       });
 
       $this.getInputElements(this).each(function(){
-        var value = params[ $(this).attr("name") ], $this;
+        var value = params[ $(this).attr(&quot;name&quot;) ], $this;
         // console.log(value);
-        // Don't do all this work if there's no value
+        // Don&#x27;t do all this work if there&#x27;s no value
         if ( value !== undefined) {
           $this = $(this);
           // Select element
-          if ( $this.is("select") ) {
+          if ( $this.is(&quot;select&quot;) ) {
             // Fill select with option elements if select value is null
             if(!$this.val()) {
               var selectElement = $this;
@@ -1225,40 +1312,40 @@ var MVC = {
               $.each(value, function(k,v) {
                 var txt = v;
                 var val = v;
-                if(typeof v === 'object') {
+                if(typeof v === &#x27;object&#x27;) {
                   $.each(v, function(k2,v2) {
-                    var k2isFunc = typeof k2 === 'function';
-                    var v2isFunc = typeof v2 === 'function';
+                    var k2isFunc = typeof k2 === &#x27;function&#x27;;
+                    var v2isFunc = typeof v2 === &#x27;function&#x27;;
                     // console.log(v2isFunc);
                     txt = v2isFunc ? v.toString() : k2;
                     val = v2isFunc ? v.toString() : v2;
                   });
                 }
-                // console.log("text: " + txt + " - value: " + val);
-                selectElement.append($('<option />').attr({'value': val}).text(txt));
+                // console.log(&quot;text: &quot; + txt + &quot; - value: &quot; + val);
+                selectElement.append($(&#x27;&lt;option /&gt;&#x27;).attr({&#x27;value&#x27;: val}).text(txt));
               });
             }
             else {
-              // alert($this.attr('name') + " has values!");
+              // alert($this.attr(&#x27;name&#x27;) + &quot; has values!&quot;);
             }
           }
           // Radio element
-          else if ( $this.is(":radio") ) {
+          else if ( $this.is(&quot;:radio&quot;) ) {
             if ( $this.val() === value ) {
-              $this.attr("checked", true);
+              $this.attr(&quot;checked&quot;, true);
             }
           }
           // Checkbox element
-          else if ( $this.is(":checkbox") ) {
+          else if ( $this.is(&quot;:checkbox&quot;) ) {
             // Convert single value to an array to reduce
             // complexity
             if(value) {
-              $this.attr("checked", true);
+              $this.attr(&quot;checked&quot;, true);
             }
             else {
               value = $.isArray( value ) ? value : [value];
-              if ( $.inArray( $this.val(), value ) > -1) {
-                $this.attr("checked", true);
+              if ( $.inArray( $this.val(), value ) &gt; -1) {
+                $this.attr(&quot;checked&quot;, true);
               }
             }
             $this.val( value );
@@ -1277,22 +1364,22 @@ var MVC = {
       var $this = this;
       $this.getInputElements(this).each(function() {
         var elm = $(this);
-        var type = elm.attr('type'),
-            name = elm.attr('name'),
+        var type = elm.attr(&#x27;type&#x27;),
+            name = elm.attr(&#x27;name&#x27;),
             value = elm.val();
-        if(type === 'submit' || !name) {
+        if(type === &#x27;submit&#x27; || !name) {
           return;
         }
 
-        //console.log("type: " + type + " - name: " + name + " - value: " + value);
-        if(elm.hasClass('isNumber')) {
+        //console.log(&quot;type: &quot; + type + &quot; - name: &quot; + name + &quot; - value: &quot; + value);
+        if(elm.hasClass(&#x27;isNumber&#x27;)) {
           value = parseInt(value, null);
         }
 
         // Select element
-        if(elm.is('select')) {
+        if(elm.is(&#x27;select&#x27;)) {
           var selectValues = MVC.List([]);
-          $.each(elm.find('option'), function(k,v) {
+          $.each(elm.find(&#x27;option&#x27;), function(k,v) {
             // selectValues.push($(v).val());
             selectValues.Add($(v).val());
           });
@@ -1300,16 +1387,16 @@ var MVC = {
           formData[name] = value;
         }
         // Checkbox element
-        else if(elm.is(':checkbox')) {
+        else if(elm.is(&#x27;:checkbox&#x27;)) {
           value = false;
-          if(elm.attr('checked') | elm.prop('checked')) {
+          if(elm.attr(&#x27;checked&#x27;) | elm.prop(&#x27;checked&#x27;)) {
             value = true;
           }
           formData[name] = value;
         }
         // Radio element
-        else if(elm.is(':radio')) {
-          if(elm.attr('checked') | elm.prop('checked')) {
+        else if(elm.is(&#x27;:radio&#x27;)) {
+          if(elm.attr(&#x27;checked&#x27;) | elm.prop(&#x27;checked&#x27;)) {
             formData[name] = value;
           }
         }
@@ -1327,10 +1414,10 @@ var MVC = {
           if(key === undefined) {
             return;
           }
-          if(elem.hasClass('isNumber')) {
+          if(elem.hasClass(&#x27;isNumber&#x27;)) {
             value = parseInt(value, null);
           }
-          //alert(key + " = " + value);
+          //alert(key + &quot; = &quot; + value);
           data[key] = value;
         }
       });
@@ -1346,7 +1433,25 @@ String.prototype.format = String.prototype.f = function() {
   var s = this,
       i = arguments.length;
   while (i--) {
-      s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+      s = s.replace(new RegExp(&#x27;\\{&#x27; + i + &#x27;\\}&#x27;, &#x27;gm&#x27;), arguments[i]);
   }
   return s;
 };
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

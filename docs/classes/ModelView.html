@@ -1,0 +1,4399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ModelView</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Controller.html">Controller</a></li>
+                                <li><a href="../classes/getSetHtml.html">getSetHtml</a></li>
+                                <li><a href="../classes/List.html">List</a></li>
+                                <li><a href="../classes/ModelView.html">ModelView</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/JSON.html">JSON</a></li>
+                                <li><a href="../modules/MVC.html">MVC</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1>ModelView Class</h1>
+<div class="box meta">
+
+
+        <div class="foundat">
+            Defined in: <a href="../files/simple.mvc.js.html#l230"><code>simple.mvc.js:230</code></a>
+        </div>
+
+            Module: <a href="../modules/MVC.html">MVC</a>
+
+</div>
+
+
+<div class="box intro">
+    <p>ModelView</p>
+<p>Definition:
+Model: The model manages the behavior and data of the application domain,
+responds to requests for information about its state (usually from the view),
+and responds to instructions to change state (usually from the controller).
+View: The view manages the display of information.
+Source: <a href="http://bit.ly/fQnaJI">http://bit.ly/fQnaJI</a></p>
+<p>ModelView creates the glue which binds the UI(View) with the Backend code
+functionality of the program. It keeps the View synchronized with the 'Model'.</p>
+<p>ModelView creates a new object with data and settings. The data and
+settings are (JSON) object literals and merged and returned after all the
+internal setup is done.
+The ModelView contains all the information about the object, which keeps
+the View synchronized with the Model and vice versa.</p>
+
+</div>
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+<div id="method_ModelView" class="method item">
+    <h3 class="name"><code>ModelView</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>$object</code>
+                </li>
+                <li class="arg">
+                        <code>$settings</code>
+                </li>
+                <li class="arg">
+                        <code>$methods</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l230"><code>simple.mvc.js:230</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">$object</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Model data</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">$settings</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Config &amp; view input events</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">$methods</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Custom user defined methods/functions</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+</div>
+    </div>
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li class="api-class-tab events"><a href="#events">Events</a></li>
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method private">
+                                <a href="#method__SetDataboundDomVal">_SetDataboundDomVal</a>
+
+                            </li>
+                            <li class="index-item method private">
+                                <a href="#method__SetDataboundDomVal">_SetDataboundDomVal</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Add">Add</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Add">Add</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Add">Add</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Add">Add</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_AddEvents">AddEvents</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_AddEvents">AddEvents</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_AddGetSet">AddGetSet</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_AddGetSet">AddGetSet</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_AddProperty">AddProperty</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_AddProperty">AddProperty</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Clear">Clear</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Clear">Clear</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_ClearAll">ClearAll</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_ClearAll">ClearAll</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Delete">Delete</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Delete">Delete</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_FillSelect">FillSelect</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_FillSelect">FillSelect</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Find">Find</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Find">Find</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Get">Get</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Get">Get</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetDatasrcId">GetDatasrcId</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetDatasrcId">GetDatasrcId</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetModelData">GetModelData</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetModelData">GetModelData</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetViewData">GetViewData</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetViewData">GetViewData</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetViewHtml">GetViewHtml</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetViewHtml">GetViewHtml</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetViewId">GetViewId</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_GetViewId">GetViewId</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Has">Has</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Has">Has</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_RemoveGetSet">RemoveGetSet</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_RemoveGetSet">RemoveGetSet</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_RemoveProperty">RemoveProperty</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_RemoveProperty">RemoveProperty</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_RunEvent">RunEvent</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_RunEvent">RunEvent</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Save">Save</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Save">Save</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Set">Set</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Set">Set</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_SetModelFromView">SetModelFromView</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_SetModelFromView">SetModelFromView</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_SetViewData">SetViewData</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_SetViewData">SetViewData</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_SetViewFromModel">SetViewFromModel</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_SetViewFromModel">SetViewFromModel</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Start">Start</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Start">Start</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_toArray">toArray</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_toArray">toArray</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TriggerEvent">TriggerEvent</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_TriggerEvent">TriggerEvent</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Update">Update</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_Update">Update</a>
+
+                            </li>
+                    </ul>
+                </div>
+
+
+
+                <div class="index-section events">
+                    <h3>Events</h3>
+
+                    <ul class="index-list events">
+                            <li class="index-item event">
+                                <a href="#event_keyup ...">keyup ...</a>
+
+                            </li>
+                            <li class="index-item event">
+                                <a href="#event_keyup ...">keyup ...</a>
+
+                            </li>
+                    </ul>
+                </div>
+        </div>
+
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method__SetDataboundDomVal" class="method item private">
+    <h3 class="name"><code>_SetDataboundDomVal</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>datasrc</code>
+                </li>
+                <li class="arg">
+                        <code>name</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l823"><code>npm-package&#x2F;simple.mvc.js:823</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Update the databound elements inside or outside the View.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">datasrc</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>A viewId.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>An element's name.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>A new value.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method__SetDataboundDomVal" class="method item private">
+    <h3 class="name"><code>_SetDataboundDomVal</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>datasrc</code>
+                </li>
+                <li class="arg">
+                        <code>name</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+        <span class="flag private">private</span>
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l823"><code>simple.mvc.js:823</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Update the databound elements inside or outside the View.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">datasrc</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>A viewId.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">name</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>An element's name.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>A new value.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Add" class="method item">
+    <h3 class="name"><code>Add</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>listName</code>
+                </li>
+                <li class="arg">
+                        <code>item</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l581"><code>simple.mvc.js:581</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Add</p>
+<p>NOTE: Must only be used if 'isMirror' is TRUE.</p>
+<p>Adds an item to a list object in the model and updates the View.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">listName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">item</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The new value to add to the property list</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Add" class="method item">
+    <h3 class="name"><code>Add</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>listName</code>
+                </li>
+                <li class="arg">
+                        <code>item</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l562"><code>simple.mvc.js:562</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Remove</p>
+<p>NOTE: Must only be used if 'isMirror' is TRUE.</p>
+<p>Removes an item from a list object in the model and updates the View.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">listName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">item</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The new value to add to the property list</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Add" class="method item">
+    <h3 class="name"><code>Add</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>listName</code>
+                </li>
+                <li class="arg">
+                        <code>item</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l581"><code>npm-package&#x2F;simple.mvc.js:581</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Add</p>
+<p>NOTE: Must only be used if 'isMirror' is TRUE.</p>
+<p>Adds an item to a list object in the model and updates the View.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">listName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">item</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The new value to add to the property list</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Add" class="method item">
+    <h3 class="name"><code>Add</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>listName</code>
+                </li>
+                <li class="arg">
+                        <code>item</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l562"><code>npm-package&#x2F;simple.mvc.js:562</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Remove</p>
+<p>NOTE: Must only be used if 'isMirror' is TRUE.</p>
+<p>Removes an item from a list object in the model and updates the View.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">listName</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">item</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The new value to add to the property list</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_AddEvents" class="method item">
+    <h3 class="name"><code>AddEvents</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l1015"><code>npm-package&#x2F;simple.mvc.js:1015</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>AddEvents</p>
+<p>Add events to the object's input fields</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_AddEvents" class="method item">
+    <h3 class="name"><code>AddEvents</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l1015"><code>simple.mvc.js:1015</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>AddEvents</p>
+<p>Add events to the object's input fields</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_AddGetSet" class="method item">
+    <h3 class="name"><code>AddGetSet</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+                <li class="arg">
+                        <code>onUpdate</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l436"><code>npm-package&#x2F;simple.mvc.js:436</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>AddGetSet</p>
+<p>Add getter and setter methods for a property</p>
+<p>Getters and Setters in JavaScript/JScript (ECMAScript) are not an option
+as it is hard to make it work cross-browser/platform!
+There is a solution here, but only down to IE9:
+Source: <a href="http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/">http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/</a></p>
+<p>If changes in the model properties should be reflected in the view
+then setter and getter methods will be attached using jQuery.</p>
+<p>Note: Will only be used(exec.) if 'isMirror' is TRUE.</p>
+<p>Works in IE 7+: <a href="http://jsfiddle.net/cTJZN/">http://jsfiddle.net/cTJZN/</a></p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">onUpdate</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callBack function will execute, whenever
+the get/set event handlers bound with .bind() method are triggered.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_AddGetSet" class="method item">
+    <h3 class="name"><code>AddGetSet</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+                <li class="arg">
+                        <code>onUpdate</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l436"><code>simple.mvc.js:436</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>AddGetSet</p>
+<p>Add getter and setter methods for a property</p>
+<p>Getters and Setters in JavaScript/JScript (ECMAScript) are not an option
+as it is hard to make it work cross-browser/platform!
+There is a solution here, but only down to IE9:
+Source: <a href="http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/">http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/</a></p>
+<p>If changes in the model properties should be reflected in the view
+then setter and getter methods will be attached using jQuery.</p>
+<p>Note: Will only be used(exec.) if 'isMirror' is TRUE.</p>
+<p>Works in IE 7+: <a href="http://jsfiddle.net/cTJZN/">http://jsfiddle.net/cTJZN/</a></p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">onUpdate</code>
+                        <span class="type">Function</span>
+
+
+                    <div class="param-description">
+                        <p>callBack function will execute, whenever
+the get/set event handlers bound with .bind() method are triggered.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_AddProperty" class="method item">
+    <h3 class="name"><code>AddProperty</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l520"><code>npm-package&#x2F;simple.mvc.js:520</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>AddProperty</p>
+<p>Add a property to the Model</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The property name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_AddProperty" class="method item">
+    <h3 class="name"><code>AddProperty</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l520"><code>simple.mvc.js:520</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>AddProperty</p>
+<p>Add a property to the Model</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The property name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Clear" class="method item">
+    <h3 class="name"><code>Clear</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l406"><code>npm-package&#x2F;simple.mvc.js:406</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Clear</p>
+<p>Clears a property's value in the Model and optionally in the View if 'isMirror' = true.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Clear" class="method item">
+    <h3 class="name"><code>Clear</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l406"><code>simple.mvc.js:406</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Clear</p>
+<p>Clears a property's value in the Model and optionally in the View if 'isMirror' = true.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_ClearAll" class="method item">
+    <h3 class="name"><code>ClearAll</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l421"><code>npm-package&#x2F;simple.mvc.js:421</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Clear All</p>
+<p>Clears all the data in the Model and the View.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_ClearAll" class="method item">
+    <h3 class="name"><code>ClearAll</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l421"><code>simple.mvc.js:421</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Clear All</p>
+<p>Clears all the data in the Model and the View.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Delete" class="method item">
+    <h3 class="name"><code>Delete</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>par</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l392"><code>npm-package&#x2F;simple.mvc.js:392</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Call the .Delete() method whenever you want to delete the object.
+Notice: This is intended behaviour, but the implementation of the
+method is up to the individual how and what is done when this method
+is called/executed.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">par</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Provide extra parameters if needed.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Delete" class="method item">
+    <h3 class="name"><code>Delete</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>par</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l392"><code>simple.mvc.js:392</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Call the .Delete() method whenever you want to delete the object.
+Notice: This is intended behaviour, but the implementation of the
+method is up to the individual how and what is done when this method
+is called/executed.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">par</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Provide extra parameters if needed.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_FillSelect" class="method item">
+    <h3 class="name"><code>FillSelect</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+                <li class="arg">
+                        <code>text</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l876"><code>simple.mvc.js:876</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>FillSelect</p>
+<p>Fill select element with one or more option elements.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>The property name which holds an array of values</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">text</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The text to be displayed in the option element</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The value of the option element</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_FillSelect" class="method item">
+    <h3 class="name"><code>FillSelect</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+                <li class="arg">
+                        <code>text</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l876"><code>npm-package&#x2F;simple.mvc.js:876</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>FillSelect</p>
+<p>Fill select element with one or more option elements.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">Array</span>
+
+
+                    <div class="param-description">
+                        <p>The property name which holds an array of values</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">text</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The text to be displayed in the option element</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The value of the option element</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Find" class="method item">
+    <h3 class="name"><code>Find</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l1001"><code>npm-package&#x2F;simple.mvc.js:1001</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Find</p>
+<p>Find and return one or many element/s within the View using a (id or class) selector.</p>
+<p>If the elemenet is not found an empty array is returned.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Array</span>:
+                    <p>An element from the View.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Find" class="method item">
+    <h3 class="name"><code>Find</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l1001"><code>simple.mvc.js:1001</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Find</p>
+<p>Find and return one or many element/s within the View using a (id or class) selector.</p>
+<p>If the elemenet is not found an empty array is returned.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Array</span>:
+                    <p>An element from the View.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Get" class="method item">
+    <h3 class="name"><code>Get</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l635"><code>simple.mvc.js:635</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Get</p>
+<p>NOTE: Must only be used if 'isMirror' is TRUE.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>value The value from the object's property.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Get" class="method item">
+    <h3 class="name"><code>Get</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l635"><code>npm-package&#x2F;simple.mvc.js:635</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Get</p>
+<p>NOTE: Must only be used if 'isMirror' is TRUE.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>value The value from the object's property.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetDatasrcId" class="method item">
+    <h3 class="name"><code>GetDatasrcId</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l667"><code>simple.mvc.js:667</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetDatasrcId</p>
+<p>Return the (view) ID of the datasource.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Number</span>:
+                    <p>The (View) ID of the datasource.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetDatasrcId" class="method item">
+    <h3 class="name"><code>GetDatasrcId</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l667"><code>npm-package&#x2F;simple.mvc.js:667</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetDatasrcId</p>
+<p>Return the (view) ID of the datasource.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Number</span>:
+                    <p>The (View) ID of the datasource.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetModelData" class="method item">
+    <h3 class="name"><code>GetModelData</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>withSettings</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l679"><code>npm-package&#x2F;simple.mvc.js:679</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetModelData</p>
+<p>Return's a copy of the Model's data without it's functions.
+Useful when storing the data.</p>
+<p>Note: As this object has all of it's functions/methods removed, then
+it's not possible to use the .toArray() (if needed for any reason) anymore.
+Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">withSettings</code>
+                        <span class="type">Boolean</span>
+
+
+                    <div class="param-description">
+                        <p>If TRUE, then append the settings object.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>A copy of the Model's data (as JSON object literal).</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetModelData" class="method item">
+    <h3 class="name"><code>GetModelData</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>withSettings</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l679"><code>simple.mvc.js:679</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetModelData</p>
+<p>Return's a copy of the Model's data without it's functions.
+Useful when storing the data.</p>
+<p>Note: As this object has all of it's functions/methods removed, then
+it's not possible to use the .toArray() (if needed for any reason) anymore.
+Instead use $.makeArray(theObject); which is what .toArray() uses.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">withSettings</code>
+                        <span class="type">Boolean</span>
+
+
+                    <div class="param-description">
+                        <p>If TRUE, then append the settings object.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>A copy of the Model's data (as JSON object literal).</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetViewData" class="method item">
+    <h3 class="name"><code>GetViewData</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l728"><code>simple.mvc.js:728</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetViewData</p>
+<p>Return the View data as an JSON object literal.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The View data as JSON object</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetViewData" class="method item">
+    <h3 class="name"><code>GetViewData</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l728"><code>npm-package&#x2F;simple.mvc.js:728</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetViewData</p>
+<p>Return the View data as an JSON object literal.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The View data as JSON object</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetViewHtml" class="method item">
+    <h3 class="name"><code>GetViewHtml</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l717"><code>npm-package&#x2F;simple.mvc.js:717</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetViewHtml</p>
+<p>Returns the jQuery object.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>jQuery object.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetViewHtml" class="method item">
+    <h3 class="name"><code>GetViewHtml</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l717"><code>simple.mvc.js:717</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetViewHtml</p>
+<p>Returns the jQuery object.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>jQuery object.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetViewId" class="method item">
+    <h3 class="name"><code>GetViewId</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l989"><code>npm-package&#x2F;simple.mvc.js:989</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetViewId</p>
+<p>Get the ID of the View</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">String</span>:
+                    <p>The View ID</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_GetViewId" class="method item">
+    <h3 class="name"><code>GetViewId</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">String</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l989"><code>simple.mvc.js:989</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>GetViewId</p>
+<p>Get the ID of the View</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">String</span>:
+                    <p>The View ID</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Has" class="method item">
+    <h3 class="name"><code>Has</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l651"><code>simple.mvc.js:651</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Has</p>
+<p>Checks if the Model has a given property (true) or not (false).</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Boolean</span>:
+                    <p>TRUE if the property exists. Otherwise FALSE.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Has" class="method item">
+    <h3 class="name"><code>Has</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l651"><code>npm-package&#x2F;simple.mvc.js:651</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Has</p>
+<p>Checks if the Model has a given property (true) or not (false).</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Boolean</span>:
+                    <p>TRUE if the property exists. Otherwise FALSE.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_RemoveGetSet" class="method item">
+    <h3 class="name"><code>RemoveGetSet</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l485"><code>npm-package&#x2F;simple.mvc.js:485</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>RemoveGetSet</p>
+<p>Remove getter and setter methods for a property</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_RemoveGetSet" class="method item">
+    <h3 class="name"><code>RemoveGetSet</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l485"><code>simple.mvc.js:485</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>RemoveGetSet</p>
+<p>Remove getter and setter methods for a property</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_RemoveProperty" class="method item">
+    <h3 class="name"><code>RemoveProperty</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l542"><code>simple.mvc.js:542</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>RemoveProperty</p>
+<p>Remove a property from the Model</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The property name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_RemoveProperty" class="method item">
+    <h3 class="name"><code>RemoveProperty</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l542"><code>npm-package&#x2F;simple.mvc.js:542</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>RemoveProperty</p>
+<p>Remove a property from the Model</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The property name</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_RunEvent" class="method item">
+    <h3 class="name"><code>RunEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>event</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l903"><code>npm-package&#x2F;simple.mvc.js:903</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>RunEvent</p>
+<p>Trigger an event if specified in the settings.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">event</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The eventName to trigger/execute.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_RunEvent" class="method item">
+    <h3 class="name"><code>RunEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>event</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l903"><code>simple.mvc.js:903</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>RunEvent</p>
+<p>Trigger an event if specified in the settings.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">event</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The eventName to trigger/execute.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Save" class="method item">
+    <h3 class="name"><code>Save</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>par</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l364"><code>npm-package&#x2F;simple.mvc.js:364</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Call the .Save() method whenever you want to save the object.
+Notice: This is intended behaviour, but the implementation of the
+method is up to the individual how and what is done when this method
+is called/executed.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">par</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Provide extra parameters if needed.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Save" class="method item">
+    <h3 class="name"><code>Save</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>par</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l364"><code>simple.mvc.js:364</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Call the .Save() method whenever you want to save the object.
+Notice: This is intended behaviour, but the implementation of the
+method is up to the individual how and what is done when this method
+is called/executed.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">par</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Provide extra parameters if needed.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Set" class="method item">
+    <h3 class="name"><code>Set</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l599"><code>simple.mvc.js:599</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Set</p>
+<p>NOTE: Must only be used if 'isMirror' is TRUE.</p>
+<p>When you need to update a value in the Model and reflect in the View.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The new value to set for the property</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Set" class="method item">
+    <h3 class="name"><code>Set</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+                <li class="arg">
+                        <code>value</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l599"><code>npm-package&#x2F;simple.mvc.js:599</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Set</p>
+<p>NOTE: Must only be used if 'isMirror' is TRUE.</p>
+<p>When you need to update a value in the Model and reflect in the View.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The object's property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">value</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The new value to set for the property</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_SetModelFromView" class="method item">
+    <h3 class="name"><code>SetModelFromView</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>updateDataboundValues</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l774"><code>simple.mvc.js:774</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>SetModelFromView</p>
+<p>Update the model and databound elements.</p>
+<p>This method is internally every time a 'change' and 'keyup' event occur
+in form elements. This is part of the concept to always update the Model,
+so it is synchronized with the View.</p>
+<p>It is possible to override the call to this method for the 'keyup' event
+if it is implemented manually in the settings. Therefore it's important
+to know that if overriding this event, but still want 'live' updating
+of the Model to occur, then this method must be called from the custom
+implementation of the 'keyup' event!</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">updateDataboundValues</code>
+                        <span class="type">Boolean</span>
+
+
+                    <div class="param-description">
+                        <p>TRUE | FALSE - If undefined or
+true, databound elements inside and/or outside the the View will also
+get updated. If false, then they won't.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_SetModelFromView" class="method item">
+    <h3 class="name"><code>SetModelFromView</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>updateDataboundValues</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l774"><code>npm-package&#x2F;simple.mvc.js:774</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>SetModelFromView</p>
+<p>Update the model and databound elements.</p>
+<p>This method is internally every time a 'change' and 'keyup' event occur
+in form elements. This is part of the concept to always update the Model,
+so it is synchronized with the View.</p>
+<p>It is possible to override the call to this method for the 'keyup' event
+if it is implemented manually in the settings. Therefore it's important
+to know that if overriding this event, but still want 'live' updating
+of the Model to occur, then this method must be called from the custom
+implementation of the 'keyup' event!</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">updateDataboundValues</code>
+                        <span class="type">Boolean</span>
+
+
+                    <div class="param-description">
+                        <p>TRUE | FALSE - If undefined or
+true, databound elements inside and/or outside the the View will also
+get updated. If false, then they won't.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_SetViewData" class="method item">
+    <h3 class="name"><code>SetViewData</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l742"><code>npm-package&#x2F;simple.mvc.js:742</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>SetViewData</p>
+<p>Set the View data from the Model (does not update databound elments)</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_SetViewData" class="method item">
+    <h3 class="name"><code>SetViewData</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l742"><code>simple.mvc.js:742</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>SetViewData</p>
+<p>Set the View data from the Model (does not update databound elments)</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_SetViewFromModel" class="method item">
+    <h3 class="name"><code>SetViewFromModel</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l755"><code>simple.mvc.js:755</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>SetViewFromModel</p>
+<p>Updates the elements in the View from the Model (including databound elements).</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_SetViewFromModel" class="method item">
+    <h3 class="name"><code>SetViewFromModel</code></h3>
+
+        <span class="paren">()</span>
+
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l755"><code>npm-package&#x2F;simple.mvc.js:755</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>SetViewFromModel</p>
+<p>Updates the elements in the View from the Model (including databound elements).</p>
+
+    </div>
+
+
+
+
+</div>
+<div id="method_Start" class="method item">
+    <h3 class="name"><code>Start</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>method</code>
+                </li>
+                <li class="arg">
+                        <code>par</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l948"><code>npm-package&#x2F;simple.mvc.js:948</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Start</p>
+<p>Execute a method in the controller.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">method</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The methods name specified in the controller.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">par</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>If needed you can provide optional parameters.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Start" class="method item">
+    <h3 class="name"><code>Start</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>method</code>
+                </li>
+                <li class="arg">
+                        <code>par</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l948"><code>simple.mvc.js:948</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Start</p>
+<p>Execute a method in the controller.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">method</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>The methods name specified in the controller.</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">par</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>If needed you can provide optional parameters.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_toArray" class="method item">
+    <h3 class="name"><code>toArray</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l977"><code>npm-package&#x2F;simple.mvc.js:977</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>toArray</p>
+<p>Convert the object to a real Array.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Array</span>:
+                    <p>The object converted into a real Array.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_toArray" class="method item">
+    <h3 class="name"><code>toArray</code></h3>
+
+        <span class="paren">()</span>
+
+        <span class="returns-inline">
+            <span class="type">Array</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l977"><code>simple.mvc.js:977</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>toArray</p>
+<p>Convert the object to a real Array.</p>
+
+    </div>
+
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Array</span>:
+                    <p>The object converted into a real Array.</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_TriggerEvent" class="method item">
+    <h3 class="name"><code>TriggerEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+                <li class="arg">
+                        <code>evt</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l502"><code>simple.mvc.js:502</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Trigger Event</p>
+<p>Trigger an event on an input element inside the view</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>Property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">evt</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>Event type/name (e.g. 'keyup')</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_TriggerEvent" class="method item">
+    <h3 class="name"><code>TriggerEvent</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>prop</code>
+                </li>
+                <li class="arg">
+                        <code>evt</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l502"><code>npm-package&#x2F;simple.mvc.js:502</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Trigger Event</p>
+<p>Trigger an event on an input element inside the view</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">prop</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>Property name</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">evt</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>Event type/name (e.g. 'keyup')</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Update" class="method item">
+    <h3 class="name"><code>Update</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>par</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/simple.mvc.js.html#l378"><code>simple.mvc.js:378</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Call the .Update() method whenever you want to update the object.
+Notice: This is intended behaviour, but the implementation of the
+method is up to the individual how and what is done when this method
+is called/executed.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">par</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Provide extra parameters if needed.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+<div id="method_Update" class="method item">
+    <h3 class="name"><code>Update</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>par</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/npm-package_simple.mvc.js.html#l378"><code>npm-package&#x2F;simple.mvc.js:378</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        <p>Call the .Update() method whenever you want to update the object.
+Notice: This is intended behaviour, but the implementation of the
+method is up to the individual how and what is done when this method
+is called/executed.</p>
+
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">par</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Provide extra parameters if needed.</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>The object (itself)</p>
+
+            </div>
+        </div>
+
+
+</div>
+            </div>
+
+
+
+            <div id="events" class="api-class-tabpanel">
+                <h2 class="off-left">Events</h2>
+
+                    <div id="event_keyup ..." class="events item">
+                        <h3 class="name"><code>keyup ...</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/npm-package_simple.mvc.js.html#l1050"><code>npm-package&#x2F;simple.mvc.js:1050</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>keyup event</p>
+                    <p>It's important to know that when overriding this event,
+                    but still want 'live' updating of the Model to occur,
+                    then this method must be called from the custom implementation
+                    of the 'keyup' event!</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+                    <div id="event_keyup ..." class="events item">
+                        <h3 class="name"><code>keyup ...</code></h3>
+                        <span class="type"></span>
+                    
+                    
+                    
+                    
+                    
+                        <div class="meta">
+                                    <p>
+                                    Defined in
+                            <a href="../files/simple.mvc.js.html#l1050"><code>simple.mvc.js:1050</code></a>
+                            </p>
+                    
+                    
+                        </div>
+                    
+                        <div class="description">
+                            <p>keyup event</p>
+                    <p>It's important to know that when overriding this event,
+                    but still want 'live' updating of the Model to occur,
+                    then this method must be called from the custom implementation
+                    of the 'keyup' event!</p>
+                    
+                        </div>
+                    
+                    
+                    
+                    </div>
+            </div>
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
