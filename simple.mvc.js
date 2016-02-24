@@ -1055,7 +1055,10 @@ var MVC = {
           .select(function(e) {
             $object.RunEvent(e);
           })
-          .submit(function(e){
+          .submit(function(e) {
+            $object.RunEvent(e);
+          })
+          .click(function(e) {
             $object.RunEvent(e);
           })
           /**

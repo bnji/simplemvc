@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 10</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="simple.mvc.js"></script>
+    <script>
+    $(function() {
+      $('#viewId').ModelView(
+          // Model
+          {
+            itemToAdd: '',
+            items: MVC.List([])
+          },
+          // Settings & Methods (implementation)
+          {
+            isMirror: true,
+            preventDefault: true,
+            controller: MVC.Controller({
+              addItem: function(e, o) { // event, object
+              alert("OK");
+                  // The email address will not be reset, since was excluded from the Model
+                  /*          $.each(o.GetModelData(), function(k, v) {
+                              o.Set(k, personObject[k]);
+                            });*/
+                }
+                /*addEmailToModel: function(e, o) {
+                  o.Set('email', $("[name='email']").removeClass("excludeFromModel").val());
+                },
+                removeEmailFromModel: function(e, o) {
+                  $("[name='email']").addClass("excludeFromModel");
+                  o.RemoveProperty('email');
+                },
+                showModelData: function(e, o) { // event, object
+                  alert(JSON.stringify(o.GetModelData(), null, 4));
+                },
+                showObjectData: function(e, o) { // event, object
+                  alert(JSON.stringify(o, null, 4));
+                }*/
+            }),
+            /*keyup: function(event, name, value, object) {
+              if (MVC.KeyCheck(event, 'enter')) {
+                event.preventDefault();
+                alert(value);
+                return false;
+              }
+            },*/
+            submit: function(event, name, value, object) {
+              event.preventDefault();
+              return false;
+            },
+            click: function(event, name, value, object) {
+              event.preventDefault();
+              return false;
+            }
+          },
+          // Methods
+          {
+            init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
+            }
+          });
+      });
+    </script>
+    <style>
+      table, th, td {
+         border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+   <form id="viewId" onsubmit="addItem() return false;">
+    New item:
+    <input name="itemToAdd" />
+    <button type="submit" name="addItem">Add</button>
+    <p>Your items:</p>
+    <select multiple="multiple" width="50" name="items"> </select>
+  </form>
+
+  </body>
+</html>
