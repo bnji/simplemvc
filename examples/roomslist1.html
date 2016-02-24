@@ -16,7 +16,7 @@
           return "Room # " + this.number + " costs $" + this.price;
         }
       }
-      $('#roomManager').ModelView(
+      var obj = $('#roomManager').ModelView(
       {
         selectedRoom: null,
         rooms: MVC.List(['Choose...', new Room(101, 500), new Room(102, 600)])

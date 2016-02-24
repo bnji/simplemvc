@@ -434,6 +434,34 @@ var MVC = {
       };
 
       /**
+       * SizeOf
+       *
+       * Get the size / length of a property value.
+       *
+       * @method SizeOf
+       * @return {Number} Size of property value
+       */
+      $object.SizeOf = function(prop) {
+        if($object.Has(prop)) {
+          var value = $object.Get(prop);
+          if(value) {
+            if(typeof value === 'object') {
+              try {
+                return value.Size();;
+              }
+              catch(err) {
+                return value.length;
+              }
+            }
+            else {
+              return value.length;
+            }
+          }
+        }
+        return -1;
+      };
+
+      /**
        * AddGetSet
        *
        * Add getter and setter methods for a property
