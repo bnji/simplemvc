@@ -9,59 +9,68 @@
     <script>
     $(function() {
       $('#viewId').ModelView(
-          // Model
-          {
-            itemToAdd: '',
-            items: MVC.List([])
-          },
-          // Settings & Methods (implementation)
-          {
-            isMirror: true,
-            preventDefault: true,
-            controller: MVC.Controller({
-              addItem: function(e, o) { // event, object
-              alert("OK");
-                  // The email address will not be reset, since was excluded from the Model
-                  /*          $.each(o.GetModelData(), function(k, v) {
-                              o.Set(k, personObject[k]);
-                            });*/
-                }
-                /*addEmailToModel: function(e, o) {
-                  o.Set('email', $("[name='email']").removeClass("excludeFromModel").val());
-                },
-                removeEmailFromModel: function(e, o) {
-                  $("[name='email']").addClass("excludeFromModel");
-                  o.RemoveProperty('email');
-                },
-                showModelData: function(e, o) { // event, object
-                  alert(JSON.stringify(o.GetModelData(), null, 4));
-                },
-                showObjectData: function(e, o) { // event, object
-                  alert(JSON.stringify(o, null, 4));
-                }*/
-            }),
-            /*keyup: function(event, name, value, object) {
-              if (MVC.KeyCheck(event, 'enter')) {
-                event.preventDefault();
-                alert(value);
-                return false;
-              }
-            },*/
-            submit: function(event, name, value, object) {
-              event.preventDefault();
-              return false;
+        // Model
+        {
+          itemToAdd: 'sdf',
+          items: MVC.List(['1', '2'])
+        },
+        // Settings & Methods (implementation)
+        {
+          isMirror: true,
+          //preventDefault: true,
+          controller: MVC.Controller({
+            /*addEmailToModel: function(e, o) {
+              o.Set('email', $("[name='email']").removeClass("excludeFromModel").val());
             },
-            click: function(event, name, value, object) {
+            removeEmailFromModel: function(e, o) {
+              $("[name='email']").addClass("excludeFromModel");
+              o.RemoveProperty('email');
+            },
+            showModelData: function(e, o) { // event, object
+              alert(JSON.stringify(o.GetModelData(), null, 4));
+            },
+            showObjectData: function(e, o) { // event, object
+              alert(JSON.stringify(o, null, 4));
+            }*/
+          }),
+          /*keyup: function(event, name, value, object) {
+            if (MVC.KeyCheck(event, 'enter')) {
               event.preventDefault();
+              alert(value);
               return false;
             }
+          },*/
+          submit: function(event, name, value, object) {
+            event.preventDefault();
+            return false;
           },
-          // Methods
-          {
-            init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
+          click: function(event, name, value, object) {
+            if (name === 'addItem') {
+              object.addItem();
             }
-          });
-      });
+            event.preventDefault();
+            return false;
+          }
+        },
+        // Methods
+        {
+          addItem: function() { // event, object
+            var item = this.Get('itemToAdd');
+            var list = this.Get('items');
+            list.Add(item);
+            this.Set('items', MVC.List([]));
+            console.log(list);
+            list.Add(item);
+          },
+          init: function(o) { // Simple MVC built-in initalize method which runs after 1 ms
+            // console.log(o);
+            // o.Set('items', MVC.List([]));
+            o.Set('itemToAdd', 'foobar');
+            // alert(o.Get('itemToAdd'));
+          }
+        });
+    });
+
     </script>
     <style>
       table, th, td {
@@ -75,8 +84,10 @@
     <input name="itemToAdd" />
     <button type="submit" name="addItem">Add</button>
     <p>Your items:</p>
-    <select multiple="multiple" width="50" name="items"> </select>
+    <select multiple="multiple" width="50" style="width:100px;" name="items"> </select>
   </form>
+  <span datasrc="#viewId" name="itemToAdd">...</span>
+  <span datasrc="#viewId" name="items">...</span>
 
   </body>
 </html>
