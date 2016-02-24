@@ -473,7 +473,7 @@ var MVC = {
         $('*[datasrc="'+datasrc+'"]' + selector).prop('disabled', condition);
         $('*[datasrc="'+datasrc+'"]').find(selector).prop('disabled', condition);
         $object.Find(selector).prop('disabled', condition);
-        return $object;
+        return condition;
       };
 
       /**
