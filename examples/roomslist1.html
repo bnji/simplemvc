@@ -35,8 +35,13 @@
           if(name === 'rooms') {
             object.Set('selectedRoom', selectedValue);
           }
+        },
+        keyup: function(e, n, v, o, tv, sv) {
+          o.DisableWhen('addRoom', v.length === 0);
+          // o.ToggleDisabled('addRoom', v.length === 0);
         }
       });
+      // alert(obj.SizeOf('foo'));
     });
     </script>
   </head>
@@ -57,6 +62,7 @@
     <!-- Room information -->
     <h1>Room information</h1>
     <div datasrc="#roomManager">
+      <button type="submit" name="addRoom" class="isEvent">Add</button>
         Selected room: <span name="selectedRoom"></span>
         <br />
         Rooms:

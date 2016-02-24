@@ -463,6 +463,19 @@ var MVC = {
         return -1;
       };
 
+      $object.ElementExists = function(selector) {
+        return $(selector).length > 0;
+      };
+
+      $object.DisableWhen = function(name, condition) {
+        var datasrc = $object.GetViewId();
+        var selector = $object.ElementExists(name) ? name : '*[name="'+name+'"]';
+        $('*[datasrc="'+datasrc+'"]' + selector).prop('disabled', condition);
+        $('*[datasrc="'+datasrc+'"]').find(selector).prop('disabled', condition);
+        $object.Find(selector).prop('disabled', condition);
+        return $object;
+      };
+
       /**
        * AddGetSet
        *
