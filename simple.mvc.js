@@ -410,6 +410,7 @@ var MVC = {
        *
        *
        * @method Clear
+       * @param {String} prop Property in Model.
        * @return {Object} The object (itself)
        */
       $object.Clear = function(prop) {
@@ -439,6 +440,7 @@ var MVC = {
        * Get the size / length of a property value.
        *
        * @method SizeOf
+       * @param {String} prop Property in Model.
        * @return {Number} Size of property value
        */
       $object.SizeOf = function(prop) {
@@ -603,7 +605,7 @@ var MVC = {
           var room = $object.Get(prop);
           var rooms = $object.Get(listName);
           rooms.Remove(room);
-          $object.FillSelect(listName);
+          return $object.FillSelect(listName);
       };
 
       /**
@@ -622,7 +624,7 @@ var MVC = {
           var list = $object.Get(listName);
           var propValue = $object.Get(item);
           list.Add(propValue ? propValue : item);
-          $object.FillSelect(listName);
+          return $object.FillSelect(listName);
       };
 
       /**
@@ -900,6 +902,7 @@ var MVC = {
             select.append($('<option />').attr({'value': v}).text(v));
           });
         }
+        return $object;
       };
 
       /**
