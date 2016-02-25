@@ -7,27 +7,55 @@
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="../simple.mvc.js"></script>
     <script>
-    $(function() {
-      // Room Model
-      var Room = function(number, price) {
-        this.number = number;
-        this.price = price;
-        this.toString = function() {
-          return "Room # " + this.number + " costs $" + this.price;
+    // Get function from string, with or without scopes (by Nicolas Gauthier)
+    window.getFunctionFromString = function(string)
+    {
+        var scope = window;
+        var scopeSplit = string.split('.');
+        for (i = 0; i < scopeSplit.length - 1; i++)
+        {
+            scope = scope[scopeSplit[i]];
+
+            if (scope == undefined) return;
         }
+
+        return scope[scopeSplit[scopeSplit.length - 1]];
+    }
+    // Room Model
+    var Room = function(number, price) {
+      this.number = number;
+      this.price = price;
+      this.toString = function() {
+        return "Room # " + this.number + " costs $" + this.price;
       }
+    };
+    var Room2 = function(obj) {
+      this.number = obj['number'];
+      this.price = obj['price'];
+      this.toString = function() {
+        return "Room # " + this.number + " costs $" + this.price;
+      }
+    };
+    $(function() {
       var obj = $('#roomManager').ModelView(
       {
         selectedRoom: null,
-        rooms: MVC.List(['Choose...', new Room(101, 500), new Room(102, 600)])
+        rooms: MVC.List(['Choose...', new Room(301, 500), new Room(102, 600)])
       },
       {
         controller: MVC.Controller({
           addRoom: function(e, o) {
-            o.Add('rooms', new Room(o.Get('newRoomNumber'), o.Get('newRoomPrice')));
+            o.Add('rooms', o.New('Room2'));
+            // o.Add('rooms', new Room(o.Get('newRoomNumber'), o.Get('newRoomPrice')));
           },
           removeRoom: function(e, o) {
             o.Remove('rooms', 'selectedRoom');
+          },
+          sortRoomsASC: function(e, o) {
+            o.SortASC('rooms');
+          },
+          sortRoomsDESC: function(e, o) {
+            o.SortDESC('rooms');
           }
         }),
         change: function(event, name, value, object, targetValue, selectedValue) {
@@ -37,12 +65,12 @@
           }
         },
         keyup: function(e, n, v, o, tv, sv) {
-
           // alert(o.DisableWhen('addRoom', v.length === 0));
-          // o.ToggleDisabled('addRoom', v.length === 0);
         }
+      },
+      {
+        // methods
       });
-      // alert(obj.SizeOf('foo'));
     });
     </script>
   </head>
@@ -50,25 +78,35 @@
     <div id="roomManager">
       <!-- Add or remove a Room! -->
       <h1>Add or remove room</h1>
-      Room #: <input name="newRoomNumber" />
-      Price: <input name="newRoomPrice" />
+      <div id="Room2">
+        Room #: <input name="number" value="200" />
+        Price: <input name="price" value="750" />
+      </div>
       <button type="submit" name="addRoom" class="isEvent">Add</button>
       <button type="submit" name="removeRoom" class="isEvent">Remove</button>
+      <button name="sortRoomsASC" class="isEvent">Sort a-z</button>
+      <button name="sortRoomsDESC" class="isEvent">Sort z-a</button>
       <hr />
       <!-- Select a Room -->
       <h1>Select a room</h1>
       <select name="rooms"></select>
+      <br />
+      <select name="testList">
+        <option value="foo">foo</option>
+        <option value="bar">bar</option>
+      </select>
     </div>
     <hr />
     <!-- Room information -->
     <h1>Room information</h1>
     <div datasrc="#roomManager">
-      <button type="submit" name="addRoom" class="isEvent">Add</button>
         Selected room: <span name="selectedRoom"></span>
         <br />
         Rooms:
         <br />
         <select multiple="multiple" width="50" style="width:100px;" name="rooms"></select>
+        <br />
+        <select multiple="multiple" width="50" style="width:100px;" name="testList"></select>
     </div>
   </body>
 </html>
