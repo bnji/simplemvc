@@ -752,7 +752,10 @@ var MVC = {
         var fnStr = viewId;
         viewId = ((""+viewId).length > 0 && viewId.substring(0,1) === '#') ? viewId : "#" + viewId;
         var item = $(viewId).getSetHtml();
-        var fn = $object._getFunctionFromString(fnStr);
+        // var fn = $object._getFunctionFromString(fnStr);
+        var fn = getFunctionFromString(fnStr);
+        console.log(fn);
+        console.log(typeof fn);
         return typeof fn === 'function' ? new fn(item) : null;
       };
 
@@ -1503,3 +1506,16 @@ String.prototype.format = String.prototype.f = function() {
   }
   return s;
 };
+
+window.getFunctionFromString = function(string)
+{
+    var scope = window;
+    var scopeSplit = string.split('.');
+    for (i = 0; i < scopeSplit.length - 1; i++)
+    {
+        scope = scope[scopeSplit[i]];
+
+        if (scope == undefined) return;
+    }
+    return scope[scopeSplit[scopeSplit.length - 1]];
+}
