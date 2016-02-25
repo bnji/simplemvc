@@ -223,8 +223,8 @@ var MVC = {
    */
   Controller : function(data) {
     return data;
-  }
-  //ModelView has code is now written as a jQuery plugin: simple.mvc.jquery.js
+  },
+  Extensions: []
 };
 
 /**
@@ -752,10 +752,7 @@ var MVC = {
         var fnStr = viewId;
         viewId = ((""+viewId).length > 0 && viewId.substring(0,1) === '#') ? viewId : "#" + viewId;
         var item = $(viewId).getSetHtml();
-        // var fn = $object._getFunctionFromString(fnStr);
-        var fn = getFunctionFromString(fnStr);
-        console.log(fn);
-        console.log(typeof fn);
+        var fn = $object._getFunctionFromString(fnStr);
         return typeof fn === 'function' ? new fn(item) : null;
       };
 
@@ -772,7 +769,7 @@ var MVC = {
        * @return {Object} the function
        */
       $object._getFunctionFromString = function(strFunc) {
-          var scope = window;
+          var scope = MVC.Extensions ? MVC.Extensions : window;
           var scopeSplit = (""+strFunc).split('.');
           for (i = 0; i < scopeSplit.length - 1; i++) {
               scope = scope[scopeSplit[i]];
@@ -1506,16 +1503,3 @@ String.prototype.format = String.prototype.f = function() {
   }
   return s;
 };
-
-window.getFunctionFromString = function(string)
-{
-    var scope = window;
-    var scopeSplit = string.split('.');
-    for (i = 0; i < scopeSplit.length - 1; i++)
-    {
-        scope = scope[scopeSplit[i]];
-
-        if (scope == undefined) return;
-    }
-    return scope[scopeSplit[scopeSplit.length - 1]];
-}

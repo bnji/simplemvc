@@ -7,6 +7,7 @@
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="../simple.mvc.js"></script>
     <script>
+    var roomManager = null;
     // Room Model
     var Room = function(number, price) {
       this.number = number;
@@ -15,15 +16,16 @@
         return "Room # " + this.number + " costs $" + this.price;
       }
     };
-    var Room2 = function(obj) {
+    MVC.Extensions.Room2 = function(obj) {
       this.number = obj['number'];
       this.price = obj['price'];
       this.toString = function() {
         return "Room # " + this.number + " costs $" + this.price;
       }
     };
+    console.log(MVC.Extensions);
     $(function() {
-      var obj = $('#roomManager').ModelView(
+      roomManager = $('#roomManager').ModelView(
       {
         selectedRoom: null,
         rooms: MVC.List(['Choose...', new Room(301, 500), new Room(102, 600)])
