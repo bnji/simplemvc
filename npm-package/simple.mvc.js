@@ -110,6 +110,19 @@ var MVC = {
       return array[key];
     };
 
+    array.Sort = function() {
+      array.sort(function(a,b){
+        if (a[1] < b[1]) return -1;
+        if (a[1] > b[1]) return 1;
+        return 0;
+      });
+      return array;
+    };
+
+    array.Reverse = function() {
+      return array.Sort().reverse();
+    };
+
     /**
      * Find
      *
@@ -410,6 +423,7 @@ var MVC = {
        *
        *
        * @method Clear
+       * @param {String} prop Property in Model.
        * @return {Object} The object (itself)
        */
       $object.Clear = function(prop) {
@@ -432,6 +446,77 @@ var MVC = {
         });
         return $object;
       };
+
+      /**
+       * SizeOf
+       *
+       * Get the size / length of a property value.
+       *
+       * @method SizeOf
+       * @param {String} prop Property in Model.
+       * @return {Number} Size of property value
+       */
+      $object.SizeOf = function(prop) {
+        if($object.Has(prop)) {
+          var value = $object.Get(prop);
+          if(value) {
+            if(typeof value === 'object') {
+              try {
+                return value.Size();;
+              }
+              catch(err) {
+                return value.length;
+              }
+            }
+            else {
+              return value.length;
+            }
+          }
+        }
+        return -1;
+      };
+
+      $object.ElementExists = function(selector) {
+        return $(selector).length > 0;
+      };
+
+      $object.DisableWhen = function(name, condition) {
+        var datasrc = $object.GetViewId();
+        var selector = $object.ElementExists(name) ? name : '*[name="'+name+'"]';
+        $('*[datasrc="'+datasrc+'"]' + selector).prop('disabled', condition);
+        $('*[datasrc="'+datasrc+'"]').find(selector).prop('disabled', condition);
+        $object.Find(selector).prop('disabled', condition);
+        return condition;
+      };
+
+      $object.sortMethod = null;
+      $object.SortASC = function(prop) {
+        if($object.Has(prop)) {
+          $object.sortMethod = 'ASC';
+        }
+        return $object;
+      };
+      $object.SortDESC = function(prop) {
+        if($object.Has(prop)) {
+          $object.sortMethod = 'DESC';
+        }
+        return $object;
+      };
+
+      // $object.Sort = function(name, compareFunction) {
+      //   if($object.Has(name)) {
+      //     var list = $object.Get(name);
+      //     if(typeof list === 'object') {
+      //       (compareFunction && typeof compareFunction === 'function') ? list.sort(compareFunction) : list.sort();
+      //       var datasrc = $object.GetViewId();
+      //       var select = $('select[datasrc="'+datasrc+'"][name="'+name+'"]');
+      //       $object._FillSelect(select, name, list);
+      //       var select = $('*[datasrc="'+datasrc+'"]').find('select[name="'+name+'"]');
+      //       $object._FillSelect(select, name, list);
+      //     }
+      //   }
+      //   return $object;
+      // };
 
       /**
        * AddGetSet
@@ -575,7 +660,7 @@ var MVC = {
           var room = $object.Get(prop);
           var rooms = $object.Get(listName);
           rooms.Remove(room);
-          $object.FillSelect(listName);
+          return $object.FillSelect(listName);
       };
 
       /**
@@ -592,8 +677,13 @@ var MVC = {
        */
       $object.Add = function(listName, item) {
           var list = $object.Get(listName);
-          list.Add(item);
-          $object.FillSelect(listName);
+          var propValue = $object.Get(item);
+          var value = propValue ? propValue : item;
+          if(list && value) {
+            list.Add(value);
+            return $object.FillSelect(listName);
+          }
+          return $object;
       };
 
       /**
@@ -646,6 +736,46 @@ var MVC = {
         var result = { value : undefined };
         $($object).triggerHandler('get'+prop, [result]);
         return result['value'];
+      };
+
+      /**
+       * New
+       *
+       * Creates a new value based out from a view. If the View matches a function
+       * (constructor), then it will create a new object.
+       *
+       * @method New
+       * @param {String} viewId The view which matches a function.
+       * @return {Object} a new Object or null
+       */
+      $object.New = function(viewId) {
+        var fnStr = viewId;
+        viewId = ((""+viewId).length > 0 && viewId.substring(0,1) === '#') ? viewId : "#" + viewId;
+        var item = $(viewId).getSetHtml();
+        var fn = $object._getFunctionFromString(fnStr);
+        return typeof fn === 'function' ? new fn(item) : null;
+      };
+
+      /**
+       * _getFunctionFromString
+       *
+       * Get function from string, with or without scopes (by Nicolas Gauthier).
+       *
+       * http://stackoverflow.com/questions/912596/how-to-turn-a-string-into-a-javascript-function-call
+       *
+       * @method _getFunctionFromString
+       * @private
+       * @param {String} strFunc A string with the name of an existing function.
+       * @return {Object} the function
+       */
+      $object._getFunctionFromString = function(strFunc) {
+          var scope = window;
+          var scopeSplit = (""+strFunc).split('.');
+          for (i = 0; i < scopeSplit.length - 1; i++) {
+              scope = scope[scopeSplit[i]];
+              if (scope == undefined) return;
+          }
+          return scope[scopeSplit[scopeSplit.length - 1]];
       };
 
       /**
@@ -861,16 +991,29 @@ var MVC = {
         return $object;
       };
 
+      $object.Comparator = function(a, b) {
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+      };
+
       $object._FillSelect = function(select, name, value) {
         var propValue = $object.Get(name);
         if(typeof propValue === 'object' && select.size() > 0) {
           select.empty();
+          if($object.sortMethod === 'ASC') {
+            value = value.sort($object.Comparator);
+          }
+          else if ($object.sortMethod === 'DESC') {
+            value = value.sort($object.Comparator).reverse();
+          }
           $.each(value, function(k, v) {
             // var txt = textIsFunction ? v[name.substring(0, name.length-2)]() : v[name];
             // var val = valueIsFunction ? v[value.substring(0, value.length-2)]() : v[value];
             select.append($('<option />').attr({'value': v}).text(v));
           });
         }
+        return $object;
       };
 
       /**
@@ -891,6 +1034,12 @@ var MVC = {
         $.each($object.Find('select[name*="'+prop+'"]'), function(k2,select) {
           select = $(select);
           select.empty();
+          if($object.sortMethod === 'ASC') {
+            items = items.sort($object.Comparator);
+          }
+          else if ($object.sortMethod === 'DESC') {
+            items = items.sort($object.Comparator).reverse();
+          }
           $.each(items, function(k, v) {
             var txt = !text ? v : textIsFunction ? v[text.substring(0, text.length-2)]() : v[text];
             var val = !value ? v : valueIsFunction ? v[value.substring(0, value.length-2)]() : v[value];
@@ -1222,7 +1371,7 @@ var MVC = {
             if(!$this.val()) {
               var selectElement = $this;
               selectElement.empty();
-              $.each(value, function(k,v) {
+              $.each(value.sort(), function(k,v) {
                 var txt = v;
                 var val = v;
                 if(typeof v === 'object') {
@@ -1293,9 +1442,13 @@ var MVC = {
         if(elm.is('select')) {
           var selectValues = MVC.List([]);
           $.each(elm.find('option'), function(k,v) {
-            // selectValues.push($(v).val());
-            selectValues.Add($(v).val());
+            var val = $(v).val();
+            val = !isNaN(val) ? parseInt(val) : val;
+            // selectValues.push(val);
+            selectValues.Add(val);
           });
+          selectedValues = selectValues.Sort();
+          // console.log(selectedValues);
           value = selectValues;
           formData[name] = value;
         }

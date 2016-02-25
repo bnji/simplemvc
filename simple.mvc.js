@@ -752,8 +752,30 @@ var MVC = {
         var fnStr = viewId;
         viewId = ((""+viewId).length > 0 && viewId.substring(0,1) === '#') ? viewId : "#" + viewId;
         var item = $(viewId).getSetHtml();
-        var fn = getFunctionFromString(fnStr);
+        var fn = $object._getFunctionFromString(fnStr);
         return typeof fn === 'function' ? new fn(item) : null;
+      };
+
+      /**
+       * _getFunctionFromString
+       *
+       * Get function from string, with or without scopes (by Nicolas Gauthier).
+       *
+       * http://stackoverflow.com/questions/912596/how-to-turn-a-string-into-a-javascript-function-call
+       *
+       * @method _getFunctionFromString
+       * @private
+       * @param {String} strFunc A string with the name of an existing function.
+       * @return {Object} the function
+       */
+      $object._getFunctionFromString = function(strFunc) {
+          var scope = window;
+          var scopeSplit = (""+strFunc).split('.');
+          for (i = 0; i < scopeSplit.length - 1; i++) {
+              scope = scope[scopeSplit[i]];
+              if (scope == undefined) return;
+          }
+          return scope[scopeSplit[scopeSplit.length - 1]];
       };
 
       /**

@@ -7,20 +7,6 @@
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="../simple.mvc.js"></script>
     <script>
-    // Get function from string, with or without scopes (by Nicolas Gauthier)
-    window.getFunctionFromString = function(string)
-    {
-        var scope = window;
-        var scopeSplit = string.split('.');
-        for (i = 0; i < scopeSplit.length - 1; i++)
-        {
-            scope = scope[scopeSplit[i]];
-
-            if (scope == undefined) return;
-        }
-
-        return scope[scopeSplit[scopeSplit.length - 1]];
-    }
     // Room Model
     var Room = function(number, price) {
       this.number = number;
