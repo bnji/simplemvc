@@ -10,15 +10,14 @@
     <link rel="stylesheet" type="text/css" href="main.css" />
     <script>
     $(function() {
-      $('#template').ModelView({
+      $('#helloWorld').ModelView({
         model: {
           firstName: 'John',
           lastName: 'Doe'
-        },
-        settings: {
-          clone: '#targetElement'
         }
-      }).Set('fullName', function(o) {
+      })
+      // Add a 'computed' property
+      .Set('fullName', function(o) {
         return ("{0} {1}").format(o.firstName, o.lastName);
       });
     });
@@ -26,20 +25,21 @@
   </head>
   <body>
     <div class="main">
-    <div id="targetElement"></div>
-    </div>
-
-    <!-- START SIMPLE MVC TEMPLATE -->
-      <div id="template" style="display: none;">
-        <label>First name:</label>
-        <input type="text" name="firstName" placeholder="First name"/>
+      <div id="helloWorld">
+        <label>First name</label>
+        <input type="text" name="firstName" />
         <br />
-        <label>Last name:</label>
-        <input type="text" name="lastName" placeholder="Last name" />
-        <br />
-        <label>Full name:</label>
-        <span class="fullName" datafld="fullName"></span>
+        <label>Last name</label>
+        <input type="text" name="lastName" />
       </div>
-      <!-- //END TEMPLATE -->
+      <br />
+      <h1 datasrc="#helloWorld">
+        Hello, <span name="fullName"></span>
+        <!-- or .... -->
+        <!-- Hello, <span name="firstName"></span> <span name="lastName"></span> -->
+      </h1>
+      <h1>JS Fiddle</h1>
+      <script async src="http://jsfiddle.net/bendot/ht0egvoc/embed/js,html,result/"></script>
+    </div>
   </body>
 </html>

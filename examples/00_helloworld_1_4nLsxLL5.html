@@ -10,35 +10,25 @@
     <link rel="stylesheet" type="text/css" href="main.css" />
     <script>
     $(function() {
-      $('#helloWorld').ModelView({
-        model: {
-          firstName: 'John',
-          lastName: 'Doe'
-        }
-      })
-      // Add a 'computed' property
-      .Set('fullName', function(o) {
-        return ("{0} {1}").format(o.firstName, o.lastName);
-      });
+      $('#helloWorld').ModelView();
     });
     </script>
   </head>
   <body>
     <div class="main">
-      <div id="helloWorld" class="child">
-        <label>First name</label>
-        <input type="text" name="firstName" />
+      <div id="helloWorld">
+        <label>First
+        <input type="text" name="firstName" value="John" />
         <br />
         <label>Last name</label>
-        <input type="text" name="lastName" />
+        <input type="text" name="lastName" value="Doe" /> name</label>
       </div>
       <br />
       <h1 datasrc="#helloWorld">
-        Hello, <span name="fullName"></span>
-        <!-- Hello, <span name="firstName"></span> <span name="lastName"></span> -->
+        Hello, <span name="firstName"></span> <span name="lastName"></span>
       </h1>
       <h1>JS Fiddle</h1>
-      <script async src="http://jsfiddle.net/bendot/5451zxyf/embed/js,html,result/"></script>
+      <script async src="http://jsfiddle.net/bendot/4nLsxLL5/embed/js,html,result/"></script>
     </div>
   </body>
 </html>
