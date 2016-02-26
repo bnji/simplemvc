@@ -48,9 +48,9 @@ It's free & Open Source ([MIT licence](//opensource.org/licenses/MIT)).
 Run multiple methods (on the same element) within a single statement.
 
 **Docs + Examples**
-Well documented and has many real-world [examples](//hammerbenjamin.com/simplemvc/examples). 
-[Todo App Demo](http://hammerbenjamin.com/simplemvc/examples/todo)
-[API documentation](http://hammerbenjamin.com/simplemvc/doc)
+Well documented and has many real-world [examples](http://hammerbenjamin.com/simplemvc/examples). 
+Todo App Demo: [Simple](http://hammerbenjamin.com/simplemvc/examples/todo/simple) - [Advanced](http://hammerbenjamin.com/simplemvc/examples/todo/advanced)
+[API documentation](http://hammerbenjamin.com/simplemvc/docs)
 
 #Installation
 

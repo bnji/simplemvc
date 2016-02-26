@@ -1,9 +1,12 @@
 Simple.mvc.js - Changelog
 =========
 
+**Version 1.0.8**
+*Date: 26. feb. 2016*
+* Updated links in readme.md
+
 **Version 1.0.7**
 *Date: 26. feb. 2016*
-
 * Cleaned project structure
     * Moved tempX.html files into examples directory.
     * Changed CHANGELOG (this file) to CHANGELOG.MD (plain text > markdown)
