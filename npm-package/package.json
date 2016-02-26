@@ -1,10 +1,10 @@
 {
   "name": "simple.mvc",
-  "version": "1.0.6",
-  "description": "A lightweight MVC for UI binding in web applications.",
+  "version": "1.0.7",
+  "description": "Lightweight MVC JavaScript library for UI binding.",
   "main": "simple.mvc.js",
   "directories": {
-    "doc": "doc",
+    "doc": "docs",
     "example": "examples"
   },
   "repository": {

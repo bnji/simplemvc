@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/picnicss/5.1.0/picnic.min.css" />
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <script>
+    $(function() {
+      $('#template').ModelView({
+        firstName: 'John',
+        lastName: 'Doe'
+      }, {
+        clone: '#targetElement'
+      }).Set('fullName', function(o) {
+        return ("{0} {1}").format(o.firstName, o.lastName);
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <div class="main">
+    <div id="targetElement"></div>
+    </div>
+
+    <!-- START SIMPLE MVC TEMPLATE -->
+      <div id="template" style="display: none;">
+        <label>First name:</label>
+        <input type="text" name="firstName" placeholder="First name"/>
+        <br />
+        <label>Last name:</label>
+        <input type="text" name="lastName" placeholder="Last name" />
+        <br />
+        <label>Full name:</label>
+        <span class="fullName" datafld="fullName"></span>
+      </div>
+      <!-- //END TEMPLATE -->
+  </body>
+</html>

@@ -7,28 +7,41 @@
     <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <!-- Simple MVC -->
-    <script type="text/javascript" src="simple.mvc.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/picnicss/5.1.0/picnic.min.css" />
     <script>
       var simplemvcObject;
 
       $(function() {
-        simplemvcObject = $('#viewId').ModelView(
+        simplemvcObject = $('#viewId').ModelView({
           // Person Object / Model
-          {
+          model : {
             fullname: 'John Doe',
             // City is in View, and has been automatically been added to the model.
             //address: 'Address name' // Address is in Model, but not in View.
           },
           // Settings & Methods (implementation)
-          {
+          settings: {
             isMirror: true,
             controller: MVC.Controller({
             }),
             change: function(e, n, v, o, t, s) { // event, name, value, object
-              console.log(t);
-              console.log(s);
+              // console.log(t);
+              // console.log(s);
             }
-          });
+          }
+        });
+        setTimeout(function() {
+          console.log(simplemvcObject.GetModelData());
+          simplemvcObject.Clear();
+        }, 1000);
+        setTimeout(function() {
+          console.log(simplemvcObject.GetModelData());
+          simplemvcObject.Reset();
+        }, 2000);
+        setTimeout(function() {
+          console.log(simplemvcObject.GetModelData());
+        }, 3000);
 
       // var datasrc = "#viewId",
       //     name = "foo",

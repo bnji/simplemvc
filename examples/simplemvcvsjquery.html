@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+    <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/picnicss/5.1.0/picnic.min.css" />
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <script>
+    $(function() {
+      $('#template').ModelView({
+        model: {
+          firstName: 'John',
+          lastName: 'Doe'
+        },
+        settings: {
+          controller: MVC.Controller({
+            Save: function(e, o) {
+              alert(JSON.stringify(o.GetModelData(), null, 2));
+            },
+            // Reset all input fields to initial values
+            Reset: function(e, o) {
+              o.Reset();
+            },
+            // Clear all the input fields
+            Clear: function(e, o) {
+              o.Clear();
+            }
+          }),
+          clone: {
+              id: '#'+Date.now(),
+              append: function(elem) {
+                  $(elem).show().appendTo('#simpleMvcView');
+              }
+          }
+        }
+      })
+      // Add a 'computed' property
+      .Set('fullName', function(o) {
+        return ("{0} {1}").format(o.firstName, o.lastName);
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <div class="main">
+      <span id="simpleMvcView"></span>
+      <!-- START TEMPLATE -->
+      <div id="template" style="display: none;">
+        <label>First name:</label>
+        <input type="text" name="firstName" placeholder="First name"/>
+        <br />
+        <label>Last name:</label>
+        <input type="text" name="lastName" placeholder="Last name" />
+        <br />
+        <label>Preview:</label>
+        <span datafld="fullName"></span>
+        <br />
+        <button name="Save" class="isEvent">Save</button>
+        <button name="Reset" class="isEvent">Reset</button>
+        <button name="Clear" class="isEvent">Clear</button>
+      </div>
+      <!-- //END TEMPLATE -->
+    </div>
+  </body>
+</html>

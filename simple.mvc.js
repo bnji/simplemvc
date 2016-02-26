@@ -1,7 +1,7 @@
 // ==========================================================================
 // Project:     Simple.mvc.js - A lightweight MVC library for UI binding.
 // Copyright:   (c)2012-2016 Benjamin Hammer (hammerbenjamin@gmail.com)
-// Version:     2016.2.24
+// Version:     2016.2.26 - 1.0.7 - Version number follows NPM publish.
 // Licence:     Licensed under MIT license (see LICENCE.MD)
 // Description:
 //     * README.MD
@@ -270,27 +270,46 @@ var MVC = {
       var computedProperties = [];
       $this = $(this);
       var viewId = '#'+$this.attr('id');
-      // Make sure that the object data always exists. Only require 'viewId'
-      if(!$object) {
-        $object = {};
-      }
-      else {
-        $object = $.extend({}, true, $object);
-      }
-      // Make sure that the object methods always exists. Only require 'viewId'
-      if(!$methods) {
-        $methods = {};
-      }
-      else {
-        $object = $.extend({}, true, $object, $methods);
-      }
+
+      // Make sure that the object data always exists.
+      $object = $object ? $object : {};
+      var model = $object['model'] ? $object['model'] : $object;
+      $object = $.extend({}, true, $object, model);// { model : model });
+
+      // Make sure that the controller always exists.
+      $methods = $methods ? $methods : {};
+      $methods = $object['methods'] ? $object['methods'] : $methods;
+      $object = $.extend({}, true, $object, $methods);
+
       // Make sure that the settings always exist and with certain properties.
-      if(!$settings) {
-        $settings = {};
-      }
-      var datasrc = $settings['datasrc'];
-      var clone = $settings['clone'];
+      $settings = $settings ? $settings : {};
+      $settings = $object['settings'] ? $object['settings'] : $settings;
+      // Make sure that the object methods always exists.
+      var $controller = $settings['controller'] ? $settings['controller'] : {};
+      $controller = $object['controller'] ? $object['controller'] : $controller;
+      $settings = $.extend({}, true, $settings, { controller : $controller });
+      $object = $.extend({}, true, $object, { settings : $settings });
+
+      $object.ElementExists = function(selector) {
+        return $(selector).length > 0;
+      };
+
+      var datasrc = $object['settings']['datasrc'];
+      var clone = $object['settings']['clone'];
       // If cloning-'functionality' is implemented:
+      if(typeof clone === 'string') {
+        var cloneElement = $(clone);
+        if($object.ElementExists(cloneElement)) {
+          clone =  {
+            append: function(elem) {
+              cloneElement.html(elem);
+              $(elem)
+                .show()
+                .html();
+            }
+          }
+        }
+      }
       if(clone !== undefined) {
         // Set the clone template to be the view id
         clone['template'] = viewId;
@@ -311,9 +330,9 @@ var MVC = {
           viewIdNoHash = viewId;
         }
         // Clone the source and update the viewId
-        var withDataAndEvents = $settings['clone']['withDataAndEvents'];
+        var withDataAndEvents = $object['settings']['clone']['withDataAndEvents'];
         withDataAndEvents = withDataAndEvents !== undefined ? withDataAndEvents : false;
-        $settings['clone']['withDataAndEvents'] = withDataAndEvents;
+        $object['settings']['clone']['withDataAndEvents'] = withDataAndEvents;
         var element = $($(clone['template']).clone(withDataAndEvents)).attr('id', viewIdNoHash);
         // datasrc property to the settings, as it should be possible to create a
         // ModelView without any data, but solely relies on receiving updated
@@ -333,18 +352,28 @@ var MVC = {
         // Execute the callback function:
         clone['append'](element);
       }
-      if($settings['viewId'] === undefined) {
+      if($object['settings']['viewId'] === undefined) {
         $.extend($settings, {viewId : viewId});
       }
-      if($settings['isMirror'] === undefined) {
+      if($object['settings']['isMirror'] === undefined) {
         $.extend($settings, {isMirror : true});
       }
-      if($settings['eventUsed'] === undefined) {
+      if($object['settings']['eventUsed'] === undefined) {
         $.extend($settings, {eventUsed : ''});
       }
-      if($settings['preventDefault'] === undefined) {
+      if($object['settings']['preventDefault'] === undefined) {
         $.extend($settings, {preventDefault : true});
       }
+      if($object['settings']['change'] === undefined) {
+        $object['settings']['change'] = function(event, name, value, object, targetValue, selectedValue) { };
+      }
+      if($object['settings']['keyup'] === undefined) {
+        $object['settings']['keyup'] = function(event, name, value, object, targetValue, selectedValue) { };
+      }
+      // console.log($object['model']);
+      // console.log($object['controller']);
+      // console.log($object['methods']);
+      // console.log($object['settings']);
       // Attach events to the save, update, delete (more?) buttons/submit.
       // For IE we need to specify each element with the viewId individually!
       // $(viewId + ' button,' + viewId + ' a,' + viewId + ' submit,' + viewId + ' i')
@@ -364,7 +393,7 @@ var MVC = {
               // </foobar>
               var targetName = $(e.target).attr('name'); // e.target.name
               $object.Start(targetName, e);
-              if($settings['settings']['preventDefault']) {
+              if($object['settings']['preventDefault']) {
                 e.preventDefault();
               }
             });
@@ -417,19 +446,59 @@ var MVC = {
       };
 
       /**
+       * Reset
+       *
+       * Reset the Model & View values to the original values on start.
+       *
+       */
+      $object.Reset = function() {
+        $.each($object['settings']['originalModelValues'], function(k,v) {
+          $object.Set(k, v);
+        });
+        return $object;
+      };
+
+      /**
        * Clear
        *
-       * Clears a property's value in the Model and optionally in the View if 'isMirror' = true.
+       * If no parameter is specified, it will clear all the data
+       * in the Model and the View if isMirror is TRUE.
        *
+       * If a parameter is specified, it will clear it's value
+       * in the Model and optionally in the View if isMirror is TRUE.
        *
        * @method Clear
-       * @param {String} prop Property in Model.
+       * @param {String} prop Property in Model (optional - clears all if not set).
        * @return {Object} The object (itself)
        */
       $object.Clear = function(prop) {
-        $object.Set(prop, '');
-        $object[prop] = '';
+        if(prop) {
+          $object._ClearProp(prop);
+        }
+        else {
+          $.each($object.GetModelData(), function(_prop) {
+            $object._ClearProp(_prop);
+          });
+        }
         return $object;
+      };
+
+      /**
+       * _ClearProp
+       *
+       * Private method to clear a property value
+       *
+       * @private
+       * @method _ClearProp
+       * @param  {String} prop Property in Model
+       * @return {Object}      Returns the object (itself)
+       */
+      $object._ClearProp = function(prop) {
+        // if($object.Has(prop))
+        {
+          $object.Set(prop, '');
+          $object[prop] = '';
+        }
       };
 
       /**
@@ -440,12 +509,12 @@ var MVC = {
        * @method ClearAll
        * @return {Object} The object (itself)
        */
-      $object.ClearAll = function() {
-        $.each($object.GetModelData(), function(prop) {
-          $object.Clear(prop);
-        });
-        return $object;
-      };
+      // $object.ClearAll = function() {
+      //   $.each($object.GetModelData(), function(prop) {
+      //     $object.Clear(prop);
+      //   });
+      //   return $object;
+      // };
 
       /**
        * SizeOf
@@ -474,10 +543,6 @@ var MVC = {
           }
         }
         return -1;
-      };
-
-      $object.ElementExists = function(selector) {
-        return $(selector).length > 0;
       };
 
       $object.DisableWhen = function(name, condition) {
@@ -523,6 +588,8 @@ var MVC = {
        *
        * Add getter and setter methods for a property
        *
+       * Note: Getter and setter methods only work when isMirror: TRUE.
+       *
        * Getters and Setters in JavaScript/JScript (ECMAScript) are not an option
        * as it is hard to make it work cross-browser/platform!
        * There is a solution here, but only down to IE9:
@@ -530,8 +597,6 @@ var MVC = {
        *
        * If changes in the model properties should be reflected in the view
        * then setter and getter methods will be attached using jQuery.
-       *
-       * Note: Will only be used(exec.) if 'isMirror' is TRUE.
        *
        * Works in IE 7+: http://jsfiddle.net/cTJZN/
        *
@@ -570,7 +635,9 @@ var MVC = {
       /**
        * RemoveGetSet
        *
-       * Remove getter and setter methods for a property
+       * Remove getter and setter methods for a property.
+       *
+       * Note: Getter and setter methods only work when isMirror: TRUE.
        *
        * @method RemoveGetSet
        * @param {String} prop The object's property name
@@ -693,6 +760,13 @@ var MVC = {
        *
        * When you need to update a value in the Model and reflect in the View.
        *
+       * Updates a property in the Model and is reflected in the View
+       * (including databound elements).
+       * Notice that the .Set() method will update the View with values from
+       * the Model when called.
+       * This is by design, but can seem a bit confusing (maybe) to start with.
+       * See this example, which demonstrates this (intended) behaviour.
+       *
        * @method Set
        * @param {String} prop The object's property name
        * @param {String} value The new value to set for the property
@@ -715,7 +789,13 @@ var MVC = {
         //   value2 = [value2];
         // }
         // console.log(prop + " - " + [value]);
-        $($object).triggerHandler('set'+prop, [value]);
+
+        // Only set a property value if it doesn't exist or if its same value type
+        if(!$object.Get(prop) || typeof $object.Get(prop) === typeof value) {
+          $($object).triggerHandler('set'+prop, [value]);
+        }
+        // alert(typeof $object.Get(prop) + " " + typeof value);
+
         //Update databound DOM values
         //Update databound elements with datasrc if specified, otherwise with viewId.
         $object._SetDataboundDomVal(datasrc ? datasrc : viewId, prop, value);
@@ -724,6 +804,8 @@ var MVC = {
 
       /**
        * Get
+       *
+       * Get the value for specfied object's property.
        *
        * NOTE: Must only be used if 'isMirror' is TRUE.
        *
@@ -824,7 +906,8 @@ var MVC = {
         var modelObjectData = {};
         $.each($object, function(k, v) {
           // Only add types which aren't functions
-          if((typeof v).toString() !== 'function') {
+          // if((typeof v).toString() !== 'function') {
+          if(typeof v !== 'function' && k !== 'model' && k !== 'controller' && k !== 'methods' && k !== 'sortMethod') {
             //Don't add the jQuery object which is used for .Set() & .Get()
             //Regex test on Rubular: http://www.rubular.com/r/KZQH0gdHyy
             if((/jQuery\d*/).test(k)) {
@@ -838,7 +921,7 @@ var MVC = {
             else {
               modelObjectData[k] = v;
             }
-            //console.log(k + " is a " + typeof v);
+            // console.log(k + " is a " + typeof v);
           }
         });
         return modelObjectData;
@@ -904,7 +987,7 @@ var MVC = {
       /**
        * SetModelFromView
        *
-       * Update the model and databound elements.
+       * Updates the Model and databound elements with values from the View.
        *
        * This method is internally every time a 'change' and 'keyup' event occur
        * in form elements. This is part of the concept to always update the Model,
@@ -951,7 +1034,10 @@ var MVC = {
       };
 
       /**
-       * Update the databound elements inside or outside the View.
+       * Updates (sets values of) databound elements inside and outside the View.
+       *
+       * The viewId should correspond with the datasrc attribute of the element to be updated.
+       * The property should correspond with the name attribute of the element to be updated.
        *
        * @method _SetDataboundDomVal
        * @private
@@ -1071,9 +1157,10 @@ var MVC = {
           return;
         }
         if($.trim(targetName).length > 0) {
-          if($settings['settings'][type] !== undefined && $settings['settings'][type] !== null) {
-            // alert($settings['settings'][type]);
-            $settings['settings']['eventUsed'] = type;
+          //console.log($object['settings'][type]);
+          if($object['settings'][type] !== undefined && $object['settings'][type] !== null) {
+            // alert($object['settings'][type]);
+            $object['settings']['eventUsed'] = type;
             var modelData = $object[targetName];
             var selectedModelData = modelData;
             // select element (list)
@@ -1085,7 +1172,13 @@ var MVC = {
                 selectedModelData = modelData[selectedIndex];
               }
             }
-            $settings['settings'][type](event, targetName, targetValue, $object, modelData, selectedModelData);
+            if($object.Has(targetName) && typeof $object.Get(targetName) === 'object') {
+              var newProperty = targetName.substring(targetName.length-1, targetName.length).toLowerCase();
+              newProperty = newProperty === 's' ? targetName.substring(0, targetName.length-1) : targetName;
+              newProperty = 'selected'+newProperty.toUpperCaseFirst();
+              $object.Set(newProperty, targetValue);
+            }
+            $object['settings'][type](event, targetName, targetValue, $object, modelData, selectedModelData);
           }
         }
         // else {
@@ -1211,7 +1304,7 @@ var MVC = {
             // If the 'keyup' event hasn't been specified in the settings, then
             // by default update the Model and databound values using the
             // SetModelFromView() method
-            if($settings['settings']['keyup'] === undefined) {
+            if($object['settings']['keyup'] === undefined) {
               // Update the model and also the databound elements
               $object.SetModelFromView();
             }
@@ -1240,7 +1333,7 @@ var MVC = {
       // be achieved using the .trigger() method, which is implemented in the
       // MVC.Set() and MVC.Get() methods.
       // Note: Changing the Model's properties directly won't update the view.
-      if($settings['isMirror']) {
+      if($object['settings']['isMirror']) {
         // Loop throught the object's properties
         $.each($object.GetModelData(), function(k,v) {
           // console.log(k + " : " + v);
@@ -1263,13 +1356,15 @@ var MVC = {
           });*/
         });
       }
-      if($settings['autoSaveInterval'] > 0) {
-        $settings['eventUsed'] = '"autoSave"';
+      if($object['settings']['autoSaveInterval'] > 0) {
+        $object['settings']['eventUsed'] = '"autoSave"';
         setInterval(function() {
           $object.Save();
-        }, $settings['autoSaveInterval']);
+        }, $object['settings']['autoSaveInterval']);
       }
       $object.AddEvents();
+      $settings = $.extend({}, true, $settings, { originalModelValues : $object.GetModelData() });
+      // console.log($settings);
       // Add the settings to the Model object
       $settings = { settings : $settings };
       $.extend($object, $settings);
@@ -1285,6 +1380,7 @@ var MVC = {
       if(init !== undefined && init !== null) {
         init($object);
       }
+      // console.log($object);
       return $object;
     }
   });
@@ -1488,7 +1584,7 @@ var MVC = {
         }
       });
       $.extend(data, formData);
-      //alert(CMN.JSON.stringify(data, null, 2));
+      //alert(JSON.stringify(data, null, 2));
       return data;
     }
   });
@@ -1503,3 +1599,6 @@ String.prototype.format = String.prototype.f = function() {
   }
   return s;
 };
+String.prototype.toUpperCaseFirst = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}

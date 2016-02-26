@@ -25,6 +25,8 @@
   ID (input): <input class="isNumber" name="id" id="id" />
   <br />
   <input name="id2" id="id2" />
+  <input name="id4" class="isNumber" />
+  <input name="id5" />
   <br />
   ID (span - updating when input ID changes): <span class="excludeFromModel" datasrc="#testArea" name="id" id="idDatabound"> </span>
   <input class="excludeFromModel isNumber" datasrc="#testArea" name="id" />
@@ -126,6 +128,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
       ctr,
       settings,
       onChangeResultData = {};
+
   beforeEach(function(){
     timerCallback = jasmine.createSpy('timerCallback');
     jasmine.Clock.useMock();
@@ -160,12 +163,13 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     };
 
     obj = $(viewId).ModelView({
-    //obj = MVC.ModelView(viewId, {
       datafldSpan : '',
       datafldTestElement : '',
       idTestElement : '',
       id : 123,
       id2 : 456,
+      id4 : 4,
+      id5 : 'sometext',
       type : 'typeVal'
     }, settings);
   });
@@ -173,6 +177,18 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
   it("Intial value of 'id' to be 123 (Number) and not '123' (String), because it has the class 'isNumber'", function() {
     expect(obj['id']).not.toBe('123');
     expect(obj['id']).toBe(123);
+  });
+
+  it("Setting 'id' to 'sometext' (a String) and not a Number should fail when property has class 'isNumber' in the view", function() {
+    obj.Set('id4', 'sometext');
+
+    expect(obj['id4']).not.toBe('sometext');
+    expect(obj['id4']).toBe(4);
+
+    obj.Set('id5', 123);
+
+    expect(obj['id5']).toBe('sometext');
+    expect(obj['id5']).not.toBe(123);
   });
 
   it("Intial value of 'id2' to be '456' (String) and not 456 (Number), because it does not have the class 'isNumber'", function() {
@@ -376,24 +392,29 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
   });
 
   it("View object should be equal to model object (JSON)", function() {
-    var domObj = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
-    settings = { settings : settings };
-    $.extend(domObj, settings);
+    var domObj = obj.GetViewData();
+    // console.log(JSON.stringify(domObj));
+    // console.log(JSON.stringify(obj.GetModelData()));
+    // settings = { settings : settings };
+    // $.extend(domObj, settings);
     domObj = JSON.stringify(domObj);
-    var modObj = JSON.stringify(obj);
+    var modObj = JSON.stringify(obj.GetModelData());
+    // console.log(domObj);
+    // console.log(modObj);
     expect(modObj).toEqual(domObj);
   });
 
   it("View object should be equal to model object (JSON) after the model has been updated", function() {
-    //MVC.Set(obj, 'id', 'foo');
-    obj.Set('id', 'foo');
-    //MVC.Set(obj, 'type', 'bar');
+    obj.Set('id', '3344');
     obj.Set('type', 'bar');
-    var domObj = obj.GetViewData();//MVC.GetViewData('#testArea', obj);
-    settings = { settings : settings };
-    $.extend(domObj, settings);
+    var modObj = obj.GetModelData();
+    var domObj = obj.GetViewData();
+    // settings = { settings : settings };
+    // $.extend(domObj, settings);
     domObj = JSON.stringify(domObj);
-    var modObj = JSON.stringify(obj);
+    var modObj = JSON.stringify(modObj);
+    // console.log(domObj);
+    // console.log(modObj);
     expect(modObj).toEqual(domObj);
   });
 
@@ -424,7 +445,7 @@ describe("MVC Object which reflects model changes in the DOM ---- ", function() 
     obj.AddProperty(newPropName, newVal);
     expect(obj[newPropName]).toEqual(newVal);
 
-    newVal = 'changed value!';
+    newVal = 123;// 'changed value!';
     obj.Set(newPropName, newVal); //Changing the value with .Set();
     expect(obj.Get(newPropName)).toEqual(newVal); //Access value with .Get();
 
@@ -511,7 +532,11 @@ describe("MVC Object which does NOT reflect model changes in the DOM", function(
   });
 
   it("Should clear all values in the model even when isMirror = false", function() {
-    obj.ClearAll();
+    console.log(obj['id']);
+    console.log(typeof obj['id']);
+    console.log(obj.Get('id'));
+    console.log(typeof obj.Get('id'));
+    obj.Clear();
     expect(obj['id']).toBe('');
     expect(obj['type']).toBe('');
   });

@@ -39,7 +39,7 @@ function getFiddleUrl(fiddleName) {
   return 'http://jsfiddle.net/bendot/'+fiddleName+'/embedded/result,js,html';
 }
 /**
- * Only test for a name, dot(.) and 2-5 letters after the dot... 
+ * Only test for a name, dot(.) and 2-5 letters after the dot...
  * @param {Object} str
  */
 function isValidUrl(str) {

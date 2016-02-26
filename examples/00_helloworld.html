@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="../simple.mvc.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/picnicss/5.1.0/picnic.min.css" />
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <script>
+    $(function() {
+      $('#helloWorld').ModelView({
+        model: {
+          firstName: 'John',
+          lastName: 'Doe'
+        }
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <div class="main">
+      <div id="helloWorld" class="child">
+        <label>First name</label>
+        <input type="text" name="firstName" />
+        <br />
+        <label>Last name</label>
+        <input type="text" name="lastName" />
+      </div>
+      <br />
+      <h1 datasrc="#helloWorld">
+        Hello, <span name="firstName"></span> <span name="lastName"></span>
+      </h1>
+      <h1>JS Fiddle</h1>
+      <script async src="http://jsfiddle.net/bendot/5451zxyf/embed/js,html,result/"></script>
+    </div>
+  </body>
+</html>

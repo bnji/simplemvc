@@ -6,7 +6,6 @@ var TodoHelper = {
 $(function() {
   // Todo List Model
   var todoListModel = {
-    name: "Simple MVC - Advanced Todo List",
     notes: MVC.List() //Provides helper methods
   };
   // Todo List Implementation (methods)

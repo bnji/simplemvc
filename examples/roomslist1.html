@@ -7,7 +7,6 @@
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="../simple.mvc.js"></script>
     <script>
-    var roomManager = null;
     // Room Model
     var Room = function(number, price) {
       this.number = number;
@@ -23,18 +22,15 @@
         return "Room # " + this.number + " costs $" + this.price;
       }
     };
-    console.log(MVC.Extensions);
     $(function() {
-      roomManager = $('#roomManager').ModelView(
-      {
-        selectedRoom: null,
-        rooms: MVC.List(['Choose...', new Room(301, 500), new Room(102, 600)])
-      },
-      {
+      var obj = $('#roomManager').ModelView({
+        model: {
+          rooms: MVC.List(['Choose...', new Room(301, 500), new Room(102, 600)])
+        },
         controller: MVC.Controller({
           addRoom: function(e, o) {
+            o.foo();
             o.Add('rooms', o.New('Room2'));
-            // o.Add('rooms', new Room(o.Get('newRoomNumber'), o.Get('newRoomPrice')));
           },
           removeRoom: function(e, o) {
             o.Remove('rooms', 'selectedRoom');
@@ -46,19 +42,46 @@
             o.SortDESC('rooms');
           }
         }),
-        change: function(event, name, value, object, targetValue, selectedValue) {
-          // Only update selected room when rooms change
-          if(name === 'rooms') {
-            object.Set('selectedRoom', selectedValue);
+        settings: {
+          isMirror : true,
+          click : function(event, name, value, object, targetValue, selectedValue) {
+            console.log(name);
           }
         },
-        keyup: function(e, n, v, o, tv, sv) {
-          // alert(o.DisableWhen('addRoom', v.length === 0));
+        methods: {
+          foo: function() {
+            console.log("addRoom event");
+          }
         }
-      },
-      {
-        // methods
       });
+
+      // var obj = $('#roomManager').ModelView(
+      // {
+      //   rooms: MVC.List(['Choose...', new Room(301, 500), new Room(102, 600)])
+      // },
+      // {
+      //   isMirror : true,
+      //   controller: MVC.Controller({
+      //     addRoom: function(e, o) {
+      //       o.foo();
+      //       o.Add('rooms', o.New('Room2'));
+      //     },
+      //     removeRoom: function(e, o) {
+      //       o.Remove('rooms', 'selectedRoom');
+      //     },
+      //     sortRoomsASC: function(e, o) {
+      //       o.SortASC('rooms');
+      //     },
+      //     sortRoomsDESC: function(e, o) {
+      //       o.SortDESC('rooms');
+      //     }
+      //   })
+      // },
+      // {
+      //   foo: function() {
+      //     alert("OK");
+      //   }
+      // });
     });
     </script>
   </head>

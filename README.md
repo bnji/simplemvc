@@ -1,10 +1,12 @@
 [Simple.mvc.js](//hammerbenjamin.com/simplemvc)
 =========
 
-A lightweight MVC library for UI binding.
+A lightweight MVC JavaScript library for UI binding.
 =========
 
 > The View (UI) should always be synchronised with the Model (data) and optionally the other way around. Many other [libraries](//todomvc.com) already solve this problem, but in many cases it's not enough to know JavaScript, HTML & CSS. Read more about the philosophy behind Simple.mvc below.
+
+
 
 ##Philosophy
 
@@ -59,17 +61,28 @@ Download the [minified version of simple.mvc.js](//raw.github.com/bnji/simplemvc
 or
 Download [simple.mvc.js with comments](//raw.github.com/bnji/simplemvc/master/simple.mvc.js) to be used in development & debugging.
 
-##Bower (the new way)
-Simple.mvc is available through the Bower package manager. Learn more about using and installing Bower at http://bower.io. To add Simplemvc to your application, you can run:
+##The new way
+Simple.mvc is available through Bower package manager and NPM.
+
+### Install using Bower
+Learn more about using and installing Bower at http://bower.io
+To add Simplemvc to your application, you can run:
 
 `bower install simple.mvc`
+
+### Install using NPM
+Learn more about using and installing NPM at https://nodejs.org/en/download
+To add Simplemvc to your application, you can run:
+
+`npm install simple.mvc`
+
 
 ##Installation
 Reference the JavaScript file using a `<script>` tag somewhere on your HTML pages. For example,
 
-`<script type='text/javascript' src='simple.mvc.js-1.0.1.min.js'></script>`
 `<script type='text/javascript' src='jquery-1.12.0.min.js'></script>`
 `<script type='text/javascript' src='jquery-migrate-1.12.0.min.js'></script>`
+`<script type='text/javascript' src='simple.mvc.js-1.0.1.min.js'></script>`
 
 #Copyright and licence
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
