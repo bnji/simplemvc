@@ -1,8 +1,9 @@
 var Note = function Note(notebook, value, isComplete, id) {
+  var id = (id === undefined || id === null ? notebook.Get('notes').Size() : id);
   var templateViewId = '#list-template';
   // Todo Note Model
   var model = {
-    id: (id === undefined || id === null ? Date.now() : id),
+    id: id, // (id === undefined || id === null ? Date.now() : id),
     isComplete: isComplete,
     note: value
   };
@@ -87,7 +88,7 @@ var Note = function Note(notebook, value, isComplete, id) {
         // .toggleMode();
     },
     clone: {
-        id: '#liNoteElem'+Date.now(),
+        id: '#liNoteElem' + id,
         withDataAndEvents: false,
         append: function(elem) {
           $(elem)

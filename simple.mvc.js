@@ -1,7 +1,7 @@
 // ==========================================================================
 // Project:     Simple.mvc.js - A lightweight MVC library for UI binding.
 // Copyright:   (c)2012-2016 Benjamin Hammer (hammerbenjamin@gmail.com)
-// Version:     2016.2.26 - 1.0.8 - Version number follows NPM publish.
+// Version:     2016.2.26 - 1.0.10 - Version number follows NPM publish.
 // Licence:     Licensed under MIT license (see LICENCE.MD)
 // Description:
 //     * README.MD
@@ -1059,23 +1059,32 @@ var MVC = {
       $object._SetDataboundDomVal = function(datasrc, name, value) {
         if(value) {
           //console.log(counter + " - datasrc: " + datasrc + " - name: " + name + " - value: " + value);
-          var browserVersion = navigator.appVersion;
-          // IE 7 & 8
-          if(browserVersion.indexOf("MSIE 7.") !== -1 || browserVersion.indexOf("MSIE 8.") !== -1) {
-            // case: <span datasrc="#viewId" name="somename"></span>
-            $('div[datasrc="'+datasrc+'"][name="'+name+'"],p[datasrc="'+datasrc+'"][name="'+name+'"],span[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
-            // case: <div datasrc="#viewId"><span name="somename"></span></div>
-            $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('div[name="'+name+'"],p[name="'+name+'"],span[name="'+name+'"]').text(value);
-            $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('input[name="'+name+'"]').val(value);
-          }
-          else {
-            // console.log("datasrc: " + datasrc + " - name: " + name + " - value: " + value + " - " + $('*[datasrc*="'+datasrc+'"]').find('[name*="'+name+'"]').text());
-            // case: <span datasrc="#viewId" name="somename"></span>
-            $('*[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
-            // case: <div datasrc="#viewId"><span name="somename"></span></div>
-            $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').text(value);
-            $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').val(value);
-          }
+          // var browserVersion = navigator.appVersion;
+          // // IE 7 & 8
+          // if(browserVersion.indexOf("MSIE 7.") !== -1 || browserVersion.indexOf("MSIE 8.") !== -1) {
+          //   // alert("name: " + name + " - value: " + value);
+          //   // case: <span datasrc="#viewId" name="somename"></span>
+          //   $('div[datasrc="'+datasrc+'"][name="'+name+'"],p[datasrc="'+datasrc+'"][name="'+name+'"],span[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
+          //   // case: <div datasrc="#viewId"><span name="somename"></span></div>
+          //   $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('div[name="'+name+'"],p[name="'+name+'"],span[name="'+name+'"]').text(value);
+          //   $('*[datasrc="'+datasrc+'"]').find('div[name="'+name+'"],p[name="'+name+'"],span[name="'+name+'"]').text(value);
+          //   $('div[datasrc="'+datasrc+'"],p[datasrc="'+datasrc+'"],span[datasrc="'+datasrc+'"]').find('input[name="'+name+'"]').val(value);
+          // }
+          // else {
+          //   // console.log("datasrc: " + datasrc + " - name: " + name + " - value: " + value + " - " + $('*[datasrc*="'+datasrc+'"]').find('[name*="'+name+'"]').text());
+          //   // case: <span datasrc="#viewId" name="somename"></span>
+          //   $('*[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
+          //   // case: <div datasrc="#viewId"><span name="somename"></span></div>
+          //   $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').text(value);
+          //   $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').val(value);
+          // }
+
+          // console.log("datasrc: " + datasrc + " - name: " + name + " - value: " + value + " - " + $('*[datasrc*="'+datasrc+'"]').find('[name*="'+name+'"]').text());
+          // case: <span datasrc="#viewId" name="somename"></span>
+          $('*[datasrc="'+datasrc+'"][name="'+name+'"]').text(value);
+          // case: <div datasrc="#viewId"><span name="somename"></span></div>
+          $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').text(value);
+          $('*[datasrc="'+datasrc+'"]').find('*[name="'+name+'"]').val(value);
           $('input[datasrc="'+datasrc+'"][name="'+name+'"]').val(value);
 
           var select = $('select[datasrc="'+datasrc+'"][name="'+name+'"]');
@@ -1449,11 +1458,9 @@ var MVC = {
         key = $(element).attr("data-bind");
       }
       return key;
-      //return $(element).attr("datafld") ? undefined : $(element).attr("id");
     },
     getBindableElements : function(target) {
-      //return target.find('p,span,div').filter(':not(.excludeFromModel)');
-      return target.find('*[data-bind], *[datafld]').filter(':not(.excludeFromModel)');
+      return target.find('*[data-bind], *[datafld]').not('.excludeFromModel');
     },
     setValues : function(params) {
       //console.log('setValues called!');

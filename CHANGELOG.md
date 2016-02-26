@@ -1,6 +1,13 @@
 Simple.mvc.js - Changelog
 =========
 
+**Version 1.0.10**
+*Date: 26. feb. 2016*
+* Updated readme.md.
+* Updated examples. Removed Date().now from todo examples since it didn't work with IE<9.
+* Replaced jQuery 1.12.X with 1.9.0 and jQuery migrate 1.12.X with 1.0.0 which supports IE>=6.
+* Refactored `_SetDataboundDomVal()` method which should work with any browser (only test with latest version of Chrome, Firefox and Safari on OSX and IE8 on Windows XP).
+
 **Version 1.0.9**
 *Date: 26. feb. 2016*
 * Wrapped jQuery modules with code to support the UMD pattern. As suggested on http://stackoverflow.com/questions/33353406/getting-referenceerror-jquery-is-not-defined-for-package-install-on-npm
