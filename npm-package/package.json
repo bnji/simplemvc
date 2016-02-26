@@ -1,9 +1,9 @@
 {
   "name": "simple.mvc",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Lightweight MVC JavaScript library for UI binding.",
   "main": "simple.mvc.js",
-  "keywords": ['simple.mvc','simplemvc','javascript','ui binding','javascript mvc'],
+  "keywords": ["simple.mvc","simplemvc","javascript","ui binding","javascript mvc"],
   "directories": {
     "doc": "docs",
     "example": "examples"

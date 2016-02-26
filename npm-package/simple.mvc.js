@@ -1,7 +1,7 @@
 // ==========================================================================
 // Project:     Simple.mvc.js - A lightweight MVC library for UI binding.
 // Copyright:   (c)2012-2016 Benjamin Hammer (hammerbenjamin@gmail.com)
-// Version:     2016.2.26 - 1.0.7 - Version number follows NPM publish.
+// Version:     2016.2.26 - 1.0.8 - Version number follows NPM publish.
 // Licence:     Licensed under MIT license (see LICENCE.MD)
 // Description:
 //     * README.MD
@@ -238,7 +238,16 @@ var MVC = {
  * https://github.com/addyosmani/jquery-plugin-patterns/tree/master/patterns
  *
  */
-(function( $ ) {
+(function (root, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(["jquery"], factory);
+    } else if (typeof exports === "object") {
+        module.exports = factory(require("jquery"));
+    } else {
+        factory(root.jQuery);
+    }
+}(this, function ($) {
+// (function( $ ) {
   $.fn.extend({
     /**
      * ModelView
@@ -789,6 +798,8 @@ var MVC = {
         //   value2 = [value2];
         // }
         // console.log(prop + " - " + [value]);
+
+        // Only set a property value if it doesn't exist or if its same value type
         if(!$object.Get(prop) || typeof $object.Get(prop) === typeof value) {
           $($object).triggerHandler('set'+prop, [value]);
         }
@@ -904,6 +915,7 @@ var MVC = {
         var modelObjectData = {};
         $.each($object, function(k, v) {
           // Only add types which aren't functions
+          // if((typeof v).toString() !== 'function') {
           if(typeof v !== 'function' && k !== 'model' && k !== 'controller' && k !== 'methods' && k !== 'sortMethod') {
             //Don't add the jQuery object which is used for .Set() & .Get()
             //Regex test on Rubular: http://www.rubular.com/r/KZQH0gdHyy
@@ -1381,7 +1393,8 @@ var MVC = {
       return $object;
     }
   });
-})(jQuery);
+// })(jQuery);
+}));
 /**
  * Get or set HTML (DOM) values
  *
@@ -1390,7 +1403,16 @@ var MVC = {
  * @param {Object} jQuery
  * @class getSetHtml
  */
-(function( $ ) {
+(function (root, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(["jquery"], factory);
+    } else if (typeof exports === "object") {
+        module.exports = factory(require("jquery"));
+    } else {
+        factory(root.jQuery);
+    }
+}(this, function ($) {
+// (function( $ ) {
   $.fn.extend({
     /**
      * getSetHtml
@@ -1585,8 +1607,8 @@ var MVC = {
       return data;
     }
   });
-})(jQuery);
-
+// })(jQuery);
+}));
 // http://stackoverflow.com/questions/1038746/equivalent-of-string-format-in-jquery/2648463#2648463
 String.prototype.format = String.prototype.f = function() {
   var s = this,

@@ -1,6 +1,10 @@
 Simple.mvc.js - Changelog
 =========
 
+**Version 1.0.9**
+*Date: 26. feb. 2016*
+* Wrapped jQuery modules with code to support the UMD pattern. As suggested on http://stackoverflow.com/questions/33353406/getting-referenceerror-jquery-is-not-defined-for-package-install-on-npm
+
 **Version 1.0.8**
 *Date: 26. feb. 2016*
 * Updated links in readme.md
