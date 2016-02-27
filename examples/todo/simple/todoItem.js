@@ -9,11 +9,11 @@ var Note = function Note(notebook, value, isComplete, id) {
     settings: {
       change: function(event, name, value, object) {
         object.setIsDone();
-        notebook.updateUI(); // refactor
+        notebook.updateUI();
       },
       keyup: function(event, name, value, object) {
         if(MVC.KeyCheck(event, 'enter')) {
-          object.toggleMode(); //Toggle to view mode again
+          object.toggleMode();
         }
       },
       blur: function(event, name, value, object) {
@@ -45,14 +45,15 @@ var Note = function Note(notebook, value, isComplete, id) {
       },
       toggleMode : function() {
         var self = this;
-        if(!self.getIsDone()) { //Don't toggle modes if the note is done
+        // Don't toggle modes if the note is done
+        if(!self.getIsDone()) {
           self.Find('#note').toggle(500);
           self.Find(':input[name="note"]').toggle(500, function(){
             $(this).focus();
           });
         }
       },
-      init : function(object) { // Simple MVC built-in initalize method which runs after 1 ms
+      init : function(object) {
         var self = object;
         self.Find('#note').click(function() {
           self.toggleMode();

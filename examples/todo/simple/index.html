@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
@@ -9,13 +9,10 @@
     <title>SimpleMVC Todo App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- jQuery -->
-    <!--<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>-->
-    <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <!--<script src="//code.jquery.com/jquery-1.9.0.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.0.0.js"></script>-->
+    <script src="//code.jquery.com/jquery-1.9.0.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.0.0.js"></script>
     <!--IE fixes -->
-    <script type="text/javascript" src="//rawgit.com/douglascrockford/JSON-js/master/json2.js"></script>
+    <script type="text/javascript" src="../../../lib/json2.js"></script>
     <script type="text/javascript"> if (!window['console']) console = {log: function() {}}; </script>
     <!--//end IE fixes -->
     <!-- Simple MVC -->
@@ -24,15 +21,6 @@
     <link rel="stylesheet" type='text/css' href='../todo.css' />
   </head>
   <body>
-    <!-- Todo Note Template -->
-    <li class="todo" id="list-template">
-      <!-- isComplete and note are members of the Notes' Model -->
-      <input type="checkbox" name="isComplete" />
-      <span datasrc="" name="note" class="note" id="note"> a note </span>
-      <input type="text" name="note" style="display: none;" />
-      <a class="isEvent" href="#" name="showData">show data</a>
-    </li>
-    <!-- //end Note View (template) -->
     <!-- Todo Main View -->
     <div id='todos'>
       <h1>Simple MVC - Simple Todo App</h1>
@@ -50,6 +38,17 @@
       </div>
     </div>
     <!-- //end Todo View -->
+
+    <!-- Todo Note Template -->
+    <li class="todo" id="list-template">
+      <!-- isComplete and note are members of the Notes' Model -->
+      <input type="checkbox" name="isComplete" />
+      <span datasrc="" name="note" class="note" id="note"> a note </span>
+      <input type="text" name="note" style="display: none;" />
+      <a class="isEvent" href="#" name="showData">show data</a>
+    </li>
+    <!-- //end Note View (template) -->
+
     <!-- Todo Scripts -->
     <script src="todoItem.js"></script>
     <script src="todoList.js"></script>

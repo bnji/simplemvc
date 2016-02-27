@@ -1,7 +1,7 @@
 // ==========================================================================
 // Project:     Simple.mvc.js - A lightweight MVC library for UI binding.
 // Copyright:   (c)2012-2016 Benjamin Hammer (hammerbenjamin@gmail.com)
-// Version:     2016.2.26 - 1.0.10 - Version number follows NPM publish.
+// Version:     2016.2.27 - 1.0.11 - Version number follows NPM publish.
 // Licence:     Licensed under MIT license (see LICENCE.MD)
 // Description:
 //     * README.MD
@@ -128,7 +128,7 @@ var MVC = {
      *
      * Find an element in the array. Returns null, if nothing is found.
      *
-     * @method GetById
+     * @method Find
      * @param {Object} A key.
      * @param {Object} A value to search for.
      * @return {Object} An object from the array.
@@ -136,8 +136,50 @@ var MVC = {
     array.Find = function(key, value) {
       var result = null;
       $.each(array, function(k,v) {
+        alert(v[key]);
+        alert(value);
         if(v[key] === value) {
           result = v;
+          return false;
+        }
+      });
+      return result;
+    };
+
+    /**
+     * Find
+     *
+     * Find an element in the array. Returns null, if nothing is found.
+     *
+     * @method Find
+     * @param {Object} A value to search for.
+     * @return {Object} An object from the array.
+     */
+    array.Find = function(value) {
+      var result = null;
+      $.each(array, function(k,v) {
+        if(""+v === ""+value) {// && v !== 'undefined' && value !== 'undefined') {
+          result = v;
+          return false;
+        }
+      });
+      return result;
+    };
+
+    /**
+     * IndexOf
+     *
+     * Find an element in the array. Returns null, if nothing is found.
+     *
+     * @method IndexOf
+     * @param {Object} A value to search for.
+     * @return {Number} The index of the position where the value is in the array.
+     */
+    array.IndexOf = function(value) {
+      var result = -1;
+      $.each(array, function(k,v) {
+        if(""+v === ""+value) {
+          result = k;
           return false;
         }
       });
@@ -157,8 +199,11 @@ var MVC = {
       // http://stackoverflow.com/questions/500606/javascript-array-delete-elements
       // indexOf breaks in IE < 9!
       // var i = array.indexOf(element);
-      // Solution:
-      var i = $.inArray(element, array);
+      // Old Solution:
+      // var i = $.inArray(element, array);
+      // New Solution:
+      // Created .IndexOf() method. $.inArray() didn't work with <=IE8!
+      var i = array.IndexOf(element);
       if(i !== -1) {
         array.splice(i, 1);
         return true;
@@ -535,12 +580,13 @@ var MVC = {
        * @return {Number} Size of property value
        */
       $object.SizeOf = function(prop) {
+        // alert($object.Has(prop));
         if($object.Has(prop)) {
           var value = $object.Get(prop);
           if(value) {
             if(typeof value === 'object') {
               try {
-                return value.Size();;
+                return value.Size();
               }
               catch(err) {
                 return value.length;
@@ -1184,10 +1230,12 @@ var MVC = {
             // select element (list)
             if(event.target.type.indexOf('select') !== -1) {
               var selectedIndex = event.target.selectedIndex;
-              var selectedOption = event.target.options[selectedIndex];
-              if(selectedOption) {
-                targetValue = selectedOption.value;
-                selectedModelData = modelData[selectedIndex];
+              if(selectedIndex !== -1) {
+                var selectedOption = event.target.options[selectedIndex];
+                if(selectedOption) {
+                  targetValue = selectedOption.value;
+                  selectedModelData = modelData[selectedIndex];
+                }
               }
             }
             if($object.Has(targetName) && typeof $object.Get(targetName) === 'object') {
