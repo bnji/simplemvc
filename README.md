@@ -44,7 +44,7 @@ I personally don't like mixing HTML, CSS & JS, and I am well aware of some of th
 [Read more about separation of concerns](//en.wikipedia.org/wiki/Separation_of_concerns)
 
 **Code quality**
-High code quality using Test Driven Development with unit testing. A behavior-driven development framework called [Jasmine](//pivotal.github.com/jasmine) has been used for testing.
+High code quality using Test Driven Development with unit testing. A behavior-driven development framework called [Jasmine](https://jasmine.github.io/) has been used for testing.
 [Run Unit Tests](http://hammerbenjamin.com/simplemvc/simple.mvc.unit.test.html)
 
 **Free & Open Source**
